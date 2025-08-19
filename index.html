@@ -114,11 +114,11 @@
 
   if (SUPPORT_IO) {
     // 1) 첫 번째 이미지: 기본 타이밍 (스크롤로 뷰포트 근처에서 시작)
-    const ioFirst = makeObserver('0px 0px -10% 0px');
+    const ioFirst = makeObserver('0px 0px -20% 0px');
     firstEls.forEach(el => ioFirst.observe(el));
 
     // 2) 두 번째 이미지: 더 일찍 시작 (뷰포트 하단을 100% 확장)
-    const ioSecond = makeObserver('0px 0px 100% 0px');
+    const ioSecond = makeObserver('0px 0px 140% 0px');
     secondEls.forEach(el => ioSecond.observe(el));
 
     // 3) 기타 이미지: 기본 타이밍

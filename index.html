@@ -83,62 +83,56 @@
   </main>
 
  <script>
-  (function(){
-    const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const targets = document.querySelectorAll('.reveal-up');
+(function(){
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targets = document.querySelectorAll('.reveal-up');
 
-    // 모션 최소화: 즉시 표시
-    if (REDUCED) {
-      targets.forEach(el => el.classList.add('show'));
-      return;
-    }
+  // 모션 최소화: 즉시 표시
+  if (REDUCED) {
+    targets.forEach(el => el.classList.add('show'));
+    return;
+  }
 
-    // === IO 미지원 폴백 ===
-    function fallbackCheck() {
-      const vh = window.innerHeight;
-      targets.forEach(el => {
-        if (el.classList.contains('show')) return;
-        const r = el.getBoundingClientRect();
-        // 요소의 'top'이 뷰포트 하단(vh)에 닿는 순간(<=) 발동
-        if (r.top <= vh && r.bottom > 0) {
-          el.classList.add('show');
-        }
-      });
-    }
-
-    if (!('IntersectionObserver' in window)) {
-      addEventListener('scroll', fallbackCheck, { passive: true });
-      addEventListener('resize', fallbackCheck);
-      addEventListener('load',   fallbackCheck);
-      fallbackCheck();
-      return;
-    }
-
-    // === 원하는 타이밍: 요소 top이 화면 하단에 닿는 즉시 ===
-    // rootMargin bottom을 -100%로 줄여 뷰포트의 관찰영역을 '하단선'으로 축소
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('show');
-          io.unobserve(e.target);
-        }
-      });
-    }, {
-      threshold: 0,
-      rootMargin: '0px 0px -100% 0px'
-      // 설명:
-      //  - threshold:0 -> 1px이라도 겹치면 발동
-      //  - bottom:-100% -> 관찰영역을 뷰포트 하단선까지 축소
-      //  => 요소의 '윗변(top)'이 화면 하단에 닿는 순간 바로 isIntersecting
+  // ===== IO 미지원 폴백: 요소 top이 뷰포트 하단(vh)에 닿는 순간 발동 =====
+  function fallbackCheck() {
+    const vh = window.innerHeight;
+    targets.forEach(el => {
+      if (el.classList.contains('show')) return;
+      const r = el.getBoundingClientRect();
+      // 요소 윗변이 화면 하단선에 닿는 순간(<=) 트리거, 화면 위로 사라진 엘리먼트는 제외
+      if (r.top <= vh && r.bottom > 0) {
+        el.classList.add('show');
+      }
     });
+  }
 
-    targets.forEach(el => io.observe(el));
+  if (!('IntersectionObserver' in window)) {
+    addEventListener('scroll', fallbackCheck, { passive: true });
+    addEventListener('resize', fallbackCheck);
+    addEventListener('load',   fallbackCheck);
+    fallbackCheck();
+    return;
+  }
 
-    // 로드 직후 이미 뷰포트 하단선 위에 있는 경우를 위한 1회 체크
-    addEventListener('load', () => {
-      fallbackCheck();
+  // ===== 원하는 타이밍: 요소의 '윗변(top)'이 뷰포트 '하단선'에 닿는 순간 =====
+  // top:-100% → 뷰포트의 관찰영역을 '아래쪽 선'으로 축소
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('show');
+        io.unobserve(e.target);
+      }
     });
-  })();
+  }, {
+    threshold: 0,                 // 1px이라도 교차하면 콜백
+    rootMargin: '-100% 0px 0px 0px' // ↑ 위쪽을 뷰포트 높이만큼 줄여서 '아래쪽 선'만 남김
+  });
+
+  targets.forEach(el => io.observe(el));
+
+  // 로드 직후 이미 조건을 만족하는 경우 보정
+  addEventListener('load', fallbackCheck);
+})();
 </script>
 </body>
 </html>

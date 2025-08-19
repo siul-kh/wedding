@@ -83,33 +83,84 @@
   </main>
 
   <script>
-    // 스크롤 진입 시 애니메이션 발동
-    (function(){
-      const els = document.querySelectorAll('.reveal-up');
+(function(){
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // IntersectionObserver로 화면에 들어오면 1번만 재생
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){
-            e.target.classList.add('show');
-            io.unobserve(e.target);
-          }
-        });
-      }, {
-        threshold: 0,
-        rootMargin: '0px 0px 100% 0px' // 약간 아래쪽에서 미리 트리거
+  // 그룹 선택: 클래스명으로 1번/2번 분리, 나머지는 일반
+  const firstEls  = document.querySelectorAll('.reveal-up.first-image');
+  const secondEls = document.querySelectorAll('.reveal-up.second-image');
+  const otherEls  = document.querySelectorAll('.reveal-up:not(.first-image):not(.second-image)');
+
+  // 모션 최소화 환경: 즉시 표시 후 종료
+  if (REDUCED) {
+    document.querySelectorAll('.reveal-up').forEach(el => el.classList.add('show'));
+    return;
+  }
+
+  // 공통: 옵저버 생성 헬퍼
+  function makeObserver(rootMargin) {
+    return new IntersectionObserver((entries, io) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('show');
+          io.unobserve(e.target);
+        }
       });
+    }, { threshold: 0, rootMargin });
+  }
 
-      els.forEach(el => io.observe(el));
+  // IO 지원 여부
+  const SUPPORT_IO = 'IntersectionObserver' in window;
 
-      // 페이지 로드시 이미 화면 안에 있는 경우를 위해 체크
-      window.addEventListener('load', () => {
-        els.forEach(el => {
+  if (SUPPORT_IO) {
+    // 1) 첫 번째 이미지: 기본 타이밍 (스크롤로 뷰포트 근처에서 시작)
+    const ioFirst = makeObserver('0px 0px -10% 0px');
+    firstEls.forEach(el => ioFirst.observe(el));
+
+    // 2) 두 번째 이미지: 더 일찍 시작 (뷰포트 하단을 100% 확장)
+    const ioSecond = makeObserver('0px 0px 100% 0px');
+    secondEls.forEach(el => ioSecond.observe(el));
+
+    // 3) 기타 이미지: 기본 타이밍
+    const ioOthers = makeObserver('0px 0px -10% 0px');
+    otherEls.forEach(el => ioOthers.observe(el));
+
+    // 로드 직후 이미 화면 안에 있는 요소는 즉시 표시 (레이스 컨디션 방지)
+    addEventListener('load', () => {
+      const vh = window.innerHeight;
+      const revealIfInView = (nodes, factor = 0.9) => {
+        nodes.forEach(el => {
+          if (el.classList.contains('show')) return;
           const r = el.getBoundingClientRect();
-          if (r.top < window.innerHeight * 0.9) el.classList.add('show');
+          if (r.top < vh * factor) el.classList.add('show');
         });
+      };
+      revealIfInView(firstEls, 0.9);  // 첫 이미지 군
+      revealIfInView(otherEls, 0.9);  // 일반
+      revealIfInView(secondEls, 1.9); // 두 번째 이미지는 더 이른 기준(=조기 트리거 효과)
+    });
+
+  } else {
+    // ===== 폴백: 스크롤 기반 수동 체크 (IO 미지원 브라우저 대비) =====
+    function revealByScroll(nodes, factor) {
+      const vh = window.innerHeight;
+      nodes.forEach(el => {
+        if (el.classList.contains('show')) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < vh * factor) el.classList.add('show');
       });
-    })();
-  </script>
+    }
+    function onScroll() {
+      revealByScroll(firstEls, 0.9);   // 기본 타이밍
+      revealByScroll(otherEls, 0.9);   // 기본 타이밍
+      revealByScroll(secondEls, 1.9);  // 더 이른 시작(=화면 1.9배 아래서도 발동)
+    }
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll);
+    addEventListener('load', onScroll);
+    onScroll();
+  }
+})();
+</script>
 </body>
 </html>

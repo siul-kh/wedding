@@ -30,7 +30,7 @@
     .white { background: #ffffff; }
     .white img { display:block; width:100%; height:auto; border:0; }
 
-    /* 아래에서 '자기 높이만큼' 올라오기 + 동시에 페이드인 (1초) */
+    /* 아래에서 '자기 높이만큼' 올라오기 + 동시에 페이드인 */
     @keyframes slideBySelfHeight {
       0%   { transform: translateY(100%); opacity: 0; } /* 자신의 세로 크기만큼 아래 */
       100% { transform: translateY(0);    opacity: 1; } /* 제자리 & 선명 */
@@ -41,6 +41,7 @@
       will-change: transform, opacity;
     }
     .reveal-up.show {
+      /* 올라오는 속도와 투명도 변화를 같은 타이밍으로(여기서는 2초) */
       animation: slideBySelfHeight 2s cubic-bezier(.2,.7,.2,1) forwards;
     }
 
@@ -61,106 +62,71 @@
       식전 영상 자리 (1920×1080 세로 = 9:16)
     </section>
 
-    <!-- 2) 영상 아래: 이미지(하얀 배경 + 자기 높이만큼 아래→위 슬라이드 & 페이드) -->
+    <!-- 2) 첫 번째 이미지 -->
     <section class="white" style="padding:0" aria-label="타이포그래피 이미지">
       <img
         class="reveal-up"
         src="./images/2-typography.png"
         alt="타이포그래피 이미지"
       />
+    </section>
 
-    <!-- (새) 두 번째 이미지: 아래→위 슬라이드(1s) + 페이드(2s) -->
+    <!-- 3) 두 번째 이미지 -->
     <section class="white" style="padding:0" aria-label="사진 이미지">
       <img
-        class="reveal-up fade-2s"
+        class="reveal-up"
         src="./images/3-photo.png"
         alt="두 번째 이미지"
-        style="display:block;width:100%;height:auto;border:0"
       />
-  
     </section>
 
   </main>
 
   <script>
-(function(){
-  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    (function(){
+      const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll('.reveal-up');
 
-  // 그룹 선택: 클래스명으로 1번/2번 분리, 나머지는 일반
-  const firstEls  = document.querySelectorAll('.reveal-up.first-image');
-  const secondEls = document.querySelectorAll('.reveal-up.second-image');
-  const otherEls  = document.querySelectorAll('.reveal-up:not(.first-image):not(.second-image)');
+      // 모션 최소화: 즉시 표시
+      if (REDUCED) {
+        targets.forEach(el => el.classList.add('show'));
+        return;
+      }
 
-  // 모션 최소화 환경: 즉시 표시 후 종료
-  if (REDUCED) {
-    document.querySelectorAll('.reveal-up').forEach(el => el.classList.add('show'));
-    return;
-  }
-
-  // 공통: 옵저버 생성 헬퍼
-  function makeObserver(rootMargin) {
-    return new IntersectionObserver((entries, io) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('show');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0, rootMargin });
-  }
-
-  // IO 지원 여부
-  const SUPPORT_IO = 'IntersectionObserver' in window;
-
-  if (SUPPORT_IO) {
-    // 1) 첫 번째 이미지: 기본 타이밍 (스크롤로 뷰포트 근처에서 시작)
-    const ioFirst = makeObserver('0px 0px -20% 0px');
-    firstEls.forEach(el => ioFirst.observe(el));
-
-    // 2) 두 번째 이미지: 더 일찍 시작 (뷰포트 하단을 100% 확장)
-    const ioSecond = makeObserver('0px 0px 140% 0px');
-    secondEls.forEach(el => ioSecond.observe(el));
-
-    // 3) 기타 이미지: 기본 타이밍
-    const ioOthers = makeObserver('0px 0px -10% 0px');
-    otherEls.forEach(el => ioOthers.observe(el));
-
-    // 로드 직후 이미 화면 안에 있는 요소는 즉시 표시 (레이스 컨디션 방지)
-    addEventListener('load', () => {
-      const vh = window.innerHeight;
-      const revealIfInView = (nodes, factor = 0.9) => {
-        nodes.forEach(el => {
+      // IO 미지원 폴백
+      function fallbackCheck() {
+        const vh = window.innerHeight;
+        targets.forEach(el => {
           if (el.classList.contains('show')) return;
           const r = el.getBoundingClientRect();
-          if (r.top < vh * factor) el.classList.add('show');
+          // 한 픽셀이라도 화면에 보이기 시작하면 발동
+          if (r.top < vh && r.bottom > 0) el.classList.add('show');
         });
-      };
-      revealIfInView(firstEls, 0.9);  // 첫 이미지 군
-      revealIfInView(otherEls, 0.9);  // 일반
-      revealIfInView(secondEls, 1.9); // 두 번째 이미지는 더 이른 기준(=조기 트리거 효과)
-    });
+      }
 
-  } else {
-    // ===== 폴백: 스크롤 기반 수동 체크 (IO 미지원 브라우저 대비) =====
-    function revealByScroll(nodes, factor) {
-      const vh = window.innerHeight;
-      nodes.forEach(el => {
-        if (el.classList.contains('show')) return;
-        const r = el.getBoundingClientRect();
-        if (r.top < vh * factor) el.classList.add('show');
+      if (!('IntersectionObserver' in window)) {
+        addEventListener('scroll', fallbackCheck, { passive: true });
+        addEventListener('resize', fallbackCheck);
+        addEventListener('load', fallbackCheck);
+        fallbackCheck();
+        return;
+      }
+
+      // 화면에 '노출되기 시작'하는 순간 바로 발동
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('show');
+            io.unobserve(e.target);
+          }
+        });
+      }, {
+        threshold: 0,          // 교차가 0을 초과하는 순간(= 1px이라도 보이면)
+        rootMargin: '0px'      // 확장/축소 없이 정확히 뷰포트 기준
       });
-    }
-    function onScroll() {
-      revealByScroll(firstEls, 0.9);   // 기본 타이밍
-      revealByScroll(otherEls, 0.9);   // 기본 타이밍
-      revealByScroll(secondEls, 1.9);  // 더 이른 시작(=화면 1.9배 아래서도 발동)
-    }
-    addEventListener('scroll', onScroll, { passive: true });
-    addEventListener('resize', onScroll);
-    addEventListener('load', onScroll);
-    onScroll();
-  }
-})();
-</script>
+
+      targets.forEach(el => io.observe(el));
+    })();
+  </script>
 </body>
 </html>

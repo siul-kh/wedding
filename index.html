@@ -1,60 +1,46 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>모바일 청첩장</title>
-
-  <!-- (선택) 직접 올린 폰트 사용: /fonts/MyWeddingFont.woff2 -->
   <style>
-    @font-face {
-      font-family: 'MyWeddingFont';
-      src: url('./fonts/MyWeddingFont.woff2') format('woff2');
-      font-weight: 400 700;
-      font-display: swap;
+    :root {
+      --bg: #f1f1e7;
+      --fg: #84875b;
+      --maxw: 414px;
     }
-    :root{
-      --bg:#f1f1e7;
-      --fg:#84875b;
-      --maxw:414px; /* 추천: 414px 고정 최대폭 (모바일·PC 공통) */
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      display: flex;
+      justify-content: center;
     }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;background:var(--bg);color:var(--fg);
-      font-family:'MyWeddingFont', 'Noto Sans KR', system-ui, -apple-system, sans-serif;
-      line-height:1.6; display:flex; justify-content:center;
+    .container {
+      width: 100%;
+      max-width: var(--maxw);
     }
-    .container{width:100%;max-width:var(--maxw)}
-    section{padding:20px 16px}
-    h1,h2,h3,p{margin:0 0 10px}
-    .hero img{width:100%;height:auto;display:block;border:0}
-    .center{text-align:center}
-    .map iframe{width:100%;aspect-ratio:16/9;border:0}
-    .muted{opacity:.8;font-size:14px}
+    .video-placeholder {
+      width: 100%;
+      aspect-ratio: 9 / 16; /* 1920x1080 세로 영상 (9:16) */
+      background: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #555;
+    }
   </style>
 </head>
 <body>
-  <main class="container">
-    <!-- 상단 큰 사진 -->
-    <section class="hero">
-      <img src="./images/hero.jpg" alt="커플 사진">
-    </section>
-
-    <!-- 일시/장소 -->
-    <section class="center">
-      <h2>2025년 11월 1일 토요일 오후 2시</h2>
-      <p class="muted">서울행정법원 융선당</p>
-    </section>
-
-    <!-- 구글 지도(주소로 바꾸면 더 정확) -->
-    <section class="map">
-      <h3 class="center">오시는 길</h3>
-      <p class="center muted">네비 검색: 서울행정법원 융선당</p>
-      <iframe
-        src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9&output=embed"
-        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </section>
-  </main>
+  <div class="container">
+    <!-- 식전영상 자리 -->
+    <div class="video-placeholder">
+      식전 영상 자리 (1920×1080 세로)
+    </div>
+  </div>
 </body>
 </html>

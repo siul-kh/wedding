@@ -4,18 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>모바일 청첩장</title>
+
+  <!-- (선택) 폰트 프리로드: Safari 포함 모든 브라우저에서 더 안정적으로 로드 -->
+  <link rel="preload" href="fonts/GowunBatang-Regular.woff2?v=20250822" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/GowunBatang-Bold.woff2?v=20250822" as="font" type="font/woff2" crossorigin>
+
   <style>
-    /* ===== 폰트 임포트 (저장소 루트 기준) ===== */
+    /* ===== 폰트 임포트 (버전 쿼리로 캐시 무력화) ===== */
     @font-face {
       font-family: 'GowunBatang';
-      src: url('fonts/GowunBatang-Regular.ttf') format('truetype');
+      src:
+        url('fonts/GowunBatang-Regular.woff2?v=20250822') format('woff2'),
+        url('fonts/GowunBatang-Regular.ttf?v=20250822')    format('truetype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'GowunBatang';
-      src: url('fonts/GowunBatang-Bold.ttf') format('truetype');
+      src:
+        url('fonts/GowunBatang-Bold.woff2?v=20250822') format('woff2'),
+        url('fonts/GowunBatang-Bold.ttf?v=20250822')    format('truetype');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
@@ -100,7 +109,7 @@
     <section class="white" style="padding:0" aria-label="타이포그래피 이미지">
       <img
         class="reveal-up"
-        src="./images/2-typography.png"
+        src="./images/2-typography.png?v=20250822"
         alt="타이포그래피 이미지"
       />
     </section>
@@ -109,7 +118,7 @@
     <section class="white" style="padding:0" aria-label="사진 이미지">
       <img
         class="reveal-up"
-        src="./images/3-photo.png"
+        src="./images/3-photo.png?v=20250822"
         alt="두 번째 이미지"
       />
     </section>

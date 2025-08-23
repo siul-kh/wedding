@@ -60,22 +60,35 @@
     .reveal-up.show{animation:slideBySelfHeight 2s cubic-bezier(.2,.7,.2,1) forwards}
     @media (prefers-reduced-motion:reduce){.reveal-up{transform:none;opacity:1}.reveal-up.show{animation:none}}
 
-    /* ===== 카운트 표(단순화: / 제거, 라벨 제거, 테두리 없음, 여백 축소) ===== */
-    .when{ text-align:center; }
-    .when .title{ font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
-    .when .meta{ opacity:.9; margin-bottom:8px; }
-    .count-table{
-      width:100%; border-collapse:collapse; /* 테두리/간격 완전 제거 */
+    /* ===== 카운트 표(2줄, 4칸) ===== */
+    .when { text-align:center; }
+    .when .title { font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
+    .when .meta  { opacity:.9; margin-bottom:8px; }
+
+    .count-table {
+      width:100%;
+      border-collapse:collapse;   /* 테두리 없음 */
       table-layout:fixed;
     }
-    .count-table td{
-      padding:2px 0;        /* 여백 축소 */
+    .count-table th, .count-table td {
       text-align:center;
-      border:none;          /* 테두리 없음 */
-      font-size:14pt; color:var(--ink);
+      padding:0;                  /* 셀 여백 최소화 */
+      border:none;                /* 선 없음 */
       white-space:nowrap;
     }
-    .count-table .colon{opacity:.7; width:10px}
+    .count-labels th {
+      font-size:6pt; color:var(--hint); letter-spacing:.12em; font-weight:700;
+      padding:2px 0;
+    }
+    .count-values td {
+      font-size:14pt; color:var(--ink); padding:2px 0;
+    }
+    /* 값 사이 콜론(시각적 구분, 셀은 4개 유지) */
+    .count-values td:not(:last-child)::after {
+      content:" : ";
+      opacity:.7;
+      margin:0 2px;
+    }
 
     /* 오시는 길 */
     .map iframe{ width:100%; aspect-ratio:1/1; border:0; }
@@ -92,7 +105,7 @@
       background:#fff; border:1px solid var(--thin); border-radius:10px; cursor:pointer;
     }
 
-    /* 갤러리(이전 유지) */
+    /* 갤러리(간단 유지) */
     .gallery{padding:16px}
     .hero-photo{position:relative; overflow:hidden}
     .hero-photo img{width:100%; display:block}
@@ -102,7 +115,7 @@
     .thumbs button{padding:0; border:1px solid var(--thin); aspect-ratio:1/1; overflow:hidden; cursor:pointer; background:#fff}
     .thumbs img{width:100%; height:100%; object-fit:cover; display:block}
 
-    /* 방명록(이전 유지) */
+    /* 방명록(간단 유지) */
     .gb-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px}
     .gb-list{display:grid; gap:10px}
     .card{border:1px solid var(--thin); padding:12px}
@@ -133,7 +146,7 @@
     .acc-table tbody td{ padding:10px; border-top:1px solid var(--thin); vertical-align:middle; }
     .acc-line{ font-size:10pt; color:#585353; }
     .copy-mini{
-      font-family:'GowunBatang',serif; font-size:8pt;  /* 8pt로 수정 */
+      font-family:'GowunBatang',serif; font-size:8pt;  /* 8pt 지정 */
       padding:6px 10px; border-radius:10px;
       background:transparent; color:#585353; border:1px solid var(--thin);
       cursor:pointer;
@@ -168,32 +181,37 @@
     <section class="pad poem reveal-up">
       <p class="big">13년 전,</p>
       <p class="big">우리는 처음 만나 나무를 심었습니다.</p>
-<br>
+
       <p class="normal">여린 묘목에 흙과 물을 주고,<br>적당한 햇살이 비치기를,<br>적당한 바람이 불기를 바랐습니다.</p>
-<br>
+
       <p class="normal">맘과 달리 적당하지 않은 날이<br>많았는지도 모르겠습니다.</p>
-<br>
+
       <p class="normal">그 덕에 적당한 목질이 되어<br>이제는 제법 단단한 뿌리를 뻗고,<br>위로는 숱한 가지를 내어<br>그늘을 만들었습니다.</p>
-<br>
+
       <p class="normal">그 아래서 우리는<br>적당한 날들을 맞이하려 합니다.</p>
-      <br>
     </section>
 
     <section><img src="images/3-photo.png?v=1" alt="하단 사진" class="fullimg reveal-up"></section>
 
-    <!-- 카운트(표: / 제거, 라벨 제거, 테두리 없음, 여백 축소) -->
+    <!-- 카운트(2줄·4칸 표) -->
     <section class="pad when reveal-up">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
+
       <table class="count-table" aria-label="경과 시간">
-        <tbody id="countPastRow">
+        <thead class="count-labels">
+          <tr>
+            <th>DAYS</th>
+            <th>HOUR</th>
+            <th>MIN</th>
+            <th>SEC</th>
+          </tr>
+        </thead>
+        <tbody class="count-values" id="countPastTbl">
           <tr>
             <td><span class="d">00</span></td>
-            <td class="colon">:</td>
             <td><span class="h">00</span></td>
-            <td class="colon">:</td>
             <td><span class="m">00</span></td>
-            <td class="colon">:</td>
             <td><span class="s">00</span></td>
           </tr>
         </tbody>
@@ -203,15 +221,21 @@
     <section class="pad when reveal-up">
       <div class="title">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
+
       <table class="count-table" aria-label="남은 시간">
-        <tbody id="countFutureRow">
+        <thead class="count-labels">
+          <tr>
+            <th>DAYS</th>
+            <th>HOUR</th>
+            <th>MIN</th>
+            <th>SEC</th>
+          </tr>
+        </thead>
+        <tbody class="count-values" id="countFutureTbl">
           <tr>
             <td><span class="d">00</span></td>
-            <td class="colon">:</td>
             <td><span class="h">00</span></td>
-            <td class="colon">:</td>
             <td><span class="m">00</span></td>
-            <td class="colon">:</td>
             <td><span class="s">00</span></td>
           </tr>
         </tbody>
@@ -238,7 +262,6 @@
           3호선 • 신분당선 양재역 9번 출구 도보 3분 직진<br>
           16시까지 지하 3~4층 주차장 이용 가능<br>
           13시 30분부터 식사 가능
-        <br><br>
         </div>
       </div>
 
@@ -251,7 +274,7 @@
 
     <div class="thin"></div>
 
-    <!-- 갤러리(이전 유지: 필요시 이미지 배열만 채우세요) -->
+    <!-- 갤러리(필요 시 이미지 배열만 JS에서 채우세요) -->
     <section class="gallery" id="gallery">
       <div class="center" style="font-weight:700; color:#585353; margin-bottom:8px">갤러리</div>
       <div class="hero-photo">
@@ -266,7 +289,7 @@
 
     <div class="thin"></div>
 
-    <!-- 방명록(이전 유지 / 구글시트 연동 가능) -->
+    <!-- 방명록(간단 표시) -->
     <section class="pad" id="guestbook">
       <div class="gb-head">
         <div style="font-weight:700; color:#585353">방명록</div>
@@ -298,14 +321,8 @@
     <section class="pad" id="accounts">
       <div class="acc-title">마음 전하실 곳</div>
 
-      <!-- 신랑 측 -->
-      <button
-        class="acc-toggle"
-        type="button"
-        aria-expanded="false"
-        data-target="#accGroom"
-        data-label-closed="신랑 측🔽"
-        data-label-open="신랑 측🔼">신랑 측🔽</button>
+      <!-- 신랑 측 (텍스트 고정) -->
+      <button class="acc-toggle" type="button" aria-expanded="false" data-target="#accGroom">신랑 측</button>
       <div id="accGroom" class="acc-panel" hidden>
         <table class="acc-table" style="margin-top:10px">
           <tbody>
@@ -327,14 +344,8 @@
 
       <div style="height:10px"></div>
 
-      <!-- 신부 측 -->
-      <button
-        class="acc-toggle"
-        type="button"
-        aria-expanded="false"
-        data-target="#accBride"
-        data-label-closed="신부 측🔽"
-        data-label-open="신부 측🔼">신부 측🔽</button>
+      <!-- 신부 측 (텍스트 고정) -->
+      <button class="acc-toggle" type="button" aria-expanded="false" data-target="#accBride">신부 측</button>
       <div id="accBride" class="acc-panel" hidden>
         <table class="acc-table" style="margin-top:10px">
           <tbody>
@@ -399,38 +410,39 @@
       addEventListener('load',fallback);
     })();
 
-    /* 카운트다운(단순 표 채우기) */
+    /* 카운트다운 (2줄·4칸 표 채우기) */
     (function(){
-      const rows = {
-        past:   document.getElementById('countPastRow'),
-        future: document.getElementById('countFutureRow')
-      };
-      if(!rows.past || !rows.future) return;
+      const pastTbody   = document.getElementById('countPastTbl');
+      const futureTbody = document.getElementById('countFutureTbl');
+      if(!pastTbody || !futureTbody) return;
+
       const past   = new Date('2012-06-09T08:30:00+09:00');
       const future = new Date('2025-11-01T14:00:00+09:00');
 
-      function fill(rowEl, d,h,m,s){
-        rowEl.querySelector('.d').textContent = String(d).padStart(2,'0');
-        rowEl.querySelector('.h').textContent = String(h).padStart(2,'0');
-        rowEl.querySelector('.m').textContent = String(m).padStart(2,'0');
-        rowEl.querySelector('.s').textContent = String(s).padStart(2,'0');
+      function fill(tbody, d,h,m,s){
+        tbody.querySelector('.d').textContent = String(d).padStart(2,'0');
+        tbody.querySelector('.h').textContent = String(h).padStart(2,'0');
+        tbody.querySelector('.m').textContent = String(m).padStart(2,'0');
+        tbody.querySelector('.s').textContent = String(s).padStart(2,'0');
       }
       function tick(){
         const now=new Date();
+
         // 경과
         let t1=Math.max(0, now - past);
         const d1=Math.floor(t1/86400000); t1-=d1*86400000;
         const h1=Math.floor(t1/3600000);  t1-=h1*3600000;
         const m1=Math.floor(t1/60000);    t1-=m1*60000;
         const s1=Math.floor(t1/1000);
-        fill(rows.past, d1,h1,m1,s1);
+        fill(pastTbody, d1,h1,m1,s1);
+
         // 남은
         let t2=Math.max(0, future - now);
         const d2=Math.floor(t2/86400000); t2-=d2*86400000;
         const h2=Math.floor(t2/3600000);  t2-=h2*3600000;
         const m2=Math.floor(t2/60000);    t2-=m2*60000;
         const s2=Math.floor(t2/1000);
-        fill(rows.future, d2,h2,m2,s2);
+        fill(futureTbody, d2,h2,m2,s2);
       }
       tick(); setInterval(tick, 1000);
     })();
@@ -446,7 +458,7 @@
       const ALL=[
         // 'image/hero1.jpg','image/hero2.jpg','image/p1.jpg', ...
       ];
-      function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j]]=[a[i]]}return a}
+      function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
       const list=ALL.slice(); // 필요시 shuffle(list)
       let idx=0;
       function show(i){
@@ -465,29 +477,21 @@
       });
     })();
 
-    /* 마음 전하실 곳: 토글 버튼 라벨(🔽/🔼), 복사 & 팝업 */
+    /* 마음 전하실 곳: 토글(텍스트 고정) + 복사 팝업 */
     (function(){
-      // 토글 라벨 변경
+      // 토글
       document.querySelectorAll('.acc-toggle').forEach(btn=>{
-        const closed = btn.getAttribute('data-label-closed') || btn.textContent;
-        const opened = btn.getAttribute('data-label-open') || btn.textContent;
-        btn.textContent = closed;
         btn.addEventListener('click', ()=>{
           const sel=btn.getAttribute('data-target');
           const panel=document.querySelector(sel);
           const open=btn.getAttribute('aria-expanded')==='true';
           btn.setAttribute('aria-expanded', String(!open));
-          if(open){
-            btn.textContent = closed;
-            panel.classList.remove('open'); panel.hidden=true;
-          }else{
-            btn.textContent = opened;
-            panel.hidden=false; panel.classList.add('open');
-          }
+          if(open){ panel.classList.remove('open'); panel.hidden=true; }
+          else { panel.hidden=false; panel.classList.add('open'); }
         });
       });
 
-      // 복사 팝업
+      // 복사
       const copyModal=document.getElementById('copyModal');
       const copyClose=document.getElementById('copyClose');
       if(copyClose) copyClose.addEventListener('click',()=>copyModal.classList.remove('open'));

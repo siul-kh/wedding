@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>모바일 청첩장</title>
 
-  <!-- 폰트 프리로드(권장) -->
+  <!-- 폰트 프리로드(선택) -->
   <link rel="preload" href="fonts/GowunBatang-Regular.woff2?v=1" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/GowunBatang-Bold.woff2?v=1" as="font" type="font/woff2" crossorigin>
 
   <style>
-    /* ===== 폰트: WOFF2 우선, TTF 백업 ===== */
+    /* ===== 폰트 ===== */
     @font-face{
       font-family:'GowunBatang';
       src:url('fonts/GowunBatang-Regular.woff2?v=1') format('woff2'),
@@ -27,9 +27,9 @@
     :root{
       --maxw:414px;
       --ink:#585353;     /* 본문 색 */
-      --accent:#7b9155;  /* 포인트 색 */
-      --hint:#9d9b9b;    /* 보조 라벨 */
-      --thin:#e5e5e5;    /* 테두리 */
+      --accent:#7b9155;  /* 포인트 */
+      --hint:#9d9b9b;    /* 보조 */
+      --thin:#e5e5e5;    /* 가는선 */
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -43,15 +43,16 @@
     section{margin:0; background:#fff}
     .pad{padding:24px 16px}
     .center{text-align:center}
+    .thin{height:1px; background:var(--thin); margin:16px 0}
 
-    /* 이미지 공통 */
+    /* 이미지 */
     .fullimg{display:block; width:100%; height:auto; border:0}
 
     /* 시(가운데 정렬) */
-    .poem{ text-align:center; }
-    .poem p{ margin:8px 0; }
-    .poem .big{ font-size:14pt; color:#585353; font-weight:700; }
-    .poem .normal{ font-size:12pt; color:#585353; }
+    .poem{text-align:center}
+    .poem p{margin:8px 0}
+    .poem .big{font-size:14pt; color:#585353; font-weight:700}
+    .poem .normal{font-size:12pt; color:#585353}
 
     /* 아래→위 슬라이드 + 페이드 */
     @keyframes slideBySelfHeight{0%{transform:translateY(100%);opacity:0}100%{transform:translateY(0);opacity:1}}
@@ -59,30 +60,31 @@
     .reveal-up.show{animation:slideBySelfHeight 2s cubic-bezier(.2,.7,.2,1) forwards}
     @media (prefers-reduced-motion:reduce){.reveal-up{transform:none;opacity:1}.reveal-up.show{animation:none}}
 
-    /* 카운트다운 표 */
-    .when { text-align:center; }
-    .when .title { font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
-    .when .meta { opacity:.9; margin-bottom:10px; }
-    .count-table { width:100%; border-collapse:separate; border-spacing:0; }
-    .count-table th, .count-table td { padding:6px; text-align:center; }
-    .count-table thead th {
-      font-size:6pt; color:var(--hint); letter-spacing:.12em; font-weight:700;
-      border-top:1px solid var(--thin); border-left:1px solid var(--thin);
+    /* ===== 카운트 표(단순화: / 제거, 라벨 제거, 테두리 없음, 여백 축소) ===== */
+    .when{ text-align:center; }
+    .when .title{ font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
+    .when .meta{ opacity:.9; margin-bottom:8px; }
+    .count-table{
+      width:100%; border-collapse:collapse; /* 테두리/간격 완전 제거 */
+      table-layout:fixed;
     }
-    .count-table thead th:last-child{ border-right:1px solid var(--thin); }
-    .count-table tbody td {
+    .count-table td{
+      padding:2px 0;        /* 여백 축소 */
+      text-align:center;
+      border:none;          /* 테두리 없음 */
       font-size:14pt; color:var(--ink);
-      border-bottom:1px solid var(--thin); border-left:1px solid var(--thin);
+      white-space:nowrap;
     }
-    .count-table tbody td:last-child{ border-right:1px solid var(--thin); }
-    .colon { opacity:.7; }
-
-    /* 얇은 선 */
-    .thin{height:1px; background:var(--thin); margin:16px 0}
+    .count-table .colon{opacity:.7; width:10px}
 
     /* 오시는 길 */
     .map iframe{ width:100%; aspect-ratio:1/1; border:0; }
-    .go-title { font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; }
+    .go-title{
+      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center;
+    }
+    .go-name{ font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; }
+    .go-addr{ font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; }
+    .go-info{ font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#585353; }
     .nav-apps{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px; }
     .nav-btn{
       display:inline-flex; align-items:center; justify-content:center;
@@ -90,7 +92,7 @@
       background:#fff; border:1px solid var(--thin); border-radius:10px; cursor:pointer;
     }
 
-    /* 갤러리(이전 유지—필요시 이미지 배열만 채우면 됨) */
+    /* 갤러리(이전 유지) */
     .gallery{padding:16px}
     .hero-photo{position:relative; overflow:hidden}
     .hero-photo img{width:100%; display:block}
@@ -114,36 +116,40 @@
     .sheet .body{padding:16px; display:grid; gap:10px}
     input, textarea{width:100%; padding:10px; border:1px solid var(--thin); font:inherit}
 
-    /* 마음 전하실 곳 (타이틀 + 토글 버튼 + 표 + 복사) */
-    .acc-title{ font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px; }
+    /* 마음 전하실 곳 */
+    .acc-title{
+      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
+    }
     .acc-toggle{
       width:100%; border:1px solid var(--thin); border-radius:12px;
       background:#f1f1f1; color:#585353;
-      font-size:12pt; font-weight:700; padding:12px 14px;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
+      padding:12px 14px;
       display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer;
     }
-    .acc-toggle .chev{ margin-left:8px; transition:transform .25s ease; }
-    .acc-toggle[aria-expanded="true"] .chev{ transform:rotate(180deg); }
     .acc-panel{ display:none; margin-top:10px; }
     .acc-panel.open{ display:block; }
     .acc-table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--thin); border-radius:12px; overflow:hidden; background:#fff; }
     .acc-table tbody td{ padding:10px; border-top:1px solid var(--thin); vertical-align:middle; }
     .acc-line{ font-size:10pt; color:#585353; }
     .copy-mini{
-      font-family:'GowunBatang',serif; font-size:10pt;
+      font-family:'GowunBatang',serif; font-size:8pt;  /* 8pt로 수정 */
       padding:6px 10px; border-radius:10px;
       background:transparent; color:#585353; border:1px solid var(--thin);
       cursor:pointer;
     }
     .copy-col{ width:80px; text-align:right; }
 
-    /* 복사 완료 팝업: 정사각형(라운딩) */
+    /* 복사 완료 팝업(정사각 + 라운딩 + 요청 타이포) */
     .copy-modal .sheet{
       width:260px; height:260px; border-radius:14px; display:grid; grid-template-rows:auto 1fr;
     }
-    .copy-modal .body{ display:grid; place-items:center; font-weight:700; }
+    .copy-modal .body{
+      display:grid; place-items:center;
+      font-family:'GowunBatang',serif; font-weight:400; color:#585353;
+    }
 
-    /* 공유 버튼(요청: 12pt, #585353, 테두리/배경 없음, 가운데) */
+    /* 공유 버튼(12pt, #585353, 테두리/배경 없음, 가운데) */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-btn{
       font-family:'GowunBatang',serif; font-size:12pt; color:#585353;
@@ -154,16 +160,11 @@
 <body>
   <main class="container">
 
-    <!-- 1) 상단 이미지들 -->
-    <section>
-      <img src="images/1-photo.jpg?v=1" alt="상단 사진1" class="fullimg reveal-up">
-    </section>
+    <!-- 상단 이미지들 -->
+    <section><img src="images/1-photo.jpg?v=1" alt="상단 사진1" class="fullimg reveal-up"></section>
+    <section><img src="images/2-typography.png?v=1" alt="타이포그래피" class="fullimg reveal-up"></section>
 
-    <section>
-      <img src="images/2-typography.png?v=1" alt="타이포그래피" class="fullimg reveal-up">
-    </section>
-
-    <!-- 2) 시(가운데 정렬) -->
+    <!-- 시(가운데 정렬) -->
     <section class="pad poem reveal-up">
       <p class="big">13년 전,</p>
       <p class="big">우리는 처음 만나 나무를 심었습니다.</p>
@@ -177,27 +178,13 @@
       <p class="normal">그 아래서 우리는<br>적당한 날들을 맞이하려 합니다.</p>
     </section>
 
-    <section>
-      <img src="images/3-photo.png?v=1" alt="하단 사진" class="fullimg reveal-up">
-    </section>
+    <section><img src="images/3-photo.png?v=1" alt="하단 사진" class="fullimg reveal-up"></section>
 
-    <!-- 3) 카운트 (표로 개편) -->
+    <!-- 카운트(표: / 제거, 라벨 제거, 테두리 없음, 여백 축소) -->
     <section class="pad when reveal-up">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
-
       <table class="count-table" aria-label="경과 시간">
-        <thead>
-          <tr>
-            <th style="width:14%;">DAYS</th>
-            <th style="width:8%;">/</th>
-            <th style="width:14%;">HOUR</th>
-            <th style="width:8%;">/</th>
-            <th style="width:14%;">MIN</th>
-            <th style="width:8%;">/</th>
-            <th style="width:14%;">SEC</th>
-          </tr>
-        </thead>
         <tbody id="countPastRow">
           <tr>
             <td><span class="d">00</span></td>
@@ -208,9 +195,6 @@
             <td class="colon">:</td>
             <td><span class="s">00</span></td>
           </tr>
-          <tr>
-            <td>날</td><td>/</td><td>시간</td><td>/</td><td>분</td><td>/</td><td>초</td>
-          </tr>
         </tbody>
       </table>
     </section>
@@ -218,13 +202,7 @@
     <section class="pad when reveal-up">
       <div class="title">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
-
       <table class="count-table" aria-label="남은 시간">
-        <thead>
-          <tr>
-            <th>DAYS</th><th>/</th><th>HOUR</th><th>/</th><th>MIN</th><th>/</th><th>SEC</th>
-          </tr>
-        </thead>
         <tbody id="countFutureRow">
           <tr>
             <td><span class="d">00</span></td>
@@ -235,16 +213,13 @@
             <td class="colon">:</td>
             <td><span class="s">00</span></td>
           </tr>
-          <tr>
-            <td>날</td><td>/</td><td>시간</td><td>/</td><td>분</td><td>/</td><td>초</td>
-          </tr>
         </tbody>
       </table>
     </section>
 
     <div class="thin"></div>
 
-    <!-- 4) 오시는 길 (타이틀 16pt Bold) -->
+    <!-- 오시는 길 -->
     <section class="pad reveal-up">
       <div class="go-title">오시는 길</div>
 
@@ -256,9 +231,9 @@
       </div>
 
       <div class="center" style="margin-top:12px">
-        <div style="font-size:14pt; color:#585353">서울행정법원 융선당</div>
-        <div>서울시 서초구 강남대로 193(양재동 25-3)</div>
-        <div style="margin-top:10px">
+        <div class="go-name">서울행정법원 융선당</div>
+        <div class="go-addr">서울시 서초구 강남대로 193(양재동 25-3)</div>
+        <div class="go-info" style="margin-top:10px">
           3호선 • 신분당선 양재역 9번 출구 도보 3분 직진<br>
           16시까지 지하 3~4층 주차장 이용 가능<br>
           13시 30분부터 식사 가능
@@ -274,7 +249,7 @@
 
     <div class="thin"></div>
 
-    <!-- 5) 갤러리 (이전 유지—원하면 이미지 배열만 채우면 됨) -->
+    <!-- 갤러리(이전 유지: 필요시 이미지 배열만 채우세요) -->
     <section class="gallery" id="gallery">
       <div class="center" style="font-weight:700; color:#585353; margin-bottom:8px">갤러리</div>
       <div class="hero-photo">
@@ -289,7 +264,7 @@
 
     <div class="thin"></div>
 
-    <!-- 6) 방명록 (이전 유지 / 구글시트 연동 사용 가능) -->
+    <!-- 방명록(이전 유지 / 구글시트 연동 가능) -->
     <section class="pad" id="guestbook">
       <div class="gb-head">
         <div style="font-weight:700; color:#585353">방명록</div>
@@ -303,7 +278,7 @@
       <div id="gbList" class="gb-list"></div>
     </section>
 
-    <!-- 작성 팝업(방명록) -->
+    <!-- 방명록 작성 팝업 -->
     <div id="gbModal" class="modal">
       <div class="sheet" style="width:min(92vw,420px);">
         <div class="hd"><button id="gbClose" aria-label="닫기">✕</button></div>
@@ -317,14 +292,18 @@
 
     <div class="thin"></div>
 
-    <!-- 7) 마음 전하실 곳 (타이틀 16pt Bold, 토글 버튼 사양/복사 버튼 사양) -->
+    <!-- 마음 전하실 곳 -->
     <section class="pad" id="accounts">
       <div class="acc-title">마음 전하실 곳</div>
 
       <!-- 신랑 측 -->
-      <button class="acc-toggle" type="button" aria-expanded="false" data-target="#accGroom">
-        신랑 측 <span class="chev">⌄</span>
-      </button>
+      <button
+        class="acc-toggle"
+        type="button"
+        aria-expanded="false"
+        data-target="#accGroom"
+        data-label-closed="신랑 측🔽"
+        data-label-open="신랑 측🔼">신랑 측🔽</button>
       <div id="accGroom" class="acc-panel" hidden>
         <table class="acc-table" style="margin-top:10px">
           <tbody>
@@ -347,9 +326,13 @@
       <div style="height:10px"></div>
 
       <!-- 신부 측 -->
-      <button class="acc-toggle" type="button" aria-expanded="false" data-target="#accBride">
-        신부 측 <span class="chev">⌄</span>
-      </button>
+      <button
+        class="acc-toggle"
+        type="button"
+        aria-expanded="false"
+        data-target="#accBride"
+        data-label-closed="신부 측🔽"
+        data-label-open="신부 측🔼">신부 측🔽</button>
       <div id="accBride" class="acc-panel" hidden>
         <table class="acc-table" style="margin-top:10px">
           <tbody>
@@ -380,7 +363,7 @@
 
     <div class="thin"></div>
 
-    <!-- 8) 카카오톡 공유 버튼 (12pt, #585353, 보더/배경 없음, 가운데) -->
+    <!-- 카카오톡 공유 버튼 -->
     <section class="share-box">
       <button id="kakaoShare" class="share-btn">카카오톡으로 초대장 보내기</button>
     </section>
@@ -388,7 +371,7 @@
   </main>
 
   <script>
-    /* ===== 아래→위 슬라이드 트리거: 요소 top이 뷰포트 하단선에 닿으면 발동 ===== */
+    /* 아래→위 슬라이드 트리거 */
     (function(){
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const targets = document.querySelectorAll('.reveal-up');
@@ -414,7 +397,7 @@
       addEventListener('load',fallback);
     })();
 
-    /* ===== 카운트다운 (표 내부 숫자 채우기) ===== */
+    /* 카운트다운(단순 표 채우기) */
     (function(){
       const rows = {
         past:   document.getElementById('countPastRow'),
@@ -432,7 +415,6 @@
       }
       function tick(){
         const now=new Date();
-
         // 경과
         let t1=Math.max(0, now - past);
         const d1=Math.floor(t1/86400000); t1-=d1*86400000;
@@ -440,7 +422,6 @@
         const m1=Math.floor(t1/60000);    t1-=m1*60000;
         const s1=Math.floor(t1/1000);
         fill(rows.past, d1,h1,m1,s1);
-
         // 남은
         let t2=Math.max(0, future - now);
         const d2=Math.floor(t2/86400000); t2-=d2*86400000;
@@ -452,7 +433,7 @@
       tick(); setInterval(tick, 1000);
     })();
 
-    /* ===== 갤러리 (원하면 이미지 배열 채우기) ===== */
+    /* 갤러리(필요 시 이미지 배열 세팅) */
     (function(){
       const hero=document.getElementById('heroImg');
       const thumbs=document.getElementById('thumbs');
@@ -461,10 +442,10 @@
       if(!hero||!thumbs||!prev||!next) return;
 
       const ALL=[
-        // 예: 'image/hero1.jpg','image/hero2.jpg','image/p1.jpg', ...
+        // 'image/hero1.jpg','image/hero2.jpg','image/p1.jpg', ...
       ];
-      function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-      const list=shuffle(ALL.slice());
+      function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j]]=[a[i]]}return a}
+      const list=ALL.slice(); // 필요시 shuffle(list)
       let idx=0;
       function show(i){
         if(!list.length){ hero.alt='이미지 준비중'; return; }
@@ -482,23 +463,29 @@
       });
     })();
 
-    /* ===== 방명록(연동 사용 시 별도 스크립트 유지) ===== */
-
-    /* ===== 계좌 복사 + 토글 & 복사 팝업(정사각) ===== */
+    /* 마음 전하실 곳: 토글 버튼 라벨(🔽/🔼), 복사 & 팝업 */
     (function(){
-      // 토글
+      // 토글 라벨 변경
       document.querySelectorAll('.acc-toggle').forEach(btn=>{
+        const closed = btn.getAttribute('data-label-closed') || btn.textContent;
+        const opened = btn.getAttribute('data-label-open') || btn.textContent;
+        btn.textContent = closed;
         btn.addEventListener('click', ()=>{
           const sel=btn.getAttribute('data-target');
           const panel=document.querySelector(sel);
           const open=btn.getAttribute('aria-expanded')==='true';
           btn.setAttribute('aria-expanded', String(!open));
-          if(open){ panel.classList.remove('open'); panel.hidden=true; }
-          else { panel.hidden=false; panel.classList.add('open'); }
+          if(open){
+            btn.textContent = closed;
+            panel.classList.remove('open'); panel.hidden=true;
+          }else{
+            btn.textContent = opened;
+            panel.hidden=false; panel.classList.add('open');
+          }
         });
       });
 
-      // 복사
+      // 복사 팝업
       const copyModal=document.getElementById('copyModal');
       const copyClose=document.getElementById('copyClose');
       if(copyClose) copyClose.addEventListener('click',()=>copyModal.classList.remove('open'));
@@ -517,7 +504,7 @@
       });
     })();
 
-    /* ===== 카카오톡 공유: Web Share API → 폴백(복사) ===== */
+    /* 공유 */
     (function(){
       const btn=document.getElementById('kakaoShare');
       if(!btn) return;

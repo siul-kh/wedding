@@ -30,7 +30,7 @@
       --accent:#7b9155;
       --hint:#9d9b9b;
       --thin:#e5e5e5;
-      --heart-gap:8px; /* 하트 바로 아래 줄 간격(사용자가 마음에 든 값) */
+      --heart-gap:8px; /* 하트 아래 줄 간격(사용자 선호 수치) */
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -56,7 +56,8 @@
     .poem{text-align:center}
     .poem p{margin:8px 0}
     .poem .big{font-size:14pt; color:#585353; font-weight:700}
-    .poem .big.tight{ line-height:0.9; margin:4px 0; } /* 상단 두 줄 간격 절반 */
+    .poem .big.tight{ line-height:0.9; margin:4px 0; } /* 상단 큰 글 두 줄의 줄간격(절반) */
+    .poem .big + .big{ margin-top:12px; } /* 첫 줄과 둘째 줄 사이 간격 '벌림' */
     .poem .normal{font-size:12pt; color:#585353}
     .after-heart{ margin-top:var(--heart-gap)!important; } /* 하트 아래 줄 간격(달력/오시는길/시 공통) */
 
@@ -67,17 +68,17 @@
     @media (prefers-reduced-motion:reduce){.reveal-up{transform:none;opacity:1}.reveal-up.show{animation:none}}
 
     /* ===== 달력 ===== */
-    .cal-eyebrow{ /* WE'RE GETTING MARRIED */
-      text-align:center; font-family:'GowunBatang',serif; font-weight:400;
-      font-size:6pt; color:#9d9b9b; letter-spacing:.08em;
-    }
     .cal-title{
       font-family:'GowunBatang',serif; font-weight:700;
       font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
     .cal-sub{ /* 2025년 11월 1일 오후 2시 */
       text-align:center; font-family:'GowunBatang',serif; font-weight:400;
-      font-size:12pt; color:#585353; margin:4px 0 10px;
+      font-size:12pt; color:#585353; margin:4px 0 6px;
+    }
+    .cal-msg{ /* 달력 아래 상태 문구 */
+      text-align:center; font-family:'GowunBatang',serif; font-weight:400;
+      font-size:12pt; color:#585353; margin:6px 0 10px;
     }
     .calendar{ width:70%; margin:0 auto; padding:0 4px; }
     .cal-head, .cal-grid{
@@ -143,7 +144,7 @@
     <section><img src="images/1-photo.jpg?v=1" alt="상단 사진1"></section>
     <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
 
-    <!-- 시(하트 + 제목 두 줄 간격 절반, 하트-제목 간격은 달력과 동일 적용) -->
+    <!-- 시(하트 + 제목 두 줄 간격 벌림, 하트-제목 간격은 after-heart로 통일) -->
     <section class="pad poem reveal-up" aria-label="시">
       <img src="images/heart.png" alt="하트" class="img-original">
       <p class="big tight after-heart">13년 전,</p>
@@ -175,11 +176,10 @@
 
     <section><img src="images/3-photo.png?v=1" alt="하단 사진"></section>
 
-    <!-- 달력(얇은 선 70%, 상단 하트/간격, 강조/서브 텍스트, 요일/일자 색) -->
+    <!-- 달력(얇은 선 70%, WE’RE GETTING MARRIED 삭제, 날짜/시간 + 상태 문구) -->
     <section class="pad reveal-up" aria-label="달력">
       <img src="images/heart.png" alt="하트" class="img-original">
-      <div class="cal-eyebrow after-heart">WE’RE GETTING MARRIED</div>
-      <div class="cal-title">결혼합니다</div>
+      <div class="cal-title after-heart">결혼합니다</div>
       <div class="cal-sub">2025년 11월 1일 오후 2시</div>
 
       <div class="thin thin-70"></div>
@@ -225,6 +225,9 @@
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
         </div>
       </div>
+
+      <!-- 상태 문구(달력 아래) -->
+      <div id="weddingStatus" class="cal-msg">지선 ♥︎ 기환의 결혼식이 <span class="dleft">0</span>일 남았습니다.</div>
 
       <div class="thin thin-70"></div>
     </section>
@@ -290,9 +293,9 @@
       </table>
     </section>
 
-    <div class="thin"></div>
+    <!-- 여기는 '오시는 길' 위의 얇은 선을 제거했습니다(요청). -->
 
-    <!-- 오시는 길 (하트 + 제목 간격을 달력과 동일하게 after-heart 적용) -->
+    <!-- 오시는 길 (기존 아래 내용 '유지') -->
     <section class="pad reveal-up">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title after-heart">오시는 길</div>
@@ -405,6 +408,39 @@
       tick();
       setInterval(tick, 1000);
     });
+
+    /* 달력 아래 상태 문구: 남은/당일/지나간 날 계산(기준일: 2025-11-01, 자정 기준) */
+    (function(){
+      const el = document.getElementById('weddingStatus');
+      if(!el) return;
+      function updateStatus(){
+        const now = new Date();
+        // 기준일 2025-11-01 (현지시간 KST 기준 자정으로 계산)
+        const weddingDate = new Date('2025-11-01T00:00:00+09:00');
+
+        // 오늘 자정
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        // KST 보정을 위해 로컬 자정 기준으로 처리 (사이트가 한국 대상이라고 가정)
+        const msPerDay = 86400000;
+
+        const diff = today - weddingDate; // 양수면 지난 날 수 * ms
+        if (diff < 0){
+          // 아직 전: 남은 일수 = (weddingDate - today) / day
+          const daysLeft = Math.ceil((weddingDate - today)/msPerDay);
+          el.innerHTML = `지선 ♥︎ 기환의 결혼식이 <span class="dleft">${daysLeft}</span>일 남았습니다.`;
+        } else if (diff === 0){
+          // 당일
+          el.textContent = `지선 ♥︎ 기환의 결혼식이 열리는 날입니다.`;
+        } else {
+          // 지난 뒤: 지난 일수
+          const daysSince = Math.floor(diff/msPerDay);
+          el.innerHTML = `지선 ♥︎ 기환이 결혼한 지 <span class="dleft">${daysSince}</span>일 되는 날입니다.`;
+        }
+      }
+      updateStatus();
+      // 자정이 지나면 문구가 바뀌도록 1시간 간격 갱신(부하 적게)
+      setInterval(updateStatus, 3600000);
+    })();
   </script>
 </body>
 </html>

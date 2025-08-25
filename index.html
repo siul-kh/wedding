@@ -89,8 +89,8 @@
       opacity:.7;
       font-size:12pt;           /* 콜론 12pt */
     }
-    /* 칸 폭: 첫 칸은 JS로 가변, 콜론은 2ch, 나머지 값 칸은 3ch */
-    .count-table col.first { width:5ch; } /* 초기값: JS가 덮어씀 */
+    /* 칸 폭: 첫 칸은 JS가 각 표별로 설정, 콜론은 2ch, 나머지 값 칸은 3ch */
+    /* (여기서 col.first의 기본 width는 두지 않음: 표 간 간섭 제거를 위해 JS로만 설정) */
     .count-table col.val   { width:3ch; }
     .count-table col.colon { width:2ch; }
 
@@ -426,7 +426,7 @@
       addEventListener('load',fallback);
     })();
 
-    /* 날짜 카운트: 표별(과거/미래) 첫 칸 폭 독립 계산 + 카운트 갱신 */
+    /* 날짜 카운트: 표별(과거/미래) 첫 칸 폭 독립 계산(숫자 자리수 + 1ch) + 카운트 갱신 */
     document.addEventListener('DOMContentLoaded', function(){
       const pastTbody   = document.getElementById('countPastTbl');
       const futureTbody = document.getElementById('countFutureTbl');
@@ -450,15 +450,13 @@
         sEl.textContent = String(s).padStart(2,'0');
       }
 
-      // 표별 첫 칸(col.first) 폭을 [라벨 글자수 vs 현재 d 자리수] 중 큰값 + 1ch 로 갱신
+      // 표별 첫 칸(col.first) 폭 = 해당 표의 d(일) 숫자 자리수 + 1 ch
       function adjustFirstColWidth(tableEl, tbodyEl){
-        const firstLabelTh = tableEl.querySelector('thead th');     // 첫 라벨(DAYS 등)
-        const firstCol     = tableEl.querySelector('colgroup col.first');
-        const dSpan        = tbodyEl.querySelector('.d');
-        if(!firstLabelTh || !firstCol || !dSpan) return;
-        const labelLen  = (firstLabelTh.textContent || '').trim().length || 1;
+        const firstCol = tableEl.querySelector('colgroup col.first');
+        const dSpan    = tbodyEl.querySelector('.d');
+        if(!firstCol || !dSpan) return;
         const digitsLen = (dSpan.textContent || '').trim().length || 1;
-        const widthCh   = Math.max(labelLen, digitsLen) + 1; // +1글자 폭
+        const widthCh   = Math.max(2, digitsLen + 1); // 최소 2ch 보장
         firstCol.style.width = widthCh + 'ch';
       }
 

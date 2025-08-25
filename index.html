@@ -65,16 +65,19 @@
 .when .title { font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
 .when .meta  { opacity:.9; margin-bottom:8px; }
 
+/* ===== 카운트 표(내용 폭으로 줄이기 + 칸 폭 고정) ===== */
 .count-table{
-  width:100%;
-  border-collapse:collapse;       /* 테두리 없음 */
-  table-layout:fixed;
+  width:auto;                 /* 100% → 내용만큼 */
+  margin:0 auto;              /* 가운데 정렬 */
+  border-collapse:collapse;
+  table-layout:auto;          /* 내용 기준으로 폭 계산 */
 }
 .count-table th, .count-table td{
   text-align:center;
-  padding:0;                      /* 셀 여백 최소화 */
+  padding:0 2px;              /* 셀 여백 아주 작게 */
   border:none;
   white-space:nowrap;
+  line-height:1.2;            /* 세로로도 조밀하게 */
 }
 .count-labels th{
   font-size:6pt; color:var(--hint); letter-spacing:.12em; font-weight:700;
@@ -83,10 +86,12 @@
 .count-values td{
   font-size:14pt; color:var(--ink); padding:2px 0;
 }
-.count-values td.colon{            /* 콜론 칸 */
-  opacity:.7;
-  width:10px;
-}
+.count-values td.colon{ opacity:.7; }
+
+/* colgroup으로 칸 폭을 글자수 기준으로 고정 */
+.count-table col.v{ width:4.2ch; }  /* 값 칸: 최대 4자리 + 약간 여유 */
+.count-table col.c{ width:1ch;   }  /* 콜론 칸 */
+
 
 
     /* 오시는 길 */
@@ -198,21 +203,24 @@
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
 
 <table class="count-table" aria-label="경과 시간">
+  <colgroup>
+    <col class="v"><col class="c"><col class="v"><col class="c"><col class="v"><col class="c"><col class="v">
+  </colgroup>
   <thead class="count-labels">
     <tr>
       <th>DAYS</th>
-      <th></th>        <!-- 공백 칸 -->
+      <th></th>
       <th>HOUR</th>
-      <th></th>        <!-- 공백 칸 -->
+      <th></th>
       <th>MIN</th>
-      <th></th>        <!-- 공백 칸 -->
+      <th></th>
       <th>SEC</th>
     </tr>
   </thead>
   <tbody class="count-values" id="countPastTbl">
     <tr>
       <td><span class="d">00</span></td>
-      <td class="colon">:</td>    <!-- 콜론 칸 -->
+      <td class="colon">:</td>
       <td><span class="h">00</span></td>
       <td class="colon">:</td>
       <td><span class="m">00</span></td>
@@ -222,6 +230,7 @@
   </tbody>
 </table>
 
+
     </section>
 
     <section class="pad when reveal-up">
@@ -229,14 +238,17 @@
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
 
  <table class="count-table" aria-label="남은 시간">
+  <colgroup>
+    <col class="v"><col class="c"><col class="v"><col class="c"><col class="v"><col class="c"><col class="v">
+  </colgroup>
   <thead class="count-labels">
     <tr>
       <th>DAYS</th>
-      <th></th>        <!-- 공백 칸 -->
+      <th></th>
       <th>HOUR</th>
-      <th></th>        <!-- 공백 칸 -->
+      <th></th>
       <th>MIN</th>
-      <th></th>        <!-- 공백 칸 -->
+      <th></th>
       <th>SEC</th>
     </tr>
   </thead>
@@ -252,6 +264,7 @@
     </tr>
   </tbody>
 </table>
+
 
     </section>
 

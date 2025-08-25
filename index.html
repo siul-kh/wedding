@@ -59,6 +59,12 @@
   margin: 8px 0;      /* 기존 8px의 절반 */
 }
 
+    .img-original {
+  width:auto;
+  height:auto;
+  display:inline-block;
+}
+
 
     /* 아래→위 슬라이드 + 페이드 (요소 전체에 적용) */
     @keyframes slideBySelfHeight{0%{transform:translateY(100%);opacity:0}100%{transform:translateY(0);opacity:1}}
@@ -188,6 +194,8 @@
 
   <section class="pad poem reveal-up" aria-label="시">
   <!-- 상단 두 줄: 줄간격/여백 절반(.tight) -->
+    <img src="images/heart.png" class="img-original">
+
   <p class="big tight" style="color:#585353;">13년 전,</p>
   <p class="big tight" style="color:#585353; margin-top:7px;">우리는 처음 만나 나무를 심었습니다.</p>
 
@@ -287,6 +295,8 @@
 
     <!-- 오시는 길 -->
     <section class="pad reveal-up">
+      <img src="images/heart.png" class="img-original">
+
       <div class="go-title">오시는 길</div>
 
       <div class="map" style="margin-top:10px">

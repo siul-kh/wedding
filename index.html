@@ -57,7 +57,7 @@
     .poem p{margin:8px 0}
     .poem .big{font-size:14pt; color:#585353; font-weight:700}
     .poem .big.tight{ line-height:0.9; margin:4px 0; } /* 상단 큰 글 두 줄의 줄간격(절반) */
-    .poem .big + .big{ margin-top:12px; } /* 첫 줄과 둘째 줄 사이 간격 '벌림' */
+    .poem .big + .big{ margin-top:12px; } /* “13년 전,”과 “우리는…” 사이 간격 벌림 */
     .poem .normal{font-size:12pt; color:#585353}
     .after-heart{ margin-top:var(--heart-gap)!important; } /* 하트 아래 줄 간격(달력/오시는길/시 공통) */
 
@@ -76,7 +76,7 @@
       text-align:center; font-family:'GowunBatang',serif; font-weight:400;
       font-size:12pt; color:#585353; margin:4px 0 6px;
     }
-    .cal-msg{ /* 달력 아래 상태 문구 */
+    .cal-msg{ /* 달력 날짜/시간 바로 아래 상태 문구 */
       text-align:center; font-family:'GowunBatang',serif; font-weight:400;
       font-size:12pt; color:#585353; margin:6px 0 10px;
     }
@@ -105,36 +105,70 @@
     .cal-grid .cal-cell:nth-child(7n+1){ color:#ff6b9c; }
     .cal-grid .cal-cell:nth-child(7n){   color:#6dafff; }
 
-    /* 오시는 길 */
-    .map iframe{ width:100%; aspect-ratio:1/1; border:0; }
-    .go-title{
-      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center;
+    /* ===== 갤러리 ===== */
+    .gallery{padding:16px}
+    .gallery .section-title{font-weight:700; color:#585353; text-align:center; margin-bottom:8px}
+    .hero-photo{position:relative; overflow:hidden}
+    .hero-photo img{width:100%; display:block}
+    .slide-nav{position:absolute; inset:auto 8px 8px auto; display:flex; gap:8px}
+    .slide-nav button{border:1px solid #000; background:#000; color:#fff; padding:6px 10px; cursor:pointer}
+    .thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:10px}
+    .thumbs button{padding:0; border:1px solid var(--thin); aspect-ratio:1/1; overflow:hidden; cursor:pointer; background:#fff}
+    .thumbs img{width:100%; height:100%; object-fit:cover; display:block}
+
+    /* ===== 방명록 ===== */
+    .gb-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px}
+    .gb-list{display:grid; gap:10px}
+    .card{border:1px solid var(--thin); padding:12px}
+    .pager{display:flex; gap:6px; align-items:center}
+    .pager button{border:1px solid var(--thin); background:#fff; padding:6px 10px; cursor:pointer}
+    .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.45); z-index:100}
+    .modal.open{display:grid}
+    .sheet{background:#fff; border:1px solid var(--thin)}
+    .sheet .hd{display:flex; justify-content:flex-end}
+    .sheet .hd button{border:none; background:transparent; font-size:18px; padding:8px 10px; cursor:pointer}
+    .sheet .body{padding:16px; display:grid; gap:10px}
+    input, textarea{width:100%; padding:10px; border:1px solid var(--thin); font:inherit}
+
+    /* ===== 마음 전하실 곳 ===== */
+    .acc-title{
+      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
     }
-    .go-name{ font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; }
-    .go-addr{ font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; }
-    .go-info{ font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#585353; }
-    .nav-apps{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px; }
-    .nav-btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:10px 12px; font-size:10pt; color:#585353; text-decoration:none;
-      background:#fff; border:1px solid var(--thin); border-radius:10px; cursor:pointer;
+    .acc-toggle{
+      width:100%; border:1px solid var(--thin); border-radius:12px;
+      background:#f1f1f1; color:#585353;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
+      padding:12px 14px;
+      display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer;
+    }
+    .acc-panel{ display:none; margin-top:10px; }
+    .acc-panel.open{ display:block; }
+    .acc-table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--thin); border-radius:12px; overflow:hidden; background:#fff; }
+    .acc-table tbody td{ padding:10px; border-top:1px solid var(--thin); vertical-align:middle; }
+    .acc-line{ font-size:10pt; color:#585353; }
+    .copy-mini{
+      font-family:'GowunBatang',serif; font-size:8pt;
+      padding:6px 10px; border-radius:10px;
+      background:transparent; color:#585353; border:1px solid var(--thin);
+      cursor:pointer;
+    }
+    .copy-col{ width:80px; text-align:right; }
+
+    /* 복사 완료 팝업(정사각 + 라운딩) */
+    .copy-modal .sheet{
+      width:260px; height:260px; border-radius:14px; display:grid; grid-template-rows:auto 1fr;
+    }
+    .copy-modal .body{
+      display:grid; place-items:center;
+      font-family:'GowunBatang',serif; font-weight:400; color:#585353;
     }
 
-    /* ===== 날짜 카운트(2줄·7칸) ===== */
-    .when { text-align:center; }
-    .when .title { font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
-    .when .meta  { opacity:.9; margin-bottom:8px; }
-
-    .count-table{
-      width:auto; margin:0 auto; border-collapse:collapse; table-layout:fixed;
+    /* ===== 공유 버튼 ===== */
+    .share-box{ text-align:center; padding:20px 16px 40px; }
+    .share-btn{
+      font-family:'GowunBatang',serif; font-size:12pt; color:#585353;
+      background:transparent; border:none; cursor:pointer;
     }
-    .count-table th, .count-table td{
-      text-align:center; padding:0 2px; border:none; white-space:nowrap; line-height:1.2;
-    }
-    .count-labels th{ font-size:6pt; color:var(--hint); letter-spacing:.12em; font-weight:700; padding:2px 0; }
-    .count-values td{ font-size:14pt; color:var(--ink); padding:2px 0; }
-    .count-values td.colon{ opacity:.7; font-size:12pt; }
-    .count-table col.val{ width:3ch; } .count-table col.colon{ width:2ch; }
   </style>
 </head>
 <body>
@@ -144,7 +178,7 @@
     <section><img src="images/1-photo.jpg?v=1" alt="상단 사진1"></section>
     <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
 
-    <!-- 시(하트 + 제목 두 줄 간격 벌림, 하트-제목 간격은 after-heart로 통일) -->
+    <!-- 시 -->
     <section class="pad poem reveal-up" aria-label="시">
       <img src="images/heart.png" alt="하트" class="img-original">
       <p class="big tight after-heart">13년 전,</p>
@@ -176,11 +210,14 @@
 
     <section><img src="images/3-photo.png?v=1" alt="하단 사진"></section>
 
-    <!-- 달력(얇은 선 70%, WE’RE GETTING MARRIED 삭제, 날짜/시간 + 상태 문구) -->
+    <!-- 달력 -->
     <section class="pad reveal-up" aria-label="달력">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="cal-title after-heart">결혼합니다</div>
       <div class="cal-sub">2025년 11월 1일 오후 2시</div>
+
+      <!-- 상태 문구: (요청) 날짜/시간 바로 아래로 이동 -->
+      <div id="weddingStatus" class="cal-msg">지선 ♥︎ 기환의 결혼식이 <span class="dleft">0</span>일 남았습니다.</div>
 
       <div class="thin thin-70"></div>
 
@@ -226,13 +263,10 @@
         </div>
       </div>
 
-      <!-- 상태 문구(달력 아래) -->
-      <div id="weddingStatus" class="cal-msg">지선 ♥︎ 기환의 결혼식이 <span class="dleft">0</span>일 남았습니다.</div>
-
       <div class="thin thin-70"></div>
     </section>
 
-    <!-- ===== 날짜 카운트(달력 아래로 이동) ===== -->
+    <!-- 날짜 카운트 (달력 아래) -->
     <section class="pad when reveal-up">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
@@ -293,9 +327,7 @@
       </table>
     </section>
 
-    <!-- 여기는 '오시는 길' 위의 얇은 선을 제거했습니다(요청). -->
-
-    <!-- 오시는 길 (기존 아래 내용 '유지') -->
+    <!-- 오시는 길 (원래 아래 있던 것 유지) -->
     <section class="pad reveal-up">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title after-heart">오시는 길</div>
@@ -322,6 +354,115 @@
         <a class="nav-btn" target="_blank" rel="noopener" href="https://tmap.life/143f765d">티맵</a>
         <a class="nav-btn" target="_blank" rel="noopener" href="https://kko.kakao.com/b6H0BkrBWS">카카오내비</a>
       </div>
+    </section>
+
+    <div class="thin"></div>
+
+    <!-- 갤러리 -->
+    <section class="gallery reveal-up" id="gallery">
+      <div class="section-title">갤러리</div>
+      <div class="hero-photo">
+        <img id="heroImg" alt="큰 사진">
+        <div class="slide-nav">
+          <button id="prevBtn" aria-label="이전">이전</button>
+          <button id="nextBtn" aria-label="다음">다음</button>
+        </div>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+    </section>
+
+    <div class="thin"></div>
+
+    <!-- 방명록 -->
+    <section class="pad reveal-up" id="guestbook">
+      <div class="gb-head">
+        <div style="font-weight:700; color:#585353">방명록</div>
+        <div class="pager">
+          <button id="prevPage">이전</button>
+          <span id="pageInfo">1 / 1</span>
+          <button id="nextPage">다음</button>
+          <button id="writeBtn" style="margin-left:8px">작성하기</button>
+        </div>
+      </div>
+      <div id="gbList" class="gb-list"></div>
+    </section>
+
+    <!-- 방명록 작성 팝업 -->
+    <div id="gbModal" class="modal">
+      <div class="sheet" style="width:min(92vw,420px);">
+        <div class="hd"><button id="gbClose" aria-label="닫기">✕</button></div>
+        <div class="body">
+          <input id="gbName" placeholder="이름"/>
+          <textarea id="gbMsg" rows="4" placeholder="내용"></textarea>
+          <button id="gbSubmit" class="nav-btn" style="justify-content:center">신랑 &amp; 신부에게 축하 글 전달하기</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="thin"></div>
+
+    <!-- 마음 전하실 곳 -->
+    <section class="pad reveal-up" id="accounts">
+      <div class="acc-title">마음 전하실 곳</div>
+
+      <!-- 신랑 측 -->
+      <button class="acc-toggle" type="button" aria-expanded="false" data-target="#accGroom">신랑 측</button>
+      <div id="accGroom" class="acc-panel" hidden>
+        <table class="acc-table" style="margin-top:10px">
+          <tbody>
+            <tr>
+              <td class="acc-line">김기환 국민은행 90513110424</td>
+              <td class="copy-col"><button class="copy-mini" data-copy="국민은행 90513110424 (김기환)">복사</button></td>
+            </tr>
+            <tr>
+              <td class="acc-line">김정호 국민은행 430502-93-118573</td>
+              <td class="copy-col"><button class="copy-mini" data-copy="국민은행 430502-93-118573 (김정호)">복사</button></td>
+            </tr>
+            <tr>
+              <td class="acc-line">이이순 우리은행 1002-038-271451</td>
+              <td class="copy-col"><button class="copy-mini" data-copy="우리은행 1002-038-271451 (이이순)">복사</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="height:10px"></div>
+
+      <!-- 신부 측 -->
+      <button class="acc-toggle" type="button" aria-expanded="false" data-target="#accBride">신부 측</button>
+      <div id="accBride" class="acc-panel" hidden>
+        <table class="acc-table" style="margin-top:10px">
+          <tbody>
+            <tr>
+              <td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td>
+              <td class="copy-col"><button class="copy-mini" data-copy="카카오뱅크 3333-22-7850739 (목지선)">복사</button></td>
+            </tr>
+            <tr>
+              <td class="acc-line">목승우 국민은행 659401-01-191168</td>
+              <td class="copy-col"><button class="copy-mini" data-copy="국민은행 659401-01-191168 (목승우)">복사</button></td>
+            </tr>
+            <tr>
+              <td class="acc-line">성미화 새마을금고 9002197239365</td>
+              <td class="copy-col"><button class="copy-mini" data-copy="새마을금고 9002197239365 (성미화)">복사</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 복사 완료 팝업(정사각) -->
+    <div id="copyModal" class="modal copy-modal">
+      <div class="sheet">
+        <div class="hd"><button id="copyClose" aria-label="닫기">✕</button></div>
+        <div class="body center">복사가 완료되었습니다.</div>
+      </div>
+    </div>
+
+    <div class="thin"></div>
+
+    <!-- 카카오톡 공유 버튼 -->
+    <section class="share-box reveal-up">
+      <button id="kakaoShare" class="share-btn">카카오톡으로 초대장 보내기</button>
     </section>
 
   </main>
@@ -409,7 +550,7 @@
       setInterval(tick, 1000);
     });
 
-    /* 달력 아래 상태 문구: 남은/당일/지나간 날 계산(기준일: 2025-11-01, 자정 기준) */
+    /* 달력 아래 상태 문구: 남은/당일/지난 날 계산(기준일: 2025-11-01, 자정 기준) */
     (function(){
       const el = document.getElementById('weddingStatus');
       if(!el) return;
@@ -420,26 +561,144 @@
 
         // 오늘 자정
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        // KST 보정을 위해 로컬 자정 기준으로 처리 (사이트가 한국 대상이라고 가정)
         const msPerDay = 86400000;
 
         const diff = today - weddingDate; // 양수면 지난 날 수 * ms
         if (diff < 0){
-          // 아직 전: 남은 일수 = (weddingDate - today) / day
           const daysLeft = Math.ceil((weddingDate - today)/msPerDay);
           el.innerHTML = `지선 ♥︎ 기환의 결혼식이 <span class="dleft">${daysLeft}</span>일 남았습니다.`;
         } else if (diff === 0){
-          // 당일
           el.textContent = `지선 ♥︎ 기환의 결혼식이 열리는 날입니다.`;
         } else {
-          // 지난 뒤: 지난 일수
           const daysSince = Math.floor(diff/msPerDay);
           el.innerHTML = `지선 ♥︎ 기환이 결혼한 지 <span class="dleft">${daysSince}</span>일 되는 날입니다.`;
         }
       }
       updateStatus();
-      // 자정이 지나면 문구가 바뀌도록 1시간 간격 갱신(부하 적게)
-      setInterval(updateStatus, 3600000);
+      setInterval(updateStatus, 3600000); // 1시간마다 갱신
+    })();
+
+    /* 갤러리(간단 랜덤/슬라이드 준비) */
+    (function(){
+      const hero=document.getElementById('heroImg');
+      const thumbs=document.getElementById('thumbs');
+      const prev=document.getElementById('prevBtn');
+      const next=document.getElementById('nextBtn');
+      if(!hero||!thumbs||!prev||!next) return;
+
+      const ALL=[
+        // 'images/p1.jpg','images/p2.jpg','images/p3.jpg','images/p4.jpg' ...
+      ];
+      function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+      const list=ALL.slice(); // 필요 시 shuffle(list)
+      let idx=0;
+      function show(i){
+        if(!list.length){ hero.alt='이미지 준비중'; return; }
+        idx=(i+list.length)%list.length; hero.src=list[idx]+'?v=1';
+      }
+      show(0);
+      prev.addEventListener('click',()=>show(idx-1));
+      next.addEventListener('click',()=>show(idx+1));
+      list.forEach((src,i)=>{
+        const b=document.createElement('button');
+        const im=document.createElement('img');
+        im.src=src+'?v=1'; im.alt='썸네일'; b.appendChild(im);
+        b.addEventListener('click',()=>show(i));
+        thumbs.appendChild(b);
+      });
+    })();
+
+    /* 방명록 (로컬 스텁) */
+    (function(){
+      const listEl=document.getElementById('gbList');
+      const btnWrite=document.getElementById('writeBtn');
+      const modal=document.getElementById('gbModal');
+      const close=document.getElementById('gbClose');
+      const submit=document.getElementById('gbSubmit');
+      const nameEl=document.getElementById('gbName');
+      const msgEl=document.getElementById('gbMsg');
+      const pageInfo=document.getElementById('pageInfo');
+      const prev=document.getElementById('prevPage');
+      const next=document.getElementById('nextPage');
+
+      if(!listEl) return;
+
+      let data=JSON.parse(localStorage.getItem('gb_data')||'[]');
+      const pageSize=5; let page=1;
+
+      function render(){
+        const total=Math.max(1, Math.ceil(data.length/pageSize));
+        page=Math.min(Math.max(1,page), total);
+        pageInfo.textContent=`${page} / ${total}`;
+        listEl.innerHTML='';
+        const start=(page-1)*pageSize;
+        data.slice(start, start+pageSize).forEach(item=>{
+          const card=document.createElement('div');
+          card.className='card';
+          card.innerHTML=`<div style="font-weight:700">${item.name}</div>
+                          <div style="font-size:10pt; color:#777">${item.date}</div>
+                          <div style="margin-top:6px">${item.msg.replace(/\n/g,'<br>')}</div>`;
+          listEl.appendChild(card);
+        });
+      }
+      render();
+
+      btnWrite.addEventListener('click',()=>{ modal.classList.add('open'); });
+      close.addEventListener('click',()=> modal.classList.remove('open'));
+      prev.addEventListener('click',()=>{ page--; render(); });
+      next.addEventListener('click',()=>{ page++; render(); });
+      submit.addEventListener('click',()=>{
+        const name=nameEl.value.trim(); const msg=msgEl.value.trim();
+        if(!name || !msg) return alert('이름과 내용을 입력해주세요.');
+        const date=new Date().toLocaleDateString('ko-KR');
+        data=[{name, msg, date}, ...data];
+        localStorage.setItem('gb_data', JSON.stringify(data));
+        nameEl.value=''; msgEl.value=''; modal.classList.remove('open'); render();
+      });
+    })();
+
+    /* 마음 전하실 곳: 토글 + 복사 팝업 */
+    (function(){
+      // 토글
+      document.querySelectorAll('.acc-toggle').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const sel=btn.getAttribute('data-target');
+          const panel=document.querySelector(sel);
+          const open=btn.getAttribute('aria-expanded')==='true';
+          btn.setAttribute('aria-expanded', String(!open));
+          if(open){ panel.classList.remove('open'); panel.hidden=true; }
+          else { panel.hidden=false; panel.classList.add('open'); }
+        });
+      });
+
+      // 복사
+      const copyModal=document.getElementById('copyModal');
+      const copyClose=document.getElementById('copyClose');
+      if(copyClose) copyClose.addEventListener('click',()=>copyModal.classList.remove('open'));
+
+      document.addEventListener('click', (e)=>{
+        const b=e.target.closest('.copy-mini');
+        if(!b) return;
+        const txt=b.getAttribute('data-copy')||'';
+        if(navigator.clipboard){
+          navigator.clipboard.writeText(txt).then(()=>copyModal.classList.add('open'));
+        }else{
+          const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
+          ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+          copyModal.classList.add('open');
+        }
+      });
+    })();
+
+    /* 공유 */
+    (function(){
+      const btn=document.getElementById('kakaoShare');
+      if(!btn) return;
+      btn.addEventListener('click', ()=>{
+        const data={ title:document.title, text:'초대합니다', url:location.href };
+        if(navigator.share){ navigator.share(data); }
+        else { navigator.clipboard.writeText(location.href); alert('링크가 복사되었습니다. 카카오톡에 붙여넣어 보내주세요.'); }
+      });
     })();
   </script>
 </body>

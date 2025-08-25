@@ -59,12 +59,13 @@
   margin: 8px 0;      /* 기존 8px의 절반 */
 }
 
-    .img-original {
-  width:auto; 
-  height:auto;
-  display:inline-block;
-  margin: 0 auto;
+.img-original {
+  display:block;           /* 블록요소로 만들기 */
+  width:auto !important;   /* 원본 크기 */
+  height:auto !important;  /* 비율 유지 */
+  margin:0 auto;           /* 좌우 가운데 정렬 */
 }
+
 
 
     /* 아래→위 슬라이드 + 페이드 (요소 전체에 적용) */
@@ -295,8 +296,8 @@
     <div class="thin"></div>
 
     <!-- 오시는 길 -->
-     <img src="images/heart.png" class="img-original">
     <section class="pad reveal-up">
+           <img src="images/heart.png" class="img-original">
       <div class="go-title">오시는 길</div>
 
       <div class="map" style="margin-top:10px">

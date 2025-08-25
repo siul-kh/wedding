@@ -186,30 +186,49 @@
       background:transparent; border:none; cursor:pointer;
     }
     
-    /* 달력 */
+ /* 달력 (업데이트) */
 .cal-title{
   font-family:'GowunBatang',serif; font-weight:700;
-  font-size:16pt; color:#585353; text-align:center; margin-bottom:8px;
+  font-size:16pt; color:#585353; text-align:center; margin:8px 0;
 }
-.calendar{ padding:0 4px; }
+
+/* 달력 가로폭 70% */
+.calendar{ width:70%; margin:0 auto; padding:0 4px; }
+
+/* 7열 그리드 */
 .cal-head, .cal-grid{
   display:grid; grid-template-columns:repeat(7,1fr); gap:6px;
 }
+
+/* 요일 헤더: 폰트 12pt로 통일 */
 .cal-head div{
-  text-align:center; font-size:10pt; color:#9d9b9b; letter-spacing:.06em; padding:4px 0;
+  text-align:center; font-size:12pt; color:#585353; letter-spacing:.04em; padding:4px 0;
 }
+
+/* 날짜 셀: 폰트 12pt */
 .cal-cell{
   aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
   font-size:12pt; color:#585353;
 }
+
+/* 1일: 원형 #7b9155, 텍스트 하양 유지 */
 .cal-cell .dot{
   display:inline-grid; place-items:center;
   width:28px; height:28px; border-radius:50%;
-  background:#7b9155; color:#fff; font-weight:700;
+  background:#7b9155; color:#fff !important; font-weight:700;
 }
 @media (min-width:480px){
   .cal-cell .dot{ width:32px; height:32px; }
 }
+
+/* 일요일(헤더/날짜) → 핑크, 토요일 → 연한 파랑 */
+.cal-head div:nth-child(1){ color:#ff6b9c; }   /* 일 */
+.cal-head div:nth-child(7){ color:#6dafff; }   /* 토 */
+
+/* grid의 n번째 아이템: 7n+1 = 일요일, 7n = 토요일
+   (앞 공백 칸 포함해도 색은 자연스럽게 표시됩니다) */
+.cal-grid .cal-cell:nth-child(7n+1){ color:#ff6b9c; }
+.cal-grid .cal-cell:nth-child(7n){   color:#6dafff; }
 
   </style>
 </head>
@@ -318,13 +337,14 @@
         </tbody>
       </table>
     </section>
- <section class="pad reveal-up" aria-label="달력">
+<section class="pad reveal-up" aria-label="달력">
+  <!-- 장식 하트 (원본 크기, 중앙 정렬) -->
+  <img src="images/heart.png" alt="하트" class="img-original" style="display:block; margin:0 auto;">
+
   <div class="cal-title">결혼합니다</div>
   <div class="thin"></div>
 
   <div class="calendar">
-    <div class="center" style="font-weight:700; color:#585353; margin:6px 0 8px;">2025년 11월</div>
-
     <!-- 요일 헤더 (일~토) : 좌측 첫 번째가 일요일 -->
     <div class="cal-head">
       <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
@@ -368,8 +388,6 @@
 
   <div class="thin"></div>
 </section>
-
-    <div class="thin"></div>
 
     <!-- 오시는 길 -->
     <section class="pad reveal-up">

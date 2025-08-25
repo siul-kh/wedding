@@ -60,35 +60,34 @@
     .reveal-up.show{animation:slideBySelfHeight 2s cubic-bezier(.2,.7,.2,1) forwards}
     @media (prefers-reduced-motion:reduce){.reveal-up{transform:none;opacity:1}.reveal-up.show{animation:none}}
 
-    /* ===== 카운트 표(2줄, 4칸) ===== */
-    .when { text-align:center; }
-    .when .title { font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
-    .when .meta  { opacity:.9; margin-bottom:8px; }
+    /* ===== 카운트 표(2줄, 7칸: 값/공백/값/공백/값/공백/값) ===== */
+.when { text-align:center; }
+.when .title { font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
+.when .meta  { opacity:.9; margin-bottom:8px; }
 
-    .count-table {
-      width:100%;
-      border-collapse:collapse;   /* 테두리 없음 */
-      table-layout:fixed;
-    }
-    .count-table th, .count-table td {
-      text-align:center;
-      padding:0;                  /* 셀 여백 최소화 */
-      border:none;                /* 선 없음 */
-      white-space:nowrap;
-    }
-    .count-labels th {
-      font-size:6pt; color:var(--hint); letter-spacing:.12em; font-weight:700;
-      padding:2px 0;
-    }
-    .count-values td {
-      font-size:14pt; color:var(--ink); padding:2px 0;
-    }
-    /* 값 사이 콜론(시각적 구분, 셀은 4개 유지) */
-    .count-values td:not(:last-child)::after {
-      content:" : ";
-      opacity:.7;
-      margin:0 2px;
-    }
+.count-table{
+  width:100%;
+  border-collapse:collapse;       /* 테두리 없음 */
+  table-layout:fixed;
+}
+.count-table th, .count-table td{
+  text-align:center;
+  padding:0;                      /* 셀 여백 최소화 */
+  border:none;
+  white-space:nowrap;
+}
+.count-labels th{
+  font-size:6pt; color:var(--hint); letter-spacing:.12em; font-weight:700;
+  padding:2px 0;
+}
+.count-values td{
+  font-size:14pt; color:var(--ink); padding:2px 0;
+}
+.count-values td.colon{            /* 콜론 칸 */
+  opacity:.7;
+  width:10px;
+}
+
 
     /* 오시는 길 */
     .map iframe{ width:100%; aspect-ratio:1/1; border:0; }
@@ -198,48 +197,62 @@
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
 
-      <table class="count-table" aria-label="경과 시간">
-        <thead class="count-labels">
-          <tr>
-            <th>DAYS</th>
-            <th>HOUR</th>
-            <th>MIN</th>
-            <th>SEC</th>
-          </tr>
-        </thead>
-        <tbody class="count-values" id="countPastTbl">
-          <tr>
-            <td><span class="d">00</span></td>
-            <td><span class="h">00</span></td>
-            <td><span class="m">00</span></td>
-            <td><span class="s">00</span></td>
-          </tr>
-        </tbody>
-      </table>
+<table class="count-table" aria-label="경과 시간">
+  <thead class="count-labels">
+    <tr>
+      <th>DAYS</th>
+      <th></th>        <!-- 공백 칸 -->
+      <th>HOUR</th>
+      <th></th>        <!-- 공백 칸 -->
+      <th>MIN</th>
+      <th></th>        <!-- 공백 칸 -->
+      <th>SEC</th>
+    </tr>
+  </thead>
+  <tbody class="count-values" id="countPastTbl">
+    <tr>
+      <td><span class="d">00</span></td>
+      <td class="colon">:</td>    <!-- 콜론 칸 -->
+      <td><span class="h">00</span></td>
+      <td class="colon">:</td>
+      <td><span class="m">00</span></td>
+      <td class="colon">:</td>
+      <td><span class="s">00</span></td>
+    </tr>
+  </tbody>
+</table>
+
     </section>
 
     <section class="pad when reveal-up">
       <div class="title">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
 
-      <table class="count-table" aria-label="남은 시간">
-        <thead class="count-labels">
-          <tr>
-            <th>DAYS</th>
-            <th>HOUR</th>
-            <th>MIN</th>
-            <th>SEC</th>
-          </tr>
-        </thead>
-        <tbody class="count-values" id="countFutureTbl">
-          <tr>
-            <td><span class="d">00</span></td>
-            <td><span class="h">00</span></td>
-            <td><span class="m">00</span></td>
-            <td><span class="s">00</span></td>
-          </tr>
-        </tbody>
-      </table>
+ <table class="count-table" aria-label="남은 시간">
+  <thead class="count-labels">
+    <tr>
+      <th>DAYS</th>
+      <th></th>        <!-- 공백 칸 -->
+      <th>HOUR</th>
+      <th></th>        <!-- 공백 칸 -->
+      <th>MIN</th>
+      <th></th>        <!-- 공백 칸 -->
+      <th>SEC</th>
+    </tr>
+  </thead>
+  <tbody class="count-values" id="countFutureTbl">
+    <tr>
+      <td><span class="d">00</span></td>
+      <td class="colon">:</td>
+      <td><span class="h">00</span></td>
+      <td class="colon">:</td>
+      <td><span class="m">00</span></td>
+      <td class="colon">:</td>
+      <td><span class="s">00</span></td>
+    </tr>
+  </tbody>
+</table>
+
     </section>
 
     <div class="thin"></div>

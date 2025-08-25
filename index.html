@@ -26,10 +26,10 @@
 
     :root{
       --maxw:414px;
-      --ink:#585353;     /* 본문 색 */
-      --accent:#7b9155;  /* 포인트 */
-      --hint:#9d9b9b;    /* 보조 */
-      --thin:#e5e5e5;    /* 가는선 */
+      --ink:#585353;
+      --accent:#7b9155;
+      --hint:#9d9b9b;
+      --thin:#e5e5e5;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -60,21 +60,20 @@
     .reveal-up.show{animation:slideBySelfHeight 2s cubic-bezier(.2,.7,.2,1) forwards}
     @media (prefers-reduced-motion:reduce){.reveal-up{transform:none;opacity:1}.reveal-up.show{animation:none}}
 
-    /* ===== 카운트 표(2줄, 7칸: 값/콜론/값/콜론/값/콜론/값) ===== */
+    /* ===== 카운트 표(2줄·7칸) ===== */
     .when { text-align:center; }
     .when .title { font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
     .when .meta  { opacity:.9; margin-bottom:8px; }
 
-    /* 표를 내용 폭으로 줄이고 가운데 정렬 */
     .count-table{
-      width:auto;
-      margin:0 auto;
+      width:auto;                 /* 내용 폭만 */
+      margin:0 auto;              /* 가운데 */
       border-collapse:collapse;
       table-layout:fixed;
     }
     .count-table th, .count-table td{
       text-align:center;
-      padding:0 2px;             /* 촘촘하게 */
+      padding:0 2px;
       border:none;
       white-space:nowrap;
       line-height:1.2;
@@ -88,11 +87,10 @@
     }
     .count-values td.colon{
       opacity:.7;
-      font-size:12pt; /* 요청: 콜론 12pt */
+      font-size:12pt;           /* 콜론 12pt */
     }
-
-    /* 칸 폭: 첫 칸=가변(라벨 길이+1 ch, JS에서 설정), 콜론=2ch, 나머지 값 칸=3ch */
-    .count-table col.first { width:5ch; } /* 초기값, JS가 실제 라벨 길이에 맞춰 재조정 */
+    /* 칸 폭: 첫 칸은 JS로 가변, 콜론은 2ch, 나머지 값 칸은 3ch */
+    .count-table col.first { width:5ch; } /* 초기값: JS가 덮어씀 */
     .count-table col.val   { width:3ch; }
     .count-table col.colon { width:2ch; }
 
@@ -401,98 +399,94 @@
 
   </main>
 
-<script>
-/* 아래→위 슬라이드 트리거 (그대로 유지) */
-(function(){
-  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const targets = document.querySelectorAll('.reveal-up');
-  if(REDUCED){ targets.forEach(el=>el.classList.add('show')); return; }
-  function fallback(){
-    const vh=innerHeight;
-    targets.forEach(el=>{
-      if(el.classList.contains('show')) return;
-      const r=el.getBoundingClientRect();
-      if(r.top<=vh && r.bottom>0) el.classList.add('show');
+  <script>
+    /* 아래→위 슬라이드 트리거 */
+    (function(){
+      const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll('.reveal-up');
+      if(REDUCED){ targets.forEach(el=>el.classList.add('show')); return; }
+      function fallback(){
+        const vh=innerHeight;
+        targets.forEach(el=>{
+          if(el.classList.contains('show')) return;
+          const r=el.getBoundingClientRect();
+          if(r.top<=vh && r.bottom>0) el.classList.add('show');
+        });
+      }
+      if(!('IntersectionObserver' in window)){
+        addEventListener('scroll',fallback,{passive:true}); addEventListener('resize',fallback);
+        addEventListener('load',fallback); fallback(); return;
+      }
+      const io=new IntersectionObserver((es)=>{
+        es.forEach(e=>{
+          if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+        });
+      },{threshold:0, rootMargin:'-100% 0px 0px 0px'});
+      targets.forEach(el=>io.observe(el));
+      addEventListener('load',fallback);
+    })();
+
+    /* 날짜 카운트: 표별(과거/미래) 첫 칸 폭 독립 계산 + 카운트 갱신 */
+    document.addEventListener('DOMContentLoaded', function(){
+      const pastTbody   = document.getElementById('countPastTbl');
+      const futureTbody = document.getElementById('countFutureTbl');
+      const pastTable   = document.getElementById('pastTable');
+      const futureTable = document.getElementById('futureTable');
+      if(!pastTbody || !futureTbody || !pastTable || !futureTable) return;
+
+      // 한국 표준시 기준
+      const past   = new Date('2012-06-09T08:30:00+09:00');
+      const future = new Date('2025-11-01T14:00:00+09:00');
+
+      function fill(tbody, d,h,m,s){
+        const dEl = tbody.querySelector('.d');
+        const hEl = tbody.querySelector('.h');
+        const mEl = tbody.querySelector('.m');
+        const sEl = tbody.querySelector('.s');
+        if(!dEl || !hEl || !mEl || !sEl) return;
+        dEl.textContent = String(d).padStart(2,'0');
+        hEl.textContent = String(h).padStart(2,'0');
+        mEl.textContent = String(m).padStart(2,'0');
+        sEl.textContent = String(s).padStart(2,'0');
+      }
+
+      // 표별 첫 칸(col.first) 폭을 [라벨 글자수 vs 현재 d 자리수] 중 큰값 + 1ch 로 갱신
+      function adjustFirstColWidth(tableEl, tbodyEl){
+        const firstLabelTh = tableEl.querySelector('thead th');     // 첫 라벨(DAYS 등)
+        const firstCol     = tableEl.querySelector('colgroup col.first');
+        const dSpan        = tbodyEl.querySelector('.d');
+        if(!firstLabelTh || !firstCol || !dSpan) return;
+        const labelLen  = (firstLabelTh.textContent || '').trim().length || 1;
+        const digitsLen = (dSpan.textContent || '').trim().length || 1;
+        const widthCh   = Math.max(labelLen, digitsLen) + 1; // +1글자 폭
+        firstCol.style.width = widthCh + 'ch';
+      }
+
+      function tick(){
+        const now = new Date();
+
+        // 경과
+        let t1 = Math.max(0, now - past);
+        const d1 = Math.floor(t1 / 86400000); t1 -= d1 * 86400000;
+        const h1 = Math.floor(t1 / 3600000);  t1 -= h1 * 3600000;
+        const m1 = Math.floor(t1 / 60000);    t1 -= m1 * 60000;
+        const s1 = Math.floor(t1 / 1000);
+        fill(pastTbody, d1,h1,m1,s1);
+        adjustFirstColWidth(pastTable, pastTbody);   // 과거 표만 따로 적용
+
+        // 남은
+        let t2 = Math.max(0, future - now);
+        const d2 = Math.floor(t2 / 86400000); t2 -= d2 * 86400000;
+        const h2 = Math.floor(t2 / 3600000);  t2 -= h2 * 3600000;
+        const m2 = Math.floor(t2 / 60000);    t2 -= m2 * 60000;
+        const s2 = Math.floor(t2 / 1000);
+        fill(futureTbody, d2,h2,m2,s2);
+        adjustFirstColWidth(futureTable, futureTbody); // 미래 표만 따로 적용
+      }
+
+      tick();                   // 초기 반영
+      setInterval(tick, 1000);  // 1초마다 갱신
     });
-  }
-  if(!('IntersectionObserver' in window)){
-    addEventListener('scroll',fallback,{passive:true}); addEventListener('resize',fallback);
-    addEventListener('load',fallback); fallback(); return;
-  }
-  const io=new IntersectionObserver((es)=>{
-    es.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
-    });
-  },{threshold:0, rootMargin:'-100% 0px 0px 0px'});
-  targets.forEach(el=>io.observe(el));
-  addEventListener('load',fallback);
-})();
-
-/* 날짜 카운트: 표별(과거/미래)로 첫 칸 폭을 독립 계산해서 적용 */
-document.addEventListener('DOMContentLoaded', function(){
-  const pastTbody   = document.getElementById('countPastTbl');
-  const futureTbody = document.getElementById('countFutureTbl');
-  const pastTable   = document.getElementById('pastTable');
-  const futureTable = document.getElementById('futureTable');
-  if(!pastTbody || !futureTbody || !pastTable || !futureTable) return;
-
-  // KST 기준
-  const past   = new Date('2012-06-09T08:30:00+09:00');
-  const future = new Date('2025-11-01T14:00:00+09:00');
-
-  function fill(tbody, d,h,m,s){
-    const dEl = tbody.querySelector('.d');
-    const hEl = tbody.querySelector('.h');
-    const mEl = tbody.querySelector('.m');
-    const sEl = tbody.querySelector('.s');
-    if(!dEl || !hEl || !mEl || !sEl) return;
-    dEl.textContent = String(d).padStart(2,'0');
-    hEl.textContent = String(h).padStart(2,'0');
-    mEl.textContent = String(m).padStart(2,'0');
-    sEl.textContent = String(s).padStart(2,'0');
-  }
-
-  // 표별 첫 칸(col.first) 폭을 [라벨글자수 vs 현재 d자리수] 중 큰값 + 1ch 로 갱신
-  function adjustFirstColWidth(tableEl, tbodyEl){
-    const firstLabelTh = tableEl.querySelector('thead th');     // 첫 라벨(DAYS 등)
-    const firstCol     = tableEl.querySelector('colgroup col.first');
-    const dSpan        = tbodyEl.querySelector('.d');
-    if(!firstLabelTh || !firstCol || !dSpan) return;
-    const labelLen = (firstLabelTh.textContent || '').trim().length || 1;
-    const digitsLen = (dSpan.textContent || '').trim().length || 1;
-    const widthCh = Math.max(labelLen, digitsLen) + 1; // “+1 글자 폭”
-    firstCol.style.width = widthCh + 'ch';
-  }
-
-  function tick(){
-    const now = new Date();
-
-    // 경과
-    let t1 = Math.max(0, now - past);
-    const d1 = Math.floor(t1 / 86400000); t1 -= d1 * 86400000;
-    const h1 = Math.floor(t1 / 3600000);  t1 -= h1 * 3600000;
-    const m1 = Math.floor(t1 / 60000);    t1 -= m1 * 60000;
-    const s1 = Math.floor(t1 / 1000);
-    fill(pastTbody, d1,h1,m1,s1);
-    adjustFirstColWidth(pastTable, pastTbody);   // 과거 표만 따로 계산/적용
-
-    // 남은
-    let t2 = Math.max(0, future - now);
-    const d2 = Math.floor(t2 / 86400000); t2 -= d2 * 86400000;
-    const h2 = Math.floor(t2 / 3600000);  t2 -= h2 * 3600000;
-    const m2 = Math.floor(t2 / 60000);    t2 -= m2 * 60000;
-    const s2 = Math.floor(t2 / 1000);
-    fill(futureTbody, d2,h2,m2,s2);
-    adjustFirstColWidth(futureTable, futureTbody); // 미래 표만 따로 계산/적용
-  }
-
-  tick();                   // 초기 반영
-  setInterval(tick, 1000);  // 1초마다 갱신
-});
-
-/* 갤러리/계좌/공유 스크립트는 기존 그대로 유지 */
-</script>
-
 
     /* 갤러리(필요 시 이미지 배열 세팅) */
     (function(){

@@ -65,32 +65,20 @@
 .when .title { font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
 .when .meta  { opacity:.9; margin-bottom:8px; }
 
-/* ===== 카운트 표(내용 폭으로 줄이기 + 칸 폭 고정) ===== */
-.count-table{
-  width:auto;                 /* 100% → 내용만큼 */
-  margin:0 auto;              /* 가운데 정렬 */
-  border-collapse:collapse;
-  table-layout:auto;          /* 내용 기준으로 폭 계산 */
-}
-.count-table th, .count-table td{
-  text-align:center;
-  padding:0 2px;              /* 셀 여백 아주 작게 */
-  border:none;
-  white-space:nowrap;
-  line-height:1.2;            /* 세로로도 조밀하게 */
-}
-.count-labels th{
-  font-size:6pt; color:var(--hint); letter-spacing:.12em; font-weight:700;
-  padding:2px 0;
-}
-.count-values td{
-  font-size:14pt; color:var(--ink); padding:2px 0;
-}
+/* ===== 카운트 표(칸별 폭 개별 설정) ===== */
+.count-table{ width:auto; margin:0 auto; border-collapse:collapse; table-layout:fixed; }
+.count-table th, .count-table td{ text-align:center; padding:0 2px; border:none; white-space:nowrap; line-height:1.2; }
+
+.count-labels th{ font-size:6pt; color:var(--hint); letter-spacing:.12em; font-weight:700; padding:2px 0; }
+.count-values td{ font-size:14pt; color:var(--ink); padding:2px 0; }
+
 .count-values td.colon{ opacity:.7; }
 
-/* colgroup으로 칸 폭을 글자수 기준으로 고정 */
-.count-table col.v{ width:4.2ch; }  /* 값 칸: 최대 4자리 + 약간 여유 */
-.count-table col.c{ width:1ch;   }  /* 콜론 칸 */
+/* 폭 지정 */
+col.first { width:5ch; }   /* 좌측 첫 번째 칸 (라벨 + d 값) */
+col.val   { width:3ch; }   /* 다른 값 칸 (HOUR/MIN/SEC) */
+col.colon { width:1ch; }   /* 콜론(:) 칸 */
+
 
 
 
@@ -204,31 +192,29 @@
 
 <table class="count-table" aria-label="경과 시간">
   <colgroup>
-    <col class="v"><col class="c"><col class="v"><col class="c"><col class="v"><col class="c"><col class="v">
+    <col class="first"><col class="colon">
+    <col class="val"><col class="colon">
+    <col class="val"><col class="colon">
+    <col class="val">
   </colgroup>
   <thead class="count-labels">
     <tr>
-      <th>DAYS</th>
-      <th></th>
-      <th>HOUR</th>
-      <th></th>
-      <th>MIN</th>
-      <th></th>
+      <th>DAYS</th><th></th>
+      <th>HOUR</th><th></th>
+      <th>MIN</th><th></th>
       <th>SEC</th>
     </tr>
   </thead>
   <tbody class="count-values" id="countPastTbl">
     <tr>
-      <td><span class="d">00</span></td>
-      <td class="colon">:</td>
-      <td><span class="h">00</span></td>
-      <td class="colon">:</td>
-      <td><span class="m">00</span></td>
-      <td class="colon">:</td>
+      <td><span class="d">00</span></td><td class="colon">:</td>
+      <td><span class="h">00</span></td><td class="colon">:</td>
+      <td><span class="m">00</span></td><td class="colon">:</td>
       <td><span class="s">00</span></td>
     </tr>
   </tbody>
 </table>
+
 
 
     </section>
@@ -237,33 +223,31 @@
       <div class="title">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
 
- <table class="count-table" aria-label="남은 시간">
+ <table class="count-table" aria-label="경과 시간">
   <colgroup>
-    <col class="v"><col class="c"><col class="v"><col class="c"><col class="v"><col class="c"><col class="v">
+    <col class="first"><col class="colon">
+    <col class="val"><col class="colon">
+    <col class="val"><col class="colon">
+    <col class="val">
   </colgroup>
   <thead class="count-labels">
     <tr>
-      <th>DAYS</th>
-      <th></th>
-      <th>HOUR</th>
-      <th></th>
-      <th>MIN</th>
-      <th></th>
+      <th>DAYS</th><th></th>
+      <th>HOUR</th><th></th>
+      <th>MIN</th><th></th>
       <th>SEC</th>
     </tr>
   </thead>
-  <tbody class="count-values" id="countFutureTbl">
+  <tbody class="count-values" id="countPastTbl">
     <tr>
-      <td><span class="d">00</span></td>
-      <td class="colon">:</td>
-      <td><span class="h">00</span></td>
-      <td class="colon">:</td>
-      <td><span class="m">00</span></td>
-      <td class="colon">:</td>
+      <td><span class="d">00</span></td><td class="colon">:</td>
+      <td><span class="h">00</span></td><td class="colon">:</td>
+      <td><span class="m">00</span></td><td class="colon">:</td>
       <td><span class="s">00</span></td>
     </tr>
   </tbody>
 </table>
+
 
 
     </section>

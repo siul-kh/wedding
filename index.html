@@ -54,7 +54,7 @@
     .poem .big{font-size:14pt; color:#585353; font-weight:700}
     .poem .normal{font-size:12pt; color:#585353}
 
-    /* 아래→위 슬라이드 + 페이드 */
+    /* 아래→위 슬라이드 + 페이드 (요소 전체에 적용) */
     @keyframes slideBySelfHeight{0%{transform:translateY(100%);opacity:0}100%{transform:translateY(0);opacity:1}}
     .reveal-up{transform:translateY(100%);opacity:0;will-change:transform,opacity}
     .reveal-up.show{animation:slideBySelfHeight 2s cubic-bezier(.2,.7,.2,1) forwards}
@@ -90,7 +90,6 @@
       font-size:12pt;           /* 콜론 12pt */
     }
     /* 칸 폭: 첫 칸은 JS가 각 표별로 설정, 콜론은 2ch, 나머지 값 칸은 3ch */
-    /* (여기서 col.first의 기본 width는 두지 않음: 표 간 간섭 제거를 위해 JS로만 설정) */
     .count-table col.val   { width:3ch; }
     .count-table col.colon { width:2ch; }
 
@@ -400,30 +399,35 @@
   </main>
 
   <script>
-    /* 아래→위 슬라이드 트리거 */
+    /* 아래→위 슬라이드 트리거: 각 요소의 '중앙'이 화면 '하단'에 닿는 순간 발동 */
     (function(){
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const targets = document.querySelectorAll('.reveal-up');
-      if(REDUCED){ targets.forEach(el=>el.classList.add('show')); return; }
-      function fallback(){
-        const vh=innerHeight;
-        targets.forEach(el=>{
-          if(el.classList.contains('show')) return;
-          const r=el.getBoundingClientRect();
-          if(r.top<=vh && r.bottom>0) el.classList.add('show');
+      const targets = Array.from(document.querySelectorAll('.reveal-up'));
+      if (!targets.length) return;
+
+      if (REDUCED) { targets.forEach(el => el.classList.add('show')); return; }
+
+      let ticking = false;
+      function onScrollOrResize(){
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          targets.forEach(el => {
+            if (el.classList.contains('show')) return;
+            const r = el.getBoundingClientRect();
+            const mid = r.top + r.height / 2;   // 요소 중앙 y
+            if (mid <= vh) {                    // 중앙이 화면 하단(y=vh)에 닿으면 발동
+              el.classList.add('show');
+            }
+          });
+          ticking = false;
         });
       }
-      if(!('IntersectionObserver' in window)){
-        addEventListener('scroll',fallback,{passive:true}); addEventListener('resize',fallback);
-        addEventListener('load',fallback); fallback(); return;
-      }
-      const io=new IntersectionObserver((es)=>{
-        es.forEach(e=>{
-          if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
-        });
-      },{threshold:0, rootMargin:'-100% 0px 0px 0px'});
-      targets.forEach(el=>io.observe(el));
-      addEventListener('load',fallback);
+      window.addEventListener('load', onScrollOrResize, { once:true });
+      window.addEventListener('scroll', onScrollOrResize, { passive:true });
+      window.addEventListener('resize', onScrollOrResize);
+      onScrollOrResize(); // 초기 1회
     })();
 
     /* 날짜 카운트: 표별(과거/미래) 첫 칸 폭 독립 계산(숫자 자리수 + 1ch) + 카운트 갱신 */
@@ -450,13 +454,13 @@
         sEl.textContent = String(s).padStart(2,'0');
       }
 
-      // 표별 첫 칸(col.first) 폭 = 해당 표의 d(일) 숫자 자리수 + 1 ch
+      // 표별 첫 칸(col.first) 폭 = 해당 표 d(일) 숫자 자리수 + 1 ch  (표 간 간섭 없음)
       function adjustFirstColWidth(tableEl, tbodyEl){
         const firstCol = tableEl.querySelector('colgroup col.first');
         const dSpan    = tbodyEl.querySelector('.d');
         if(!firstCol || !dSpan) return;
         const digitsLen = (dSpan.textContent || '').trim().length || 1;
-        const widthCh   = Math.max(2, digitsLen + 1); // 최소 2ch 보장
+        const widthCh   = Math.max(2, digitsLen + 1); // 최소 2ch
         firstCol.style.width = widthCh + 'ch';
       }
 
@@ -470,7 +474,7 @@
         const m1 = Math.floor(t1 / 60000);    t1 -= m1 * 60000;
         const s1 = Math.floor(t1 / 1000);
         fill(pastTbody, d1,h1,m1,s1);
-        adjustFirstColWidth(pastTable, pastTbody);   // 과거 표만 따로 적용
+        adjustFirstColWidth(pastTable, pastTbody);
 
         // 남은
         let t2 = Math.max(0, future - now);
@@ -479,7 +483,7 @@
         const m2 = Math.floor(t2 / 60000);    t2 -= m2 * 60000;
         const s2 = Math.floor(t2 / 1000);
         fill(futureTbody, d2,h2,m2,s2);
-        adjustFirstColWidth(futureTable, futureTbody); // 미래 표만 따로 적용
+        adjustFirstColWidth(futureTable, futureTbody);
       }
 
       tick();                   // 초기 반영
@@ -516,7 +520,7 @@
       });
     })();
 
-    /* 마음 전하실 곳: 토글(텍스트 고정) + 복사 팝업 */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 */
     (function(){
       // 토글
       document.querySelectorAll('.acc-toggle').forEach(btn=>{

@@ -59,28 +59,23 @@
     .poem .big.tight{ line-height:0.9; margin:4px 0; }
     .poem .big + .big{ margin-top:12px; } /* “13년 전,” ↔ “우리는 …” 사이 간격 벌림 */
     .poem .normal{font-size:12pt; color:#585353}
-    .after-heart{ margin-top:var(--heart-gap)!important; } /* 하트 아래 간격 공통 */
-
-    /* 아래→위 슬라이드 + 페이드 */
-    @keyframes slideBySelfHeight{0%{transform:translateY(100%);opacity:0}100%{transform:translateY(0);opacity:1}}
-    .reveal-up{transform:translateY(100%);opacity:0;will-change:transform,opacity}
-    .reveal-up.show{animation:slideBySelfHeight 2s cubic-bezier(.2,.7,.2,1) forwards}
-    @media (prefers-reduced-motion:reduce){.reveal-up{transform:none;opacity:1}.reveal-up.show{animation:none}}
+    .after-heart{ margin-top:var(--heart-gap)!important; }
 
     /* ===== 달력 ===== */
     .cal-title{
       font-family:'GowunBatang',serif; font-weight:700;
       font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
-    .cal-sub{ /* 2025년 11월 1일 오후 2시 */
+    .cal-sub{
       text-align:center; font-family:'GowunBatang',serif; font-weight:400;
       font-size:12pt; color:#585353; margin:4px 0 6px;
     }
-    .cal-msg{ /* 날짜/시간 바로 아래 상태 문구 */
+    .cal-msg{
       text-align:center; font-family:'GowunBatang',serif; font-weight:400;
-      font-size:12pt; color:#585353; margin:6px 0 10px;
+      font-size:10pt; color:#585353; margin:6px 0 10px; /* 글자크기 10pt */
     }
-    .cal-msg .dleft{ color:var(--accent); font-weight:700; } /* N일 강조 색상 */
+    .cal-msg .dleft{ color:var(--accent); font-weight:700; }
+    .cal-msg .unit{ color:var(--accent); } /* ‘일’만 강조 */
 
     .calendar{ width:70%; margin:0 auto; padding:0 4px; }
     .cal-head, .cal-grid{
@@ -101,42 +96,38 @@
     @media (min-width:480px){
       .cal-cell .dot{ width:32px; height:32px; }
     }
-    /* 일요일/토요일 색상 (1일은 .dot로 흰색 유지) */
     .cal-head div:nth-child(1){ color:#ff6b9c; }  /* 일 */
     .cal-head div:nth-child(7){ color:#6dafff; }  /* 토 */
     .cal-grid .cal-cell:nth-child(7n+1){ color:#ff6b9c; }
     .cal-grid .cal-cell:nth-child(7n){   color:#6dafff; }
 
-    /* 오시는 길 타이틀(요청: 16pt, Bold, #585353, 가운데정렬) */
-.go-title {
-  font-family: 'GowunBatang', serif;
-  font-weight: 700;
-  font-size: 16pt;
-  color: #585353;
-  text-align: center;
-}
+    /* ===== 오시는 길 ===== */
+    .go-title {
+      font-family: 'GowunBatang', serif;
+      font-weight: 700;
+      font-size: 16pt;
+      color: #585353;
+      text-align: center;
+    }
+    .map { margin: 1.5em 0; } /* 위·아래 여백 1.5줄 */
+    .map iframe {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border: 0;
+      display: block;
+      margin: 0 auto;
+    }
+    .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; } /* 14pt */
+    .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; } /* 14pt */
+    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; }
 
-/* 지도: 정사각형 비율, 가로 100% */
-.map iframe {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border: 0;
-  display: block;
-  margin: 0 auto;
-}
-
-/* 안내문 텍스트(요청 크기/정렬/색) */
-.go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:12pt; color:#585353; text-align:center; }
-.go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; }
-.go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; }
-
-/* 네비 앱 버튼 */
-.nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px; }
-.nav-btn {
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:10px 12px; font-family:'GowunBatang',serif; font-size:10pt; color:#585353; text-decoration:none;
-  background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer;
-}
+    /* 네비 앱 버튼 */
+    .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 1.5em 0; } /* 위·아래 1.5줄 */
+    .nav-btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 12px; font-family:'GowunBatang',serif; font-size:10pt; color:#585353; text-decoration:none;
+      background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer;
+    }
 
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
@@ -167,16 +158,13 @@
     .acc-title{
       font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
     }
-    .acc-toggle{
-      width:100%; border:1px solid var(--thin); border-radius:12px;
-      background:#f1f1f1; color:#585353;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      padding:12px 14px;
-      display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer;
-    }
-    .acc-panel{ display:none; margin-top:10px; }
-    .acc-panel.open{ display:block; }
     .acc-table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--thin); border-radius:12px; overflow:hidden; background:#fff; }
+    .acc-table thead th{ padding:0; }
+    .acc-heading{
+      width:100%; display:block; text-align:center; cursor:pointer;
+      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
+      padding:12px 14px; border:0; border-bottom:1px solid var(--thin); /* 기존 톤 유지 */
+    }
     .acc-table tbody td{ padding:10px; border-top:1px solid var(--thin); vertical-align:middle; }
     .acc-line{ font-size:10pt; color:#585353; }
     .copy-mini{
@@ -198,6 +186,8 @@
 
     /* ===== 공유 버튼 ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
+    .share-wrap{ display:inline-flex; align-items:center; gap:8px; }
+    .share-icon{ margin:0; } /* img-original의 auto margin 상쇄 */
     .share-btn{
       font-family:'GowunBatang',serif; font-size:12pt; color:#585353;
       background:transparent; border:none; cursor:pointer;
@@ -212,7 +202,7 @@
     <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
 
     <!-- 시 -->
-    <section class="pad poem reveal-up" aria-label="시">
+    <section class="pad poem" aria-label="시">
      <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title after-heart">13년 전,<br>
       우리는 처음 만나 나무를 심었습니다.</div>
@@ -244,13 +234,13 @@
     <section><img src="images/3-photo.png?v=1" alt="하단 사진"></section>
 
     <!-- 달력 -->
-    <section class="pad reveal-up" aria-label="달력">
+    <section class="pad" aria-label="달력">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="cal-title after-heart">결혼합니다</div>
       <div class="cal-sub">2025년 11월 1일 오후 2시</div>
 
-      <!-- (변경) 상태 문구: 날짜 바로 아래 + 텍스트 교체 + 숫자 색 강조 -->
-      <div id="weddingStatus" class="cal-msg">지선, 기환의 결혼식이 <span class="dleft">0</span>일 남았습니다.</div>
+      <!-- 상태 문구: 10pt + ‘일’ 색상 -->
+      <div id="weddingStatus" class="cal-msg">지선, 기환의 결혼식이 <span class="dleft">0</span><span class="unit">일</span> 남았습니다.</div>
 
       <div class="thin thin-70"></div>
 
@@ -299,8 +289,8 @@
       <div class="thin thin-70"></div>
     </section>
 
- <!-- 카운트(2줄·7칸 표) -->
-    <section class="pad when reveal-up">
+    <!-- 카운트(2줄·7칸 표) -->
+    <section class="pad when">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
 
@@ -330,7 +320,7 @@
       </table>
     </section>
 
-    <section class="pad when reveal-up">
+    <section class="pad when">
       <div class="title">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
 
@@ -360,49 +350,47 @@
       </table>
     </section>
 
-
     <!-- 오시는 길 -->
-<section class="pad reveal-up" id="way">
-  <img src="images/heart.png" alt="하트" class="img-original">
-  <div class="go-title" style="margin-top:8px">오시는 길</div>
+    <section class="pad" id="way">
+      <img src="images/heart.png" alt="하트" class="img-original">
+      <div class="go-title" style="margin-top:8px">오시는 길</div>
 
-  <div class="map" style="margin-top:10px">
-    <iframe
-      title="서울가정행정법원 융선당"
-      src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%EA%B0%80%EC%A0%95%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9&output=embed"
-      loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  </div>
+      <div class="map">
+        <iframe
+          title="서울가정행정법원 융선당"
+          src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%EA%B0%80%EC%A0%95%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
 
-  <div style="margin-top:12px">
-    <div class="go-name">서울행정법원 융선당</div>
-    <div class="go-addr">서울시 서초구 강남대로 193(양재동 25-3)</div>
-    <div class="go-info" style="margin-top:10px">
-      3호선 • 신분당선 양재역 9번 출구 도보 3분 직진<br>
-      16시까지 지하 3~4층 주차장 이용 가능<br>
-      13시 30분부터 식사 가능<br>
-    </div>
-  </div>
+      <div>
+        <div class="go-name">서울행정법원 융선당</div>
+        <div class="go-addr">서울시 서초구 강남대로 193(양재동 25-3)</div>
+        <div class="go-info" style="margin-top:10px">
+          3호선 • 신분당선 양재역 9번 출구 도보 3분 직진<br>
+          16시까지 지하 3~4층 주차장 이용 가능<br>
+          13시 30분부터 식사 가능<br>
+        </div>
+      </div>
 
-  <div class="nav-apps">
-    <!-- 주소지 검색 바로 연동 -->
-    <a class="nav-btn" target="_blank" rel="noopener"
-       href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
-      네이버 지도
-    </a>
-    <a class="nav-btn" target="_blank" rel="noopener"
-       href="https://tmap.life/c31c6940">
-      티맵
-    </a>
-    <a class="nav-btn" target="_blank" rel="noopener"
-       href="https://map.kakao.com/?q=서울행정법원%20융선당예식장">
-      카카오맵
-    </a>
-  </div>
-</section>
-
+      <div class="nav-apps">
+        <!-- 주소지 검색 바로 연동 -->
+        <a class="nav-btn" target="_blank" rel="noopener"
+           href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
+          네이버 지도
+        </a>
+        <a class="nav-btn" target="_blank" rel="noopener"
+           href="https://tmap.life/c31c6940">
+          티맵
+        </a>
+        <a class="nav-btn" target="_blank" rel="noopener"
+           href="https://map.kakao.com/?q=서울행정법원%20융선당예식장">
+          카카오맵
+        </a>
+      </div>
+    </section>
 
     <!-- 갤러리 -->
-    <section class="gallery reveal-up" id="gallery">
+    <section class="gallery" id="gallery">
       <div class="section-title">갤러리</div>
       <div class="hero-photo">
         <img id="heroImg" alt="큰 사진">
@@ -417,7 +405,7 @@
     <div class="thin"></div>
 
     <!-- 방명록 -->
-    <section class="pad reveal-up" id="guestbook">
+    <section class="pad" id="guestbook">
       <div class="gb-head">
         <div style="font-weight:700; color:#585353">방명록</div>
         <div class="pager">
@@ -445,52 +433,53 @@
     <div class="thin"></div>
 
     <!-- 마음 전하실 곳 -->
-    <section class="pad reveal-up" id="accounts">
-      <div class="acc-title">마음 전하실 곳</div>
+    <section class="pad" id="accounts">
+      <img src="images/heart.png" alt="하트" class="img-original">
+      <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 신랑 측 -->
-      <button class="acc-toggle" type="button" aria-expanded="false" data-target="#accGroom">신랑 측</button>
-      <div id="accGroom" class="acc-panel" hidden>
-        <table class="acc-table" style="margin-top:10px">
-          <tbody>
-            <tr>
-              <td class="acc-line">김기환 국민은행 90513110424</td>
-              <td class="copy-col"><button class="copy-mini" data-copy="국민은행 90513110424 (김기환)">복사</button></td>
-            </tr>
-            <tr>
-              <td class="acc-line">김정호 국민은행 430502-93-118573</td>
-              <td class="copy-col"><button class="copy-mini" data-copy="국민은행 430502-93-118573 (김정호)">복사</button></td>
-            </tr>
-            <tr>
-              <td class="acc-line">이이순 우리은행 1002-038-271451</td>
-              <td class="copy-col"><button class="copy-mini" data-copy="우리은행 1002-038-271451 (이이순)">복사</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <!-- 신랑 측: 버튼+표 일체형 -->
+      <table class="acc-table acc-group" id="accGroomTbl">
+        <thead>
+          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr>
+        </thead>
+        <tbody hidden>
+          <tr>
+            <td class="acc-line">김기환 국민은행 90513110424</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 90513110424 (김기환)">복사</button></td>
+          </tr>
+          <tr>
+            <td class="acc-line">김정호 국민은행 430502-93-118573</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 430502-93-118573 (김정호)">복사</button></td>
+          </tr>
+          <tr>
+            <td class="acc-line">이이순 우리은행 1002-038-271451</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="우리은행 1002-038-271451 (이이순)">복사</button></td>
+          </tr>
+        </tbody>
+      </table>
 
       <div style="height:10px"></div>
 
-      <!-- 신부 측 -->
-      <button class="acc-toggle" type="button" aria-expanded="false" data-target="#accBride">신부 측</button>
-      <div id="accBride" class="acc-panel" hidden>
-        <table class="acc-table" style="margin-top:10px">
-          <tbody>
-            <tr>
-              <td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td>
-              <td class="copy-col"><button class="copy-mini" data-copy="카카오뱅크 3333-22-7850739 (목지선)">복사</button></td>
-            </tr>
-            <tr>
-              <td class="acc-line">목승우 국민은행 659401-01-191168</td>
-              <td class="copy-col"><button class="copy-mini" data-copy="국민은행 659401-01-191168 (목승우)">복사</button></td>
-            </tr>
-            <tr>
-              <td class="acc-line">성미화 새마을금고 9002197239365</td>
-              <td class="copy-col"><button class="copy-mini" data-copy="새마을금고 9002197239365 (성미화)">복사</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <!-- 신부 측: 버튼+표 일체형 -->
+      <table class="acc-table acc-group" id="accBrideTbl">
+        <thead>
+          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr>
+        </thead>
+        <tbody hidden>
+          <tr>
+            <td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="카카오뱅크 3333-22-7850739 (목지선)">복사</button></td>
+          </tr>
+          <tr>
+            <td class="acc-line">목승우 국민은행 659401-01-191168</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 659401-01-191168 (목승우)">복사</button></td>
+          </tr>
+          <tr>
+            <td class="acc-line">성미화 새마을금고 9002197239365</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="새마을금고 9002197239365 (성미화)">복사</button></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
     <!-- 복사 완료 팝업(정사각) -->
@@ -503,44 +492,18 @@
 
     <div class="thin"></div>
 
-    <!-- 카카오톡 공유 버튼 -->
-    <section class="share-box reveal-up">
-      <button id="kakaoShare" class="share-btn">카카오톡으로 초대장 보내기</button>
+    <!-- 카카오톡 공유 -->
+    <section class="share-box">
+      <div class="share-wrap">
+        <img src="images/message.png" alt="" class="img-original share-icon">
+        <button id="kakaoShare" class="share-btn">카카오톡으로 초대장 보내기</button>
+      </div>
     </section>
 
   </main>
 
   <script>
-    /* 아래→위 슬라이드 트리거 */
-    (function(){
-      const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const targets = Array.from(document.querySelectorAll('.reveal-up'));
-      if (!targets.length) return;
-
-      if (REDUCED) { targets.forEach(el => el.classList.add('show')); return; }
-
-      let ticking = false;
-      function onScrollOrResize(){
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          const vh = window.innerHeight || document.documentElement.clientHeight;
-          targets.forEach(el => {
-            if (el.classList.contains('show')) return;
-            const r = el.getBoundingClientRect();
-            const mid = r.top + r.height / 2;
-            if (mid <= vh) { el.classList.add('show'); }
-          });
-          ticking = false;
-        });
-      }
-      window.addEventListener('load', onScrollOrResize, { once:true });
-      window.addEventListener('scroll', onScrollOrResize, { passive:true });
-      window.addEventListener('resize', onScrollOrResize);
-      onScrollOrResize();
-    })();
-
-  /* 카운트다운 + 첫 칸 가변 폭(라벨 길이+1ch), 콜론 2ch */
+    /* 카운트다운 + 첫 칸 가변 폭(라벨 길이+1ch), 콜론 2ch */
     document.addEventListener('DOMContentLoaded', function(){
       const pastTbody   = document.getElementById('countPastTbl');
       const futureTbody = document.getElementById('countFutureTbl');
@@ -600,7 +563,6 @@
       setInterval(tick, 1000);
     });
 
-
     /* 달력 상태 문구: 남은/당일/지난 날 계산(기준일: 2025-11-01, 자정 기준) */
     (function(){
       const el = document.getElementById('weddingStatus');
@@ -614,12 +576,12 @@
         const diff = today - weddingDate; // 양수: 지난 날
         if (diff < 0){
           const daysLeft = Math.ceil((weddingDate - today)/msPerDay);
-          el.innerHTML = `지선, 기환의 결혼식이 <span class="dleft">${daysLeft}</span>일 남았습니다.`;
+          el.innerHTML = `지선, 기환의 결혼식이 <span class="dleft">${daysLeft}</span><span class="unit">일</span> 남았습니다.`;
         } else if (diff === 0){
           el.textContent = `지선, 기환의 결혼식이 열리는 날입니다.`;
         } else {
           const daysSince = Math.floor(diff/msPerDay);
-          el.innerHTML = `지선, 기환이 결혼한 지 <span class="dleft">${daysSince}</span>일 되는 날입니다.`;
+          el.innerHTML = `지선, 기환이 결혼한 지 <span class="dleft">${daysSince}</span><span class="unit">일</span> 되는 날입니다.`;
         }
       }
       updateStatus();
@@ -705,17 +667,17 @@
       });
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 */
+    /* 마음 전하실 곳: 헤더(버튼)+표 결합 토글 + 복사 팝업 */
     (function(){
-      // 토글
-      document.querySelectorAll('.acc-toggle').forEach(btn=>{
+      // 토글: acc-group 테이블의 thead 버튼으로 tbody show/hide
+      document.querySelectorAll('.acc-group').forEach(tbl=>{
+        const btn = tbl.querySelector('.acc-heading');
+        const body = tbl.querySelector('tbody');
+        if(!btn || !body) return;
         btn.addEventListener('click', ()=>{
-          const sel=btn.getAttribute('data-target');
-          const panel=document.querySelector(sel);
-          const open=btn.getAttribute('aria-expanded')==='true';
+          const open = btn.getAttribute('aria-expanded') === 'true';
           btn.setAttribute('aria-expanded', String(!open));
-          if(open){ panel.classList.remove('open'); panel.hidden=true; }
-          else { panel.hidden=false; panel.classList.add('open'); }
+          body.hidden = open;
         });
       });
 

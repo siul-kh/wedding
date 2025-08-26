@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>2025년 11월 1일 목지선 ♥︎ 김기환 결혼합니다</title>
+  <meta name="format-detection" content="telephone=no"> <!-- 모바일 전화번호 자동인식 방지 -->
+  <title>2025. 11. 01. 목지선 ♥︎ 김기환</title>
 
   <!-- 폰트 프리로드(선택) -->
   <link rel="preload" href="fonts/GowunBatang-Regular.woff2?v=1" as="font" type="font/woff2" crossorigin>
@@ -30,7 +31,7 @@
       --accent:#7b9155;
       --hint:#9d9b9b;
       --thin:#e5e5e5;
-      --heart-gap:8px; /* 하트 아래 줄 간격 */
+      --heart-gap:8px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -57,9 +58,10 @@
     .poem p{margin:8px 0}
     .poem .big{font-size:14pt; color:#585353; font-weight:700}
     .poem .big.tight{ line-height:0.9; margin:4px 0; }
-    .poem .big + .big{ margin-top:12px; } /* “13년 전,” ↔ “우리는 …” 사이 간격 벌림 */
+    .poem .big + .big{ margin-top:12px; }
     .poem .normal{font-size:12pt; color:#585353}
     .after-heart{ margin-top:var(--heart-gap)!important; }
+    .poem .go-title{ font-size:14pt; } /* 요청: 시 위 문장 14pt */
 
     /* ===== 달력 ===== */
     .cal-title{
@@ -72,10 +74,12 @@
     }
     .cal-msg{
       text-align:center; font-family:'GowunBatang',serif; font-weight:400;
-      font-size:10pt; color:#585353; margin:6px 0 10px; /* 글자크기 10pt */
+      font-size:12pt; color:#585353; margin:6px 0 10px; /* 요청: 12pt */
     }
-    .cal-msg .dleft{ color:var(--accent); font-weight:700; }
-    .cal-msg .unit{ color:var(--accent); } /* ‘일’만 강조 */
+    .cal-msg .dleft{
+      color:var(--accent);
+      font-weight:700; /* GowunBatang-Bold 사용 */
+    }
 
     .calendar{ width:70%; margin:0 auto; padding:0 4px; }
     .cal-head, .cal-grid{
@@ -96,8 +100,8 @@
     @media (min-width:480px){
       .cal-cell .dot{ width:32px; height:32px; }
     }
-    .cal-head div:nth-child(1){ color:#ff6b9c; }  /* 일 */
-    .cal-head div:nth-child(7){ color:#6dafff; }  /* 토 */
+    .cal-head div:nth-child(1){ color:#ff6b9c; }
+    .cal-head div:nth-child(7){ color:#6dafff; }
     .cal-grid .cal-cell:nth-child(7n+1){ color:#ff6b9c; }
     .cal-grid .cal-cell:nth-child(7n){   color:#6dafff; }
 
@@ -109,7 +113,7 @@
       color: #585353;
       text-align: center;
     }
-    .map { margin: 1.5em 0; } /* 위·아래 여백 1.5줄 */
+    .map { margin: 1.5em 0; }
     .map iframe {
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -117,17 +121,19 @@
       display: block;
       margin: 0 auto;
     }
-    .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; } /* 14pt */
-    .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; } /* 14pt */
+    .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; }
+    .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; }
     .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; }
 
     /* 네비 앱 버튼 */
-    .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 1.5em 0; } /* 위·아래 1.5줄 */
+    .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; } /* 요청: 2줄 */
     .nav-btn {
-      display:inline-flex; align-items:center; justify-content:center;
+      display:inline-flex; align-items:center; justify-content:center; gap:6px;
       padding:10px 12px; font-family:'GowunBatang',serif; font-size:10pt; color:#585353; text-decoration:none;
       background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer;
     }
+    /* 버튼 안 아이콘은 원래 크기 유지 */
+    .nav-btn img{ width:auto !important; height:auto !important; display:inline-block; }
 
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
@@ -163,7 +169,7 @@
     .acc-heading{
       width:100%; display:block; text-align:center; cursor:pointer;
       background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      padding:12px 14px; border:0; border-bottom:1px solid var(--thin); /* 기존 톤 유지 */
+      padding:12px 14px; border:0; border-bottom:1px solid var(--thin);
     }
     .acc-table tbody td{ padding:10px; border-top:1px solid var(--thin); vertical-align:middle; }
     .acc-line{ font-size:10pt; color:#585353; }
@@ -175,19 +181,26 @@
     }
     .copy-col{ width:80px; text-align:right; }
 
-    /* 복사 완료 팝업(정사각 + 라운딩) */
+    /* 복사 완료 팝업: 가로형 비율 + 확인 버튼 */
     .copy-modal .sheet{
-      width:260px; height:260px; border-radius:14px; display:grid; grid-template-rows:auto 1fr;
+      width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto;
     }
     .copy-modal .body{
-      display:grid; place-items:center;
+      display:grid; place-items:center; gap:14px;
+      padding:24px 18px;
       font-family:'GowunBatang',serif; font-weight:400; color:#585353;
+    }
+    .copy-ok{
+      font-family:'GowunBatang',serif; font-size:10pt;
+      padding:8px 14px; border-radius:10px;
+      background:transparent; color:#585353; border:1px solid var(--thin);
+      cursor:pointer;
     }
 
     /* ===== 공유 버튼 ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-wrap{ display:inline-flex; align-items:center; gap:8px; }
-    .share-icon{ margin:0; } /* img-original의 auto margin 상쇄 */
+    .share-icon{ margin:0; }
     .share-btn{
       font-family:'GowunBatang',serif; font-size:12pt; color:#585353;
       background:transparent; border:none; cursor:pointer;
@@ -203,9 +216,8 @@
 
     <!-- 시 -->
     <section class="pad poem" aria-label="시">
-     <img src="images/heart.png" alt="하트" class="img-original">
-      <div class="go-title after-heart">13년 전,<br>
-      우리는 처음 만나 나무를 심었습니다.</div>
+      <img src="images/heart.png" alt="하트" class="img-original">
+      <div class="go-title after-heart">13년 전,<br>우리는 처음 만나 나무를 심었습니다.</div>
 
       <p class="normal" style="margin:30px 0 0 0;">
         여린 묘목에 흙과 물을 주고,<br>
@@ -239,13 +251,12 @@
       <div class="cal-title after-heart">결혼합니다</div>
       <div class="cal-sub">2025년 11월 1일 오후 2시</div>
 
-      <!-- 상태 문구: 10pt + ‘일’ 색상 -->
-      <div id="weddingStatus" class="cal-msg">지선, 기환의 결혼식이 <span class="dleft">0</span><span class="unit">일</span> 남았습니다.</div>
+      <!-- 상태 문구: 12pt + ‘N일’ 볼드/색상 -->
+      <div id="weddingStatus" class="cal-msg">지선, 기환의 결혼식이 <span class="dleft">0일</span> 남았습니다.</div>
 
       <div class="thin thin-70"></div>
 
       <div class="calendar">
-        <!-- 요일 헤더 (일~토) -->
         <div class="cal-head">
           <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
         </div>
@@ -363,7 +374,7 @@
       </div>
 
       <div>
-        <div class="go-name">서울행정법원 융선당</div>
+        <div class="go-name">📍서울행정법원 융선당</div> <!-- 요청: 📍 추가 -->
         <div class="go-addr">서울시 서초구 강남대로 193(양재동 25-3)</div>
         <div class="go-info" style="margin-top:10px">
           3호선 • 신분당선 양재역 9번 출구 도보 3분 직진<br>
@@ -376,14 +387,17 @@
         <!-- 주소지 검색 바로 연동 -->
         <a class="nav-btn" target="_blank" rel="noopener"
            href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
+          <img src="images/navermap.png" alt="">
           네이버 지도
         </a>
         <a class="nav-btn" target="_blank" rel="noopener"
            href="https://tmap.life/c31c6940">
+          <img src="images/tmap.png" alt="">
           티맵
         </a>
         <a class="nav-btn" target="_blank" rel="noopener"
            href="https://map.kakao.com/?q=서울행정법원%20융선당예식장">
+          <img src="images/kakaomap.png" alt="">
           카카오맵
         </a>
       </div>
@@ -482,48 +496,48 @@
       </table>
     </section>
 
-    <!-- 복사 완료 팝업(정사각) -->
+    <!-- 복사 완료 팝업(가로형 + 확인 버튼) -->
     <div id="copyModal" class="modal copy-modal">
       <div class="sheet">
-        <div class="hd"><button id="copyClose" aria-label="닫기">✕</button></div>
-        <div class="body center">복사가 완료되었습니다.</div>
+        <div class="body center">
+          <div>복사가 완료되었습니다.</div>
+          <button id="copyOk" class="copy-ok">확인</button>
+        </div>
       </div>
     </div>
 
     <div class="thin"></div>
 
-    <!-- 카카오톡 공유 -->
+    <!-- 공유 -->
     <section class="share-box">
       <div class="share-wrap">
         <img src="images/message.png" alt="" class="img-original share-icon">
-        <button id="kakaoShare" class="share-btn">카카오톡으로 초대장 보내기</button>
+        <button id="kakaoShare" class="share-btn">청첩장 공유하기</button>
       </div>
     </section>
 
   </main>
 
   <script>
-    /* 카운트다운 + 첫 칸 가변 폭(라벨 길이+1ch), 콜론 2ch */
+    /* 카운트다운 + 첫 칸 가변 폭(라벨 길이+1ch), 콜론 2ch) */
     document.addEventListener('DOMContentLoaded', function(){
       const pastTbody   = document.getElementById('countPastTbl');
       const futureTbody = document.getElementById('countFutureTbl');
       if(!pastTbody || !futureTbody) return;
 
-      // --- 첫 칸 폭: 라벨 글자수 + 1 ch ---
       function adjustFirstColWidth(tableId){
         const table = document.getElementById(tableId);
         if(!table) return;
-        const firstTh = table.querySelector('thead th'); // 첫 라벨(DAYS)
+        const firstTh = table.querySelector('thead th');
         const firstCol = table.querySelector('colgroup col.first');
         if(!firstTh || !firstCol) return;
-        const len = (firstTh.textContent || '').trim().length || 4; // 기본 4자 가정
-        const widthCh = (len + 1) + 'ch'; // 요구: 글자수+1 ch
+        const len = (firstTh.textContent || '').trim().length || 4;
+        const widthCh = (len + 1) + 'ch';
         firstCol.style.width = widthCh;
       }
       adjustFirstColWidth('pastTable');
       adjustFirstColWidth('futureTable');
 
-      // --- 카운트다운 ---
       const past   = new Date('2012-06-09T08:30:00+09:00');
       const future = new Date('2025-11-01T14:00:00+09:00');
 
@@ -576,12 +590,12 @@
         const diff = today - weddingDate; // 양수: 지난 날
         if (diff < 0){
           const daysLeft = Math.ceil((weddingDate - today)/msPerDay);
-          el.innerHTML = `지선, 기환의 결혼식이 <span class="dleft">${daysLeft}</span><span class="unit">일</span> 남았습니다.`;
+          el.innerHTML = `지선, 기환의 결혼식이 <span class="dleft">${daysLeft}일</span> 남았습니다.`;
         } else if (diff === 0){
           el.textContent = `지선, 기환의 결혼식이 열리는 날입니다.`;
         } else {
           const daysSince = Math.floor(diff/msPerDay);
-          el.innerHTML = `지선, 기환이 결혼한 지 <span class="dleft">${daysSince}</span><span class="unit">일</span> 되는 날입니다.`;
+          el.innerHTML = `지선, 기환이 결혼한 지 <span class="dleft">${daysSince}일</span> 되는 날입니다.`;
         }
       }
       updateStatus();
@@ -600,7 +614,7 @@
         // 'images/p1.jpg','images/p2.jpg','images/p3.jpg','images/p4.jpg' ...
       ];
       function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-      const list=ALL.slice(); // 필요 시 shuffle(list)
+      const list=ALL.slice();
       let idx=0;
       function show(i){
         if(!list.length){ hero.alt='이미지 준비중'; return; }
@@ -667,9 +681,9 @@
       });
     })();
 
-    /* 마음 전하실 곳: 헤더(버튼)+표 결합 토글 + 복사 팝업 */
+    /* 마음 전하실 곳: 헤더(버튼)+표 결합 토글 + 복사 팝업 + 전화번호 자동인식 방지 */
     (function(){
-      // 토글: acc-group 테이블의 thead 버튼으로 tbody show/hide
+      // 토글
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn = tbl.querySelector('.acc-heading');
         const body = tbl.querySelector('tbody');
@@ -681,10 +695,21 @@
         });
       });
 
-      // 복사
+      // 전화번호 자동인식 방지: 숫자/하이픈 사이에 0-width space 삽입(시각 변화 없음)
+      function defangTel(str){
+        return str
+          .replace(/\d/g, d => d + '\u200B')
+          .replace(/-/g, '-' + '\u200B');
+      }
+      document.querySelectorAll('.acc-line').forEach(td=>{
+        const raw = td.textContent;
+        td.innerHTML = raw.replace(/[0-9-]{3,}/g, m => defangTel(m)); // 긴 숫자 덩어리만 처리
+      });
+
+      // 복사 팝업
       const copyModal=document.getElementById('copyModal');
-      const copyClose=document.getElementById('copyClose');
-      if(copyClose) copyClose.addEventListener('click',()=>copyModal.classList.remove('open'));
+      const copyOk=document.getElementById('copyOk');
+      if(copyOk) copyOk.addEventListener('click',()=>copyModal.classList.remove('open'));
 
       document.addEventListener('click', (e)=>{
         const b=e.target.closest('.copy-mini');
@@ -700,14 +725,14 @@
       });
     })();
 
-    /* 공유 */
+    /* 공유: Web Share API + 복사 대체 */
     (function(){
       const btn=document.getElementById('kakaoShare');
       if(!btn) return;
       btn.addEventListener('click', ()=>{
-        const data={ title:document.title, text:'초대합니다', url:location.href };
+        const data={ title:document.title, text:'초대장을 공유합니다', url:location.href };
         if(navigator.share){ navigator.share(data); }
-        else { navigator.clipboard.writeText(location.href); alert('링크가 복사되었습니다. 카카오톡에 붙여넣어 보내주세요.'); }
+        else { navigator.clipboard.writeText(location.href); alert('링크가 복사되었습니다. 원하는 앱에 붙여넣어 공유해주세요.'); }
       });
     })();
   </script>

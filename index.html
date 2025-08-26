@@ -329,6 +329,7 @@
       </table>
     </section>
 
+
     <!-- 오시는 길 -->
     <section class="pad reveal-up">
       <img src="images/heart.png" alt="하트" class="img-original">
@@ -499,14 +500,27 @@
       onScrollOrResize();
     })();
 
-    /* 날짜 카운트(2표) */
+  /* 카운트다운 + 첫 칸 가변 폭(라벨 길이+1ch), 콜론 2ch */
     document.addEventListener('DOMContentLoaded', function(){
       const pastTbody   = document.getElementById('countPastTbl');
       const futureTbody = document.getElementById('countFutureTbl');
-      const pastTable   = document.getElementById('pastTable');
-      const futureTable = document.getElementById('futureTable');
-      if(!pastTbody || !futureTbody || !pastTable || !futureTable) return;
+      if(!pastTbody || !futureTbody) return;
 
+      // --- 첫 칸 폭: 라벨 글자수 + 1 ch ---
+      function adjustFirstColWidth(tableId){
+        const table = document.getElementById(tableId);
+        if(!table) return;
+        const firstTh = table.querySelector('thead th'); // 첫 라벨(DAYS)
+        const firstCol = table.querySelector('colgroup col.first');
+        if(!firstTh || !firstCol) return;
+        const len = (firstTh.textContent || '').trim().length || 4; // 기본 4자 가정
+        const widthCh = (len + 1) + 'ch'; // 요구: 글자수+1 ch
+        firstCol.style.width = widthCh;
+      }
+      adjustFirstColWidth('pastTable');
+      adjustFirstColWidth('futureTable');
+
+      // --- 카운트다운 ---
       const past   = new Date('2012-06-09T08:30:00+09:00');
       const future = new Date('2025-11-01T14:00:00+09:00');
 
@@ -521,36 +535,31 @@
         mEl.textContent = String(m).padStart(2,'0');
         sEl.textContent = String(s).padStart(2,'0');
       }
-      function adjustFirstColWidth(tableEl, tbodyEl){
-        const firstCol = tableEl.querySelector('colgroup col.first');
-        const dSpan    = tbodyEl.querySelector('.d');
-        if(!firstCol || !dSpan) return;
-        const digitsLen = (dSpan.textContent || '').trim().length || 1;
-        const widthCh   = Math.max(2, digitsLen + 1);
-        firstCol.style.width = widthCh + 'ch';
-      }
+
       function tick(){
         const now = new Date();
 
+        // 경과
         let t1 = Math.max(0, now - past);
         const d1 = Math.floor(t1 / 86400000); t1 -= d1 * 86400000;
         const h1 = Math.floor(t1 / 3600000);  t1 -= h1 * 3600000;
         const m1 = Math.floor(t1 / 60000);    t1 -= m1 * 60000;
         const s1 = Math.floor(t1 / 1000);
         fill(pastTbody, d1,h1,m1,s1);
-        adjustFirstColWidth(pastTable, pastTbody);
 
+        // 남은
         let t2 = Math.max(0, future - now);
         const d2 = Math.floor(t2 / 86400000); t2 -= d2 * 86400000;
         const h2 = Math.floor(t2 / 3600000);  t2 -= h2 * 3600000;
         const m2 = Math.floor(t2 / 60000);    t2 -= m2 * 60000;
         const s2 = Math.floor(t2 / 1000);
         fill(futureTbody, d2,h2,m2,s2);
-        adjustFirstColWidth(futureTable, futureTbody);
       }
+
       tick();
       setInterval(tick, 1000);
     });
+
 
     /* 달력 상태 문구: 남은/당일/지난 날 계산(기준일: 2025-11-01, 자정 기준) */
     (function(){

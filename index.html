@@ -107,6 +107,37 @@
     .cal-grid .cal-cell:nth-child(7n+1){ color:#ff6b9c; }
     .cal-grid .cal-cell:nth-child(7n){   color:#6dafff; }
 
+    /* 오시는 길 타이틀(요청: 16pt, Bold, #7b9155, 가운데정렬) */
+.go-title {
+  font-family: 'GowunBatang', serif;
+  font-weight: 700;
+  font-size: 16pt;
+  color: #7b9155;
+  text-align: center;
+}
+
+/* 지도: 정사각형 비율, 가로 100% */
+.map iframe {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 0;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 안내문 텍스트(요청 크기/정렬/색) */
+.go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:12pt; color:#585353; text-align:center; }
+.go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; }
+.go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#585353; text-align:center; }
+
+/* 네비 앱 버튼 */
+.nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px; }
+.nav-btn {
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:10px 12px; font-family:'GowunBatang',serif; font-size:10pt; color:#585353; text-decoration:none;
+  background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer;
+}
+
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
     .gallery .section-title{font-weight:700; color:#585353; text-align:center; margin-bottom:8px}
@@ -331,33 +362,44 @@
 
 
     <!-- 오시는 길 -->
-    <section class="pad reveal-up">
-      <img src="images/heart.png" alt="하트" class="img-original">
-      <div class="go-title after-heart">오시는 길</div>
+<section class="pad reveal-up" id="way">
+  <img src="images/heart.png" alt="하트" class="img-original">
+  <div class="go-title" style="margin-top:8px">오시는 길</div>
 
-      <div class="map" style="margin-top:10px">
-        <iframe
-          title="서울가정행정법원 융선당"
-          src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%EA%B0%80%EC%A0%95%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9&output=embed"
-          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
+  <div class="map" style="margin-top:10px">
+    <iframe
+      title="서울가정행정법원 융선당"
+      src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%EA%B0%80%EC%A0%95%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9&output=embed"
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
 
-      <div class="center" style="margin-top:12px">
-        <div class="go-name">서울행정법원 융선당</div>
-        <div class="go-addr">서울시 서초구 강남대로 193(양재동 25-3)</div>
-        <div class="go-info" style="margin-top:10px">
-          3호선 • 신분당선 양재역 9번 출구 도보 3분 직진<br>
-          16시까지 지하 3~4층 주차장 이용 가능<br>
-          13시 30분부터 식사 가능
-        </div>
-      </div>
+  <div style="margin-top:12px">
+    <div class="go-name">서울행정법원 융선당</div>
+    <div class="go-addr">서울시 서초구 강남대로 193(양재동 25-3)</div>
+    <div class="go-info" style="margin-top:10px">
+      3호선 • 신분당선 양재역 9번 출구 도보 3분 직진<br>
+      16시까지 지하 3~4층 주차장 이용 가능<br>
+      13시 30분부터 식사 가능
+    </div>
+  </div>
 
-      <div class="nav-apps">
-        <a class="nav-btn" target="_blank" rel="noopener" href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">네이버 지도</a>
-        <a class="nav-btn" target="_blank" rel="noopener" href="https://tmap.life/143f765d">티맵</a>
-        <a class="nav-btn" target="_blank" rel="noopener" href="https://kko.kakao.com/b6H0BkrBWS">카카오내비</a>
-      </div>
-    </section>
+  <div class="nav-apps">
+    <!-- 주소지 검색 바로 연동 -->
+    <a class="nav-btn" target="_blank" rel="noopener"
+       href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
+      네이버 지도
+    </a>
+    <a class="nav-btn" target="_blank" rel="noopener"
+       href="https://tmap.life/143f765d">
+      티맵
+    </a>
+    <a class="nav-btn" target="_blank" rel="noopener"
+       href="https://map.kakao.com/?q=%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
+      카카오내비
+    </a>
+  </div>
+</section>
+
 
     <div class="thin"></div>
 

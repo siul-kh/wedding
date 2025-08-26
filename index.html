@@ -4,7 +4,138 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>모바일 청첩장</title>
-  <!-- 폰트 및 스타일 정의 (생략된 부분은 동일) -->
+
+  <!-- 폰트 프리로드(선택) -->
+  <link rel="preload" href="fonts/GowunBatang-Regular.woff2?v=1" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/GowunBatang-Bold.woff2?v=1" as="font" type="font/woff2" crossorigin>
+
+  <style>
+    /* ===== 폰트 ===== */
+    @font-face{
+      font-family:'GowunBatang';
+      src:url('fonts/GowunBatang-Regular.woff2?v=1') format('woff2'),
+          url('fonts/GowunBatang-Regular.ttf?v=1') format('truetype');
+      font-weight:400; font-style:normal; font-display:swap;
+    }
+    @font-face{
+      font-family:'GowunBatang';
+      src:url('fonts/GowunBatang-Bold.woff2?v=1') format('woff2'),
+          url('fonts/GowunBatang-Bold.ttf?v=1') format('truetype');
+      font-weight:700; font-style:normal; font-display:swap;
+    }
+
+    :root{
+      --maxw:414px;
+      --ink:#585353;
+      --accent:#7b9155;
+      --hint:#9d9b9b;
+      --thin:#e5e5e5;
+      --heart-gap:8px; /* 하트 아래 줄 간격(사용자 선호 수치) */
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:#fff; color:var(--ink);
+      font-family:'GowunBatang', ui-serif, system-ui, serif;
+      font-size:12pt; line-height:1.8;
+      display:flex; justify-content:center;
+    }
+    .container{width:100%; max-width:var(--maxw)}
+    section{margin:0; background:#fff}
+    .pad{padding:24px 16px}
+    .center{text-align:center}
+    .thin{height:1px; background:var(--thin); margin:16px 0}
+    .thin-70{ width:70%; margin:16px auto; } /* 달력 앞뒤 얇은 선 전용 */
+
+    /* 이미지 공통 */
+    img{display:block; height:auto;}
+    img:not(.img-original){ width:100%; } /* 원본 크기 유지 예외는 .img-original */
+    .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
+
+    /* 시(가운데 정렬) */
+    .poem{text-align:center}
+    .poem p{margin:8px 0}
+    .poem .big{font-size:14pt; color:#585353; font-weight:700}
+    .poem .big.tight{ line-height:0.9; margin:4px 0; } /* 상단 큰 글 두 줄의 줄간격(절반) */
+    .poem .big + .big{ margin-top:12px; } /* 첫 줄과 둘째 줄 사이 간격 '벌림' */
+    .poem .normal{font-size:12pt; color:#585353}
+    .after-heart{ margin-top:var(--heart-gap)!important; } /* 하트 아래 줄 간격(달력/오시는길/시 공통) */
+
+    /* 아래→위 슬라이드 + 페이드 (요소 전체에 적용) */
+    @keyframes slideBySelfHeight{0%{transform:translateY(100%);opacity:0}100%{transform:translateY(0);opacity:1}}
+    .reveal-up{transform:translateY(100%);opacity:0;will-change:transform,opacity}
+    .reveal-up.show{animation:slideBySelfHeight 2s cubic-bezier(.2,.7,.2,1) forwards}
+    @media (prefers-reduced-motion:reduce){.reveal-up{transform:none;opacity:1}.reveal-up.show{animation:none}}
+
+    /* ===== 달력 ===== */
+    .cal-title{
+      font-family:'GowunBatang',serif; font-weight:700;
+      font-size:16pt; color:#585353; text-align:center; margin:8px 0;
+    }
+    .cal-sub{ /* 2025년 11월 1일 오후 2시 */
+      text-align:center; font-family:'GowunBatang',serif; font-weight:400;
+      font-size:12pt; color:#585353; margin:4px 0 6px;
+    }
+    .cal-msg{ /* 달력 아래 상태 문구 */
+      text-align:center; font-family:'GowunBatang',serif; font-weight:400;
+      font-size:12pt; color:#585353; margin:6px 0 10px;
+    }
+    .calendar{ width:70%; margin:0 auto; padding:0 4px; }
+    .cal-head, .cal-grid{
+      display:grid; grid-template-columns:repeat(7,1fr); gap:6px;
+    }
+    .cal-head div{
+      text-align:center; font-size:12pt; color:#585353; letter-spacing:.04em; padding:4px 0;
+    }
+    .cal-cell{
+      aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+      font-size:12pt; color:#585353;
+    }
+    .cal-cell .dot{
+      display:inline-grid; place-items:center;
+      width:28px; height:28px; border-radius:50%;
+      background:#7b9155; color:#fff !important; font-weight:700;
+    }
+    @media (min-width:480px){
+      .cal-cell .dot{ width:32px; height:32px; }
+    }
+    /* 일요일/토요일 색상 (1일은 .dot로 흰색 유지) */
+    .cal-head div:nth-child(1){ color:#ff6b9c; }  /* 일 */
+    .cal-head div:nth-child(7){ color:#6dafff; }  /* 토 */
+    .cal-grid .cal-cell:nth-child(7n+1){ color:#ff6b9c; }
+    .cal-grid .cal-cell:nth-child(7n){   color:#6dafff; }
+
+    /* 오시는 길 */
+    .map iframe{ width:100%; aspect-ratio:1/1; border:0; }
+    .go-title{
+      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center;
+    }
+    .go-name{ font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; }
+    .go-addr{ font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; }
+    .go-info{ font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#585353; }
+    .nav-apps{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px; }
+    .nav-btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 12px; font-size:10pt; color:#585353; text-decoration:none;
+      background:#fff; border:1px solid var(--thin); border-radius:10px; cursor:pointer;
+    }
+
+    /* ===== 날짜 카운트(2줄·7칸) ===== */
+    .when { text-align:center; }
+    .when .title { font-size:14pt; color:var(--accent); font-weight:700; margin-bottom:4px; }
+    .when .meta  { opacity:.9; margin-bottom:8px; }
+
+    .count-table{
+      width:auto; margin:0 auto; border-collapse:collapse; table-layout:fixed;
+    }
+    .count-table th, .count-table td{
+      text-align:center; padding:0 2px; border:none; white-space:nowrap; line-height:1.2;
+    }
+    .count-labels th{ font-size:6pt; color:var(--hint); letter-spacing:.12em; font-weight:700; padding:2px 0; }
+    .count-values td{ font-size:14pt; color:var(--ink); padding:2px 0; }
+    .count-values td.colon{ opacity:.7; font-size:12pt; }
+    .count-table col.val{ width:3ch; } .count-table col.colon{ width:2ch; }
+  </style>
 </head>
 <body>
   <main class="container">
@@ -13,63 +144,303 @@
     <section><img src="images/1-photo.jpg?v=1" alt="상단 사진1"></section>
     <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
 
-    <!-- 시 -->
+    <!-- 시(하트 + 제목 두 줄 간격 벌림, 하트-제목 간격은 after-heart로 통일) -->
     <section class="pad poem reveal-up" aria-label="시">
       <img src="images/heart.png" alt="하트" class="img-original">
       <p class="big tight after-heart">13년 전,</p>
       <p class="big tight">우리는 처음 만나 나무를 심었습니다.</p>
-      <!-- 본문 p 태그들 -->
+
+      <p class="normal" style="margin:50px 0 0 0;">
+        여린 묘목에 흙과 물을 주고,<br>
+        적당한 햇살이 비치기를,<br>
+        적당한 바람이 불기를 바랐습니다.
+      </p>
+
+      <p class="normal" style="margin:30px 0 0 0;">
+        맘과 달리 적당하지 않은 날이<br>
+        많았는지도 모르겠습니다.
+      </p>
+
+      <p class="normal" style="margin:30px 0 0 0;">
+        그 덕에 적당한 목질이 되어<br>
+        이제는 제법 단단한 뿌리를 뻗고,<br>
+        위로는 숱한 가지를 내어<br>
+        그늘을 만들었습니다.
+      </p>
+
+      <p class="normal" style="margin:30px 0 0 0;">
+        그 아래서 우리는<br>
+        적당한 날들을 맞이하려 합니다.
+      </p>
     </section>
 
     <section><img src="images/3-photo.png?v=1" alt="하단 사진"></section>
 
-    <!-- 달력 -->
+    <!-- 달력(얇은 선 70%, WE’RE GETTING MARRIED 삭제, 날짜/시간 + 상태 문구) -->
     <section class="pad reveal-up" aria-label="달력">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="cal-title after-heart">결혼합니다</div>
       <div class="cal-sub">2025년 11월 1일 오후 2시</div>
 
       <div class="thin thin-70"></div>
-      <!-- 달력 그리드 ... -->
-      <div class="cal-msg" id="weddingStatus">
-        지선 ♥︎ 기환의 결혼식이 <span class="dleft">0</span>일 남았습니다.
+
+      <div class="calendar">
+        <!-- 요일 헤더 (일~토) -->
+        <div class="cal-head">
+          <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+        </div>
+
+        <!-- 2025년 11월: 1일(토) → 앞 6칸 공백, 30일까지 -->
+        <div class="cal-grid">
+          <!-- 공백 6칸 -->
+          <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+          <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+
+          <!-- 1일(토) 강조 -->
+          <div class="cal-cell"><span class="dot">1</span></div>
+
+          <!-- 2 ~ 8 -->
+          <div class="cal-cell">2</div><div class="cal-cell">3</div><div class="cal-cell">4</div>
+          <div class="cal-cell">5</div><div class="cal-cell">6</div><div class="cal-cell">7</div>
+          <div class="cal-cell">8</div>
+
+          <!-- 9 ~ 15 -->
+          <div class="cal-cell">9</div><div class="cal-cell">10</div><div class="cal-cell">11</div>
+          <div class="cal-cell">12</div><div class="cal-cell">13</div><div class="cal-cell">14</div>
+          <div class="cal-cell">15</div>
+
+          <!-- 16 ~ 22 -->
+          <div class="cal-cell">16</div><div class="cal-cell">17</div><div class="cal-cell">18</div>
+          <div class="cal-cell">19</div><div class="cal-cell">20</div><div class="cal-cell">21</div>
+          <div class="cal-cell">22</div>
+
+          <!-- 23 ~ 29 -->
+          <div class="cal-cell">23</div><div class="cal-cell">24</div><div class="cal-cell">25</div>
+          <div class="cal-cell">26</div><div class="cal-cell">27</div><div class="cal-cell">28</div>
+          <div class="cal-cell">29</div>
+
+          <!-- 30 (일) + 주 마감 공백 6칸 -->
+          <div class="cal-cell">30</div>
+          <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+          <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+        </div>
       </div>
+
+      <!-- 상태 문구(달력 아래) -->
+      <div id="weddingStatus" class="cal-msg">지선 ♥︎ 기환의 결혼식이 <span class="dleft">0</span>일 남았습니다.</div>
+
       <div class="thin thin-70"></div>
     </section>
 
-    <!-- 날짜 카운트 -->
+    <!-- ===== 날짜 카운트(달력 아래로 이동) ===== -->
     <section class="pad when reveal-up">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
-      <!-- 카운트 표 -->
+
+      <table class="count-table" aria-label="경과 시간" id="pastTable">
+        <colgroup>
+          <col class="first"><col class="colon">
+          <col class="val"><col class="colon">
+          <col class="val"><col class="colon">
+          <col class="val">
+        </colgroup>
+        <thead class="count-labels">
+          <tr>
+            <th>DAYS</th><th></th>
+            <th>HOUR</th><th></th>
+            <th>MIN</th><th></th>
+            <th>SEC</th>
+          </tr>
+        </thead>
+        <tbody class="count-values" id="countPastTbl">
+          <tr>
+            <td><span class="d">00</span></td><td class="colon">:</td>
+            <td><span class="h">00</span></td><td class="colon">:</td>
+            <td><span class="m">00</span></td><td class="colon">:</td>
+            <td><span class="s">00</span></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
     <section class="pad when reveal-up">
       <div class="title">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
-      <!-- 카운트 표 -->
+
+      <table class="count-table" aria-label="남은 시간" id="futureTable">
+        <colgroup>
+          <col class="first"><col class="colon">
+          <col class="val"><col class="colon">
+          <col class="val"><col class="colon">
+          <col class="val">
+        </colgroup>
+        <thead class="count-labels">
+          <tr>
+            <th>DAYS</th><th></th>
+            <th>HOUR</th><th></th>
+            <th>MIN</th><th></th>
+            <th>SEC</th>
+          </tr>
+        </thead>
+        <tbody class="count-values" id="countFutureTbl">
+          <tr>
+            <td><span class="d">00</span></td><td class="colon">:</td>
+            <td><span class="h">00</span></td><td class="colon">:</td>
+            <td><span class="m">00</span></td><td class="colon">:</td>
+            <td><span class="s">00</span></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
-    <!-- 오시는 길 -->
+    <!-- 여기는 '오시는 길' 위의 얇은 선을 제거했습니다(요청). -->
+
+    <!-- 오시는 길 (기존 아래 내용 '유지') -->
     <section class="pad reveal-up">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title after-heart">오시는 길</div>
-      <div class="map"><iframe ... ></iframe></div>
-      <div class="center">
+
+      <div class="map" style="margin-top:10px">
+        <iframe
+          title="서울가정행정법원 융선당"
+          src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%EA%B0%80%EC%A0%95%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <div class="center" style="margin-top:12px">
         <div class="go-name">서울행정법원 융선당</div>
         <div class="go-addr">서울시 서초구 강남대로 193(양재동 25-3)</div>
-        <div class="go-info">3호선 • 신분당선 ...</div>
+        <div class="go-info" style="margin-top:10px">
+          3호선 • 신분당선 양재역 9번 출구 도보 3분 직진<br>
+          16시까지 지하 3~4층 주차장 이용 가능<br>
+          13시 30분부터 식사 가능
+        </div>
       </div>
+
       <div class="nav-apps">
-        <a class="nav-btn" ...>네이버 지도</a>
-        <a class="nav-btn" ...>티맵</a>
-        <a class="nav-btn" ...>카카오내비</a>
+        <a class="nav-btn" target="_blank" rel="noopener" href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">네이버 지도</a>
+        <a class="nav-btn" target="_blank" rel="noopener" href="https://tmap.life/143f765d">티맵</a>
+        <a class="nav-btn" target="_blank" rel="noopener" href="https://kko.kakao.com/b6H0BkrBWS">카카오내비</a>
       </div>
     </section>
 
   </main>
+
   <script>
-    /* reveal-up 애니메이션, 카운트 타이머, weddingStatus 날짜 계산 스크립트 */
+    /* 아래→위 슬라이드 트리거: 각 요소의 '중앙'이 화면 '하단'에 닿는 순간 발동 */
+    (function(){
+      const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = Array.from(document.querySelectorAll('.reveal-up'));
+      if (!targets.length) return;
+
+      if (REDUCED) { targets.forEach(el => el.classList.add('show')); return; }
+
+      let ticking = false;
+      function onScrollOrResize(){
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          targets.forEach(el => {
+            if (el.classList.contains('show')) return;
+            const r = el.getBoundingClientRect();
+            const mid = r.top + r.height / 2;
+            if (mid <= vh) { el.classList.add('show'); }
+          });
+          ticking = false;
+        });
+      }
+      window.addEventListener('load', onScrollOrResize, { once:true });
+      window.addEventListener('scroll', onScrollOrResize, { passive:true });
+      window.addEventListener('resize', onScrollOrResize);
+      onScrollOrResize();
+    })();
+
+    /* 날짜 카운트: 표별 첫 칸 폭(자리수+1ch) + 1초 갱신 */
+    document.addEventListener('DOMContentLoaded', function(){
+      const pastTbody   = document.getElementById('countPastTbl');
+      const futureTbody = document.getElementById('countFutureTbl');
+      const pastTable   = document.getElementById('pastTable');
+      const futureTable = document.getElementById('futureTable');
+      if(!pastTbody || !futureTbody || !pastTable || !futureTable) return;
+
+      const past   = new Date('2012-06-09T08:30:00+09:00');
+      const future = new Date('2025-11-01T14:00:00+09:00');
+
+      function fill(tbody, d,h,m,s){
+        const dEl = tbody.querySelector('.d');
+        const hEl = tbody.querySelector('.h');
+        const mEl = tbody.querySelector('.m');
+        const sEl = tbody.querySelector('.s');
+        if(!dEl || !hEl || !mEl || !sEl) return;
+        dEl.textContent = String(d).padStart(2,'0');
+        hEl.textContent = String(h).padStart(2,'0');
+        mEl.textContent = String(m).padStart(2,'0');
+        sEl.textContent = String(s).padStart(2,'0');
+      }
+      function adjustFirstColWidth(tableEl, tbodyEl){
+        const firstCol = tableEl.querySelector('colgroup col.first');
+        const dSpan    = tbodyEl.querySelector('.d');
+        if(!firstCol || !dSpan) return;
+        const digitsLen = (dSpan.textContent || '').trim().length || 1;
+        const widthCh   = Math.max(2, digitsLen + 1);
+        firstCol.style.width = widthCh + 'ch';
+      }
+      function tick(){
+        const now = new Date();
+
+        let t1 = Math.max(0, now - past);
+        const d1 = Math.floor(t1 / 86400000); t1 -= d1 * 86400000;
+        const h1 = Math.floor(t1 / 3600000);  t1 -= h1 * 3600000;
+        const m1 = Math.floor(t1 / 60000);    t1 -= m1 * 60000;
+        const s1 = Math.floor(t1 / 1000);
+        fill(pastTbody, d1,h1,m1,s1);
+        adjustFirstColWidth(pastTable, pastTbody);
+
+        let t2 = Math.max(0, future - now);
+        const d2 = Math.floor(t2 / 86400000); t2 -= d2 * 86400000;
+        const h2 = Math.floor(t2 / 3600000);  t2 -= h2 * 3600000;
+        const m2 = Math.floor(t2 / 60000);    t2 -= m2 * 60000;
+        const s2 = Math.floor(t2 / 1000);
+        fill(futureTbody, d2,h2,m2,s2);
+        adjustFirstColWidth(futureTable, futureTbody);
+      }
+      tick();
+      setInterval(tick, 1000);
+    });
+
+    /* 달력 아래 상태 문구: 남은/당일/지나간 날 계산(기준일: 2025-11-01, 자정 기준) */
+    (function(){
+      const el = document.getElementById('weddingStatus');
+      if(!el) return;
+      function updateStatus(){
+        const now = new Date();
+        // 기준일 2025-11-01 (현지시간 KST 기준 자정으로 계산)
+        const weddingDate = new Date('2025-11-01T00:00:00+09:00');
+
+        // 오늘 자정
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        // KST 보정을 위해 로컬 자정 기준으로 처리 (사이트가 한국 대상이라고 가정)
+        const msPerDay = 86400000;
+
+        const diff = today - weddingDate; // 양수면 지난 날 수 * ms
+        if (diff < 0){
+          // 아직 전: 남은 일수 = (weddingDate - today) / day
+          const daysLeft = Math.ceil((weddingDate - today)/msPerDay);
+          el.innerHTML = `지선 ♥︎ 기환의 결혼식이 <span class="dleft">${daysLeft}</span>일 남았습니다.`;
+        } else if (diff === 0){
+          // 당일
+          el.textContent = `지선 ♥︎ 기환의 결혼식이 열리는 날입니다.`;
+        } else {
+          // 지난 뒤: 지난 일수
+          const daysSince = Math.floor(diff/msPerDay);
+          el.innerHTML = `지선 ♥︎ 기환이 결혼한 지 <span class="dleft">${daysSince}</span>일 되는 날입니다.`;
+        }
+      }
+      updateStatus();
+      // 자정이 지나면 문구가 바뀌도록 1시간 간격 갱신(부하 적게)
+      setInterval(updateStatus, 3600000);
+    })();
   </script>
 </body>
 </html>

@@ -123,9 +123,9 @@
     }
     .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; }
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
-    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; line-height:2.0; margin-top:0; } /* 요청: 줄간격 2.0 */
+    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; line-height:2.0; margin-top:0; } /* 줄간격 2.0 */
 
-    /* 네비 앱 버튼: 항상 한 줄 + 폭 좁아지면 자동 축소 */
+    /* 네비 앱 버튼 */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
     .nav-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5em;
@@ -166,7 +166,6 @@
       aspect-ratio:1/1; display:block;
     }
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; color:#585353; cursor:pointer; }
     .thumbs-more[hidden]{ display:none; }
 
@@ -190,10 +189,10 @@
     }
     .acc-table{
       width:100%; border-collapse:separate; border-spacing:0;
-      border:1px solid #f1f1f1; /* 요청: 테두리 색 */
+      border:1px solid #f1f1f1; /* 테두리 색 */
       border-radius:12px; overflow:hidden; background:#fff;
     }
-    .acc-table thead th{ padding:0; background:#f1f1f1; } /* 요청: 헤더 배경 #f1f1f1 */
+    .acc-table thead th{ padding:0; background:#f1f1f1; } /* 헤더 배경 */
     .acc-heading{
       width:100%; display:block; text-align:center; cursor:pointer;
       background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
@@ -242,7 +241,7 @@
       display:inline-flex; align-items:center; justify-content:center; gap:4px; /* 여백 줄임 */
       background:#fff; border:1px solid var(--thin); border-radius:10px;
       padding:10px 12px; cursor:pointer;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; /* 요청: 12pt */
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; /* 12pt */
     }
     .share-cta img{ display:inline-block; margin:0 2px; } /* 좌우 여백 축소 */
     .share-cta span{ line-height:1; }
@@ -348,12 +347,8 @@
     <section class="pad when">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
-
-      <!-- 7칸 표 -->
       <table class="count-table" id="pastTable">
-        <colgroup>
-          <col><col><col><col><col><col><col>
-        </colgroup>
+        <colgroup><col><col><col><col><col><col><col></colgroup>
         <thead class="count-labels">
           <tr>
             <th>DAYS</th><th class="colon"></th>
@@ -376,12 +371,8 @@
     <section class="pad when">
       <div class="title" id="fruitTitle">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
-
-      <!-- 7칸 표 -->
       <table class="count-table" id="futureTable">
-        <colgroup>
-          <col><col><col><col><col><col><col>
-        </colgroup>
+        <colgroup><col><col><col><col><col><col><col></colgroup>
         <thead class="count-labels">
           <tr>
             <th>DAYS</th><th class="colon"></th>
@@ -424,21 +415,16 @@
       </div>
 
       <div class="nav-apps">
-        <!-- 주소지 검색 바로 연동 (아이콘+텍스트 한 줄, 자동 축소) -->
         <a class="nav-btn" target="_blank" rel="noopener"
            href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
-          <img src="images/navermap.png" alt="">
-          네이버 지도
+          <img src="images/navermap.png" alt="">네이버 지도
         </a>
-        <a class="nav-btn" target="_blank" rel="noopener"
-           href="https://tmap.life/c31c6940">
-          <img src="images/tmap.png" alt="">
-          티맵
+        <a class="nav-btn" target="_blank" rel="noopener" href="https://tmap.life/c31c6940">
+          <img src="images/tmap.png" alt="">티맵
         </a>
         <a class="nav-btn" target="_blank" rel="noopener"
            href="https://map.kakao.com/?q=서울행정법원%20융선당예식장">
-          <img src="images/kakaomap.png" alt="">
-          카카오맵
+          <img src="images/kakaomap.png" alt="">카카오맵
         </a>
       </div>
     </section>
@@ -456,7 +442,6 @@
 
       <!-- 5x5 첫 화면 -->
       <div class="thumbs5" id="thumbsTop"></div>
-
       <!-- 더 보기(숨김) -->
       <div class="thumbs5 thumbs-more" id="thumbsMore" hidden></div>
       <button id="thumbsMoreBtn" class="more-tri" aria-expanded="false" aria-controls="thumbsMore">▼</button>
@@ -497,7 +482,7 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 신랑 측: 버튼+표 일체형 -->
+      <!-- 신랑 측 -->
       <table class="acc-table acc-group" id="accGroomTbl">
         <thead>
           <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr>
@@ -520,7 +505,7 @@
 
       <div style="height:10px"></div>
 
-      <!-- 신부 측: 버튼+표 일체형 -->
+      <!-- 신부 측 -->
       <table class="acc-table acc-group" id="accBrideTbl">
         <thead>
           <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr>
@@ -542,7 +527,7 @@
       </table>
     </section>
 
-    <!-- 복사 완료 팝업(가로형 + 확인 버튼) -->
+    <!-- 복사 완료 팝업 -->
     <div id="copyModal" class="modal copy-modal">
       <div class="sheet">
         <div class="body center">
@@ -565,9 +550,7 @@
   </main>
 
   <script>
-    /* 카운트 두 번째 줄(값 행) 셀 폭 규칙:
-       - 첫 번째 칸(일 수): 내용 글자 수 ch
-       - 나머지 칸(숫자/콜론 모두): 2ch 고정 */
+    /* 카운트 두 번째 줄(값 행) 폭: 첫 칸은 글자수 ch, 나머지는 2ch */
     function setSecondRowWidths(tbody){
       const row = tbody.querySelector('tr');
       if(!row) return;
@@ -577,19 +560,15 @@
       cells[0].style.width = dLen + 'ch';
       for(let i=1;i<cells.length;i++){ cells[i].style.width = '2ch'; }
     }
-
-    /* 값 행 채우기: 숫자만(단위 텍스트 제거), 콜론은 그대로 */
     function fillCountRow(tbody, d,h,m,s){
       const cells = tbody.querySelector('tr')?.children;
       if(!cells || cells.length !== 7) return;
-      cells[0].textContent = String(d);                  // DAYS
-      cells[2].textContent = String(h).padStart(2,'0');  // HOUR
-      cells[4].textContent = String(m).padStart(2,'0');  // MIN
-      cells[6].textContent = String(s).padStart(2,'0');  // SEC
+      cells[0].textContent = String(d);
+      cells[2].textContent = String(h).padStart(2,'0');
+      cells[4].textContent = String(m).padStart(2,'0');
+      cells[6].textContent = String(s).padStart(2,'0');
       setSecondRowWidths(tbody);
     }
-
-    /* 카운트다운 */
     document.addEventListener('DOMContentLoaded', function(){
       const pastTable   = document.getElementById('pastTable');
       const futureTable = document.getElementById('futureTable');
@@ -602,7 +581,6 @@
       function tick(){
         const now = new Date();
 
-        // 경과(과거)
         let t1 = Math.max(0, now - past);
         const d1 = Math.floor(t1 / 86400000); t1 -= d1 * 86400000;
         const h1 = Math.floor(t1 / 3600000);  t1 -= h1 * 3600000;
@@ -610,10 +588,7 @@
         const s1 = Math.floor(t1 / 1000);
         if(pastBody){ fillCountRow(pastBody, d1,h1,m1,s1); }
 
-        // 남은/지남(미래)
-        let t2 = future - now;
-        let d2,h2,m2,s2;
-
+        let t2 = future - now, d2,h2,m2,s2;
         if (t2 >= 0){
           let rem = t2;
           d2 = Math.floor(rem / 86400000); rem -= d2 * 86400000;
@@ -621,33 +596,30 @@
           m2 = Math.floor(rem / 60000);    rem -= m2 * 60000;
           s2 = Math.floor(rem / 1000);
         } else {
-          // 지난 시간(경과값)
           let passed = -t2;
           d2 = Math.floor(passed / 86400000); passed -= d2 * 86400000;
           h2 = Math.floor(passed / 3600000);  passed -= h2 * 3600000;
           m2 = Math.floor(passed / 60000);    passed -= m2 * 60000;
           s2 = Math.floor(passed / 1000);
         }
-
         if(futureBody){ fillCountRow(futureBody, d2,h2,m2,s2); }
       }
-
       tick();
       setInterval(tick, 1000);
     });
 
-    /* 달력 상태 문구: 남은/당일/지난 날 계산(기준일: 2025-11-01, 자정 기준) */
+    /* 달력 상태 문구 */
     (function(){
       const el = document.getElementById('weddingStatus');
       const fruitTitle = document.getElementById('fruitTitle');
       if(!el) return;
       function updateStatus(){
         const now = new Date();
-        const weddingDate = new Date('2025-11-01T00:00:00+09:00'); // 기준일 자정(KST)
+        const weddingDate = new Date('2025-11-01T00:00:00+09:00');
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const msPerDay = 86400000;
 
-        const diff = today - weddingDate; // 양수: 지난 날
+        const diff = today - weddingDate;
         if (diff < 0){
           const daysLeft = Math.ceil((weddingDate - today)/msPerDay);
           el.innerHTML = `지선, 기환의 결혼식이 <span class="dleft">${daysLeft}일</span> 남았습니다.`;
@@ -662,10 +634,10 @@
         }
       }
       updateStatus();
-      setInterval(updateStatus, 3600000); // 1시간마다 갱신
+      setInterval(updateStatus, 3600000);
     })();
 
-    /* 갤러리: 5x10 썸네일(처음엔 5x5만 표시), 클릭/좌우 화살표로 메인이미지 변경 */
+    /* 갤러리: GitHub API로 폴더 내 모든 이미지 자동 로드 (공개 저장소 전제) */
     (function(){
       const hero=document.getElementById('heroImg');
       const prev=document.getElementById('heroPrev');
@@ -675,28 +647,26 @@
       const moreBtn=document.getElementById('thumbsMoreBtn');
       if(!hero||!prev||!next||!thumbsTop||!thumbsMore||!moreBtn) return;
 
-      // 실제 파일명을 아래 배열에 채워주세요(최대 50장 가정).
-      // 예: "001.jpg","002.jpg", ...
-      const FILES=[
-        // "001.jpg","002.jpg","003.jpg", ...  <- 실제 파일명으로 대체
-      ];
-      const BASE='images/pre-wedding%20snap/';
+      /* === 필수 설정: 본인 저장소로 바꿔주세요 === */
+      const GH = {
+        owner: '',  // 예) 'your-username'
+        repo:  '',  // 예) 'your-repo'
+        ref:   'main', // 브랜치명
+        dir:   'images/pre-wedding snap' // 공백 포함 경로(그대로)
+      };
 
-      function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-      const list = shuffle(FILES.slice()).map(name => BASE + encodeURIComponent(name));
-
-      // 최소 한 장도 없으면 안내
-      if(!list.length){ hero.alt='이미지 준비중'; }
-
-      let idx=0;
-
-      function show(i){
-        if(!list.length){ return; }
-        idx=(i+list.length)%list.length;
-        hero.src=list[idx]+'?v=1';
+      // GitHub Pages URL에서 추론(설정이 비어있는 경우에만)
+      if(!GH.owner || !GH.repo){
+        const host = location.hostname;
+        if(host.endsWith('github.io')){
+          GH.owner = GH.owner || host.split('.')[0];
+          const seg = location.pathname.replace(/^\/+/,'').split('/');
+          GH.repo  = GH.repo || (seg[0] || (GH.owner + '.github.io'));
+        }
       }
 
-      // 썸네일 렌더(5x5 + 나머지 5x5)
+      function encPath(p){ return p.split('/').map(encodeURIComponent).join('/'); }
+      function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
       function makeThumb(src, i){
         const b=document.createElement('button');
         b.className='thumb';
@@ -707,26 +677,60 @@
         return b;
       }
 
-      const first25 = list.slice(0,25);
-      const next25  = list.slice(25,50);
+      let list = []; // 이미지 URL 배열(페이지 상대경로)
+      let idx  = 0;
 
-      first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
-      next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
+      function show(i){
+        if(!list.length){ hero.alt='이미지 준비중'; return; }
+        idx=(i+list.length)%list.length;
+        hero.src=list[idx]+'?v=1';
+      }
 
-      // 첫 노출: 최상단 맨 왼쪽(= 배열 0번)
-      show(0);
+      async function loadFromGitHub(){
+        try{
+          if(!GH.owner || !GH.repo) throw new Error('GitHub 저장소 정보를 설정하세요.');
+          const api = `https://api.github.com/repos/${encodeURIComponent(GH.owner)}/${encodeURIComponent(GH.repo)}/contents/${encPath(GH.dir)}?ref=${encodeURIComponent(GH.ref)}`;
+          const res = await fetch(api, { headers:{ 'Accept':'application/vnd.github+json' } });
+          if(!res.ok) throw new Error('GitHub API 요청 실패: ' + res.status);
+          const items = await res.json();
+          const exts = /\.(jpe?g|png|webp|gif|avif)$/i;
+          const basePath = encPath(GH.dir) + '/';
+          const files = items.filter(it=>it.type==='file' && exts.test(it.name))
+                             .map(it => basePath + encodeURIComponent(it.name));
+          return shuffle(files).slice(0,50); // 최대 50장
+        }catch(e){
+          console.warn(e);
+          return [];
+        }
+      }
 
-      // 더보기(▼) : 숨김 해제 후 버튼 감춤
-      if(next25.length===0){ moreBtn.hidden = true; }
-      moreBtn.addEventListener('click', ()=>{
-        thumbsMore.hidden=false;
-        moreBtn.setAttribute('aria-expanded','true');
-        moreBtn.hidden=true;
-      });
+      function render(){
+        const first25 = list.slice(0,25);
+        const next25  = list.slice(25,50);
 
-      // 좌우 화살표
-      prev.addEventListener('click',()=>show(idx-1));
-      next.addEventListener('click',()=>show(idx+1));
+        thumbsTop.innerHTML=''; thumbsMore.innerHTML='';
+        first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
+        next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
+
+        show(0); // 첫 노출: 맨 위 맨 왼쪽
+
+        // 더보기(▼)
+        if(next25.length===0){ moreBtn.hidden = true; }
+        moreBtn.addEventListener('click', ()=>{
+          thumbsMore.hidden=false;
+          moreBtn.setAttribute('aria-expanded','true');
+          moreBtn.hidden=true;
+        });
+
+        // 좌우 화살표
+        prev.addEventListener('click',()=>show(idx-1));
+        next.addEventListener('click',()=>show(idx+1));
+      }
+
+      (async function init(){
+        list = await loadFromGitHub();
+        render();
+      })();
     })();
 
     /* 방명록 (로컬 스텁) */
@@ -780,7 +784,6 @@
 
     /* 마음 전하실 곳: 토글 + 복사 팝업 + 전화번호 자동인식 방지 */
     (function(){
-      // 토글
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn = tbl.querySelector('.acc-heading');
         const body = tbl.querySelector('tbody');
@@ -792,7 +795,6 @@
         });
       });
 
-      // 전화번호 자동인식 방지: 숫자/하이픈 사이에 0-width space 삽입(시각 변화 없음)
       function defangTel(str){
         return str
           .replace(/\d/g, d => d + '\u200B')
@@ -803,7 +805,6 @@
         td.innerHTML = raw.replace(/[0-9-]{3,}/g, m => defangTel(m));
       });
 
-      // 복사 팝업
       const copyModal=document.getElementById('copyModal');
       const copyOk=document.getElementById('copyOk');
       if(copyOk) copyOk.addEventListener('click',()=>copyModal.classList.remove('open'));
@@ -822,7 +823,7 @@
       });
     })();
 
-    /* 공유: Web Share API + 복사 대체 */
+    /* 공유 */
     (function(){
       const btn=document.getElementById('shareCta');
       if(!btn) return;

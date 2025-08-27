@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="format-detection" content="telephone=no"> <!-- 모바일 전화번호 자동인식 방지 -->
-  <title>2025년 11월 1일 목지선 ♥︎ 김기환 결혼합니다</title>
+  <title>2025년 11월 1일 목지선 ♥︎ 김기환</title>
 
   <!-- 폰트 프리로드(선택) -->
   <link rel="preload" href="fonts/GowunBatang-Regular.woff2?v=1" as="font" type="font/woff2" crossorigin>
@@ -122,8 +122,8 @@
       margin: 0 auto;
     }
     .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; }
-    .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; } /* 아래 간격 1.3배 */
-    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; line-height:2.34; margin-top:0; } /* 3줄 줄간격 1.3배 */
+    .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
+    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; line-height:2.0; margin-top:0; } /* 요청: 줄간격 2.0 */
 
     /* 네비 앱 버튼: 항상 한 줄 + 폭 좁아지면 자동 축소 */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
@@ -140,14 +140,35 @@
 
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
-    .gallery .section-title{font-weight:700; color:#585353; text-align:center; margin-bottom:8px}
-    .hero-photo{position:relative; overflow:hidden}
-    .hero-photo img{width:100%; display:block}
-    .slide-nav{position:absolute; inset:auto 8px 8px auto; display:flex; gap:8px}
-    .slide-nav button{border:1px solid #000; background:#000; color:#fff; padding:6px 10px; cursor:pointer}
-    .thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:10px}
-    .thumbs button{padding:0; border:1px solid var(--thin); aspect-ratio:1/1; overflow:hidden; cursor:pointer; background:#fff}
-    .thumbs img{width:100%; height:100%; object-fit:cover; display:block}
+    .gallery .section-title{
+      font-family:'GowunBatang',serif; font-weight:400;
+      font-size:16pt; color:#585353; text-align:center; margin:8px 0;
+    }
+    .gallery .heart-top{ margin:0 auto 6px; }
+    .hero-photo{
+      position:relative; overflow:hidden; width:100%; aspect-ratio:4/6; /* 가로:세로 = 4:6 */
+      background:#f7f7f7;
+    }
+    .hero-photo img{
+      width:100%; height:100%; object-fit:cover; display:block;
+    }
+    .hero-arrow{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:transparent; border:none; font-size:22px; color:#585353; cursor:pointer; line-height:1;
+      padding:6px 8px;
+    }
+    .hero-arrow.prev{ left:4px; }
+    .hero-arrow.next{ right:4px; }
+
+    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; width:100%; }
+    .thumbs5 .thumb{
+      padding:0; border:1px solid var(--thin); background:#fff; cursor:pointer; overflow:hidden;
+      aspect-ratio:1/1; display:block;
+    }
+    .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; color:#585353; cursor:pointer; }
+    .thumbs-more[hidden]{ display:none; }
 
     /* ===== 방명록 ===== */
     .gb-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px}
@@ -167,15 +188,19 @@
     .acc-title{
       font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
     }
-    .acc-table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--thin); border-radius:12px; overflow:hidden; background:#fff; }
-    .acc-table thead th{ padding:0; background:#f1f1f1; } /* 요청: 헤더 셀 배경 #f1f1f1 */
+    .acc-table{
+      width:100%; border-collapse:separate; border-spacing:0;
+      border:1px solid #f1f1f1; /* 요청: 테두리 색 */
+      border-radius:12px; overflow:hidden; background:#fff;
+    }
+    .acc-table thead th{ padding:0; background:#f1f1f1; } /* 요청: 헤더 배경 #f1f1f1 */
     .acc-heading{
       width:100%; display:block; text-align:center; cursor:pointer;
       background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      padding:12px 14px; border:0; border-bottom:1px solid var(--thin);
+      padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1;
     }
-    .acc-table tbody td{ padding:10px; border-top:1px solid var(--thin); vertical-align:middle; }
-    .acc-line{ font-size:10pt; color:#585353; } /* 요청: 10pt */
+    .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
+    .acc-line{ font-size:10pt; color:#585353; }
     .copy-mini{
       font-family:'GowunBatang',serif; font-size:8pt;
       padding:6px 10px; border-radius:10px;
@@ -202,33 +227,24 @@
 
     /* ===== 카운트 블럭(달력 아래 2개) ===== */
     .when{ text-align:center; }
-    .when .title{ font-size:14pt; color:var(--accent); font-weight:700; } /* 요청: Bold */
+    .when .title{ font-size:14pt; color:var(--accent); font-weight:700; } /* Bold */
     .when .meta{ font-size:12pt; color:#585353; }
-    .count-table{
-      margin:8px auto 0;
-      border-collapse:separate; border-spacing:0;
-    }
-    .count-table th, .count-table td{
-      text-align:center; vertical-align:middle; padding:2px 0;
-    }
-    .count-labels th{
-      font-size:6pt; color:var(--hint); font-weight:400;
-    }
-    .count-values td{
-      font-size:14pt; color:#585353; font-weight:700; /* Bold (GowunBatang-Bold) */
-    }
-    .count-values .colon{ font-weight:700; font-size:12pt; } /* ‘:’ 12pt */
+    .count-table{ margin:8px auto 0; border-collapse:separate; border-spacing:0; }
+    .count-table th, .count-table td{ text-align:center; vertical-align:middle; padding:2px 0; }
+    .count-labels th{ font-size:6pt; color:var(--hint); font-weight:400; }
+    .count-values td{ font-size:14pt; color:#585353; font-weight:700; }
+    .count-values .colon{ font-weight:700; font-size:12pt; }
 
     /* ===== 공유 버튼(하단) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-cta{
       width:50%;
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      display:inline-flex; align-items:center; justify-content:center; gap:4px; /* 여백 줄임 */
       background:#fff; border:1px solid var(--thin); border-radius:10px;
       padding:10px 12px; cursor:pointer;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#585353;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; /* 요청: 12pt */
     }
-    .share-cta img{ display:inline-block; } /* 원본 크기 유지 (img-original 사용) */
+    .share-cta img{ display:inline-block; margin:0 2px; } /* 좌우 여백 축소 */
     .share-cta span{ line-height:1; }
     @media (max-width:360px){
       .share-cta{ width:70%; }
@@ -289,7 +305,7 @@
           <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
         </div>
 
-        <!-- 2025년 November: 1일(토) → 앞 6칸 공백, 30일까지 -->
+        <!-- 2025년 11월: 1일(토) → 앞 6칸 공백, 30일까지 -->
         <div class="cal-grid">
           <!-- 공백 6칸 -->
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
@@ -428,16 +444,22 @@
     </section>
 
     <!-- 갤러리 -->
-    <section class="gallery" id="gallery">
+    <section class="gallery pad" id="gallery">
+      <img src="images/heart.png" alt="하트" class="img-original heart-top">
       <div class="section-title">갤러리</div>
+
       <div class="hero-photo">
-        <img id="heroImg" alt="큰 사진">
-        <div class="slide-nav">
-          <button id="prevBtn" aria-label="이전">이전</button>
-          <button id="nextBtn" aria-label="다음">다음</button>
-        </div>
+        <img id="heroImg" alt="메인이미지">
+        <button id="heroPrev" class="hero-arrow prev" aria-label="이전">&lt;</button>
+        <button id="heroNext" class="hero-arrow next" aria-label="다음">&gt;</button>
       </div>
-      <div class="thumbs" id="thumbs"></div>
+
+      <!-- 5x5 첫 화면 -->
+      <div class="thumbs5" id="thumbsTop"></div>
+
+      <!-- 더 보기(숨김) -->
+      <div class="thumbs5 thumbs-more" id="thumbsMore" hidden></div>
+      <button id="thumbsMoreBtn" class="more-tri" aria-expanded="false" aria-controls="thumbsMore">▼</button>
     </section>
 
     <div class="thin"></div>
@@ -543,32 +565,17 @@
   </main>
 
   <script>
-    /* 7칸 표 각 열 너비 = (해당 열 최대 글자수 + 보정)ch
-       콜론 열은 +2ch, 그 외는 +1ch */
-    function adjustSevenColWidths(table){
-      const cols = table.querySelectorAll('colgroup col');
-      const headRows = table.querySelectorAll('thead tr');
-      const bodyRows = table.querySelectorAll('tbody tr');
-      if(cols.length !== 7) return;
-
-      const rows = [...headRows, ...bodyRows];
-      const maxLen = Array(7).fill(0);
-      const colonCols = new Set();
-
-      rows.forEach(tr=>{
-        const cells = [...tr.children];
-        cells.forEach((cell,i)=>{
-          const txt = (cell.textContent || '').trim();
-          const len = [...txt].length;
-          if(len > maxLen[i]) maxLen[i] = len;
-          if(cell.classList.contains('colon')) colonCols.add(i);
-        });
-      });
-
-      cols.forEach((c, i)=>{
-        const bonus = colonCols.has(i) ? 2 : 1;
-        c.style.width = (maxLen[i] + bonus) + 'ch';
-      });
+    /* 카운트 두 번째 줄(값 행) 셀 폭 규칙:
+       - 첫 번째 칸(일 수): 내용 글자 수 ch
+       - 나머지 칸(숫자/콜론 모두): 2ch 고정 */
+    function setSecondRowWidths(tbody){
+      const row = tbody.querySelector('tr');
+      if(!row) return;
+      const cells = row.children;
+      if(!cells || cells.length !== 7) return;
+      const dLen = (cells[0].textContent || '').length || 1;
+      cells[0].style.width = dLen + 'ch';
+      for(let i=1;i<cells.length;i++){ cells[i].style.width = '2ch'; }
     }
 
     /* 값 행 채우기: 숫자만(단위 텍스트 제거), 콜론은 그대로 */
@@ -579,9 +586,10 @@
       cells[2].textContent = String(h).padStart(2,'0');  // HOUR
       cells[4].textContent = String(m).padStart(2,'0');  // MIN
       cells[6].textContent = String(s).padStart(2,'0');  // SEC
+      setSecondRowWidths(tbody);
     }
 
-    /* 카운트다운 + 표 폭 조절 */
+    /* 카운트다운 */
     document.addEventListener('DOMContentLoaded', function(){
       const pastTable   = document.getElementById('pastTable');
       const futureTable = document.getElementById('futureTable');
@@ -600,7 +608,7 @@
         const h1 = Math.floor(t1 / 3600000);  t1 -= h1 * 3600000;
         const m1 = Math.floor(t1 / 60000);    t1 -= m1 * 60000;
         const s1 = Math.floor(t1 / 1000);
-        if(pastBody){ fillCountRow(pastBody, d1,h1,m1,s1); adjustSevenColWidths(pastTable); }
+        if(pastBody){ fillCountRow(pastBody, d1,h1,m1,s1); }
 
         // 남은/지남(미래)
         let t2 = future - now;
@@ -621,7 +629,7 @@
           s2 = Math.floor(passed / 1000);
         }
 
-        if(futureBody){ fillCountRow(futureBody, d2,h2,m2,s2); adjustSevenColWidths(futureTable); }
+        if(futureBody){ fillCountRow(futureBody, d2,h2,m2,s2); }
       }
 
       tick();
@@ -657,34 +665,68 @@
       setInterval(updateStatus, 3600000); // 1시간마다 갱신
     })();
 
-    /* 갤러리(간단 랜덤/슬라이드 준비) */
+    /* 갤러리: 5x10 썸네일(처음엔 5x5만 표시), 클릭/좌우 화살표로 메인이미지 변경 */
     (function(){
       const hero=document.getElementById('heroImg');
-      const thumbs=document.getElementById('thumbs');
-      const prev=document.getElementById('prevBtn');
-      const next=document.getElementById('nextBtn');
-      if(!hero||!thumbs||!prev||!next) return;
+      const prev=document.getElementById('heroPrev');
+      const next=document.getElementById('heroNext');
+      const thumbsTop=document.getElementById('thumbsTop');
+      const thumbsMore=document.getElementById('thumbsMore');
+      const moreBtn=document.getElementById('thumbsMoreBtn');
+      if(!hero||!prev||!next||!thumbsTop||!thumbsMore||!moreBtn) return;
 
-      const ALL=[
-        // 'images/p1.jpg','images/p2.jpg','images/p3.jpg','images/p4.jpg' ...
+      // 실제 파일명을 아래 배열에 채워주세요(최대 50장 가정).
+      // 예: "001.jpg","002.jpg", ...
+      const FILES=[
+        // "001.jpg","002.jpg","003.jpg", ...  <- 실제 파일명으로 대체
       ];
+      const BASE='images/pre-wedding%20snap/';
+
       function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-      const list=ALL.slice();
+      const list = shuffle(FILES.slice()).map(name => BASE + encodeURIComponent(name));
+
+      // 최소 한 장도 없으면 안내
+      if(!list.length){ hero.alt='이미지 준비중'; }
+
       let idx=0;
+
       function show(i){
-        if(!list.length){ hero.alt='이미지 준비중'; return; }
-        idx=(i+list.length)%list.length; hero.src=list[idx]+'?v=1';
+        if(!list.length){ return; }
+        idx=(i+list.length)%list.length;
+        hero.src=list[idx]+'?v=1';
       }
+
+      // 썸네일 렌더(5x5 + 나머지 5x5)
+      function makeThumb(src, i){
+        const b=document.createElement('button');
+        b.className='thumb';
+        const im=document.createElement('img');
+        im.src=src+'?v=1'; im.alt='썸네일';
+        b.appendChild(im);
+        b.addEventListener('click',()=>show(i));
+        return b;
+      }
+
+      const first25 = list.slice(0,25);
+      const next25  = list.slice(25,50);
+
+      first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
+      next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
+
+      // 첫 노출: 최상단 맨 왼쪽(= 배열 0번)
       show(0);
+
+      // 더보기(▼) : 숨김 해제 후 버튼 감춤
+      if(next25.length===0){ moreBtn.hidden = true; }
+      moreBtn.addEventListener('click', ()=>{
+        thumbsMore.hidden=false;
+        moreBtn.setAttribute('aria-expanded','true');
+        moreBtn.hidden=true;
+      });
+
+      // 좌우 화살표
       prev.addEventListener('click',()=>show(idx-1));
       next.addEventListener('click',()=>show(idx+1));
-      list.forEach((src,i)=>{
-        const b=document.createElement('button');
-        const im=document.createElement('img');
-        im.src=src+'?v=1'; im.alt='썸네일'; b.appendChild(im);
-        b.addEventListener('click',()=>show(i));
-        thumbs.appendChild(b);
-      });
     })();
 
     /* 방명록 (로컬 스텁) */

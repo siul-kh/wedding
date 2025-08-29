@@ -754,9 +754,8 @@
 
     /* ===== 방명록: Google Sheets 연동 + 5개/페이지 + 5개 단위 페이지 버튼 윈도우 + 삭제(비번) ===== */
     (function(){
-      // 주신 API 주소 사용
+      // 주신 API 주소 사용 (Apps Script ALLOW_ORIGIN: https://siul-kh.github.io/wedding/ 로 설정)
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbzQt4X0406Rgp_vIpG2fjRWaZsrgop2Cbje7nUl31hJGUBrKvi3wTD9eA4Vvw8cAllU/exec';
-      // Apps Script의 ALLOW_ORIGIN은 https://siul-kh.github.io/wedding/ 로 설정하면 됩니다.
 
       const PAGE_SIZE = 5;
 
@@ -778,7 +777,7 @@
 
       let data = [];
       let page = 1;
-      let winStart = 1; // 페이지 버튼 5개 윈도우의 시작 페이지 (1,6,11,...)
+      let winStart = 1; // 페이지 버튼 5개 윈도우 시작 (1,6,11,...)
 
       function fmtDate(iso){
         try{
@@ -817,7 +816,7 @@
       }
 
       function renderPager(totalPages){
-        // 현재 윈도우 시작 보정
+        // 현재 페이지에 맞게 윈도우 시작 조정
         if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
         if(page > winStart+4) winStart = Math.floor((page-1)/5)*5 + 1;
 
@@ -833,7 +832,6 @@
           pagesWrap.appendChild(b);
         }
 
-        // 좌/우 윈도우 이동 삼각형 표시
         prevWindowBtn.hidden = (winStart <= 1);
         nextWindowBtn.hidden = (end >= totalPages);
       }
@@ -889,7 +887,6 @@
         const ok = await apiDelete(id, passhash);
         if(!ok){ alert('삭제에 실패했습니다. 비밀번호를 확인해주세요.'); return; }
         await load();
-        // 현재 페이지가 비어버리면 한 페이지 앞으로
         const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
         if(page > totalPages) page = totalPages;
         if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
@@ -902,7 +899,6 @@
           const res = await fetch(GUESTBOOK_API+'?method=list', { cache:'no-store' });
           if(!res.ok) throw new Error('list failed');
           const json = await res.json();
-          // 방어: 배열 보장 + 최신순 유지(서버에서 이미 최신순이면 그대로)
           return Array.isArray(json) ? json : [];
         }catch(e){ console.warn(e); return []; }
       }

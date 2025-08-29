@@ -187,10 +187,16 @@
       border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer;
     }
     .gb-pages{ display:flex; gap:6px; }
+    /* === 페이지 번호 버튼: 요청 사양 === */
     .gb-pagebtn{
-      border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer;
+      border:none; background:transparent;
+      color:#9d9b9b;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
+      padding:6px 10px; border-radius:8px; cursor:pointer;
     }
-    .gb-pagebtn[aria-current="true"]{ background:#f7f7f7; font-weight:700; }
+    .gb-pagebtn[aria-current="true"]{
+      color:#585353; font-weight:700;
+    }
 
     .gb-write-wrap{ text-align:center; margin-top:12px; }
     .gb-write{
@@ -540,10 +546,11 @@
 
     <div class="thin"></div>
 
-    <!-- 공유 (하단 버튼, 현상 유지) -->
+    <!-- 공유 (하단 버튼) -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
-        <img src="Images/message.png" alt="" class="img-original">
+        <!-- 경로 수정: images/message.png -->
+        <img src="images/message.png" alt="" class="img-original">
         <span>청첩장 공유하기</span>
       </button>
     </section>

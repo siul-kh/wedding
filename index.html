@@ -182,9 +182,15 @@
     .gb-actions{ margin-top:6px; text-align:right; }
     .gb-del{ font:inherit; font-size:9pt; color:#9d9b9b; background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer; }
 
-    .gb-pager{ display:flex; align-items:center; justify-content:center; gap:8px; margin-top:12px; }
-    .gb-pager button{ border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer; }
-    .gb-pageinfo{ color:#585353; font-size:10pt; }
+    .gb-pager{ display:flex; align-items:center; justify-content:center; gap:6px; margin-top:12px; flex-wrap:wrap; }
+    .gb-pager .arrow{
+      border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer;
+    }
+    .gb-pages{ display:flex; gap:6px; }
+    .gb-pagebtn{
+      border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer;
+    }
+    .gb-pagebtn[aria-current="true"]{ background:#f7f7f7; font-weight:700; }
 
     .gb-write-wrap{ text-align:center; margin-top:12px; }
     .gb-write{
@@ -192,7 +198,7 @@
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; padding:8px 14px; border-radius:10px; cursor:pointer;
     }
 
-    /* 작성 팝업 (기존 modal/sheet 활용) */
+    /* 작성 팝업 */
     #gbModal .sheet{ width:min(92vw,420px); border-radius:14px; }
     #gbModal .hd{ display:flex; justify-content:flex-end; }
     #gbClose{ border:none; background:transparent; font-size:18px; padding:8px 10px; cursor:pointer; }
@@ -203,7 +209,16 @@
       background:#fff; border:1px solid var(--thin); border-radius:10px; padding:10px 12px; cursor:pointer;
     }
 
-    /* ===== 카운트 블럭 ===== */
+    /* “내용을 모두 입력하세요.” 알림 팝업 */
+    #gbAlertModal .sheet{ width:min(88vw,360px); border-radius:14px; }
+    #gbAlertModal .body{ padding:18px; display:grid; gap:14px; place-items:center; font-family:'GowunBatang',serif; color:#585353; }
+    .gb-alert-text{ font-size:12pt; }
+    .gb-alert-ok{
+      font-family:'GowunBatang',serif; font-size:12pt; color:#585353;
+      background:#fff; border:1px solid var(--thin); border-radius:10px; padding:8px 14px; cursor:pointer;
+    }
+
+    /* ===== 카운트 블럭 (현상 유지) ===== */
     .when{ text-align:center; }
     .when .title{ font-size:14pt; color:var(--accent); font-weight:700; }
     .when .meta{ font-size:12pt; color:#585353; }
@@ -213,7 +228,7 @@
     .count-values td{ font-size:14pt; color:#585353; font-weight:700; }
     .count-values .colon{ font-weight:700; font-size:12pt; }
 
-    /* ===== 공유 버튼(하단) ===== */
+    /* ===== 공유 버튼(하단, 현상 유지) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-cta{
       width:50%;
@@ -225,7 +240,7 @@
     .share-cta img{ display:inline-block; margin:0 2px; }
     .share-cta span{ line-height:1; }
 
-    /* ===== 아래에서 위로 애니메이션 ===== */
+    /* ===== 아래에서 위로 애니메이션 (현상 유지) ===== */
     @keyframes riseIn{
       from{ transform:translateY(24px); opacity:0; }
       to{   transform:translateY(0);   opacity:1; }
@@ -241,11 +256,11 @@
 <body>
   <main class="container">
 
-    <!-- 상단 이미지들 -->
+    <!-- 상단 이미지들 (현상 유지) -->
     <section><img src="images/1-photo.jpg?v=1" alt="상단 사진1"></section>
     <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
 
-    <!-- 시 -->
+    <!-- 시 (현상 유지) -->
     <section class="pad poem" aria-label="시">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title after-heart">13년 전,<br>우리는 처음 만나 나무를 심었습니다.</div>
@@ -276,7 +291,7 @@
 
     <section><img src="images/3-photo.png?v=1" alt="하단 사진"></section>
 
-    <!-- 달력 -->
+    <!-- 달력 (현상 유지) -->
     <section class="pad" aria-label="달력">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="cal-title after-heart">결혼합니다</div>
@@ -290,37 +305,22 @@
         <div class="cal-head">
           <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
         </div>
-
-        <!-- 2025년 11월: 1일(토) → 앞 6칸 공백, 30일까지 -->
         <div class="cal-grid">
-          <!-- 공백 6칸 -->
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
-
-          <!-- 1일(토) 강조 -->
           <div class="cal-cell"><span class="dot">1</span></div>
-
-          <!-- 2 ~ 8 -->
           <div class="cal-cell">2</div><div class="cal-cell">3</div><div class="cal-cell">4</div>
           <div class="cal-cell">5</div><div class="cal-cell">6</div><div class="cal-cell">7</div>
           <div class="cal-cell">8</div>
-
-          <!-- 9 ~ 15 -->
           <div class="cal-cell">9</div><div class="cal-cell">10</div><div class="cal-cell">11</div>
           <div class="cal-cell">12</div><div class="cal-cell">13</div><div class="cal-cell">14</div>
           <div class="cal-cell">15</div>
-
-          <!-- 16 ~ 22 -->
           <div class="cal-cell">16</div><div class="cal-cell">17</div><div class="cal-cell">18</div>
           <div class="cal-cell">19</div><div class="cal-cell">20</div><div class="cal-cell">21</div>
           <div class="cal-cell">22</div>
-
-          <!-- 23 ~ 29 -->
           <div class="cal-cell">23</div><div class="cal-cell">24</div><div class="cal-cell">25</div>
           <div class="cal-cell">26</div><div class="cal-cell">27</div><div class="cal-cell">28</div>
           <div class="cal-cell">29</div>
-
-          <!-- 30 (일) + 주 마감 공백 6칸 -->
           <div class="cal-cell">30</div>
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
@@ -330,7 +330,7 @@
       <div class="thin thin-70"></div>
     </section>
 
-    <!-- 카운트 1 -->
+    <!-- 카운트 1 (현상 유지) -->
     <section class="pad when">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
@@ -355,7 +355,7 @@
       </table>
     </section>
 
-    <!-- 카운트 2 -->
+    <!-- 카운트 2 (현상 유지) -->
     <section class="pad when">
       <div class="title" id="fruitTitle">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
@@ -380,7 +380,7 @@
       </table>
     </section>
 
-    <!-- 오시는 길 -->
+    <!-- 오시는 길 (현상 유지) -->
     <section class="pad" id="way">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title" style="margin-top:8px">오시는 길</div>
@@ -417,7 +417,7 @@
       </div>
     </section>
 
-    <!-- 갤러리 -->
+    <!-- 갤러리 (현상 유지) -->
     <section class="gallery pad" id="gallery">
       <img src="images/heart.png" alt="하트" class="img-original heart-top">
       <div class="section-title">갤러리</div>
@@ -435,7 +435,7 @@
 
     <div class="thin"></div>
 
-    <!-- ===== 방명록(새로 구성) ===== -->
+    <!-- ===== 방명록(요청대로 재구성) ===== -->
     <section class="pad" id="guestbook">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="gb-title after-heart">방명록</div>
@@ -443,9 +443,9 @@
       <div id="gbList" class="gb-list"></div>
 
       <div class="gb-pager">
-        <button id="gbPrev">이전</button>
-        <span id="gbPageInfo" class="gb-pageinfo">1 / 1</span>
-        <button id="gbNext">다음</button>
+        <button id="gbPrevWindow" class="arrow" hidden>◀</button>
+        <div id="gbPages" class="gb-pages"></div>
+        <button id="gbNextWindow" class="arrow" hidden>▶</button>
       </div>
 
       <div class="gb-write-wrap">
@@ -466,9 +466,19 @@
       </div>
     </div>
 
+    <!-- 입력 누락 알림 팝업 -->
+    <div id="gbAlertModal" class="modal">
+      <div class="sheet">
+        <div class="body">
+          <div class="gb-alert-text">내용을 모두 입력하세요.</div>
+          <button id="gbAlertOk" class="gb-alert-ok">확인</button>
+        </div>
+      </div>
+    </div>
+
     <div class="thin"></div>
 
-    <!-- 마음 전하실 곳 (그대로) -->
+    <!-- 마음 전하실 곳 (현상 유지) -->
     <section class="pad" id="accounts">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
@@ -518,7 +528,7 @@
       </table>
     </section>
 
-    <!-- 복사 완료 팝업 (그대로) -->
+    <!-- 복사 완료 팝업 (현상 유지) -->
     <div id="copyModal" class="modal copy-modal">
       <div class="sheet">
         <div class="body center">
@@ -530,7 +540,7 @@
 
     <div class="thin"></div>
 
-    <!-- 공유 (하단 버튼) -->
+    <!-- 공유 (하단 버튼, 현상 유지) -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
         <img src="Images/message.png" alt="" class="img-original">
@@ -541,7 +551,7 @@
   </main>
 
   <script>
-    /* 카운트 두 번째 줄(값 행) 폭: 첫 칸은 글자수 ch, 나머지는 2ch */
+    /* ===== 카운트 두 번째 줄(값 행) 폭: 첫 칸은 글자수 ch, 나머지는 2ch (현상 유지) ===== */
     function setSecondRowWidths(tbody){
       const row = tbody.querySelector('tr');
       if(!row) return;
@@ -599,7 +609,7 @@
       setInterval(tick, 1000);
     });
 
-    /* 달력 상태 문구 + 타이틀 변경 */
+    /* ===== 달력 상태 문구 + 타이틀 변경 (현상 유지) ===== */
     (function(){
       const el = document.getElementById('weddingStatus');
       const fruitTitle = document.getElementById('fruitTitle');
@@ -628,7 +638,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* 갤러리: GitHub API + 드래그/스와이프 + 더보기 */
+    /* ===== 갤러리: GitHub API + 드래그/스와이프 + 더보기 (현상 유지) ===== */
     (function(){
       const hero=document.getElementById('heroImg');
       const zone=document.getElementById('heroZone');
@@ -742,17 +752,19 @@
       })();
     })();
 
-    /* 새 방명록: 구글시트 API 연동(없으면 로컬) + 삭제(비밀번호) + 페이지네이션 */
+    /* ===== 방명록: Google Sheets 연동 + 5개/페이지 + 5개 단위 페이지 버튼 윈도우 + 삭제(비번) ===== */
     (function(){
-      const GUESTBOOK_API =  'https://script.google.com/macros/s/AKfycbzQt4X0406Rgp_vIpG2fjRWaZsrgop2Cbje7nUl31hJGUBrKvi3wTD9eA4Vvw8cAllU/exec’;
- // <-- 구글 앱스 스크립트 Web App URL을 넣으면 시트와 연동됩니다.
+      // 주신 API 주소 사용
+      const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbzQt4X0406Rgp_vIpG2fjRWaZsrgop2Cbje7nUl31hJGUBrKvi3wTD9eA4Vvw8cAllU/exec';
+      // Apps Script의 ALLOW_ORIGIN은 https://siul-kh.github.io/wedding/ 로 설정하면 됩니다.
+
       const PAGE_SIZE = 5;
 
       const listEl = document.getElementById('gbList');
-      const prevBtn = document.getElementById('gbPrev');
-      const nextBtn = document.getElementById('gbNext');
-      const pageInfo = document.getElementById('gbPageInfo');
       const writeBtn = document.getElementById('gbWrite');
+      const prevWindowBtn = document.getElementById('gbPrevWindow');
+      const nextWindowBtn = document.getElementById('gbNextWindow');
+      const pagesWrap = document.getElementById('gbPages');
 
       const modal = document.getElementById('gbModal');
       const closeBtn = document.getElementById('gbClose');
@@ -761,8 +773,12 @@
       const passEl = document.getElementById('gbPass');
       const msgEl  = document.getElementById('gbMsg');
 
+      const alertModal = document.getElementById('gbAlertModal');
+      const alertOk = document.getElementById('gbAlertOk');
+
       let data = [];
       let page = 1;
+      let winStart = 1; // 페이지 버튼 5개 윈도우의 시작 페이지 (1,6,11,...)
 
       function fmtDate(iso){
         try{
@@ -771,12 +787,15 @@
         }catch(e){ return iso || ''; }
       }
 
-      function render(){
-        const total = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
-        page = Math.min(Math.max(1, page), total);
-        pageInfo.textContent = `${page} / ${total}`;
-        listEl.innerHTML = '';
+      function escapeHtml(s){
+        return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+      }
 
+      function renderList(){
+        const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
+        page = Math.min(Math.max(1, page), totalPages);
+
+        listEl.innerHTML = '';
         const start = (page-1)*PAGE_SIZE;
         data.slice(start, start+PAGE_SIZE).forEach(item=>{
           const card = document.createElement('div');
@@ -793,20 +812,58 @@
           `;
           listEl.appendChild(card);
         });
+
+        renderPager(totalPages);
       }
 
-      prevBtn.addEventListener('click', ()=>{ page--; render(); });
-      nextBtn.addEventListener('click', ()=>{ page++; render(); });
+      function renderPager(totalPages){
+        // 현재 윈도우 시작 보정
+        if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
+        if(page > winStart+4) winStart = Math.floor((page-1)/5)*5 + 1;
+
+        const end = Math.min(winStart + 4, totalPages);
+
+        pagesWrap.innerHTML = '';
+        for(let p=winStart; p<=end; p++){
+          const b = document.createElement('button');
+          b.className = 'gb-pagebtn';
+          b.textContent = String(p);
+          b.setAttribute('aria-current', p===page ? 'true' : 'false');
+          b.addEventListener('click', ()=>{ page = p; renderList(); });
+          pagesWrap.appendChild(b);
+        }
+
+        // 좌/우 윈도우 이동 삼각형 표시
+        prevWindowBtn.hidden = (winStart <= 1);
+        nextWindowBtn.hidden = (end >= totalPages);
+      }
+
+      prevWindowBtn.addEventListener('click', ()=>{
+        winStart = Math.max(1, winStart - 5);
+        page = winStart;
+        renderList();
+      });
+      nextWindowBtn.addEventListener('click', ()=>{
+        const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
+        const newStart = winStart + 5;
+        if(newStart <= totalPages){
+          winStart = newStart;
+          page = winStart;
+          renderList();
+        }
+      });
 
       writeBtn.addEventListener('click', ()=>{ modal.classList.add('open'); });
       closeBtn.addEventListener('click', ()=>{ modal.classList.remove('open'); });
+
+      alertOk.addEventListener('click', ()=>{ alertModal.classList.remove('open'); });
 
       submitBtn.addEventListener('click', async ()=>{
         const name = (nameEl.value||'').trim();
         const pass = (passEl.value||'').trim();
         const msg  = (msgEl.value||'').trim();
         if(!name || !pass || !msg){
-          alert('이름, 비밀번호, 내용을 모두 입력해주세요.');
+          alertModal.classList.add('open');
           return;
         }
         const passhash = await sha256(pass);
@@ -814,12 +871,11 @@
           id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
           name, msg, passhash, date: new Date().toISOString()
         };
-
         const ok = await apiCreate(entry);
         if(!ok){ alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.'); return; }
         nameEl.value=''; passEl.value=''; msgEl.value='';
         modal.classList.remove('open');
-        await load(); page = 1; render();
+        await load(); page = 1; winStart = 1; renderList();
       });
 
       // 삭제(작성자 비번 확인)
@@ -832,65 +888,47 @@
         const passhash = await sha256(input);
         const ok = await apiDelete(id, passhash);
         if(!ok){ alert('삭제에 실패했습니다. 비밀번호를 확인해주세요.'); return; }
-        await load(); render();
+        await load();
+        // 현재 페이지가 비어버리면 한 페이지 앞으로
+        const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
+        if(page > totalPages) page = totalPages;
+        if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
+        renderList();
       });
 
-      // ===== API 래퍼 (시트 연동 없으면 localStorage로 대체) =====
+      // ==== API 래퍼 (Google Apps Script) ====
       async function apiList(){
-        if(GUESTBOOK_API){
-          try{
-            const res = await fetch(GUESTBOOK_API+'?method=list', { cache:'no-store' });
-            if(!res.ok) throw new Error('list failed');
-            const json = await res.json();
-            return Array.isArray(json) ? json : [];
-          }catch(e){ console.warn(e); return []; }
-        }else{
-          return JSON.parse(localStorage.getItem('gb_data_v2')||'[]');
-        }
+        try{
+          const res = await fetch(GUESTBOOK_API+'?method=list', { cache:'no-store' });
+          if(!res.ok) throw new Error('list failed');
+          const json = await res.json();
+          // 방어: 배열 보장 + 최신순 유지(서버에서 이미 최신순이면 그대로)
+          return Array.isArray(json) ? json : [];
+        }catch(e){ console.warn(e); return []; }
       }
       async function apiCreate(entry){
-        if(GUESTBOOK_API){
-          try{
-            const res = await fetch(GUESTBOOK_API, {
-              method:'POST',
-              headers:{'Content-Type':'application/json'},
-              body: JSON.stringify({ method:'create', entry })
-            });
-            return res.ok;
-          }catch(e){ console.warn(e); return false; }
-        }else{
-          const cur = JSON.parse(localStorage.getItem('gb_data_v2')||'[]');
-          cur.unshift(entry);
-          localStorage.setItem('gb_data_v2', JSON.stringify(cur));
-          return true;
-        }
+        try{
+          const res = await fetch(GUESTBOOK_API, {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ method:'create', entry })
+          });
+          return res.ok;
+        }catch(e){ console.warn(e); return false; }
       }
       async function apiDelete(id, passhash){
-        if(GUESTBOOK_API){
-          try{
-            const res = await fetch(GUESTBOOK_API, {
-              method:'POST',
-              headers:{'Content-Type':'application/json'},
-              body: JSON.stringify({ method:'delete', id, passhash })
-            });
-            return res.ok;
-          }catch(e){ console.warn(e); return false; }
-        }else{
-          let cur = JSON.parse(localStorage.getItem('gb_data_v2')||'[]');
-          const idx = cur.findIndex(x=>x.id===id && x.passhash===passhash);
-          if(idx === -1) return false;
-          cur.splice(idx,1);
-          localStorage.setItem('gb_data_v2', JSON.stringify(cur));
-          return true;
-        }
+        try{
+          const res = await fetch(GUESTBOOK_API, {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ method:'delete', id, passhash })
+          });
+          return res.ok;
+        }catch(e){ console.warn(e); return false; }
       }
 
       async function load(){
         data = await apiList();
-      }
-
-      function escapeHtml(s){
-        return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
       }
       async function sha256(str){
         const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
@@ -899,11 +937,11 @@
 
       (async function init(){
         await load();
-        render();
+        renderList();
       })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 + 전화번호 자동인식 방지 (현상 유지) */
+    /* ===== 마음 전하실 곳: 토글 + 복사 팝업 + 전화번호 자동인식 방지 (현상 유지) ===== */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn = tbl.querySelector('.acc-heading');
@@ -944,7 +982,7 @@
       });
     })();
 
-    /* 공유 (현상 유지) */
+    /* ===== 공유 (현상 유지) ===== */
     (function(){
       const btn=document.getElementById('shareCta');
       if(!btn) return;
@@ -955,7 +993,7 @@
       });
     })();
 
-    /* 아래에서 위로 애니메이션: .share-box 제외(현상 유지) */
+    /* ===== 아래에서 위로 애니메이션: .share-box 제외(현상 유지) ===== */
     (function(){
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const all = Array.from(document.querySelectorAll('main > section, .thin'));

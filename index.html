@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="format-detection" content="telephone=no"> <!-- 모바일 전화번호 자동인식 방지 -->
+  <meta name="format-detection" content="telephone=no">
   <title>2025년 11월 1일 목지선 ♥︎ 김기환</title>
 
   <!-- 폰트 프리로드(선택) -->
@@ -47,14 +47,14 @@
     .pad{padding:24px 16px}
     .center{text-align:center}
     .thin{height:1px; background:var(--thin); margin:16px 0}
-    .thin-70{ width:70%; margin:16px auto; } /* 달력 앞뒤 얇은 선 */
+    .thin-70{ width:70%; margin:16px auto; }
 
     /* 이미지 공통 */
     img{display:block; height:auto;}
     img:not(.img-original){ width:100%; }
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
 
-    /* 시(가운데 정렬) */
+    /* 시 */
     .poem{text-align:center}
     .poem p{margin:8px 0}
     .poem .big{font-size:14pt; color:#585353; font-weight:700}
@@ -62,33 +62,26 @@
     .poem .big + .big{ margin-top:12px; }
     .poem .normal{font-size:12pt; color:#585353}
     .after-heart{ margin-top:var(--heart-gap)!important; }
-    .poem .go-title{ font-size:14pt; } /* 시 위 문장 14pt */
+    .poem .go-title{ font-size:14pt; }
 
     /* ===== 달력 ===== */
     .cal-title{
       font-family:'GowunBatang',serif; font-weight:700;
-      font-size:16pt; color:#585353; text-align:center; margin:6px 0; /* 간격 0.7배 */
+      font-size:16pt; color:#585353; text-align:center; margin:6px 0;
     }
     .cal-sub{
       text-align:center; font-family:'GowunBatang',serif; font-weight:400;
-      font-size:12pt; color:#585353; margin:3px 0 4px; /* 간격 0.7배 */
+      font-size:12pt; color:#585353; margin:3px 0 4px;
     }
     .cal-msg{
       text-align:center; font-family:'GowunBatang',serif; font-weight:400;
-      font-size:12pt; color:#585353; margin:4px 0 7px; /* 글자 12pt & 간격 0.7배 */
+      font-size:12pt; color:#585353; margin:4px 0 7px;
     }
-    .cal-msg .dleft{
-      color:var(--accent);
-      font-weight:700; /* GowunBatang-Bold 사용 */
-    }
+    .cal-msg .dleft{ color:var(--accent); font-weight:700; }
 
     .calendar{ width:70%; margin:0 auto; padding:0 4px; }
-    .cal-head, .cal-grid{
-      display:grid; grid-template-columns:repeat(7,1fr); gap:6px;
-    }
-    .cal-head div{
-      text-align:center; font-size:12pt; color:#585353; letter-spacing:.04em; padding:4px 0;
-    }
+    .cal-head, .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+    .cal-head div{ text-align:center; font-size:12pt; color:#585353; letter-spacing:.04em; padding:4px 0; }
     .cal-cell{
       aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
       font-size:12pt; color:#585353;
@@ -124,7 +117,7 @@
     }
     .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; }
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
-    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; line-height:2.0; margin-top:0; } /* 줄간격 2.0 */
+    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; line-height:2.0; margin-top:0; }
 
     /* 네비 앱 버튼 */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
@@ -142,13 +135,13 @@
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
     .gallery .section-title{
-      font-family:'GowunBatang',serif; font-weight:700; /* Bold 유지 */
+      font-family:'GowunBatang',serif; font-weight:700;
       font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
     .gallery .heart-top{ margin:0 auto 6px; }
     .hero-photo{
       position:relative; overflow:hidden; width:100%; aspect-ratio:4/6;
-      background:#f7f7f7; touch-action:pan-y; cursor:grab; /* 드래그 스와이프 */
+      background:#f7f7f7; touch-action:pan-y; cursor:grab;
     }
     .hero-photo img{
       width:100%; height:100%; object-fit:cover; display:block; user-select:none;
@@ -163,9 +156,9 @@
     .hero-arrow.next{ right:4px; }
 
     .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%;
-      margin-block:var(--thumb-gap); } /* 위/아래 여백=간격과 동일 */
+      margin-block:var(--thumb-gap); }
     .thumbs5 .thumb{
-      padding:0; border:none; /* 테두리 제거 유지 */
+      padding:0; border:none;
       background:#fff; cursor:pointer; overflow:hidden;
       aspect-ratio:1/1; display:block;
     }
@@ -173,64 +166,46 @@
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; color:#585353; cursor:pointer; }
     .thumbs-more[hidden]{ display:none; }
 
-    /* ===== 방명록 ===== */
-    .gb-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px}
-    .gb-list{display:grid; gap:10px}
-    .card{border:1px solid var(--thin); padding:12px}
-    .pager{display:flex; gap:6px; align-items:center}
-    .pager button{border:1px solid var(--thin); background:#fff; padding:6px 10px; cursor:pointer}
-    .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.45); z-index:100}
-    .modal.open{display:grid}
-    .sheet{background:#fff; border:1px solid var(--thin)}
-    .sheet .hd{display:flex; justify-content:flex-end}
-    .sheet .hd button{border:none; background:transparent; font-size:18px; padding:8px 10px; cursor:pointer}
-    .sheet .body{padding:16px; display:grid; gap:10px}
-    input, textarea{width:100%; padding:10px; border:1px solid var(--thin); font:inherit}
+    /* ===== 새 방명록 ===== */
+    #guestbook .gb-title{
+      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px;
+    }
+    .gb-list{ display:grid; gap:12px; }
+    .gb-card{
+      width:70%; margin:0 auto; background:#fff;
+      border:1px solid var(--thin); border-radius:12px; padding:12px;
+    }
+    .gb-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+    .gb-name{ font-family:'GowunBatang',serif; font-weight:700; font-size:10pt; color:#585353; }
+    .gb-date{ font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#9d9b9b; }
+    .gb-msg{ margin-top:6px; font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#585353; white-space:pre-wrap; word-break:break-word; }
+    .gb-actions{ margin-top:6px; text-align:right; }
+    .gb-del{ font:inherit; font-size:9pt; color:#9d9b9b; background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer; }
 
-    /* ===== 마음 전하실 곳 ===== */
-    .acc-title{
-      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
-    }
-    .acc-table{
-      width:100%; border-collapse:separate; border-spacing:0;
-      border:1px solid #f1f1f1; /* 테두리 색 */
-      border-radius:12px; overflow:hidden; background:#fff;
-    }
-    .acc-table thead th{ padding:0; background:#f1f1f1; } /* 헤더 배경 */
-    .acc-heading{
-      width:100%; display:block; text-align:center; cursor:pointer;
-      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1;
-    }
-    .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
-    .acc-line{ font-size:10pt; color:#585353; }
-    .copy-mini{
-      font-family:'GowunBatang',serif; font-size:8pt;
-      padding:6px 10px; border-radius:10px;
-      background:transparent; color:#585353; border:1px solid var(--thin);
-      cursor:pointer;
-    }
-    .copy-col{ width:80px; text-align:right; }
+    .gb-pager{ display:flex; align-items:center; justify-content:center; gap:8px; margin-top:12px; }
+    .gb-pager button{ border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer; }
+    .gb-pageinfo{ color:#585353; font-size:10pt; }
 
-    /* 복사 완료 팝업: 가로형 비율 + 확인 버튼 */
-    .copy-modal .sheet{
-      width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto;
-    }
-    .copy-modal .body{
-      display:grid; place-items:center; gap:14px;
-      padding:24px 18px;
-      font-family:'GowunBatang',serif; font-weight:400; color:#585353;
-    }
-    .copy-ok{
-      font-family:'GowunBatang',serif; font-size:10pt;
-      padding:8px 14px; border-radius:10px;
-      background:transparent; color:#585353; border:1px solid var(--thin);
-      cursor:pointer;
+    .gb-write-wrap{ text-align:center; margin-top:12px; }
+    .gb-write{
+      display:inline-block; background:#fff; border:1px solid var(--thin); color:#585353;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; padding:8px 14px; border-radius:10px; cursor:pointer;
     }
 
-    /* ===== 카운트 블럭(달력 아래 2개) ===== */
+    /* 작성 팝업 (기존 modal/sheet 활용) */
+    #gbModal .sheet{ width:min(92vw,420px); border-radius:14px; }
+    #gbModal .hd{ display:flex; justify-content:flex-end; }
+    #gbClose{ border:none; background:transparent; font-size:18px; padding:8px 10px; cursor:pointer; }
+    #gbModal .body{ padding:16px; display:grid; gap:10px; }
+    #gbModal input, #gbModal textarea{ width:100%; padding:10px; border:1px solid var(--thin); font:inherit; }
+    .gb-submit{
+      font-family:'GowunBatang',serif; font-weight:700; font-size:12pt; color:#585353;
+      background:#fff; border:1px solid var(--thin); border-radius:10px; padding:10px 12px; cursor:pointer;
+    }
+
+    /* ===== 카운트 블럭 ===== */
     .when{ text-align:center; }
-    .when .title{ font-size:14pt; color:var(--accent); font-weight:700; } /* Bold */
+    .when .title{ font-size:14pt; color:var(--accent); font-weight:700; }
     .when .meta{ font-size:12pt; color:#585353; }
     .count-table{ margin:8px auto 0; border-collapse:separate; border-spacing:0; }
     .count-table th, .count-table td{ text-align:center; vertical-align:middle; padding:2px 0; }
@@ -243,24 +218,20 @@
     .share-cta{
       width:50%;
       display:inline-flex; align-items:center; justify-content:center; gap:4px;
-      background:#fff; border:none; /* 테두리 없음 (요청) */
-      border-radius:10px;
+      background:#fff; border:none; border-radius:10px;
       padding:10px 12px; cursor:pointer;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; /* 12pt, #585353 */
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
     }
     .share-cta img{ display:inline-block; margin:0 2px; }
     .share-cta span{ line-height:1; }
-    @media (max-width:360px){
-      .share-cta{ width:70%; }
-    }
 
-    /* ===== 아래에서 위로 올라오는 애니메이션(스크롤 등장, 속도 더 느리게) ===== */
+    /* ===== 아래에서 위로 애니메이션 ===== */
     @keyframes riseIn{
       from{ transform:translateY(24px); opacity:0; }
       to{   transform:translateY(0);   opacity:1; }
     }
     .reveal-up{ opacity:0; transform:translateY(24px); will-change:transform,opacity; }
-    .reveal-up.show{ animation:riseIn 1100ms cubic-bezier(.2,.7,.2,1) forwards; } /* 1.1초로 느리게 */
+    .reveal-up.show{ animation:riseIn 1100ms cubic-bezier(.2,.7,.2,1) forwards; }
     @media (prefers-reduced-motion:reduce){
       .reveal-up{ opacity:1; transform:none; }
       .reveal-up.show{ animation:none; }
@@ -311,7 +282,6 @@
       <div class="cal-title after-heart">결혼합니다</div>
       <div class="cal-sub">2025년 11월 1일 오후 2시</div>
 
-      <!-- 상태 문구: 12pt + ‘N일’ 볼드/색상 -->
       <div id="weddingStatus" class="cal-msg">지선, 기환의 결혼식이 <span class="dleft">0일</span> 남았습니다.</div>
 
       <div class="thin thin-70"></div>
@@ -360,7 +330,7 @@
       <div class="thin thin-70"></div>
     </section>
 
-    <!-- 카운트(2개) -->
+    <!-- 카운트 1 -->
     <section class="pad when">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
@@ -385,6 +355,7 @@
       </table>
     </section>
 
+    <!-- 카운트 2 -->
     <section class="pad when">
       <div class="title" id="fruitTitle">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
@@ -457,44 +428,47 @@
         <button id="heroNext" class="hero-arrow next" aria-label="다음">&gt;</button>
       </div>
 
-      <!-- 5x5 첫 화면 -->
       <div class="thumbs5" id="thumbsTop"></div>
-      <!-- 더 보기(토글) -->
       <div class="thumbs5 thumbs-more" id="thumbsMore" hidden></div>
       <button id="thumbsMoreBtn" class="more-tri" aria-expanded="false" aria-controls="thumbsMore">▼</button>
     </section>
 
     <div class="thin"></div>
 
-    <!-- 방명록 -->
+    <!-- ===== 방명록(새로 구성) ===== -->
     <section class="pad" id="guestbook">
-      <div class="gb-head">
-        <div style="font-weight:700; color:#585353">방명록</div>
-        <div class="pager">
-          <button id="prevPage">이전</button>
-          <span id="pageInfo">1 / 1</span>
-          <button id="nextPage">다음</button>
-          <button id="writeBtn" style="margin-left:8px">작성하기</button>
-        </div>
-      </div>
+      <img src="images/heart.png" alt="하트" class="img-original">
+      <div class="gb-title after-heart">방명록</div>
+
       <div id="gbList" class="gb-list"></div>
+
+      <div class="gb-pager">
+        <button id="gbPrev">이전</button>
+        <span id="gbPageInfo" class="gb-pageinfo">1 / 1</span>
+        <button id="gbNext">다음</button>
+      </div>
+
+      <div class="gb-write-wrap">
+        <button id="gbWrite" class="gb-write">작성하기</button>
+      </div>
     </section>
 
     <!-- 방명록 작성 팝업 -->
     <div id="gbModal" class="modal">
-      <div class="sheet" style="width:min(92vw,420px);">
+      <div class="sheet">
         <div class="hd"><button id="gbClose" aria-label="닫기">✕</button></div>
         <div class="body">
           <input id="gbName" placeholder="이름"/>
+          <input id="gbPass" placeholder="비밀번호" type="password"/>
           <textarea id="gbMsg" rows="4" placeholder="내용"></textarea>
-          <button id="gbSubmit" class="nav-btn" style="justify-content:center">신랑 &amp; 신부에게 축하 글 전달하기</button>
+          <button id="gbSubmit" class="gb-submit">신랑 &amp; 신부에게 축하 글 전달하기</button>
         </div>
       </div>
     </div>
 
     <div class="thin"></div>
 
-    <!-- 마음 전하실 곳 -->
+    <!-- 마음 전하실 곳 (그대로) -->
     <section class="pad" id="accounts">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
@@ -544,7 +518,7 @@
       </table>
     </section>
 
-    <!-- 복사 완료 팝업 -->
+    <!-- 복사 완료 팝업 (그대로) -->
     <div id="copyModal" class="modal copy-modal">
       <div class="sheet">
         <div class="body center">
@@ -556,10 +530,10 @@
 
     <div class="thin"></div>
 
-    <!-- 공유 (하단 버튼) : 다시 생성 -->
+    <!-- 공유 (하단 버튼) -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
-        <img src="Images/message.png" alt="" class="img-original"><!-- 원본 크기 유지 -->
+        <img src="Images/message.png" alt="" class="img-original">
         <span>청첩장 공유하기</span>
       </button>
     </section>
@@ -625,7 +599,7 @@
       setInterval(tick, 1000);
     });
 
-    /* 달력 상태 문구 */
+    /* 달력 상태 문구 + 타이틀 변경 */
     (function(){
       const el = document.getElementById('weddingStatus');
       const fruitTitle = document.getElementById('fruitTitle');
@@ -654,7 +628,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* 갤러리: GitHub API로 폴더 내 모든 이미지 자동 로드 + 스와이프/드래그 + 더보기 토글 */
+    /* 갤러리: GitHub API + 드래그/스와이프 + 더보기 */
     (function(){
       const hero=document.getElementById('heroImg');
       const zone=document.getElementById('heroZone');
@@ -665,9 +639,7 @@
       const moreBtn=document.getElementById('thumbsMoreBtn');
       if(!hero||!prev||!next||!thumbsTop||!thumbsMore||!moreBtn||!zone) return;
 
-      /* === 저장소 정보 필요시 설정 === */
       const GH = { owner:'', repo:'', ref:'main', dir:'images/pre-wedding snap' };
-
       if(!GH.owner || !GH.repo){
         const host = location.hostname;
         if(host.endsWith('github.io')){
@@ -726,7 +698,6 @@
 
         show(0);
 
-        // 더보기 토글(▼/▲)
         moreBtn.hidden = next25.length===0;
         moreBtn.textContent = '▼';
         moreBtn.setAttribute('aria-expanded','false');
@@ -738,11 +709,9 @@
           moreBtn.setAttribute('aria-expanded', String(willOpen));
         });
 
-        // 좌우 화살표
         prev.addEventListener('click',()=>show(idx-1));
         next.addEventListener('click',()=>show(idx+1));
 
-        // 스와이프/드래그(모바일/PC 공통, Pointer Events)
         let isDown=false, startX=0, dx=0, pid=null;
         zone.addEventListener('pointerdown', (e)=>{
           isDown=true; startX=e.clientX; dx=0; pid=e.pointerId;
@@ -773,56 +742,167 @@
       })();
     })();
 
-    /* 방명록 (로컬 스텁) */
+    /* 새 방명록: 구글시트 API 연동(없으면 로컬) + 삭제(비밀번호) + 페이지네이션 */
     (function(){
-      const listEl=document.getElementById('gbList');
-      const btnWrite=document.getElementById('writeBtn');
-      const modal=document.getElementById('gbModal');
-      const close=document.getElementById('gbClose');
-      const submit=document.getElementById('gbSubmit');
-      const nameEl=document.getElementById('gbName');
-      const msgEl=document.getElementById('gbMsg');
-      const pageInfo=document.getElementById('pageInfo');
-      const prev=document.getElementById('prevPage');
-      const next=document.getElementById('nextPage');
+      const GUESTBOOK_API = ''; // <-- 구글 앱스 스크립트 Web App URL을 넣으면 시트와 연동됩니다.
+      const PAGE_SIZE = 5;
 
-      if(!listEl) return;
+      const listEl = document.getElementById('gbList');
+      const prevBtn = document.getElementById('gbPrev');
+      const nextBtn = document.getElementById('gbNext');
+      const pageInfo = document.getElementById('gbPageInfo');
+      const writeBtn = document.getElementById('gbWrite');
 
-      let data=JSON.parse(localStorage.getItem('gb_data')||'[]');
-      const pageSize=5; let page=1;
+      const modal = document.getElementById('gbModal');
+      const closeBtn = document.getElementById('gbClose');
+      const submitBtn = document.getElementById('gbSubmit');
+      const nameEl = document.getElementById('gbName');
+      const passEl = document.getElementById('gbPass');
+      const msgEl  = document.getElementById('gbMsg');
+
+      let data = [];
+      let page = 1;
+
+      function fmtDate(iso){
+        try{
+          const d = iso ? new Date(iso) : new Date();
+          return d.toLocaleDateString('ko-KR');
+        }catch(e){ return iso || ''; }
+      }
 
       function render(){
-        const total=Math.max(1, Math.ceil(data.length/pageSize));
-        page=Math.min(Math.max(1,page), total);
-        pageInfo.textContent=`${page} / ${total}`;
-        listEl.innerHTML='';
-        const start=(page-1)*pageSize;
-        data.slice(start, start+pageSize).forEach(item=>{
-          const card=document.createElement('div');
-          card.className='card';
-          card.innerHTML=`<div style="font-weight:700">${item.name}</div>
-                          <div style="font-size:10pt; color:#777">${item.date}</div>
-                          <div style="margin-top:6px">${item.msg.replace(/\n/g,'<br>')}</div>`;
+        const total = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
+        page = Math.min(Math.max(1, page), total);
+        pageInfo.textContent = `${page} / ${total}`;
+        listEl.innerHTML = '';
+
+        const start = (page-1)*PAGE_SIZE;
+        data.slice(start, start+PAGE_SIZE).forEach(item=>{
+          const card = document.createElement('div');
+          card.className = 'gb-card';
+          card.innerHTML = `
+            <div class="gb-row">
+              <div class="gb-name">${escapeHtml(item.name)}</div>
+              <div class="gb-date">${escapeHtml(fmtDate(item.date))}</div>
+            </div>
+            <div class="gb-msg">${escapeHtml(item.msg)}</div>
+            <div class="gb-actions">
+              <button class="gb-del" data-id="${item.id}">삭제</button>
+            </div>
+          `;
           listEl.appendChild(card);
         });
       }
-      render();
 
-      btnWrite.addEventListener('click',()=>{ modal.classList.add('open'); });
-      close.addEventListener('click',()=> modal.classList.remove('open'));
-      prev.addEventListener('click',()=>{ page--; render(); });
-      next.addEventListener('click',()=>{ page++; render(); });
-      submit.addEventListener('click',()=>{
-        const name=nameEl.value.trim(); const msg=msgEl.value.trim();
-        if(!name || !msg) return alert('이름과 내용을 입력해주세요.');
-        const date=new Date().toLocaleDateString('ko-KR');
-        data=[{name, msg, date}, ...data];
-        localStorage.setItem('gb_data', JSON.stringify(data));
-        nameEl.value=''; msgEl.value=''; modal.classList.remove('open'); render();
+      prevBtn.addEventListener('click', ()=>{ page--; render(); });
+      nextBtn.addEventListener('click', ()=>{ page++; render(); });
+
+      writeBtn.addEventListener('click', ()=>{ modal.classList.add('open'); });
+      closeBtn.addEventListener('click', ()=>{ modal.classList.remove('open'); });
+
+      submitBtn.addEventListener('click', async ()=>{
+        const name = (nameEl.value||'').trim();
+        const pass = (passEl.value||'').trim();
+        const msg  = (msgEl.value||'').trim();
+        if(!name || !pass || !msg){
+          alert('이름, 비밀번호, 내용을 모두 입력해주세요.');
+          return;
+        }
+        const passhash = await sha256(pass);
+        const entry = {
+          id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+          name, msg, passhash, date: new Date().toISOString()
+        };
+
+        const ok = await apiCreate(entry);
+        if(!ok){ alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.'); return; }
+        nameEl.value=''; passEl.value=''; msgEl.value='';
+        modal.classList.remove('open');
+        await load(); page = 1; render();
       });
+
+      // 삭제(작성자 비번 확인)
+      document.addEventListener('click', async (e)=>{
+        const btn = e.target.closest('.gb-del');
+        if(!btn) return;
+        const id = btn.getAttribute('data-id');
+        const input = prompt('삭제 비밀번호를 입력하세요.');
+        if(!input) return;
+        const passhash = await sha256(input);
+        const ok = await apiDelete(id, passhash);
+        if(!ok){ alert('삭제에 실패했습니다. 비밀번호를 확인해주세요.'); return; }
+        await load(); render();
+      });
+
+      // ===== API 래퍼 (시트 연동 없으면 localStorage로 대체) =====
+      async function apiList(){
+        if(GUESTBOOK_API){
+          try{
+            const res = await fetch(GUESTBOOK_API+'?method=list', { cache:'no-store' });
+            if(!res.ok) throw new Error('list failed');
+            const json = await res.json();
+            return Array.isArray(json) ? json : [];
+          }catch(e){ console.warn(e); return []; }
+        }else{
+          return JSON.parse(localStorage.getItem('gb_data_v2')||'[]');
+        }
+      }
+      async function apiCreate(entry){
+        if(GUESTBOOK_API){
+          try{
+            const res = await fetch(GUESTBOOK_API, {
+              method:'POST',
+              headers:{'Content-Type':'application/json'},
+              body: JSON.stringify({ method:'create', entry })
+            });
+            return res.ok;
+          }catch(e){ console.warn(e); return false; }
+        }else{
+          const cur = JSON.parse(localStorage.getItem('gb_data_v2')||'[]');
+          cur.unshift(entry);
+          localStorage.setItem('gb_data_v2', JSON.stringify(cur));
+          return true;
+        }
+      }
+      async function apiDelete(id, passhash){
+        if(GUESTBOOK_API){
+          try{
+            const res = await fetch(GUESTBOOK_API, {
+              method:'POST',
+              headers:{'Content-Type':'application/json'},
+              body: JSON.stringify({ method:'delete', id, passhash })
+            });
+            return res.ok;
+          }catch(e){ console.warn(e); return false; }
+        }else{
+          let cur = JSON.parse(localStorage.getItem('gb_data_v2')||'[]');
+          const idx = cur.findIndex(x=>x.id===id && x.passhash===passhash);
+          if(idx === -1) return false;
+          cur.splice(idx,1);
+          localStorage.setItem('gb_data_v2', JSON.stringify(cur));
+          return true;
+        }
+      }
+
+      async function load(){
+        data = await apiList();
+      }
+
+      function escapeHtml(s){
+        return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+      }
+      async function sha256(str){
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+      }
+
+      (async function init(){
+        await load();
+        render();
+      })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 + 전화번호 자동인식 방지 */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 + 전화번호 자동인식 방지 (현상 유지) */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn = tbl.querySelector('.acc-heading');
@@ -863,7 +943,7 @@
       });
     })();
 
-    /* 공유 */
+    /* 공유 (현상 유지) */
     (function(){
       const btn=document.getElementById('shareCta');
       if(!btn) return;
@@ -874,11 +954,16 @@
       });
     })();
 
-    /* 아래에서 위로 올라오는 애니메이션: 섹션들 자동 적용 (속도 1.1초) */
+    /* 아래에서 위로 애니메이션: .share-box 제외(현상 유지) */
     (function(){
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const targets = Array.from(document.querySelectorAll('main > section, .thin'));
+      const all = Array.from(document.querySelectorAll('main > section, .thin'));
+      const targets = all.filter(el => !el.classList.contains('share-box'));
+      const share = document.querySelector('.share-box');
+
       targets.forEach(el => el.classList.add('reveal-up'));
+      if (share) share.classList.add('show');
+
       if (REDUCED) { targets.forEach(el => el.classList.add('show')); return; }
 
       const io = new IntersectionObserver((entries)=>{

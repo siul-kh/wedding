@@ -166,7 +166,7 @@
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; color:#585353; cursor:pointer; }
     .thumbs-more[hidden]{ display:none; }
 
-    /* ===== 새 방명록 ===== */
+    /* ===== 방명록 섹션 ===== */
     #guestbook .gb-title{
       font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px;
     }
@@ -187,7 +187,6 @@
       border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer;
     }
     .gb-pages{ display:flex; gap:6px; }
-    /* === 페이지 번호 버튼: 요청 사양 === */
     .gb-pagebtn{
       border:none; background:transparent;
       color:#9d9b9b;
@@ -222,6 +221,47 @@
     .gb-alert-ok{
       font-family:'GowunBatang',serif; font-size:12pt; color:#585353;
       background:#fff; border:1px solid var(--thin); border-radius:10px; padding:8px 14px; cursor:pointer;
+    }
+
+    /* ===== 마음 전하실 곳 ===== */
+    .acc-title{
+      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
+    }
+    .acc-table{
+      width:100%; border-collapse:separate; border-spacing:0;
+      border:1px solid #f1f1f1; /* 요청: 테두리 색 */
+      border-radius:12px; overflow:hidden; background:#fff;
+    }
+    .acc-table thead th{ padding:0; background:#f1f1f1; } /* 요청: 헤더 배경 #f1f1f1 */
+    .acc-heading{
+      width:100%; display:block; text-align:center; cursor:pointer;
+      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
+      padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1;
+    }
+    .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
+    .acc-line{ font-size:10pt; color:#585353; }
+    .copy-mini{
+      font-family:'GowunBatang',serif; font-size:8pt;
+      padding:6px 10px; border-radius:10px;
+      background:transparent; color:#585353; border:1px solid var(--thin);
+      cursor:pointer;
+    }
+    .copy-col{ width:80px; text-align:right; }
+
+    /* 복사 완료 팝업: 가로형 비율 + 확인 버튼 */
+    .copy-modal .sheet{
+      width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto;
+    }
+    .copy-modal .body{
+      display:grid; place-items:center; gap:14px;
+      padding:24px 18px;
+      font-family:'GowunBatang',serif; font-weight:400; color:#585353;
+    }
+    .copy-ok{
+      font-family:'GowunBatang',serif; font-size:10pt;
+      padding:8px 14px; border-radius:10px;
+      background:transparent; color:#585353; border:1px solid var(--thin);
+      cursor:pointer;
     }
 
     /* ===== 카운트 블럭 (현상 유지) ===== */
@@ -441,7 +481,7 @@
 
     <div class="thin"></div>
 
-    <!-- ===== 방명록(요청대로 재구성) ===== -->
+    <!-- 방명록 (요청사항 반영) -->
     <section class="pad" id="guestbook">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="gb-title after-heart">방명록</div>
@@ -484,12 +524,12 @@
 
     <div class="thin"></div>
 
-    <!-- 마음 전하실 곳 (현상 유지) -->
+    <!-- 마음 전하실 곳 -->
     <section class="pad" id="accounts">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 신랑 측 -->
+      <!-- 신랑 측: 버튼+표 일체형 -->
       <table class="acc-table acc-group" id="accGroomTbl">
         <thead>
           <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr>
@@ -512,7 +552,7 @@
 
       <div style="height:10px"></div>
 
-      <!-- 신부 측 -->
+      <!-- 신부 측: 버튼+표 일체형 -->
       <table class="acc-table acc-group" id="accBrideTbl">
         <thead>
           <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr>
@@ -534,7 +574,7 @@
       </table>
     </section>
 
-    <!-- 복사 완료 팝업 (현상 유지) -->
+    <!-- 복사 완료 팝업(가로형 + 확인 버튼) -->
     <div id="copyModal" class="modal copy-modal">
       <div class="sheet">
         <div class="body center">
@@ -546,10 +586,9 @@
 
     <div class="thin"></div>
 
-    <!-- 공유 (하단 버튼) -->
+    <!-- 공유 (하단 버튼, 경로 수정 images/message.png) -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
-        <!-- 경로 수정: images/message.png -->
         <img src="images/message.png" alt="" class="img-original">
         <span>청첩장 공유하기</span>
       </button>
@@ -761,7 +800,7 @@
 
     /* ===== 방명록: Google Sheets 연동 + 5개/페이지 + 5개 단위 페이지 버튼 윈도우 + 삭제(비번) ===== */
     (function(){
-      // 주신 API 주소 사용 (Apps Script ALLOW_ORIGIN: https://siul-kh.github.io/wedding/ 로 설정)
+      // Apps Script에서 ALLOW_ORIGIN: https://siul-kh.github.io/wedding/ 로 설정
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbzQt4X0406Rgp_vIpG2fjRWaZsrgop2Cbje7nUl31hJGUBrKvi3wTD9eA4Vvw8cAllU/exec';
 
       const PAGE_SIZE = 5;
@@ -823,7 +862,6 @@
       }
 
       function renderPager(totalPages){
-        // 현재 페이지에 맞게 윈도우 시작 조정
         if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
         if(page > winStart+4) winStart = Math.floor((page-1)/5)*5 + 1;
 
@@ -944,8 +982,9 @@
       })();
     })();
 
-    /* ===== 마음 전하실 곳: 토글 + 복사 팝업 + 전화번호 자동인식 방지 (현상 유지) ===== */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 + 전화번호 자동인식 방지 */
     (function(){
+      // 토글
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn = tbl.querySelector('.acc-heading');
         const body = tbl.querySelector('tbody');
@@ -957,6 +996,7 @@
         });
       });
 
+      // 전화번호 자동인식 방지: 숫자/하이픈 사이에 0-width space 삽입(시각 변화 없음)
       function defangTel(str){
         return str
           .replace(/\d/g, d => d + '\u200B')
@@ -967,6 +1007,7 @@
         td.innerHTML = raw.replace(/[0-9-]{3,}/g, m => defangTel(m));
       });
 
+      // 복사 팝업
       const copyModal=document.getElementById('copyModal');
       const copyOk=document.getElementById('copyOk');
       if(copyOk) copyOk.addEventListener('click',()=>copyModal.classList.remove('open'));

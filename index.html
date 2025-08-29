@@ -101,20 +101,11 @@
 
     /* ===== 오시는 길 ===== */
     .go-title {
-      font-family: 'GowunBatang', serif;
-      font-weight: 700;
-      font-size: 16pt;
-      color: #585353;
-      text-align: center;
+      font-family: 'GowunBatang', serif; font-weight: 700; font-size: 16pt;
+      color: #585353; text-align: center;
     }
     .map { margin: 1.5em 0; }
-    .map iframe {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border: 0;
-      display: block;
-      margin: 0 auto;
-    }
+    .map iframe { width: 100%; aspect-ratio: 1 / 1; border: 0; display: block; margin: 0 auto; }
     .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; }
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
     .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; line-height:2.0; margin-top:0; }
@@ -157,16 +148,13 @@
 
     .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%;
       margin-block:var(--thumb-gap); }
-    .thumbs5 .thumb{
-      padding:0; border:none;
-      background:#fff; cursor:pointer; overflow:hidden;
-      aspect-ratio:1/1; display:block;
-    }
+    .thumbs5 .thumb{ padding:0; border:none; background:#fff; cursor:pointer; overflow:hidden;
+      aspect-ratio:1/1; display:block; }
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; color:#585353; cursor:pointer; }
     .thumbs-more[hidden]{ display:none; }
 
-    /* ===== 새 방명록 ===== */
+    /* ===== 방명록(스타일) ===== */
     #guestbook .gb-title{
       font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px;
     }
@@ -198,37 +186,7 @@
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; padding:8px 14px; border-radius:10px; cursor:pointer;
     }
 
-    /* 작성 팝업 */
-    #gbModal .sheet{ width:min(92vw,420px); border-radius:14px; }
-    #gbModal .hd{ display:flex; justify-content:flex-end; }
-    #gbClose{ border:none; background:transparent; font-size:18px; padding:8px 10px; cursor:pointer; }
-    #gbModal .body{ padding:16px; display:grid; gap:10px; }
-    #gbModal input, #gbModal textarea{ width:100%; padding:10px; border:1px solid var(--thin); font:inherit; }
-    .gb-submit{
-      font-family:'GowunBatang',serif; font-weight:700; font-size:12pt; color:#585353;
-      background:#fff; border:1px solid var(--thin); border-radius:10px; padding:10px 12px; cursor:pointer;
-    }
-
-    /* “내용을 모두 입력하세요.” 알림 팝업 */
-    #gbAlertModal .sheet{ width:min(88vw,360px); border-radius:14px; }
-    #gbAlertModal .body{ padding:18px; display:grid; gap:14px; place-items:center; font-family:'GowunBatang',serif; color:#585353; }
-    .gb-alert-text{ font-size:12pt; }
-    .gb-alert-ok{
-      font-family:'GowunBatang',serif; font-size:12pt; color:#585353;
-      background:#fff; border:1px solid var(--thin); border-radius:10px; padding:8px 14px; cursor:pointer;
-    }
-
-    /* ===== 카운트 블럭 (현상 유지) ===== */
-    .when{ text-align:center; }
-    .when .title{ font-size:14pt; color:var(--accent); font-weight:700; }
-    .when .meta{ font-size:12pt; color:#585353; }
-    .count-table{ margin:8px auto 0; border-collapse:separate; border-spacing:0; }
-    .count-table th, .count-table td{ text-align:center; vertical-align:middle; padding:2px 0; }
-    .count-labels th{ font-size:6pt; color:var(--hint); font-weight:400; }
-    .count-values td{ font-size:14pt; color:#585353; font-weight:700; }
-    .count-values .colon{ font-weight:700; font-size:12pt; }
-
-    /* ===== 공유 버튼(하단, 현상 유지) ===== */
+    /* ===== 공유 버튼(하단) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-cta{
       width:50%;
@@ -240,7 +198,7 @@
     .share-cta img{ display:inline-block; margin:0 2px; }
     .share-cta span{ line-height:1; }
 
-    /* ===== 아래에서 위로 애니메이션 (현상 유지) ===== */
+    /* ===== 아래에서 위로 애니메이션 ===== */
     @keyframes riseIn{
       from{ transform:translateY(24px); opacity:0; }
       to{   transform:translateY(0);   opacity:1; }
@@ -251,16 +209,19 @@
       .reveal-up{ opacity:1; transform:none; }
       .reveal-up.show{ animation:none; }
     }
+
+    /* ===== (중요) 기존 모달 요소는 항상 숨김: 실제 새 창으로 대체 ===== */
+    .modal{ display:none !important; }
   </style>
 </head>
 <body>
   <main class="container">
 
-    <!-- 상단 이미지들 (현상 유지) -->
+    <!-- 상단 이미지들 -->
     <section><img src="images/1-photo.jpg?v=1" alt="상단 사진1"></section>
     <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
 
-    <!-- 시 (현상 유지) -->
+    <!-- 시 -->
     <section class="pad poem" aria-label="시">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title after-heart">13년 전,<br>우리는 처음 만나 나무를 심었습니다.</div>
@@ -291,7 +252,7 @@
 
     <section><img src="images/3-photo.png?v=1" alt="하단 사진"></section>
 
-    <!-- 달력 (현상 유지) -->
+    <!-- 달력 -->
     <section class="pad" aria-label="달력">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="cal-title after-heart">결혼합니다</div>
@@ -330,7 +291,7 @@
       <div class="thin thin-70"></div>
     </section>
 
-    <!-- 카운트 1 (현상 유지) -->
+    <!-- 카운트 1 -->
     <section class="pad when">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
@@ -355,7 +316,7 @@
       </table>
     </section>
 
-    <!-- 카운트 2 (현상 유지) -->
+    <!-- 카운트 2 -->
     <section class="pad when">
       <div class="title" id="fruitTitle">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
@@ -380,7 +341,7 @@
       </table>
     </section>
 
-    <!-- 오시는 길 (현상 유지) -->
+    <!-- 오시는 길 -->
     <section class="pad" id="way">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title" style="margin-top:8px">오시는 길</div>
@@ -417,7 +378,7 @@
       </div>
     </section>
 
-    <!-- 갤러리 (현상 유지) -->
+    <!-- 갤러리 -->
     <section class="gallery pad" id="gallery">
       <img src="images/heart.png" alt="하트" class="img-original heart-top">
       <div class="section-title">갤러리</div>
@@ -435,7 +396,7 @@
 
     <div class="thin"></div>
 
-    <!-- ===== 방명록(요청대로 재구성) ===== -->
+    <!-- 방명록 -->
     <section class="pad" id="guestbook">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="gb-title after-heart">방명록</div>
@@ -453,94 +414,14 @@
       </div>
     </section>
 
-    <!-- 방명록 작성 팝업 -->
-    <div id="gbModal" class="modal">
-      <div class="sheet">
-        <div class="hd"><button id="gbClose" aria-label="닫기">✕</button></div>
-        <div class="body">
-          <input id="gbName" placeholder="이름"/>
-          <input id="gbPass" placeholder="비밀번호" type="password"/>
-          <textarea id="gbMsg" rows="4" placeholder="내용"></textarea>
-          <button id="gbSubmit" class="gb-submit">신랑 &amp; 신부에게 축하 글 전달하기</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 입력 누락 알림 팝업 -->
-    <div id="gbAlertModal" class="modal">
-      <div class="sheet">
-        <div class="body">
-          <div class="gb-alert-text">내용을 모두 입력하세요.</div>
-          <button id="gbAlertOk" class="gb-alert-ok">확인</button>
-        </div>
-      </div>
-    </div>
+    <!-- (기존 모달 마크업은 유지하되, CSS로 완전 숨김) -->
+    <div id="gbModal" class="modal"></div>
+    <div id="gbAlertModal" class="modal"></div>
+    <div id="copyModal" class="modal"></div>
 
     <div class="thin"></div>
 
-    <!-- 마음 전하실 곳 (현상 유지) -->
-    <section class="pad" id="accounts">
-      <img src="images/heart.png" alt="하트" class="img-original">
-      <div class="acc-title after-heart">마음 전하실 곳</div>
-
-      <!-- 신랑 측 -->
-      <table class="acc-table acc-group" id="accGroomTbl">
-        <thead>
-          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr>
-        </thead>
-        <tbody hidden>
-          <tr>
-            <td class="acc-line">김기환 국민은행 90513110424</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 90513110424 (김기환)">복사</button></td>
-          </tr>
-          <tr>
-            <td class="acc-line">김정호 국민은행 430502-93-118573</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 430502-93-118573 (김정호)">복사</button></td>
-          </tr>
-          <tr>
-            <td class="acc-line">이이순 우리은행 1002-038-271451</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="우리은행 1002-038-271451 (이이순)">복사</button></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div style="height:10px"></div>
-
-      <!-- 신부 측 -->
-      <table class="acc-table acc-group" id="accBrideTbl">
-        <thead>
-          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr>
-        </thead>
-        <tbody hidden>
-          <tr>
-            <td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="카카오뱅크 3333-22-7850739 (목지선)">복사</button></td>
-          </tr>
-          <tr>
-            <td class="acc-line">목승우 국민은행 659401-01-191168</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 659401-01-191168 (목승우)">복사</button></td>
-          </tr>
-          <tr>
-            <td class="acc-line">성미화 새마을금고 9002197239365</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="새마을금고 9002197239365 (성미화)">복사</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 복사 완료 팝업 (현상 유지) -->
-    <div id="copyModal" class="modal copy-modal">
-      <div class="sheet">
-        <div class="body center">
-          <div>복사가 완료되었습니다.</div>
-          <button id="copyOk" class="copy-ok">확인</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="thin"></div>
-
-    <!-- 공유 (하단 버튼, 현상 유지) -->
+    <!-- 공유 -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
         <img src="Images/message.png" alt="" class="img-original">
@@ -551,12 +432,25 @@
   </main>
 
   <script>
-    /* ===== 카운트 두 번째 줄(값 행) 폭: 첫 칸은 글자수 ch, 나머지는 2ch (현상 유지) ===== */
+    /* ===== 유틸: 가운데 새 창 열기 ===== */
+    function popupCenter(width, height){
+      const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;
+      const dualScreenTop  = window.screenTop  !== undefined ? window.screenTop  : screen.top;
+      const w = window.innerWidth  || document.documentElement.clientWidth  || screen.width;
+      const h = window.innerHeight || document.documentElement.clientHeight || screen.height;
+      const left = dualScreenLeft + Math.max(0, (w - width) / 2);
+      const top  = dualScreenTop  + Math.max(0, (h - height) / 2);
+      return `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`;
+    }
+    function siteBase(){
+      // index.html의 기준 디렉토리 (fonts, images 상대경로용)
+      return location.origin + location.pathname.replace(/\/[^\/]*$/, '/');
+    }
+
+    /* ===== 카운트 ===== */
     function setSecondRowWidths(tbody){
-      const row = tbody.querySelector('tr');
-      if(!row) return;
-      const cells = row.children;
-      if(!cells || cells.length !== 7) return;
+      const row = tbody.querySelector('tr'); if(!row) return;
+      const cells = row.children; if(!cells || cells.length !== 7) return;
       const dLen = (cells[0].textContent || '').length || 1;
       cells[0].style.width = dLen + 'ch';
       for(let i=1;i<cells.length;i++){ cells[i].style.width = '2ch'; }
@@ -609,7 +503,7 @@
       setInterval(tick, 1000);
     });
 
-    /* ===== 달력 상태 문구 + 타이틀 변경 (현상 유지) ===== */
+    /* ===== 달력 상태 문구 + 타이틀 변경 ===== */
     (function(){
       const el = document.getElementById('weddingStatus');
       const fruitTitle = document.getElementById('fruitTitle');
@@ -638,7 +532,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리: GitHub API + 드래그/스와이프 + 더보기 (현상 유지) ===== */
+    /* ===== 갤러리(로딩/스와이프/더보기) ===== */
     (function(){
       const hero=document.getElementById('heroImg');
       const zone=document.getElementById('heroZone');
@@ -752,10 +646,10 @@
       })();
     })();
 
-    /* ===== 방명록: Google Sheets 연동 + 5개/페이지 + 5개 단위 페이지 버튼 윈도우 + 삭제(비번) ===== */
+    /* ===== 방명록: Sheets 연동 + 새 창 팝업 UI ===== */
     (function(){
-      // 주신 API 주소 사용 (Apps Script ALLOW_ORIGIN: https://siul-kh.github.io/wedding/ 로 설정)
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbzQt4X0406Rgp_vIpG2fjRWaZsrgop2Cbje7nUl31hJGUBrKvi3wTD9eA4Vvw8cAllU/exec';
+      // Apps Script의 ALLOW_ORIGIN은 https://siul-kh.github.io/wedding/ 로 설정하세요.
 
       const PAGE_SIZE = 5;
 
@@ -765,27 +659,14 @@
       const nextWindowBtn = document.getElementById('gbNextWindow');
       const pagesWrap = document.getElementById('gbPages');
 
-      const modal = document.getElementById('gbModal');
-      const closeBtn = document.getElementById('gbClose');
-      const submitBtn = document.getElementById('gbSubmit');
-      const nameEl = document.getElementById('gbName');
-      const passEl = document.getElementById('gbPass');
-      const msgEl  = document.getElementById('gbMsg');
-
-      const alertModal = document.getElementById('gbAlertModal');
-      const alertOk = document.getElementById('gbAlertOk');
-
       let data = [];
       let page = 1;
-      let winStart = 1; // 페이지 버튼 5개 윈도우 시작 (1,6,11,...)
+      let winStart = 1;
 
       function fmtDate(iso){
-        try{
-          const d = iso ? new Date(iso) : new Date();
-          return d.toLocaleDateString('ko-KR');
-        }catch(e){ return iso || ''; }
+        try{ const d = iso ? new Date(iso) : new Date(); return d.toLocaleDateString('ko-KR'); }
+        catch(e){ return iso || ''; }
       }
-
       function escapeHtml(s){
         return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
       }
@@ -807,8 +688,7 @@
             <div class="gb-msg">${escapeHtml(item.msg)}</div>
             <div class="gb-actions">
               <button class="gb-del" data-id="${item.id}">삭제</button>
-            </div>
-          `;
+            </div>`;
           listEl.appendChild(card);
         });
 
@@ -816,7 +696,6 @@
       }
 
       function renderPager(totalPages){
-        // 현재 페이지에 맞게 윈도우 시작 조정
         if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
         if(page > winStart+4) winStart = Math.floor((page-1)/5)*5 + 1;
 
@@ -831,7 +710,6 @@
           b.addEventListener('click', ()=>{ page = p; renderList(); });
           pagesWrap.appendChild(b);
         }
-
         prevWindowBtn.hidden = (winStart <= 1);
         nextWindowBtn.hidden = (end >= totalPages);
       }
@@ -851,40 +729,134 @@
         }
       });
 
-      writeBtn.addEventListener('click', ()=>{ modal.classList.add('open'); });
-      closeBtn.addEventListener('click', ()=>{ modal.classList.remove('open'); });
+      // ===== 팝업들 =====
+      function popupHTMLHead(title=''){
+        const base = siteBase();
+        return `
+<!doctype html><html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>${title}</title>
+<link rel="preload" href="${base}fonts/GowunBatang-Regular.woff2?v=1" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${base}fonts/GowunBatang-Bold.woff2?v=1" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'GowunBatang';src:url('${base}fonts/GowunBatang-Regular.woff2?v=1') format('woff2'),url('${base}fonts/GowunBatang-Regular.ttf?v=1') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'GowunBatang';src:url('${base}fonts/GowunBatang-Bold.woff2?v=1') format('woff2'),url('${base}fonts/GowunBatang-Bold.ttf?v=1') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+:root{--ink:#585353;--thin:#e5e5e5}
+*{box-sizing:border-box}
+body{margin:0;padding:16px;font-family:'GowunBatang',ui-serif,system-ui,serif;color:var(--ink);background:#fff;line-height:1.6}
+.hd{display:flex;justify-content:flex-end}
+.close{border:none;background:transparent;font-size:18px;cursor:pointer;padding:6px 8px}
+label{display:block;margin-top:8px;margin-bottom:4px}
+input,textarea{width:100%;border:1px solid var(--thin);padding:10px;font:inherit}
+.btn{display:inline-block;background:#fff;border:1px solid var(--thin);border-radius:10px;color:var(--ink);cursor:pointer;padding:10px 12px}
+.bold{font-weight:700}
+.center{text-align:center}
+.small{font-size:12pt}
+</style>
+</head><body>`;
+      }
 
-      alertOk.addEventListener('click', ()=>{ alertModal.classList.remove('open'); });
+      function openAlertPopup(message){
+        const win = window.open('', '_blank', popupCenter(320,220));
+        if(!win) return;
+        win.document.write(popupHTMLHead('알림') + `
+          <div class="center" style="margin:20px 0">${message}</div>
+          <div class="center"><button class="btn" onclick="window.close()">확인</button></div>
+        </body></html>`);
+        win.document.close();
+      }
 
-      submitBtn.addEventListener('click', async ()=>{
-        const name = (nameEl.value||'').trim();
-        const pass = (passEl.value||'').trim();
-        const msg  = (msgEl.value||'').trim();
-        if(!name || !pass || !msg){
-          alertModal.classList.add('open');
-          return;
-        }
-        const passhash = await sha256(pass);
-        const entry = {
-          id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
-          name, msg, passhash, date: new Date().toISOString()
-        };
-        const ok = await apiCreate(entry);
-        if(!ok){ alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.'); return; }
-        nameEl.value=''; passEl.value=''; msgEl.value='';
-        modal.classList.remove('open');
-        await load(); page = 1; winStart = 1; renderList();
-      });
+      function openCopyDonePopup(){
+        const win = window.open('', '_blank', popupCenter(320,220));
+        if(!win) return;
+        win.document.write(popupHTMLHead('복사 완료') + `
+          <div class="center" style="margin:20px 0">복사가 완료되었습니다.</div>
+          <div class="center"><button class="btn" onclick="window.close()">확인</button></div>
+        </body></html>`);
+        win.document.close();
+      }
 
-      // 삭제(작성자 비번 확인)
+      function openWritePopup(){
+        const win = window.open('', '_blank', popupCenter(420,520));
+        if(!win) return;
+        const base = siteBase();
+        const api  = JSON.stringify(GUESTBOOK_API); // 안전하게 문자열화
+        win.document.write(popupHTMLHead('방명록 작성') + `
+          <div class="hd"><button class="close" aria-label="닫기" onclick="window.close()">✕</button></div>
+          <div>
+            <label class="bold">이름</label>
+            <input id="name" placeholder="이름"/>
+            <label class="bold" style="margin-top:10px">비밀번호</label>
+            <input id="pass" type="password" placeholder="비밀번호"/>
+            <label class="bold" style="margin-top:10px">내용</label>
+            <textarea id="msg" rows="6" placeholder="내용"></textarea>
+            <div class="center" style="margin-top:14px">
+              <button id="submit" class="btn bold small">신랑 &amp; 신부에게 축하 글 전달하기</button>
+            </div>
+          </div>
+          <script>
+            const API = ${api};
+            async function sha256(str){
+              const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+              return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+            }
+            async function apiCreate(entry){
+              try{
+                const res = await fetch(API, {
+                  method:'POST',
+                  headers:{'Content-Type':'application/json'},
+                  body: JSON.stringify({ method:'create', entry })
+                });
+                return res.ok;
+              }catch(e){ return false; }
+            }
+            document.getElementById('submit').addEventListener('click', async ()=>{
+              const name = (document.getElementById('name').value||'').trim();
+              const pass = (document.getElementById('pass').value||'').trim();
+              const msg  = (document.getElementById('msg').value||'').trim();
+              if(!name || !pass || !msg){
+                const aw = window.open('', '_blank', '${popupCenter(320,220)}');
+                if(aw){
+                  aw.document.write(\`${popupHTMLHead('알림')}\` + '<div class="center" style="margin:20px 0">내용을 모두 입력하세요.</div><div class="center"><button class="btn" onclick="window.close()">확인</button></div></body></html>');
+                  aw.document.close();
+                }
+                return;
+              }
+              const passhash = await sha256(pass);
+              const entry = { id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7), name, msg, passhash, date: new Date().toISOString() };
+              const ok = await apiCreate(entry);
+              if(!ok){
+                const aw = window.open('', '_blank', '${popupCenter(320,220)}');
+                if(aw){
+                  aw.document.write(\`${popupHTMLHead('알림')}\` + '<div class="center" style="margin:20px 0">저장에 실패했습니다. 잠시 후 다시 시도해주세요.</div><div class="center"><button class="btn" onclick="window.close()">확인</button></div></body></html>');
+                  aw.document.close();
+                }
+                return;
+              }
+              if(window.opener && window.opener.__refreshGuestbook){ window.opener.__refreshGuestbook(); }
+              window.close();
+            });
+          <\/script>
+        </body></html>`);
+        win.document.close();
+      }
+
+      // 작성하기 버튼 → 새 창
+      writeBtn.addEventListener('click', openWritePopup);
+
+      // 삭제(작성자 비번 확인) — 그대로 유지
       document.addEventListener('click', async (e)=>{
-        const btn = e.target.closest('.gb-del');
-        if(!btn) return;
+        const btn = e.target.closest('.gb-del'); if(!btn) return;
         const id = btn.getAttribute('data-id');
-        const input = prompt('삭제 비밀번호를 입력하세요.');
-        if(!input) return;
-        const passhash = await sha256(input);
-        const ok = await apiDelete(id, passhash);
+        const input = prompt('삭제 비밀번호를 입력하세요.'); if(!input) return;
+        const passhash = await (async (str)=>{ const b=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)); return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join(''); })(input);
+        const ok = await (async ()=>{
+          try{
+            const res = await fetch(GUESTBOOK_API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ method:'delete', id, passhash }) });
+            return res.ok;
+          }catch(e){ return false; }
+        })();
         if(!ok){ alert('삭제에 실패했습니다. 비밀번호를 확인해주세요.'); return; }
         await load();
         const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
@@ -893,51 +865,37 @@
         renderList();
       });
 
-      // ==== API 래퍼 (Google Apps Script) ====
+      // 목록 로딩
       async function apiList(){
         try{
           const res = await fetch(GUESTBOOK_API+'?method=list', { cache:'no-store' });
           if(!res.ok) throw new Error('list failed');
           const json = await res.json();
           return Array.isArray(json) ? json : [];
-        }catch(e){ console.warn(e); return []; }
+        }catch(e){ return []; }
       }
-      async function apiCreate(entry){
-        try{
-          const res = await fetch(GUESTBOOK_API, {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ method:'create', entry })
-          });
-          return res.ok;
-        }catch(e){ console.warn(e); return false; }
-      }
-      async function apiDelete(id, passhash){
-        try{
-          const res = await fetch(GUESTBOOK_API, {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ method:'delete', id, passhash })
-          });
-          return res.ok;
-        }catch(e){ console.warn(e); return false; }
-      }
+      async function load(){ data = await apiList(); }
 
-      async function load(){
-        data = await apiList();
-      }
-      async function sha256(str){
-        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-        return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-      }
+      // 외부에서 새로고침할 수 있도록 노출
+      window.__refreshGuestbook = async function(){ await load(); page = 1; winStart = 1; renderList(); };
 
-      (async function init(){
-        await load();
-        renderList();
-      })();
+      (async function init(){ await load(); renderList(); })();
+
+      // ===== 복사 버튼 팝업(별도 창)로 변경 =====
+      document.addEventListener('click', (e)=>{
+        const b=e.target.closest('.copy-mini'); if(!b) return;
+        const txt=b.getAttribute('data-copy')||'';
+        if(navigator.clipboard){
+          navigator.clipboard.writeText(txt).then(()=>openCopyDonePopup());
+        }else{
+          const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
+          ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+          openCopyDonePopup();
+        }
+      });
     })();
 
-    /* ===== 마음 전하실 곳: 토글 + 복사 팝업 + 전화번호 자동인식 방지 (현상 유지) ===== */
+    /* ===== 마음 전하실 곳: 토글 + 전화번호 자동인식 방지 ===== */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn = tbl.querySelector('.acc-heading');
@@ -951,34 +909,15 @@
       });
 
       function defangTel(str){
-        return str
-          .replace(/\d/g, d => d + '\u200B')
-          .replace(/-/g, '-' + '\u200B');
+        return str.replace(/\d/g, d => d + '\u200B').replace(/-/g, '-' + '\u200B');
       }
       document.querySelectorAll('.acc-line').forEach(td=>{
         const raw = td.textContent;
         td.innerHTML = raw.replace(/[0-9-]{3,}/g, m => defangTel(m));
       });
-
-      const copyModal=document.getElementById('copyModal');
-      const copyOk=document.getElementById('copyOk');
-      if(copyOk) copyOk.addEventListener('click',()=>copyModal.classList.remove('open'));
-
-      document.addEventListener('click', (e)=>{
-        const b=e.target.closest('.copy-mini');
-        if(!b) return;
-        const txt=b.getAttribute('data-copy')||'';
-        if(navigator.clipboard){
-          navigator.clipboard.writeText(txt).then(()=>copyModal.classList.add('open'));
-        }else{
-          const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
-          ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-          copyModal.classList.add('open');
-        }
-      });
     })();
 
-    /* ===== 공유 (현상 유지) ===== */
+    /* ===== 공유 ===== */
     (function(){
       const btn=document.getElementById('shareCta');
       if(!btn) return;
@@ -989,7 +928,7 @@
       });
     })();
 
-    /* ===== 아래에서 위로 애니메이션: .share-box 제외(현상 유지) ===== */
+    /* ===== 아래에서 위로 애니메이션(.share-box 제외 즉시 표시) ===== */
     (function(){
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const all = Array.from(document.querySelectorAll('main > section, .thin'));

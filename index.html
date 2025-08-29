@@ -744,7 +744,8 @@
 
     /* 새 방명록: 구글시트 API 연동(없으면 로컬) + 삭제(비밀번호) + 페이지네이션 */
     (function(){
-      const GUESTBOOK_API = ''; // <-- 구글 앱스 스크립트 Web App URL을 넣으면 시트와 연동됩니다.
+      const GUESTBOOK_API =  'https://script.google.com/macros/s/AKfycbzQt4X0406Rgp_vIpG2fjRWaZsrgop2Cbje7nUl31hJGUBrKvi3wTD9eA4Vvw8cAllU/exec’;
+ // <-- 구글 앱스 스크립트 Web App URL을 넣으면 시트와 연동됩니다.
       const PAGE_SIZE = 5;
 
       const listEl = document.getElementById('gbList');

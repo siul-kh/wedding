@@ -32,7 +32,7 @@
       --hint:#9d9b9b;
       --thin:#e5e5e5;
       --heart-gap:8px;
-      --thumb-gap:6px; /* 썸네일 사이 간격 + 위/아래 여백 동일값 */
+      --thumb-gap:6px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -142,7 +142,7 @@
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
     .gallery .section-title{
-      font-family:'GowunBatang',serif; font-weight:700; /* 요청: Bold */
+      font-family:'GowunBatang',serif; font-weight:700; /* Bold 유지 */
       font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
     .gallery .heart-top{ margin:0 auto 6px; }
@@ -165,7 +165,7 @@
     .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%;
       margin-block:var(--thumb-gap); } /* 위/아래 여백=간격과 동일 */
     .thumbs5 .thumb{
-      padding:0; border:none; /* 요청: 테두리 제거 */
+      padding:0; border:none; /* 테두리 제거 유지 */
       background:#fff; cursor:pointer; overflow:hidden;
       aspect-ratio:1/1; display:block;
     }
@@ -243,10 +243,10 @@
     .share-cta{
       width:50%;
       display:inline-flex; align-items:center; justify-content:center; gap:4px;
-      background:#fff; border:none; /* 요청: 테두리 제거 */
+      background:#fff; border:none; /* 테두리 없음 (요청) */
       border-radius:10px;
       padding:10px 12px; cursor:pointer;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; /* 12pt, #585353 */
     }
     .share-cta img{ display:inline-block; margin:0 2px; }
     .share-cta span{ line-height:1; }
@@ -254,13 +254,13 @@
       .share-cta{ width:70%; }
     }
 
-    /* ===== 아래에서 위로 올라오는 애니메이션(스크롤 등장) ===== */
+    /* ===== 아래에서 위로 올라오는 애니메이션(스크롤 등장, 속도 더 느리게) ===== */
     @keyframes riseIn{
       from{ transform:translateY(24px); opacity:0; }
       to{   transform:translateY(0);   opacity:1; }
     }
     .reveal-up{ opacity:0; transform:translateY(24px); will-change:transform,opacity; }
-    .reveal-up.show{ animation:riseIn 700ms cubic-bezier(.2,.7,.2,1) forwards; }
+    .reveal-up.show{ animation:riseIn 1100ms cubic-bezier(.2,.7,.2,1) forwards; } /* 1.1초로 느리게 */
     @media (prefers-reduced-motion:reduce){
       .reveal-up{ opacity:1; transform:none; }
       .reveal-up.show{ animation:none; }
@@ -556,10 +556,10 @@
 
     <div class="thin"></div>
 
-    <!-- 공유 (하단 버튼) -->
+    <!-- 공유 (하단 버튼) : 다시 생성 -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
-        <img src="images/message.png" alt="" class="img-original">
+        <img src="Images/message.png" alt="" class="img-original"><!-- 원본 크기 유지 -->
         <span>청첩장 공유하기</span>
       </button>
     </section>
@@ -654,8 +654,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* 갤러리: GitHub API로 폴더 내 모든 이미지 자동 로드 (공개 저장소 전제)
-       + 메인이미지 스와이프/드래그 내비게이션 + 더보기 토글(▼/▲) */
+    /* 갤러리: GitHub API로 폴더 내 모든 이미지 자동 로드 + 스와이프/드래그 + 더보기 토글 */
     (function(){
       const hero=document.getElementById('heroImg');
       const zone=document.getElementById('heroZone');
@@ -666,15 +665,9 @@
       const moreBtn=document.getElementById('thumbsMoreBtn');
       if(!hero||!prev||!next||!thumbsTop||!thumbsMore||!moreBtn||!zone) return;
 
-      /* === 필수 설정: 본인 저장소로 바꿔주세요 === */
-      const GH = {
-        owner: '',  // 예) 'your-username'
-        repo:  '',  // 예) 'your-repo'
-        ref:   'main', // 브랜치명
-        dir:   'images/pre-wedding snap' // 공백 포함 경로(그대로)
-      };
+      /* === 저장소 정보 필요시 설정 === */
+      const GH = { owner:'', repo:'', ref:'main', dir:'images/pre-wedding snap' };
 
-      // GitHub Pages URL에서 추론(설정이 비어있는 경우에만)
       if(!GH.owner || !GH.repo){
         const host = location.hostname;
         if(host.endsWith('github.io')){
@@ -696,7 +689,7 @@
         return b;
       }
 
-      let list = []; // 이미지 URL 배열(페이지 상대경로)
+      let list = [];
       let idx  = 0;
 
       function show(i){
@@ -716,7 +709,7 @@
           const basePath = encPath(GH.dir) + '/';
           const files = items.filter(it=>it.type==='file' && exts.test(it.name))
                              .map(it => basePath + encodeURIComponent(it.name));
-          return shuffle(files).slice(0,50); // 최대 50장
+          return shuffle(files).slice(0,50);
         }catch(e){
           console.warn(e);
           return [];
@@ -731,7 +724,7 @@
         first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
 
-        show(0); // 첫 노출: 맨 위 맨 왼쪽
+        show(0);
 
         // 더보기 토글(▼/▲)
         moreBtn.hidden = next25.length===0;
@@ -760,10 +753,10 @@
           if(!isDown) return;
           dx = e.clientX - startX;
         });
-        function endDrag(e){
+        function endDrag(){
           if(!isDown) return;
           isDown=false; zone.style.cursor='grab';
-          const threshold = 30; // 드래그 임계값(px)
+          const threshold = 30;
           if(Math.abs(dx) > threshold){
             if(dx < 0) show(idx+1); else show(idx-1);
           }
@@ -881,7 +874,7 @@
       });
     })();
 
-    /* 아래에서 위로 올라오는 애니메이션: 섹션들 자동 적용 */
+    /* 아래에서 위로 올라오는 애니메이션: 섹션들 자동 적용 (속도 1.1초) */
     (function(){
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const targets = Array.from(document.querySelectorAll('main > section, .thin'));

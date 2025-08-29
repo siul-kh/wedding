@@ -32,6 +32,7 @@
       --hint:#9d9b9b;
       --thin:#e5e5e5;
       --heart-gap:8px;
+      --thumb-gap:6px; /* 썸네일 사이 간격 + 위/아래 여백 동일값 */
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -141,16 +142,17 @@
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
     .gallery .section-title{
-      font-family:'GowunBatang',serif; font-weight:400;
+      font-family:'GowunBatang',serif; font-weight:700; /* 요청: Bold */
       font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
     .gallery .heart-top{ margin:0 auto 6px; }
     .hero-photo{
-      position:relative; overflow:hidden; width:100%; aspect-ratio:4/6; /* 가로:세로 = 4:6 */
-      background:#f7f7f7;
+      position:relative; overflow:hidden; width:100%; aspect-ratio:4/6;
+      background:#f7f7f7; touch-action:pan-y; cursor:grab; /* 드래그 스와이프 */
     }
     .hero-photo img{
-      width:100%; height:100%; object-fit:cover; display:block;
+      width:100%; height:100%; object-fit:cover; display:block; user-select:none;
+      -webkit-user-drag:none;
     }
     .hero-arrow{
       position:absolute; top:50%; transform:translateY(-50%);
@@ -160,9 +162,11 @@
     .hero-arrow.prev{ left:4px; }
     .hero-arrow.next{ right:4px; }
 
-    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; width:100%; }
+    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%;
+      margin-block:var(--thumb-gap); } /* 위/아래 여백=간격과 동일 */
     .thumbs5 .thumb{
-      padding:0; border:1px solid var(--thin); background:#fff; cursor:pointer; overflow:hidden;
+      padding:0; border:none; /* 요청: 테두리 제거 */
+      background:#fff; cursor:pointer; overflow:hidden;
       aspect-ratio:1/1; display:block;
     }
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
@@ -238,15 +242,28 @@
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-cta{
       width:50%;
-      display:inline-flex; align-items:center; justify-content:center; gap:4px; /* 여백 줄임 */
-      background:#fff; border:1px solid var(--thin); border-radius:10px;
+      display:inline-flex; align-items:center; justify-content:center; gap:4px;
+      background:#fff; border:none; /* 요청: 테두리 제거 */
+      border-radius:10px;
       padding:10px 12px; cursor:pointer;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; /* 12pt */
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
     }
-    .share-cta img{ display:inline-block; margin:0 2px; } /* 좌우 여백 축소 */
+    .share-cta img{ display:inline-block; margin:0 2px; }
     .share-cta span{ line-height:1; }
     @media (max-width:360px){
       .share-cta{ width:70%; }
+    }
+
+    /* ===== 아래에서 위로 올라오는 애니메이션(스크롤 등장) ===== */
+    @keyframes riseIn{
+      from{ transform:translateY(24px); opacity:0; }
+      to{   transform:translateY(0);   opacity:1; }
+    }
+    .reveal-up{ opacity:0; transform:translateY(24px); will-change:transform,opacity; }
+    .reveal-up.show{ animation:riseIn 700ms cubic-bezier(.2,.7,.2,1) forwards; }
+    @media (prefers-reduced-motion:reduce){
+      .reveal-up{ opacity:1; transform:none; }
+      .reveal-up.show{ animation:none; }
     }
   </style>
 </head>
@@ -434,7 +451,7 @@
       <img src="images/heart.png" alt="하트" class="img-original heart-top">
       <div class="section-title">갤러리</div>
 
-      <div class="hero-photo">
+      <div class="hero-photo" id="heroZone">
         <img id="heroImg" alt="메인이미지">
         <button id="heroPrev" class="hero-arrow prev" aria-label="이전">&lt;</button>
         <button id="heroNext" class="hero-arrow next" aria-label="다음">&gt;</button>
@@ -442,7 +459,7 @@
 
       <!-- 5x5 첫 화면 -->
       <div class="thumbs5" id="thumbsTop"></div>
-      <!-- 더 보기(숨김) -->
+      <!-- 더 보기(토글) -->
       <div class="thumbs5 thumbs-more" id="thumbsMore" hidden></div>
       <button id="thumbsMoreBtn" class="more-tri" aria-expanded="false" aria-controls="thumbsMore">▼</button>
     </section>
@@ -637,20 +654,22 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* 갤러리: GitHub API로 폴더 내 모든 이미지 자동 로드 (공개 저장소 전제) */
+    /* 갤러리: GitHub API로 폴더 내 모든 이미지 자동 로드 (공개 저장소 전제)
+       + 메인이미지 스와이프/드래그 내비게이션 + 더보기 토글(▼/▲) */
     (function(){
       const hero=document.getElementById('heroImg');
+      const zone=document.getElementById('heroZone');
       const prev=document.getElementById('heroPrev');
       const next=document.getElementById('heroNext');
       const thumbsTop=document.getElementById('thumbsTop');
       const thumbsMore=document.getElementById('thumbsMore');
       const moreBtn=document.getElementById('thumbsMoreBtn');
-      if(!hero||!prev||!next||!thumbsTop||!thumbsMore||!moreBtn) return;
+      if(!hero||!prev||!next||!thumbsTop||!thumbsMore||!moreBtn||!zone) return;
 
       /* === 필수 설정: 본인 저장소로 바꿔주세요 === */
       const GH = {
-        owner: 'siul-kh',  // 예) 'your-username'
-        repo:  'wedding',  // 예) 'your-repo'
+        owner: '',  // 예) 'your-username'
+        repo:  '',  // 예) 'your-repo'
         ref:   'main', // 브랜치명
         dir:   'images/pre-wedding snap' // 공백 포함 경로(그대로)
       };
@@ -714,17 +733,45 @@
 
         show(0); // 첫 노출: 맨 위 맨 왼쪽
 
-        // 더보기(▼)
-        if(next25.length===0){ moreBtn.hidden = true; }
+        // 더보기 토글(▼/▲)
+        moreBtn.hidden = next25.length===0;
+        moreBtn.textContent = '▼';
+        moreBtn.setAttribute('aria-expanded','false');
+        thumbsMore.hidden = true;
         moreBtn.addEventListener('click', ()=>{
-          thumbsMore.hidden=false;
-          moreBtn.setAttribute('aria-expanded','true');
-          moreBtn.hidden=true;
+          const willOpen = thumbsMore.hidden;
+          thumbsMore.hidden = !willOpen;
+          moreBtn.textContent = willOpen ? '▲' : '▼';
+          moreBtn.setAttribute('aria-expanded', String(willOpen));
         });
 
         // 좌우 화살표
         prev.addEventListener('click',()=>show(idx-1));
         next.addEventListener('click',()=>show(idx+1));
+
+        // 스와이프/드래그(모바일/PC 공통, Pointer Events)
+        let isDown=false, startX=0, dx=0, pid=null;
+        zone.addEventListener('pointerdown', (e)=>{
+          isDown=true; startX=e.clientX; dx=0; pid=e.pointerId;
+          zone.setPointerCapture(pid);
+          zone.style.cursor='grabbing';
+        });
+        zone.addEventListener('pointermove', (e)=>{
+          if(!isDown) return;
+          dx = e.clientX - startX;
+        });
+        function endDrag(e){
+          if(!isDown) return;
+          isDown=false; zone.style.cursor='grab';
+          const threshold = 30; // 드래그 임계값(px)
+          if(Math.abs(dx) > threshold){
+            if(dx < 0) show(idx+1); else show(idx-1);
+          }
+          dx=0; pid=null;
+        }
+        zone.addEventListener('pointerup', endDrag);
+        zone.addEventListener('pointercancel', endDrag);
+        zone.addEventListener('dragstart', e=>e.preventDefault());
       }
 
       (async function init(){
@@ -832,6 +879,25 @@
         if(navigator.share){ navigator.share(data); }
         else { navigator.clipboard.writeText(location.href); alert('링크가 복사되었습니다. 원하는 앱에 붙여넣어 공유해주세요.'); }
       });
+    })();
+
+    /* 아래에서 위로 올라오는 애니메이션: 섹션들 자동 적용 */
+    (function(){
+      const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = Array.from(document.querySelectorAll('main > section, .thin'));
+      targets.forEach(el => el.classList.add('reveal-up'));
+      if (REDUCED) { targets.forEach(el => el.classList.add('show')); return; }
+
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(ent=>{
+          if(ent.isIntersecting){
+            ent.target.classList.add('show');
+            io.unobserve(ent.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+
+      targets.forEach(el => io.observe(el));
     })();
   </script>
 </body>

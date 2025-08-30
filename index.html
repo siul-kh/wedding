@@ -941,23 +941,33 @@
         }catch(e){ console.warn(e); return []; }
       }
       async function apiCreate(entry){
-        try{
-          const res = await fetch(GUESTBOOK_API, {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ method:'create', entry })
-          });
-          return res.ok;
-        }catch(e){ console.warn(e); return false; }
-      }
-      async function apiDelete(id, passhash){
-        try{
-          const res = await fetch(GUESTBOOK_API, {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ method:'delete', id, passhash })
-          });
-          return res.ok;
+  try{
+    const res = await fetch(GUESTBOOK_API, {
+      method:'POST',
+      headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // ✅ 단순요청
+      body: JSON.stringify({ method:'create', entry })
+    });
+    return res.ok; // GAS 응답이 200이면 true
+  }catch(e){
+    console.warn(e);
+    return false;
+  }
+}
+
+async function apiDelete(id, passhash){
+  try{
+    const res = await fetch(GUESTBOOK_API, {
+      method:'POST',
+      headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // ✅ 단순요청
+      body: JSON.stringify({ method:'delete', id, passhash })
+    });
+    return res.ok;
+  }catch(e){
+    console.warn(e);
+    return false;
+  }
+}
+
         }catch(e){ console.warn(e); return false; }
       }
 

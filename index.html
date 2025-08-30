@@ -941,34 +941,34 @@
         }catch(e){ console.warn(e); return []; }
       }
 
+// ===== API 래퍼 중 저장/삭제 (헤더 제거 버전) =====
 async function apiCreate(entry){
   try{
     const res = await fetch(GUESTBOOK_API, {
-      method:'POST',
-      // ★중요: 헤더 넣지 않음 → 프리플라이트(OPTIONS) 방지
+      method: 'POST',
+      // 포인트: 헤더를 지정하지 않습니다 (Content-Type 제거)
+      // 문자열(body)만 보냅니다 → 브라우저가 프리플라이트를 안 보냄
       body: JSON.stringify({ method:'create', entry })
     });
-    // Apps Script는 CORS 헤더를 직접 못붙이지만, 단순요청이면 정상 응답을 읽을 수 있습니다.
-    const text = await res.text();
-    try { return !!JSON.parse(text).ok; } catch(_) { return res.ok; }
-  }catch(e){
-    console.warn(e);
-    return false;
-  }
+    if(!res.ok) return false;
+    // 응답이 JSON이든 문자열이든 안전하게 처리
+    const txt = await res.text();
+    try { const j = JSON.parse(txt); return j.ok === true || j.result === 'ok'; }
+    catch { return res.ok; }
+  }catch(e){ console.warn(e); return false; }
 }
 
 async function apiDelete(id, passhash){
   try{
     const res = await fetch(GUESTBOOK_API, {
-      method:'POST',
+      method: 'POST',
       body: JSON.stringify({ method:'delete', id, passhash })
     });
-    const text = await res.text();
-    try { return !!JSON.parse(text).ok; } catch(_) { return res.ok; }
-  }catch(e){
-    console.warn(e);
-    return false;
-  }
+    if(!res.ok) return false;
+    const txt = await res.text();
+    try { const j = JSON.parse(txt); return j.ok === true || j.result === 'ok'; }
+    catch { return res.ok; }
+  }catch(e){ console.warn(e); return false; }
 }
 
       async function load(){

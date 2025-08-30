@@ -804,6 +804,21 @@ function closeModal(el) {
     (function(){
       // Apps Script는 ALLOW_ORIGIN: https://siul-kh.github.io/wedding/ 로 설정
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbxp2VAXos-C8Z3pJOYQiV9JDAKuF8zEf9uMIfGulxWf9KegrhwtQ8KTLh7mMronT9HK/exec';
+// JSONP helper: <script src="...&callback=__func">로 데이터를 받기
+function jsonp(url){
+  return new Promise((resolve, reject)=>{
+    const cb = '__gb_cb_' + Date.now() + Math.random().toString(36).slice(2);
+    window[cb] = (data)=>{ resolve(data); cleanup(); };
+    function cleanup(){
+      try{ delete window[cb]; }catch{}
+      if(s && s.parentNode) s.parentNode.removeChild(s);
+    }
+    const s = document.createElement('script');
+    s.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb + '&_=' + Date.now();
+    s.onerror = ()=>{ cleanup(); reject(new Error('JSONP failed')); };
+    document.head.appendChild(s);
+  });
+}
 
       const PAGE_SIZE = 5;
 
@@ -898,20 +913,21 @@ function closeModal(el) {
         }
       });
 
-      // 작성하기 → 작성 팝업 열기
-     writeBtn.addEventListener('click', ()=>{
-  openModal(modal);
-  nameEl.focus();
+// 작성하기 → 작성 팝업 열기
+writeBtn.addEventListener('click', ()=>{
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
 });
-
-      // 닫기
+// 닫기
 closeBtn.addEventListener('click', ()=>{
-  closeModal(modal);
-  writeBtn.focus();
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
 });
-
-      // 입력 누락 알림 팝업 닫기
-      alertOk.addEventListener('click', ()=>{ closeModal(alertModal); });
+// 입력 누락 알림 팝업 닫기
+alertOk.addEventListener('click', ()=>{
+  alertModal.classList.remove('open');
+  alertModal.setAttribute('aria-hidden','true');
+});
 
       // 작성 완료
       submitBtn.addEventListener('click', async ()=>{
@@ -920,8 +936,9 @@ closeBtn.addEventListener('click', ()=>{
         const msg  = (msgEl.value||'').trim();
         if(!name || !pass || !msg){
           // 입력 누락 시, 별도 팝업(오버레이) 열기
-          openModal(alertModal);
-          return;
+alertModal.classList.add('open');
+alertModal.setAttribute('aria-hidden','false');
+
         }
         const passhash = await sha256(pass);
         const entry = {
@@ -953,43 +970,41 @@ closeModal(modal);
       });
 
       // ==== API 래퍼 (Google Apps Script) ====
-      async function apiList(){
-        try{
-          const res = await fetch(GUESTBOOK_API+'?method=list', { cache:'no-store' });
-          if(!res.ok) throw new Error('list failed');
-          const json = await res.json();
-          return Array.isArray(json) ? json : [];
-        }catch(e){ console.warn(e); return []; }
-      }
+    async function apiList(){
+  try{
+    // JSONP → CORS 없이 목록을 읽어옴
+    return await jsonp(GUESTBOOK_API + '?method=list');
+  }catch(e){
+    console.warn(e); return [];
+  }
+}
 
-// ===== API 래퍼 중 저장/삭제 (헤더 제거 버전) =====
+
+// no-cors POST: 응답은 읽지 않고, 성공 가정 후 목록을 다시 JSONP로 재조회
 async function apiCreate(entry){
   try{
-    const res = await fetch(GUESTBOOK_API, {
+    await fetch(GUESTBOOK_API, {
       method: 'POST',
-      // 포인트: 헤더를 지정하지 않습니다 (Content-Type 제거)
-      // 문자열(body)만 보냅니다 → 브라우저가 프리플라이트를 안 보냄
+      mode: 'no-cors',                // ← CORS 프리플라이트/차단 피함
       body: JSON.stringify({ method:'create', entry })
     });
-    if(!res.ok) return false;
-    // 응답이 JSON이든 문자열이든 안전하게 처리
-    const txt = await res.text();
-    try { const j = JSON.parse(txt); return j.ok === true || j.result === 'ok'; }
-    catch { return res.ok; }
-  }catch(e){ console.warn(e); return false; }
+    return true; // 요청 자체가 네트워크 에러 없이 나갔으면 성공으로 판단
+  }catch(e){
+    console.warn(e); return false;
+  }
 }
 
 async function apiDelete(id, passhash){
   try{
-    const res = await fetch(GUESTBOOK_API, {
+    await fetch(GUESTBOOK_API, {
       method: 'POST',
+      mode: 'no-cors',
       body: JSON.stringify({ method:'delete', id, passhash })
     });
-    if(!res.ok) return false;
-    const txt = await res.text();
-    try { const j = JSON.parse(txt); return j.ok === true || j.result === 'ok'; }
-    catch { return res.ok; }
-  }catch(e){ console.warn(e); return false; }
+    return true;
+  }catch(e){
+    console.warn(e); return false;
+  }
 }
 
       async function load(){

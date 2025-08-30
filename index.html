@@ -586,6 +586,19 @@
   </main>
 
   <script>
+
+    // ===== 모달 열기/닫기 유틸(접근성 경고 방지) =====
+function openModal(el) {
+  if (!el) return;
+  el.classList.add('open');
+  el.setAttribute('aria-hidden', 'false');
+}
+function closeModal(el) {
+  if (!el) return;
+  el.classList.remove('open');
+  el.setAttribute('aria-hidden', 'true');
+}
+
     /* ===== 카운트 두 번째 줄(값 행) 폭: 첫 칸은 글자수 ch, 나머지는 2ch (현상 유지) ===== */
     function setSecondRowWidths(tbody){
       const row = tbody.querySelector('tr');
@@ -886,11 +899,19 @@
       });
 
       // 작성하기 → 작성 팝업 열기
-      writeBtn.addEventListener('click', ()=>{ modal.classList.add('open'); });
+     writeBtn.addEventListener('click', ()=>{
+  openModal(modal);
+  nameEl.focus();
+});
+
       // 닫기
-      closeBtn.addEventListener('click', ()=>{ modal.classList.remove('open'); });
+closeBtn.addEventListener('click', ()=>{
+  closeModal(modal);
+  writeBtn.focus();
+});
+
       // 입력 누락 알림 팝업 닫기
-      alertOk.addEventListener('click', ()=>{ alertModal.classList.remove('open'); });
+      alertOk.addEventListener('click', ()=>{ closeModal(alertModal); });
 
       // 작성 완료
       submitBtn.addEventListener('click', async ()=>{
@@ -899,7 +920,7 @@
         const msg  = (msgEl.value||'').trim();
         if(!name || !pass || !msg){
           // 입력 누락 시, 별도 팝업(오버레이) 열기
-          alertModal.classList.add('open');
+          openModal(alertModal);
           return;
         }
         const passhash = await sha256(pass);
@@ -910,7 +931,7 @@
         const ok = await apiCreate(entry);
         if(!ok){ alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.'); return; }
         nameEl.value=''; passEl.value=''; msgEl.value='';
-        modal.classList.remove('open');
+closeModal(modal);
         await load(); page = 1; winStart = 1; renderList();
       });
 
@@ -1013,18 +1034,18 @@ async function apiDelete(id, passhash){
       // 복사 완료 팝업
       const copyModal=document.getElementById('copyModal');
       const copyOk=document.getElementById('copyOk');
-      if(copyOk) copyOk.addEventListener('click',()=>copyModal.classList.remove('open'));
+      if(copyOk) copyOk.addEventListener('click',()=>closeModal(copyModal));
 
       document.addEventListener('click', (e)=>{
         const b=e.target.closest('.copy-mini');
         if(!b) return;
         const txt=b.getAttribute('data-copy')||'';
         if(navigator.clipboard){
-          navigator.clipboard.writeText(txt).then(()=>copyModal.classList.add('open'));
+          navigator.clipboard.writeText(txt).then(()=>openModal(copyModal));
         }else{
           const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
           ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-          copyModal.classList.add('open');
+          openModal(copyModal);
         }
       });
     })();
@@ -1063,6 +1084,7 @@ async function apiDelete(id, passhash){
 
       targets.forEach(el => io.observe(el));
     })();
+    
   </script>
 </body>
 </html>

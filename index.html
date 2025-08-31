@@ -143,10 +143,18 @@
       position:relative; overflow:hidden; width:100%; aspect-ratio:4/6;
       background:#f7f7f7; touch-action:pan-y; cursor:grab;
     }
-    .hero-photo img{
-      width:100%; height:100%; object-fit:cover; display:block; user-select:none;
-      -webkit-user-drag:none;
+    /* 슬라이드 전환용 레이어 */
+    .hero-photo > img{
+      position:absolute; inset:0;
+      width:100%; height:100%; object-fit:cover; display:block; user-select:none; -webkit-user-drag:none;
+      transition: transform 360ms cubic-bezier(.2,.7,.2,1), opacity 360ms cubic-bezier(.2,.7,.2,1);
     }
+    .slide-pos{ transform:translateX(0); }
+    .slide-enter-right{ transform:translateX(100%); }
+    .slide-enter-left{  transform:translateX(-100%); }
+    .slide-leave-left{  transform:translateX(-100%); }
+    .slide-leave-right{ transform:translateX(100%); }
+
     .hero-arrow{
       position:absolute; top:50%; transform:translateY(-50%);
       background:transparent; border:none; font-size:22px; color:#585353; cursor:pointer; line-height:1;
@@ -172,7 +180,8 @@
     }
     .gb-list{ display:grid; gap:12px; }
     .gb-card{
-      width:70%; margin:0 auto; background:#fff;
+      width:90%; /* 70% → 90% */
+      margin:0 auto; background:#fff;
       border:1px solid var(--thin); border-radius:12px; padding:12px;
     }
     .gb-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
@@ -190,17 +199,11 @@
     .gb-pagebtn{
       border:none; background:transparent;
       color:#9d9b9b;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; /* Regular */
       padding:6px 10px; border-radius:8px; cursor:pointer;
     }
     .gb-pagebtn[aria-current="true"]{
-      color:#585353; font-weight:700;
-    }
-
-    .gb-write-wrap{ text-align:center; margin-top:12px; }
-    .gb-write{
-      display:inline-block; background:#fff; border:1px solid var(--thin); color:#585353;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; padding:8px 14px; border-radius:10px; cursor:pointer;
+      color:#585353; font-weight:700; /* Bold (Bold.ttf로 매핑) */
     }
 
     /* ===== 마음 전하실 곳 ===== */
@@ -452,13 +455,13 @@
       </div>
     </section>
 
-    <!-- 갤러리 (현상 유지) -->
+    <!-- 갤러리 -->
     <section class="gallery pad" id="gallery">
       <img src="images/heart.png" alt="하트" class="img-original heart-top">
       <div class="section-title">갤러리</div>
 
       <div class="hero-photo" id="heroZone">
-        <img id="heroImg" alt="메인이미지">
+        <img id="heroImg" alt="메인이미지" class="slide-pos">
         <button id="heroPrev" class="hero-arrow prev" aria-label="이전">&lt;</button>
         <button id="heroNext" class="hero-arrow next" aria-label="다음">&gt;</button>
       </div>
@@ -586,18 +589,9 @@
   </main>
 
   <script>
-
     // ===== 모달 열기/닫기 유틸(접근성 경고 방지) =====
-function openModal(el) {
-  if (!el) return;
-  el.classList.add('open');
-  el.setAttribute('aria-hidden', 'false');
-}
-function closeModal(el) {
-  if (!el) return;
-  el.classList.remove('open');
-  el.setAttribute('aria-hidden', 'true');
-}
+    function openModal(el) { if (!el) return; el.classList.add('open'); el.setAttribute('aria-hidden', 'false'); }
+    function closeModal(el){ if (!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden', 'true'); }
 
     /* ===== 카운트 두 번째 줄(값 행) 폭: 첫 칸은 글자수 ch, 나머지는 2ch (현상 유지) ===== */
     function setSecondRowWidths(tbody){
@@ -686,7 +680,7 @@ function closeModal(el) {
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리: GitHub API + 드래그/스와이프 + 더보기 (현상 유지) ===== */
+    /* ===== 갤러리: GitHub API + 드래그/스와이프 + 더보기 + 슬라이드 전환 ===== */
     (function(){
       const hero=document.getElementById('heroImg');
       const zone=document.getElementById('heroZone');
@@ -715,17 +709,50 @@ function closeModal(el) {
         const im=document.createElement('img');
         im.src=src+'?v=1'; im.alt='썸네일';
         b.appendChild(im);
-        b.addEventListener('click',()=>show(i));
+        b.addEventListener('click',()=>show(i, i>idx ? +1 : -1));
         return b;
       }
 
       let list = [];
       let idx  = 0;
 
-      function show(i){
+      function animateTo(newSrc, dir){
+        // dir: +1 다음, -1 이전, 0 초기
+        if(!hero.src || !hero.src.includes(newSrc) && !document.querySelector('#heroZone img.temp')){
+          // 첫 로드 또는 전환 준비
+        }
+        if(dir===0 || !hero.getAttribute('src')){
+          hero.src = newSrc+'?v=1';
+          hero.className = 'slide-pos';
+          return;
+        }
+        const incoming = document.createElement('img');
+        incoming.alt = '메인이미지';
+        incoming.className = dir>0 ? 'slide-enter-right' : 'slide-enter-left';
+        incoming.src = newSrc+'?v=1';
+        incoming.classList.add('temp');
+        zone.appendChild(incoming);
+
+        // 다음 프레임에서 전환
+        requestAnimationFrame(()=>{
+          hero.classList.remove('slide-pos');
+          hero.classList.add(dir>0 ? 'slide-leave-left' : 'slide-leave-right');
+          incoming.classList.remove('slide-enter-right','slide-enter-left');
+          incoming.classList.add('slide-pos');
+        });
+
+        const done = ()=> {
+          hero.className = 'slide-pos';
+          hero.src = newSrc+'?v=1';
+          incoming.remove();
+        };
+        incoming.addEventListener('transitionend', done, { once:true });
+      }
+
+      function show(i, dir=0){
         if(!list.length){ hero.alt='이미지 준비중'; return; }
         idx=(i+list.length)%list.length;
-        hero.src=list[idx]+'?v=1';
+        animateTo(list[idx], dir);
       }
 
       async function loadFromGitHub(){
@@ -754,7 +781,7 @@ function closeModal(el) {
         first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
 
-        show(0);
+        show(0, 0);
 
         moreBtn.hidden = next25.length===0;
         moreBtn.textContent = '▼';
@@ -767,8 +794,8 @@ function closeModal(el) {
           moreBtn.setAttribute('aria-expanded', String(willOpen));
         });
 
-        prev.addEventListener('click',()=>show(idx-1));
-        next.addEventListener('click',()=>show(idx+1));
+        prev.addEventListener('click',()=>show(idx-1, -1));
+        next.addEventListener('click',()=>show(idx+1, +1));
 
         let isDown=false, startX=0, dx=0, pid=null;
         zone.addEventListener('pointerdown', (e)=>{
@@ -785,7 +812,7 @@ function closeModal(el) {
           isDown=false; zone.style.cursor='grab';
           const threshold = 30;
           if(Math.abs(dx) > threshold){
-            if(dx < 0) show(idx+1); else show(idx-1);
+            if(dx < 0) show(idx+1, +1); else show(idx-1, -1);
           }
           dx=0; pid=null;
         }
@@ -802,23 +829,21 @@ function closeModal(el) {
 
     /* ===== 방명록: Google Sheets 연동 + 모달 열기 + 검증 팝업 ===== */
     (function(){
-      // Apps Script는 ALLOW_ORIGIN: https://siul-kh.github.io/wedding/ 로 설정
+      // Apps Script는 ALLOW_ORIGIN: https://siul-kh.github.io 로 설정되어 있어야 함
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbxp2VAXos-C8Z3pJOYQiV9JDAKuF8zEf9uMIfGulxWf9KegrhwtQ8KTLh7mMronT9HK/exec';
-// JSONP helper: <script src="...&callback=__func">로 데이터를 받기
-function jsonp(url){
-  return new Promise((resolve, reject)=>{
-    const cb = '__gb_cb_' + Date.now() + Math.random().toString(36).slice(2);
-    window[cb] = (data)=>{ resolve(data); cleanup(); };
-    function cleanup(){
-      try{ delete window[cb]; }catch{}
-      if(s && s.parentNode) s.parentNode.removeChild(s);
-    }
-    const s = document.createElement('script');
-    s.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb + '&_=' + Date.now();
-    s.onerror = ()=>{ cleanup(); reject(new Error('JSONP failed')); };
-    document.head.appendChild(s);
-  });
-}
+
+      // JSONP helper: <script src="...&callback=__func"> 로 데이터 받기 (CORS 불필요)
+      function jsonp(url){
+        return new Promise((resolve, reject)=>{
+          const cb = '__gb_cb_' + Date.now() + Math.random().toString(36).slice(2);
+          window[cb] = (data)=>{ resolve(data); cleanup(); };
+          function cleanup(){ try{ delete window[cb]; }catch{} if(s && s.parentNode) s.parentNode.removeChild(s); }
+          const s = document.createElement('script');
+          s.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb + '&_=' + Date.now();
+          s.onerror = ()=>{ cleanup(); reject(new Error('JSONP failed')); };
+          document.head.appendChild(s);
+        });
+      }
 
       const PAGE_SIZE = 5;
 
@@ -849,8 +874,10 @@ function jsonp(url){
         }catch(e){ return iso || ''; }
       }
 
+      // 숫자/기호/이모지까지 안전
       function escapeHtml(s){
-        return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+        const str = String(s ?? '');
+        return str.replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
       }
 
       function renderList(){
@@ -869,7 +896,7 @@ function jsonp(url){
             </div>
             <div class="gb-msg">${escapeHtml(item.msg)}</div>
             <div class="gb-actions">
-              <button class="gb-del" data-id="${item.id}">삭제</button>
+              <button class="gb-del" data-id="${escapeHtml(item.id)}">삭제</button>
             </div>
           `;
           listEl.appendChild(card);
@@ -913,21 +940,45 @@ function jsonp(url){
         }
       });
 
-// 작성하기 → 작성 팝업 열기
-writeBtn.addEventListener('click', ()=>{
-  modal.classList.add('open');
-  modal.setAttribute('aria-hidden','false');
-});
-// 닫기
-closeBtn.addEventListener('click', ()=>{
-  modal.classList.remove('open');
-  modal.setAttribute('aria-hidden','true');
-});
-// 입력 누락 알림 팝업 닫기
-alertOk.addEventListener('click', ()=>{
-  alertModal.classList.remove('open');
-  alertModal.setAttribute('aria-hidden','true');
-});
+      // 작성하기 → 작성 팝업 열기
+      writeBtn.addEventListener('click', ()=>{ openModal(modal); });
+      // 닫기
+      closeBtn.addEventListener('click', ()=>{ closeModal(modal); });
+      // 입력 누락 알림 팝업 닫기
+      alertOk.addEventListener('click', ()=>{ closeModal(alertModal); });
+
+      // ==== API 래퍼 (Google Apps Script) ====
+      async function apiList(){
+        try{
+          // 서버가 최신순을 돌려주지만, 안전하게 클라이언트에서도 최신순 정렬 보장
+          const rows = await jsonp(GUESTBOOK_API + '?method=list');
+          if(Array.isArray(rows)){
+            return rows.slice().sort((a,b)=>{
+              const ta = Date.parse(a?.date||'') || 0;
+              const tb = Date.parse(b?.date||'') || 0;
+              return tb - ta; // 최신 우선
+            });
+          }
+          return [];
+        }catch(e){
+          console.warn(e); return [];
+        }
+      }
+
+      // no-cors POST: 응답은 못 읽으므로, 이후 목록 재조회로 성공/실패 판정
+      async function apiCreate(entry){
+        await fetch(GUESTBOOK_API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ method:'create', entry }) });
+      }
+      async function apiDelete(id, passhash){
+        await fetch(GUESTBOOK_API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ method:'delete', id, passhash }) });
+      }
+
+      async function load(){ data = await apiList(); }
+
+      async function sha256(str){
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+      }
 
       // 작성 완료
       submitBtn.addEventListener('click', async ()=>{
@@ -935,24 +986,30 @@ alertOk.addEventListener('click', ()=>{
         const pass = (passEl.value||'').trim();
         const msg  = (msgEl.value||'').trim();
         if(!name || !pass || !msg){
-          // 입력 누락 시, 별도 팝업(오버레이) 열기
-alertModal.classList.add('open');
-alertModal.setAttribute('aria-hidden','false');
-
+          openModal(alertModal);
+          return; // ★ 누락 시 즉시 종료(버그 수정)
         }
         const passhash = await sha256(pass);
-        const entry = {
-          id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
-          name, msg, passhash, date: new Date().toISOString()
-        };
-        const ok = await apiCreate(entry);
-        if(!ok){ alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.'); return; }
+        const newId = 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+        const entry = { id:newId, name, msg, passhash, date:new Date().toISOString() };
+
+        // 전송
+        try{ await apiCreate(entry); }catch(e){ console.warn(e); }
+
+        // 재조회 후 성공 판정
+        await load();
+        const exists = data.some(it => String(it.id) === String(newId));
+        if(!exists){
+          alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
+          return;
+        }
+        // 성공 처리
         nameEl.value=''; passEl.value=''; msgEl.value='';
-closeModal(modal);
-        await load(); page = 1; winStart = 1; renderList();
+        closeModal(modal);
+        page = 1; winStart = 1; renderList();
       });
 
-      // 삭제(작성자 비번 확인)
+      // 삭제(작성자 비번 확인) — 실패 시 “비밀번호가 틀렸습니다.”
       document.addEventListener('click', async (e)=>{
         const btn = e.target.closest('.gb-del');
         if(!btn) return;
@@ -960,60 +1017,24 @@ closeModal(modal);
         const input = prompt('삭제 비밀번호를 입력하세요.');
         if(!input) return;
         const passhash = await sha256(input);
-        const ok = await apiDelete(id, passhash);
-        if(!ok){ alert('삭제에 실패했습니다. 비밀번호를 확인해주세요.'); return; }
+
+        // 삭제 시도
+        try{ await apiDelete(id, passhash); }catch(err){ console.warn(err); }
+
+        // 재조회 후 실제 삭제되었는지 확인
         await load();
+        const stillThere = data.some(it => String(it.id) === String(id));
+        if(stillThere){
+          alert('비밀번호가 틀렸습니다.');
+          return;
+        }
+
+        // 삭제 성공 → 페이지 보정 및 렌더
         const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
         if(page > totalPages) page = totalPages;
         if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
         renderList();
       });
-
-      // ==== API 래퍼 (Google Apps Script) ====
-    async function apiList(){
-  try{
-    // JSONP → CORS 없이 목록을 읽어옴
-    return await jsonp(GUESTBOOK_API + '?method=list');
-  }catch(e){
-    console.warn(e); return [];
-  }
-}
-
-
-// no-cors POST: 응답은 읽지 않고, 성공 가정 후 목록을 다시 JSONP로 재조회
-async function apiCreate(entry){
-  try{
-    await fetch(GUESTBOOK_API, {
-      method: 'POST',
-      mode: 'no-cors',                // ← CORS 프리플라이트/차단 피함
-      body: JSON.stringify({ method:'create', entry })
-    });
-    return true; // 요청 자체가 네트워크 에러 없이 나갔으면 성공으로 판단
-  }catch(e){
-    console.warn(e); return false;
-  }
-}
-
-async function apiDelete(id, passhash){
-  try{
-    await fetch(GUESTBOOK_API, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: JSON.stringify({ method:'delete', id, passhash })
-    });
-    return true;
-  }catch(e){
-    console.warn(e); return false;
-  }
-}
-
-      async function load(){
-        data = await apiList();
-      }
-      async function sha256(str){
-        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-        return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-      }
 
       (async function init(){
         await load();

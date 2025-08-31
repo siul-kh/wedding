@@ -117,15 +117,19 @@
     }
     .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; }
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
-    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; line-height:2.0; margin-top:0; }
+    .go-info {
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
+      color:#9d9b9b; /* 요청: 세 줄 색상 */
+      text-align:center; line-height:2.0; margin-top:0;
+    }
 
-    /* 네비 앱 버튼 */
+    /* 네비 앱 버튼 (요청: 12pt 고정) */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
     .nav-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5em;
       padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
       font-family:'GowunBatang',serif;
-      font-size: clamp(9pt, 2.6vw, 10pt);
+      font-size: 12pt; /* ← 수정 */
       color:#585353; text-decoration:none;
       background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer;
       white-space:nowrap; flex-wrap:nowrap; max-width:100%;
@@ -139,21 +143,29 @@
       font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
     .gallery .heart-top{ margin:0 auto 6px; }
+
     .hero-photo{
       position:relative; overflow:hidden; width:100%; aspect-ratio:4/6;
       background:#f7f7f7; touch-action:pan-y; cursor:grab;
     }
     .hero-photo img{
-      width:100%; height:100%; object-fit:cover; display:block; user-select:none;
-      -webkit-user-drag:none;
+      user-select:none; -webkit-user-drag:none;
+    }
+    /* 슬라이드용 레이어 */
+    .hero-photo .slide{
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; display:block;
+      will-change:transform;
+      transform:translateX(0);
     }
     .hero-arrow{
       position:absolute; top:50%; transform:translateY(-50%);
-      background:transparent; border:none; font-size:22px; color:#585353; cursor:pointer; line-height:1;
-      padding:6px 8px;
+      background:transparent; border:none; cursor:pointer; line-height:1;
+      padding:0; /* 원본 크기 유지 */
     }
     .hero-arrow.prev{ left:4px; }
     .hero-arrow.next{ right:4px; }
+    .hero-arrow img{ display:block; }
 
     .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%;
       margin-block:var(--thumb-gap); }
@@ -163,7 +175,8 @@
       aspect-ratio:1/1; display:block;
     }
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; color:#585353; cursor:pointer; }
+    .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; cursor:pointer; }
+    .more-tri img{ display:block; }
     .thumbs-more[hidden]{ display:none; }
 
     /* ===== 방명록 섹션 ===== */
@@ -172,7 +185,7 @@
     }
     .gb-list{ display:grid; gap:12px; }
 
-    /* 카드 폭을 100%로 변경 */
+    /* 카드 폭 100% (작성폼+목록 공통) */
     .gb-card{
       width:100%; margin:0 auto; background:#fff;
       border:1px solid var(--thin); border-radius:12px; padding:12px;
@@ -215,33 +228,16 @@
       display:inline-block; background:#fff; border:1px solid var(--thin); color:#585353;
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; padding:8px 14px; border-radius:10px; cursor:pointer;
     }
+    /* 요청: 방명록 작성 버튼만 스타일 변경 */
+    #gbSubmit{
+      font-size:10pt !important;
+      color:#9d9b9b !important;
+      font-weight:400 !important; /* Regular */
+    }
+    /* 요청: 내용 칸을 위 칸들과 더 가깝게 */
+    #gbForm .gb-msg{ margin-top:4px; }
 
-    /* ===== 마음 전하실 곳 ===== */
-    .acc-title{
-      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
-    }
-    .acc-table{
-      width:100%; border-collapse:separate; border-spacing:0;
-      border:1px solid #f1f1f1;
-      border-radius:12px; overflow:hidden; background:#fff;
-    }
-    .acc-table thead th{ padding:0; background:#f1f1f1; }
-    .acc-heading{
-      width:100%; display:block; text-align:center; cursor:pointer;
-      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1;
-    }
-    .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
-    .acc-line{ font-size:10pt; color:#585353; }
-    .copy-mini{
-      font-family:'GowunBatang',serif; font-size:8pt;
-      padding:6px 10px; border-radius:10px;
-      background:transparent; color:#585353; border:1px solid var(--thin);
-      cursor:pointer;
-    }
-    .copy-col{ width:80px; text-align:right; }
-
-    /* 복사 완료 팝업: 가로형 비율 + 확인 버튼 */
+    /* 복사/삭제 모달 공통 스타일(현상 유지 + 재활용) */
     .copy-modal .sheet{
       width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto;
     }
@@ -275,7 +271,7 @@
     .count-labels th{ font-size:6pt; color:var(--hint); font-weight:400; }
     .count-values td{ font-size:14pt; color:#585353; font-weight:700; }
     .count-values .colon{ font-weight:700; font-size:12pt; }
-
+    
     /* ===== 공유 버튼(하단, 현상 유지) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-cta{
@@ -343,12 +339,9 @@
     <section class="pad" aria-label="달력">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="cal-title after-heart">결혼합니다</div>
-      <div class="cal-sub">2025년 11월 1일 오후 2시</div>
-
+      <div class="cal-sub">2025년 11월 1일 토요일 오후 2시</div><!-- ← 텍스트 수정 -->
       <div id="weddingStatus" class="cal-msg">지선, 기환의 결혼식이 <span class="dleft">0일</span> 남았습니다.</div>
-
       <div class="thin thin-70"></div>
-
       <div class="calendar">
         <div class="cal-head">
           <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
@@ -374,61 +367,13 @@
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
         </div>
       </div>
-
       <div class="thin thin-70"></div>
     </section>
 
-    <!-- 카운트 1 (현상 유지) -->
-    <section class="pad when">
-      <div class="title">우리가 나무를 심은 날</div>
-      <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
-      <table class="count-table" id="pastTable">
-        <colgroup><col><col><col><col><col><col><col></colgroup>
-        <thead class="count-labels">
-          <tr>
-            <th>DAYS</th><th class="colon"></th>
-            <th>HOUR</th><th class="colon"></th>
-            <th>MIN</th><th class="colon"></th>
-            <th>SEC</th>
-          </tr>
-        </thead>
-        <tbody class="count-values">
-          <tr>
-            <td class="d"></td><td class="colon">:</td>
-            <td class="h"></td><td class="colon">:</td>
-            <td class="m"></td><td class="colon">:</td>
-            <td class="s"></td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <!-- 얇은 선 추가: 결혼합니다 ↔ 오시는 길 -->
+    <div class="thin"></div>
 
-    <!-- 카운트 2 (현상 유지) -->
-    <section class="pad when">
-      <div class="title" id="fruitTitle">그 나무가 열매를 맺을 날</div>
-      <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
-      <table class="count-table" id="futureTable">
-        <colgroup><col><col><col><col><col><col><col></colgroup>
-        <thead class="count-labels">
-          <tr>
-            <th>DAYS</th><th class="colon"></th>
-            <th>HOUR</th><th class="colon"></th>
-            <th>MIN</th><th class="colon"></th>
-            <th>SEC</th>
-          </tr>
-        </thead>
-        <tbody class="count-values">
-          <tr>
-            <td class="d"></td><td class="colon">:</td>
-            <td class="h"></td><td class="colon">:</td>
-            <td class="m"></td><td class="colon">:</td>
-            <td class="s"></td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 오시는 길 (현상 유지) -->
+    <!-- 오시는 길 -->
     <section class="pad" id="way">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title" style="margin-top:8px">오시는 길</div>
@@ -465,20 +410,29 @@
       </div>
     </section>
 
-    <!-- 갤러리 (현상 유지) -->
+    <!-- 얇은 선 추가: 오시는 길 ↔ 갤러리 -->
+    <div class="thin"></div>
+
+    <!-- 갤러리 -->
     <section class="gallery pad" id="gallery">
       <img src="images/heart.png" alt="하트" class="img-original heart-top">
       <div class="section-title">갤러리</div>
 
       <div class="hero-photo" id="heroZone">
-        <img id="heroImg" alt="메인이미지">
-        <button id="heroPrev" class="hero-arrow prev" aria-label="이전">&lt;</button>
-        <button id="heroNext" class="hero-arrow next" aria-label="다음">&gt;</button>
+        <!-- 슬라이드 이미지들은 JS가 동적으로 관리 -->
+        <button id="heroPrev" class="hero-arrow prev" aria-label="이전">
+          <img src="images/left.png" alt="">
+        </button>
+        <button id="heroNext" class="hero-arrow next" aria-label="다음">
+          <img src="images/right.png" alt="">
+        </button>
       </div>
 
       <div class="thumbs5" id="thumbsTop"></div>
       <div class="thumbs5 thumbs-more" id="thumbsMore" hidden></div>
-      <button id="thumbsMoreBtn" class="more-tri" aria-expanded="false" aria-controls="thumbsMore">▼</button>
+      <button id="thumbsMoreBtn" class="more-tri" aria-expanded="false" aria-controls="thumbsMore">
+        <img id="thumbsMoreIcon" src="images/down.png" alt="">
+      </button>
     </section>
 
     <div class="thin"></div>
@@ -488,13 +442,13 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="gb-title after-heart">방명록</div>
 
-      <!-- 새로운 "작성 폼" (카드와 동일 형태, 가로 100%) -->
+      <!-- 작성 폼 (가로 100%) -->
       <div class="gb-card" id="gbForm">
         <div class="gb-row">
           <input id="gbName" class="gb-input" placeholder="이름"/>
           <input id="gbPass" class="gb-input" placeholder="비밀번호" type="password"/>
         </div>
-        <div class="gb-msg" style="margin-top:8px;">
+        <div class="gb-msg" style="margin-top:4px;">
           <textarea id="gbMsg" class="gb-textarea" rows="4" placeholder="내용을 입력하세요."></textarea>
         </div>
         <div class="gb-actions">
@@ -502,7 +456,7 @@
         </div>
       </div>
 
-      <!-- 작성된 목록 -->
+      <!-- 작성 목록 -->
       <div id="gbList" class="gb-list" style="margin-top:12px;"></div>
 
       <div class="gb-pager">
@@ -564,7 +518,22 @@
       </table>
     </section>
 
-    <!-- 복사 완료 팝업 (현상 유지: 공유용) -->
+    <!-- 삭제 확인 모달 (복사 모달과 동일한 디자인) -->
+    <div id="delModal" class="modal copy-modal" aria-hidden="true">
+      <div class="sheet">
+        <div class="body center">
+          <div>삭제 비밀번호를 입력하세요.</div>
+          <input id="delPass" class="gb-input" type="password" placeholder="비밀번호">
+          <div id="delError" style="display:none; color:#d00; font-size:10pt;">비밀번호가 틀렸습니다.</div>
+          <div style="display:flex; gap:10px;">
+            <button id="delOk" class="copy-ok">삭제</button>
+            <button id="delCancel" class="copy-ok">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 복사 완료 모달 (현상 유지) -->
     <div id="copyModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body center">
@@ -574,6 +543,7 @@
       </div>
     </div>
 
+    <!-- 얇은 선 추가: 마음 전하실 곳 ↔ 공유 -->
     <div class="thin"></div>
 
     <!-- 공유 (하단 버튼) -->
@@ -587,11 +557,11 @@
   </main>
 
   <script>
-    // ===== 모달 유틸(복사완료 팝업만 사용) =====
+    /* ===== 모달 유틸 (공통) ===== */
     function openModal(el){ if(!el) return; el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
     function closeModal(el){ if(!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
 
-    /* ===== 카운트 (손대지 않음) ===== */
+    /* ===== 카운트 (절대 수정하지 않음) ===== */
     function setSecondRowWidths(tbody){
       const row = tbody.querySelector('tr');
       if(!row) return;
@@ -678,16 +648,16 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리 (현상 유지) ===== */
+    /* ===== 갤러리: 랜덤 유지 + 슬라이드/드래그 애니메이션 + 이미지 버튼 ===== */
     (function(){
-      const hero=document.getElementById('heroImg');
       const zone=document.getElementById('heroZone');
       const prev=document.getElementById('heroPrev');
       const next=document.getElementById('heroNext');
       const thumbsTop=document.getElementById('thumbsTop');
       const thumbsMore=document.getElementById('thumbsMore');
       const moreBtn=document.getElementById('thumbsMoreBtn');
-      if(!hero||!prev||!next||!thumbsTop||!thumbsMore||!moreBtn||!zone) return;
+      const moreIcon=document.getElementById('thumbsMoreIcon');
+      if(!zone||!prev||!next||!thumbsTop||!thumbsMore||!moreBtn||!moreIcon) return;
 
       const GH = { owner:'', repo:'', ref:'main', dir:'images/pre-wedding snap' };
       if(!GH.owner || !GH.repo){
@@ -707,17 +677,170 @@
         const im=document.createElement('img');
         im.src=src+'?v=1'; im.alt='썸네일';
         b.appendChild(im);
-        b.addEventListener('click',()=>show(i));
+        b.addEventListener('click',()=>show(i,0,true));
         return b;
       }
 
       let list = [];
       let idx  = 0;
+      let curImg = null;
+      let animating = false;
+      let drag = {active:false, startX:0, dx:0, dir:0, ghost:null};
 
-      function show(i){
-        if(!list.length){ hero.alt='이미지 준비중'; return; }
-        idx=(i+list.length)%list.length;
-        hero.src=list[idx]+'?v=1';
+      function width(){ return zone.getBoundingClientRect().width; }
+
+      function mountInitial(src){
+        curImg = document.createElement('img');
+        curImg.className = 'slide';
+        curImg.src = src+'?v=1';
+        curImg.style.transform = 'translateX(0px)';
+        zone.appendChild(curImg);
+      }
+
+      function createGhost(src){
+        const g = document.createElement('img');
+        g.className='slide';
+        g.src=src+'?v=1';
+        return g;
+      }
+
+      function show(newIndex, dir=0, instant=false){
+        if(!list.length) return;
+        newIndex=(newIndex+list.length)%list.length;
+        if(!curImg){
+          mountInitial(list[newIndex]);
+          idx=newIndex;
+          return;
+        }
+        if(animating) return;
+        if(newIndex===idx && dir===0) return;
+
+        const toLeft = dir>0;   // next
+        const toRight= dir<0;   // prev
+
+        const incoming = createGhost(list[newIndex]);
+        const w = width();
+        incoming.style.transform = `translateX(${toLeft? w : toRight? -w : 0}px)`;
+        zone.appendChild(incoming);
+
+        if(instant){
+          // 즉시 교체(썸네일 클릭 시)
+          zone.removeChild(curImg);
+          curImg = incoming;
+          curImg.style.transform = 'translateX(0px)';
+          idx=newIndex;
+          return;
+        }
+
+        animating = true;
+        // 다음 프레임에 트랜지션
+        requestAnimationFrame(()=>{
+          curImg.style.transition = 'transform 300ms ease';
+          incoming.style.transition = 'transform 300ms ease';
+          curImg.style.transform = `translateX(${toLeft? -w : w}px)`;
+          incoming.style.transform = 'translateX(0px)';
+          const done = ()=>{
+            curImg.removeEventListener('transitionend', done);
+            // 정리
+            zone.removeChild(curImg);
+            curImg = incoming;
+            curImg.style.transition = '';
+            animating=false;
+          };
+          curImg.addEventListener('transitionend', done, {once:true});
+          idx=newIndex;
+        });
+      }
+
+      // 드래그
+      zone.addEventListener('pointerdown',(e)=>{
+        if(!list.length || animating) return;
+        drag.active=true; drag.startX=e.clientX; drag.dx=0; drag.dir=0;
+        zone.setPointerCapture(e.pointerId);
+        zone.style.cursor='grabbing';
+      });
+      zone.addEventListener('pointermove',(e)=>{
+        if(!drag.active || !curImg) return;
+        drag.dx = e.clientX - drag.startX;
+        const w = width();
+        const dir = drag.dx<0 ? 1 : -1; // 좌로 끌면 next(+1), 우로 끌면 prev(-1)
+        if(dir !== drag.dir){
+          // 방향 바뀌면 유령 이미지 재생성
+          if(drag.ghost && drag.ghost.parentNode) zone.removeChild(drag.ghost);
+          const nextIndex = (idx + dir + list.length)%list.length;
+          drag.ghost = createGhost(list[nextIndex]);
+          drag.ghost.style.transform = `translateX(${dir>0? w : -w}px)`;
+          zone.appendChild(drag.ghost);
+          drag.dir = dir;
+        }
+        // 실시간 이동
+        if(drag.ghost){
+          curImg.style.transform = `translateX(${drag.dx}px)`;
+          drag.ghost.style.transform = `translateX(${(drag.dir>0? w : -w) + drag.dx}px)`;
+        }
+      });
+      function endDrag(){
+        if(!drag.active){ return; }
+        zone.style.cursor='grab';
+        const w = width();
+        const threshold = Math.min(120, w*0.25);
+        if(Math.abs(drag.dx) > threshold && drag.dir !== 0){
+          // 슬라이드 완료 애니메이션
+          animating = true;
+          curImg.style.transition = 'transform 250ms ease';
+          drag.ghost.style.transition = 'transform 250ms ease';
+          curImg.style.transform = `translateX(${drag.dir>0? -w : w}px)`;
+          drag.ghost.style.transform = 'translateX(0px)';
+          const old = curImg, incoming = drag.ghost, newIndex = (idx + drag.dir + list.length)%list.length;
+          old.addEventListener('transitionend', ()=>{
+            if(old.parentNode) old.parentNode.removeChild(old);
+            incoming.style.transition='';
+            curImg = incoming;
+            idx = newIndex;
+            animating=false;
+          }, {once:true});
+        }else{
+          // 되돌리기
+          curImg.style.transition = 'transform 200ms ease';
+          curImg.style.transform = 'translateX(0px)';
+          if(drag.ghost){
+            drag.ghost.style.transition='transform 200ms ease';
+            drag.ghost.style.transform = `translateX(${drag.dir>0? w : -w}px)`;
+            drag.ghost.addEventListener('transitionend', ()=>{
+              if(drag.ghost && drag.ghost.parentNode) drag.ghost.parentNode.removeChild(drag.ghost);
+            }, {once:true});
+          }
+        }
+        drag.active=false; drag.dx=0; drag.dir=0; drag.ghost=null;
+      }
+      zone.addEventListener('pointerup', endDrag);
+      zone.addEventListener('pointercancel', endDrag);
+      zone.addEventListener('dragstart', e=>e.preventDefault());
+
+      prev.addEventListener('click', ()=> show(idx-1, -1));
+      next.addEventListener('click', ()=> show(idx+1, +1));
+
+      function render(){
+        const first25 = list.slice(0,25);
+        const next25  = list.slice(25,50);
+
+        thumbsTop.innerHTML=''; thumbsMore.innerHTML='';
+        first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
+        next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
+
+        show(0,0,true);
+
+        // 더보기 이미지 버튼 토글
+        moreBtn.hidden = next25.length===0;
+        moreBtn.setAttribute('aria-expanded','false');
+        thumbsMore.hidden = true;
+        moreIcon.src = 'images/down.png';
+        moreBtn.addEventListener('click', ()=>{
+          const willOpen = thumbsMore.hidden;
+          thumbsMore.hidden = !willOpen;
+          moreBtn.setAttribute('aria-expanded', String(willOpen));
+          moreIcon.src = willOpen ? 'images/up.png' : 'images/down.png';
+        }, {once:true}); // 중복 핸들러 방지
       }
 
       async function loadFromGitHub(){
@@ -731,59 +854,11 @@
           const basePath = encPath(GH.dir) + '/';
           const files = items.filter(it=>it.type==='file' && exts.test(it.name))
                              .map(it => basePath + encodeURIComponent(it.name));
-          return shuffle(files).slice(0,50);
+          return shuffle(files).slice(0,50); // 랜덤 유지
         }catch(e){
           console.warn(e);
           return [];
         }
-      }
-
-      function render(){
-        const first25 = list.slice(0,25);
-        const next25  = list.slice(25,50);
-
-        thumbsTop.innerHTML=''; thumbsMore.innerHTML='';
-        first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
-        next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
-
-        show(0);
-
-        moreBtn.hidden = next25.length===0;
-        moreBtn.textContent = '▼';
-        moreBtn.setAttribute('aria-expanded','false');
-        thumbsMore.hidden = true;
-        moreBtn.addEventListener('click', ()=>{
-          const willOpen = thumbsMore.hidden;
-          thumbsMore.hidden = !willOpen;
-          moreBtn.textContent = willOpen ? '▲' : '▼';
-          moreBtn.setAttribute('aria-expanded', String(willOpen));
-        });
-
-        prev.addEventListener('click',()=>show(idx-1));
-        next.addEventListener('click',()=>show(idx+1));
-
-        let isDown=false, startX=0, dx=0, pid=null;
-        zone.addEventListener('pointerdown', (e)=>{
-          isDown=true; startX=e.clientX; dx=0; pid=e.pointerId;
-          zone.setPointerCapture(pid);
-          zone.style.cursor='grabbing';
-        });
-        zone.addEventListener('pointermove', (e)=>{
-          if(!isDown) return;
-          dx = e.clientX - startX;
-        });
-        function endDrag(){
-          if(!isDown) return;
-          isDown=false; zone.style.cursor='grab';
-          const threshold = 30;
-          if(Math.abs(dx) > threshold){
-            if(dx < 0) show(idx+1); else show(idx-1);
-          }
-          dx=0; pid=null;
-        }
-        zone.addEventListener('pointerup', endDrag);
-        zone.addEventListener('pointercancel', endDrag);
-        zone.addEventListener('dragstart', e=>e.preventDefault());
       }
 
       (async function init(){
@@ -816,11 +891,19 @@
       const nextWindowBtn = document.getElementById('gbNextWindow');
       const pagesWrap = document.getElementById('gbPages');
 
-      // 새로 만든 “작성 폼” 요소
+      // 작성 폼
       const nameEl = document.getElementById('gbName');
       const passEl = document.getElementById('gbPass');
       const msgEl  = document.getElementById('gbMsg');
       const submitBtn = document.getElementById('gbSubmit');
+
+      // 삭제 모달
+      const delModal = document.getElementById('delModal');
+      const delPass  = document.getElementById('delPass');
+      const delOk    = document.getElementById('delOk');
+      const delCancel= document.getElementById('delCancel');
+      const delError = document.getElementById('delError');
+      let targetDeleteId = null;
 
       let data = [];
       let page = 1;
@@ -916,16 +999,27 @@
         await load(); page = 1; winStart = 1; renderList();
       });
 
-      // 삭제(작성자 비번 확인)
-      document.addEventListener('click', async (e)=>{
+      // 삭제 버튼 → 모달 열기
+      document.addEventListener('click', (e)=>{
         const btn = e.target.closest('.gb-del');
         if(!btn) return;
-        const id = btn.getAttribute('data-id');
-        const input = prompt('삭제 비밀번호를 입력하세요.');
-        if(!input) return;
-        const passhash = await sha256(input);
-        const ok = await apiDelete(id, passhash);
-        if(!ok){ alert('비밀번호가 틀렸습니다.'); return; }  // 메시지 명확화
+        targetDeleteId = btn.getAttribute('data-id');
+        delPass.value=''; delError.style.display='none';
+        openModal(delModal);
+      });
+      // 모달 취소
+      delCancel.addEventListener('click', ()=> closeModal(delModal));
+      // 모달 삭제 실행
+      delOk.addEventListener('click', async ()=>{
+        const pw = delPass.value || '';
+        if(!pw) return;
+        const passhash = await sha256(pw);
+        const ok = await apiDelete(targetDeleteId, passhash);
+        if(!ok){
+          delError.style.display='block'; // 요청: 비밀번호 틀림 표시
+          return;
+        }
+        closeModal(delModal);
         await load();
         const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
         if(page > totalPages) page = totalPages;
@@ -936,14 +1030,13 @@
       // ==== API 래퍼 ====
       async function apiList(){
         try{
-          // 최신글이 먼저 오도록 서버에서 reverse 하고 있음 (현상 유지)
+          // 시트는 최신글이 위로 오도록 서버에서 reverse() 적용됨
           return await jsonp(GUESTBOOK_API + '?method=list');
         }catch(e){
           console.warn(e); return [];
         }
       }
-
-      // no-cors POST: 응답은 읽지 않고, 성공 가정 후 목록을 JSONP로 다시 조회
+      // no-cors POST
       async function apiCreate(entry){
         try{
           await fetch(GUESTBOOK_API, {

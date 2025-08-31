@@ -143,18 +143,10 @@
       position:relative; overflow:hidden; width:100%; aspect-ratio:4/6;
       background:#f7f7f7; touch-action:pan-y; cursor:grab;
     }
-    /* 슬라이드 전환용 레이어 */
-    .hero-photo > img{
-      position:absolute; inset:0;
-      width:100%; height:100%; object-fit:cover; display:block; user-select:none; -webkit-user-drag:none;
-      transition: transform 360ms cubic-bezier(.2,.7,.2,1), opacity 360ms cubic-bezier(.2,.7,.2,1);
+    .hero-photo img{
+      width:100%; height:100%; object-fit:cover; display:block; user-select:none;
+      -webkit-user-drag:none;
     }
-    .slide-pos{ transform:translateX(0); }
-    .slide-enter-right{ transform:translateX(100%); }
-    .slide-enter-left{  transform:translateX(-100%); }
-    .slide-leave-left{  transform:translateX(-100%); }
-    .slide-leave-right{ transform:translateX(100%); }
-
     .hero-arrow{
       position:absolute; top:50%; transform:translateY(-50%);
       background:transparent; border:none; font-size:22px; color:#585353; cursor:pointer; line-height:1;
@@ -179,9 +171,10 @@
       font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px;
     }
     .gb-list{ display:grid; gap:12px; }
+
+    /* 카드 폭을 100%로 변경 */
     .gb-card{
-      width:90%; /* 70% → 90% */
-      margin:0 auto; background:#fff;
+      width:100%; margin:0 auto; background:#fff;
       border:1px solid var(--thin); border-radius:12px; padding:12px;
     }
     .gb-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
@@ -199,11 +192,28 @@
     .gb-pagebtn{
       border:none; background:transparent;
       color:#9d9b9b;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; /* Regular */
+      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
       padding:6px 10px; border-radius:8px; cursor:pointer;
     }
     .gb-pagebtn[aria-current="true"]{
-      color:#585353; font-weight:700; /* Bold (Bold.ttf로 매핑) */
+      color:#585353; font-weight:700;
+    }
+
+    /* ===== 작성 폼(카드와 동일 룩) ===== */
+    .gb-input{
+      flex:1; min-width:0;
+      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
+      background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
+    }
+    .gb-textarea{
+      width:100%;
+      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
+      background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
+      resize:vertical;
+    }
+    .gb-write{
+      display:inline-block; background:#fff; border:1px solid var(--thin); color:#585353;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; padding:8px 14px; border-radius:10px; cursor:pointer;
     }
 
     /* ===== 마음 전하실 곳 ===== */
@@ -455,13 +465,13 @@
       </div>
     </section>
 
-    <!-- 갤러리 -->
+    <!-- 갤러리 (현상 유지) -->
     <section class="gallery pad" id="gallery">
       <img src="images/heart.png" alt="하트" class="img-original heart-top">
       <div class="section-title">갤러리</div>
 
       <div class="hero-photo" id="heroZone">
-        <img id="heroImg" alt="메인이미지" class="slide-pos">
+        <img id="heroImg" alt="메인이미지">
         <button id="heroPrev" class="hero-arrow prev" aria-label="이전">&lt;</button>
         <button id="heroNext" class="hero-arrow next" aria-label="다음">&gt;</button>
       </div>
@@ -478,41 +488,29 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="gb-title after-heart">방명록</div>
 
-      <div id="gbList" class="gb-list"></div>
+      <!-- 새로운 "작성 폼" (카드와 동일 형태, 가로 100%) -->
+      <div class="gb-card" id="gbForm">
+        <div class="gb-row">
+          <input id="gbName" class="gb-input" placeholder="이름"/>
+          <input id="gbPass" class="gb-input" placeholder="비밀번호" type="password"/>
+        </div>
+        <div class="gb-msg" style="margin-top:8px;">
+          <textarea id="gbMsg" class="gb-textarea" rows="4" placeholder="내용을 입력하세요."></textarea>
+        </div>
+        <div class="gb-actions">
+          <button id="gbSubmit" class="gb-write">작성하기</button>
+        </div>
+      </div>
+
+      <!-- 작성된 목록 -->
+      <div id="gbList" class="gb-list" style="margin-top:12px;"></div>
 
       <div class="gb-pager">
         <button id="gbPrevWindow" class="arrow" hidden>◀</button>
         <div id="gbPages" class="gb-pages"></div>
         <button id="gbNextWindow" class="arrow" hidden>▶</button>
       </div>
-
-      <div class="gb-write-wrap">
-        <button id="gbWrite" class="gb-write">작성하기</button>
-      </div>
     </section>
-
-    <!-- 방명록 작성 팝업(오버레이 모달) -->
-    <div id="gbModal" class="modal" aria-hidden="true">
-      <div class="sheet">
-        <div class="hd"><button id="gbClose" aria-label="닫기">✕</button></div>
-        <div class="body">
-          <input id="gbName" placeholder="이름"/>
-          <input id="gbPass" placeholder="비밀번호" type="password"/>
-          <textarea id="gbMsg" rows="4" placeholder="내용"></textarea>
-          <button id="gbSubmit" class="gb-submit">신랑 &amp; 신부에게 축하 글 전달하기</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 입력 누락 알림 팝업(오버레이 모달) -->
-    <div id="gbAlertModal" class="modal" aria-hidden="true">
-      <div class="sheet">
-        <div class="body">
-          <div class="gb-alert-text">내용을 모두 입력하세요.</div>
-          <button id="gbAlertOk" class="gb-alert-ok">확인</button>
-        </div>
-      </div>
-    </div>
 
     <div class="thin"></div>
 
@@ -566,7 +564,7 @@
       </table>
     </section>
 
-    <!-- 복사 완료 팝업 -->
+    <!-- 복사 완료 팝업 (현상 유지: 공유용) -->
     <div id="copyModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body center">
@@ -589,11 +587,11 @@
   </main>
 
   <script>
-    // ===== 모달 열기/닫기 유틸(접근성 경고 방지) =====
-    function openModal(el) { if (!el) return; el.classList.add('open'); el.setAttribute('aria-hidden', 'false'); }
-    function closeModal(el){ if (!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden', 'true'); }
+    // ===== 모달 유틸(복사완료 팝업만 사용) =====
+    function openModal(el){ if(!el) return; el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
+    function closeModal(el){ if(!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
 
-    /* ===== 카운트 두 번째 줄(값 행) 폭: 첫 칸은 글자수 ch, 나머지는 2ch (현상 유지) ===== */
+    /* ===== 카운트 (손대지 않음) ===== */
     function setSecondRowWidths(tbody){
       const row = tbody.querySelector('tr');
       if(!row) return;
@@ -651,7 +649,7 @@
       setInterval(tick, 1000);
     });
 
-    /* ===== 달력 상태 문구 + 타이틀 변경 (현상 유지) ===== */
+    /* ===== 달력 상태 문구 (현상 유지) ===== */
     (function(){
       const el = document.getElementById('weddingStatus');
       const fruitTitle = document.getElementById('fruitTitle');
@@ -680,7 +678,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리: GitHub API + 드래그/스와이프 + 더보기 + 슬라이드 전환 ===== */
+    /* ===== 갤러리 (현상 유지) ===== */
     (function(){
       const hero=document.getElementById('heroImg');
       const zone=document.getElementById('heroZone');
@@ -709,50 +707,17 @@
         const im=document.createElement('img');
         im.src=src+'?v=1'; im.alt='썸네일';
         b.appendChild(im);
-        b.addEventListener('click',()=>show(i, i>idx ? +1 : -1));
+        b.addEventListener('click',()=>show(i));
         return b;
       }
 
       let list = [];
       let idx  = 0;
 
-      function animateTo(newSrc, dir){
-        // dir: +1 다음, -1 이전, 0 초기
-        if(!hero.src || !hero.src.includes(newSrc) && !document.querySelector('#heroZone img.temp')){
-          // 첫 로드 또는 전환 준비
-        }
-        if(dir===0 || !hero.getAttribute('src')){
-          hero.src = newSrc+'?v=1';
-          hero.className = 'slide-pos';
-          return;
-        }
-        const incoming = document.createElement('img');
-        incoming.alt = '메인이미지';
-        incoming.className = dir>0 ? 'slide-enter-right' : 'slide-enter-left';
-        incoming.src = newSrc+'?v=1';
-        incoming.classList.add('temp');
-        zone.appendChild(incoming);
-
-        // 다음 프레임에서 전환
-        requestAnimationFrame(()=>{
-          hero.classList.remove('slide-pos');
-          hero.classList.add(dir>0 ? 'slide-leave-left' : 'slide-leave-right');
-          incoming.classList.remove('slide-enter-right','slide-enter-left');
-          incoming.classList.add('slide-pos');
-        });
-
-        const done = ()=> {
-          hero.className = 'slide-pos';
-          hero.src = newSrc+'?v=1';
-          incoming.remove();
-        };
-        incoming.addEventListener('transitionend', done, { once:true });
-      }
-
-      function show(i, dir=0){
+      function show(i){
         if(!list.length){ hero.alt='이미지 준비중'; return; }
         idx=(i+list.length)%list.length;
-        animateTo(list[idx], dir);
+        hero.src=list[idx]+'?v=1';
       }
 
       async function loadFromGitHub(){
@@ -781,7 +746,7 @@
         first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
 
-        show(0, 0);
+        show(0);
 
         moreBtn.hidden = next25.length===0;
         moreBtn.textContent = '▼';
@@ -794,8 +759,8 @@
           moreBtn.setAttribute('aria-expanded', String(willOpen));
         });
 
-        prev.addEventListener('click',()=>show(idx-1, -1));
-        next.addEventListener('click',()=>show(idx+1, +1));
+        prev.addEventListener('click',()=>show(idx-1));
+        next.addEventListener('click',()=>show(idx+1));
 
         let isDown=false, startX=0, dx=0, pid=null;
         zone.addEventListener('pointerdown', (e)=>{
@@ -812,7 +777,7 @@
           isDown=false; zone.style.cursor='grab';
           const threshold = 30;
           if(Math.abs(dx) > threshold){
-            if(dx < 0) show(idx+1, +1); else show(idx-1, -1);
+            if(dx < 0) show(idx+1); else show(idx-1);
           }
           dx=0; pid=null;
         }
@@ -827,12 +792,11 @@
       })();
     })();
 
-    /* ===== 방명록: Google Sheets 연동 + 모달 열기 + 검증 팝업 ===== */
+    /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) ===== */
     (function(){
-      // Apps Script는 ALLOW_ORIGIN: https://siul-kh.github.io 로 설정되어 있어야 함
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbxp2VAXos-C8Z3pJOYQiV9JDAKuF8zEf9uMIfGulxWf9KegrhwtQ8KTLh7mMronT9HK/exec';
 
-      // JSONP helper: <script src="...&callback=__func"> 로 데이터 받기 (CORS 불필요)
+      // JSONP helper
       function jsonp(url){
         return new Promise((resolve, reject)=>{
           const cb = '__gb_cb_' + Date.now() + Math.random().toString(36).slice(2);
@@ -848,20 +812,15 @@
       const PAGE_SIZE = 5;
 
       const listEl = document.getElementById('gbList');
-      const writeBtn = document.getElementById('gbWrite');
       const prevWindowBtn = document.getElementById('gbPrevWindow');
       const nextWindowBtn = document.getElementById('gbNextWindow');
       const pagesWrap = document.getElementById('gbPages');
 
-      const modal = document.getElementById('gbModal');
-      const closeBtn = document.getElementById('gbClose');
-      const submitBtn = document.getElementById('gbSubmit');
+      // 새로 만든 “작성 폼” 요소
       const nameEl = document.getElementById('gbName');
       const passEl = document.getElementById('gbPass');
       const msgEl  = document.getElementById('gbMsg');
-
-      const alertModal = document.getElementById('gbAlertModal');
-      const alertOk = document.getElementById('gbAlertOk');
+      const submitBtn = document.getElementById('gbSubmit');
 
       let data = [];
       let page = 1;
@@ -873,11 +832,8 @@
           return d.toLocaleDateString('ko-KR');
         }catch(e){ return iso || ''; }
       }
-
-      // 숫자/기호/이모지까지 안전
       function escapeHtml(s){
-        const str = String(s ?? '');
-        return str.replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+        return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
       }
 
       function renderList(){
@@ -896,7 +852,7 @@
             </div>
             <div class="gb-msg">${escapeHtml(item.msg)}</div>
             <div class="gb-actions">
-              <button class="gb-del" data-id="${escapeHtml(item.id)}">삭제</button>
+              <button class="gb-del" data-id="${item.id}">삭제</button>
             </div>
           `;
           listEl.appendChild(card);
@@ -940,37 +896,77 @@
         }
       });
 
-      // 작성하기 → 작성 팝업 열기
-      writeBtn.addEventListener('click', ()=>{ openModal(modal); });
-      // 닫기
-      closeBtn.addEventListener('click', ()=>{ closeModal(modal); });
-      // 입력 누락 알림 팝업 닫기
-      alertOk.addEventListener('click', ()=>{ closeModal(alertModal); });
+      // 작성(폼) → 저장
+      submitBtn.addEventListener('click', async ()=>{
+        const name = (nameEl.value||'').trim();
+        const pass = (passEl.value||'').trim();
+        const msg  = (msgEl.value||'').trim();
+        if(!name || !pass || !msg){
+          alert('내용을 모두 입력하세요.');
+          return;
+        }
+        const passhash = await sha256(pass);
+        const entry = {
+          id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+          name, msg, passhash, date: new Date().toISOString()
+        };
+        const ok = await apiCreate(entry);
+        if(!ok){ alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.'); return; }
+        nameEl.value=''; passEl.value=''; msgEl.value='';
+        await load(); page = 1; winStart = 1; renderList();
+      });
 
-      // ==== API 래퍼 (Google Apps Script) ====
+      // 삭제(작성자 비번 확인)
+      document.addEventListener('click', async (e)=>{
+        const btn = e.target.closest('.gb-del');
+        if(!btn) return;
+        const id = btn.getAttribute('data-id');
+        const input = prompt('삭제 비밀번호를 입력하세요.');
+        if(!input) return;
+        const passhash = await sha256(input);
+        const ok = await apiDelete(id, passhash);
+        if(!ok){ alert('비밀번호가 틀렸습니다.'); return; }  // 메시지 명확화
+        await load();
+        const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
+        if(page > totalPages) page = totalPages;
+        if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
+        renderList();
+      });
+
+      // ==== API 래퍼 ====
       async function apiList(){
         try{
-          // 서버가 최신순을 돌려주지만, 안전하게 클라이언트에서도 최신순 정렬 보장
-          const rows = await jsonp(GUESTBOOK_API + '?method=list');
-          if(Array.isArray(rows)){
-            return rows.slice().sort((a,b)=>{
-              const ta = Date.parse(a?.date||'') || 0;
-              const tb = Date.parse(b?.date||'') || 0;
-              return tb - ta; // 최신 우선
-            });
-          }
-          return [];
+          // 최신글이 먼저 오도록 서버에서 reverse 하고 있음 (현상 유지)
+          return await jsonp(GUESTBOOK_API + '?method=list');
         }catch(e){
           console.warn(e); return [];
         }
       }
 
-      // no-cors POST: 응답은 못 읽으므로, 이후 목록 재조회로 성공/실패 판정
+      // no-cors POST: 응답은 읽지 않고, 성공 가정 후 목록을 JSONP로 다시 조회
       async function apiCreate(entry){
-        await fetch(GUESTBOOK_API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ method:'create', entry }) });
+        try{
+          await fetch(GUESTBOOK_API, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({ method:'create', entry })
+          });
+          return true;
+        }catch(e){
+          console.warn(e); return false;
+        }
       }
       async function apiDelete(id, passhash){
-        await fetch(GUESTBOOK_API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ method:'delete', id, passhash }) });
+        try{
+          await fetch(GUESTBOOK_API, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({ method:'delete', id, passhash })
+          });
+          return true;
+        }catch(e){
+          console.warn(e); return false;
+        }
       }
 
       async function load(){ data = await apiList(); }
@@ -980,71 +976,14 @@
         return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
       }
 
-      // 작성 완료
-      submitBtn.addEventListener('click', async ()=>{
-        const name = (nameEl.value||'').trim();
-        const pass = (passEl.value||'').trim();
-        const msg  = (msgEl.value||'').trim();
-        if(!name || !pass || !msg){
-          openModal(alertModal);
-          return; // ★ 누락 시 즉시 종료(버그 수정)
-        }
-        const passhash = await sha256(pass);
-        const newId = 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
-        const entry = { id:newId, name, msg, passhash, date:new Date().toISOString() };
-
-        // 전송
-        try{ await apiCreate(entry); }catch(e){ console.warn(e); }
-
-        // 재조회 후 성공 판정
-        await load();
-        const exists = data.some(it => String(it.id) === String(newId));
-        if(!exists){
-          alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
-          return;
-        }
-        // 성공 처리
-        nameEl.value=''; passEl.value=''; msgEl.value='';
-        closeModal(modal);
-        page = 1; winStart = 1; renderList();
-      });
-
-      // 삭제(작성자 비번 확인) — 실패 시 “비밀번호가 틀렸습니다.”
-      document.addEventListener('click', async (e)=>{
-        const btn = e.target.closest('.gb-del');
-        if(!btn) return;
-        const id = btn.getAttribute('data-id');
-        const input = prompt('삭제 비밀번호를 입력하세요.');
-        if(!input) return;
-        const passhash = await sha256(input);
-
-        // 삭제 시도
-        try{ await apiDelete(id, passhash); }catch(err){ console.warn(err); }
-
-        // 재조회 후 실제 삭제되었는지 확인
-        await load();
-        const stillThere = data.some(it => String(it.id) === String(id));
-        if(stillThere){
-          alert('비밀번호가 틀렸습니다.');
-          return;
-        }
-
-        // 삭제 성공 → 페이지 보정 및 렌더
-        const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
-        if(page > totalPages) page = totalPages;
-        if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
-        renderList();
-      });
-
       (async function init(){
         await load();
         renderList();
       })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 + 전화번호 자동인식 방지 (현상 유지) */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) */
     (function(){
-      // 토글
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn = tbl.querySelector('.acc-heading');
         const body = tbl.querySelector('tbody');
@@ -1056,7 +995,6 @@
         });
       });
 
-      // 전화번호 자동인식 방지
       function defangTel(str){
         return str
           .replace(/\d/g, d => d + '\u200B')
@@ -1067,7 +1005,6 @@
         td.innerHTML = raw.replace(/[0-9-]{3,}/g, m => defangTel(m));
       });
 
-      // 복사 완료 팝업
       const copyModal=document.getElementById('copyModal');
       const copyOk=document.getElementById('copyOk');
       if(copyOk) copyOk.addEventListener('click',()=>closeModal(copyModal));
@@ -1120,7 +1057,6 @@
 
       targets.forEach(el => io.observe(el));
     })();
-    
   </script>
 </body>
 </html>

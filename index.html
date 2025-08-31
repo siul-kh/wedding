@@ -119,17 +119,17 @@
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
     .go-info {
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      color:#9d9b9b; /* 요청 색상 */
+      color:#9d9b9b; /* 요청 반영 */
       text-align:center; line-height:2.0; margin-top:0;
     }
 
-    /* 네비 앱 버튼 (요청: 12pt 고정) */
+    /* 네비 앱 버튼 (요청: 12pt) */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
     .nav-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5em;
       padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
       font-family:'GowunBatang',serif;
-      font-size: 12pt; /* ← 수정 */
+      font-size: 12pt; /* 고정 */
       color:#585353; text-decoration:none;
       background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer;
       white-space:nowrap; flex-wrap:nowrap; max-width:100%;
@@ -148,20 +148,15 @@
       position:relative; overflow:hidden; width:100%; aspect-ratio:4/6;
       background:#f7f7f7; touch-action:pan-y; cursor:grab;
     }
-    /* 슬라이드 레이어/버튼 z-index 보정 */
     .hero-photo .slide{
       position:absolute; inset:0; width:100%; height:100%;
-      object-fit:cover; display:block;
-      will-change:transform;
-      transform:translateX(0);
-      z-index:1;
-      user-select:none; -webkit-user-drag:none;
+      object-fit:cover; display:block; user-select:none; -webkit-user-drag:none;
+      will-change:transform; transform:translateX(0); z-index:1;
     }
     .hero-arrow{
       position:absolute; top:50%; transform:translateY(-50%);
       background:transparent; border:none; cursor:pointer; line-height:1;
-      padding:0;
-      z-index:2; /* 버튼이 위로 올라오게 */
+      padding:0; z-index:2;
     }
     .hero-arrow.prev{ left:4px; }
     .hero-arrow.next{ right:4px; }
@@ -179,13 +174,12 @@
     .more-tri img{ display:block; }
     .thumbs-more[hidden]{ display:none; }
 
-    /* ===== 방명록 섹션 ===== */
+    /* ===== 방명록 ===== */
     #guestbook .gb-title{
       font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px;
     }
     .gb-list{ display:grid; gap:12px; }
 
-    /* 카드 폭 100% (작성폼+목록 공통) */
     .gb-card{
       width:100%; margin:0 auto; background:#fff;
       border:1px solid var(--thin); border-radius:12px; padding:12px;
@@ -212,7 +206,7 @@
       color:#585353; font-weight:700;
     }
 
-    /* ===== 작성 폼(카드와 동일 룩) ===== */
+    /* 작성 폼 */
     .gb-input{
       flex:1; min-width:0;
       font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
@@ -228,16 +222,37 @@
       display:inline-block; background:#fff; border:1px solid var(--thin); color:#585353;
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; padding:8px 14px; border-radius:10px; cursor:pointer;
     }
-    /* 요청: 방명록 작성 버튼만 스타일 변경 */
-    #gbSubmit{
-      font-size:10pt !important;
-      color:#9d9b9b !important;
-      font-weight:400 !important; /* Regular */
-    }
-    /* 요청: 내용 칸을 위 칸들과 더 가깝게 */
+    /* 요청: 방명록 작성 버튼 스타일 */
+    #gbSubmit{ font-size:10pt!important; color:#9d9b9b!important; font-weight:400!important; }
+    /* 요청: 내용칸 간격 조금 더 가깝게 */
     #gbForm .gb-msg{ margin-top:4px; }
 
-    /* 복사/삭제 모달 공통 스타일 */
+    /* ===== 마음 전하실 곳 (네가 준 정상 버전 그대로) ===== */
+    .acc-title{
+      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
+    }
+    .acc-table{
+      width:100%; border-collapse:separate; border-spacing:0;
+      border:1px solid #f1f1f1;
+      border-radius:12px; overflow:hidden; background:#fff;
+    }
+    .acc-table thead th{ padding:0; background:#f1f1f1; }
+    .acc-heading{
+      width:100%; display:block; text-align:center; cursor:pointer;
+      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
+      padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1;
+    }
+    .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
+    .acc-line{ font-size:10pt; color:#585353; }
+    .copy-mini{
+      font-family:'GowunBatang',serif; font-size:8pt;
+      padding:6px 10px; border-radius:10px;
+      background:transparent; color:#585353; border:1px solid var(--thin);
+      cursor:pointer;
+    }
+    .copy-col{ width:80px; text-align:right; }
+
+    /* 복사/삭제 공통 모달 */
     .copy-modal .sheet{
       width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto;
     }
@@ -268,7 +283,7 @@
     .when .meta{ font-size:12pt; color:#585353; }
     .count-table{ margin:8px auto 0; border-collapse:separate; border-spacing:0; }
     .count-table th, .count-table td{ text-align:center; vertical-align:middle; padding:2px 0; }
-    .count-labels th{ font-size:6pt; color:#hint; font-weight:400; }
+    .count-labels th{ font-size:6pt; color:var(--hint); font-weight:400; } /* var(--hint) 유지 */
     .count-values td{ font-size:14pt; color:#585353; font-weight:700; }
     .count-values .colon{ font-weight:700; font-size:12pt; }
 
@@ -420,7 +435,7 @@
       </table>
     </section>
 
-    <!-- 얇은 선: 결혼합니다 ↔ 오시는 길 (카운트 뒤에 배치) -->
+    <!-- 얇은 선: 결혼합니다 ↔ 오시는 길 -->
     <div class="thin"></div>
 
     <!-- 오시는 길 -->
@@ -517,7 +532,7 @@
 
     <div class="thin"></div>
 
-    <!-- 마음 전하실 곳 (원본 스타일 유지) -->
+    <!-- 마음 전하실 곳 (정상 버전 그대로) -->
     <section class="pad" id="accounts">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
@@ -567,7 +582,7 @@
       </table>
     </section>
 
-    <!-- 삭제 확인 모달 -->
+    <!-- 삭제 확인 모달 (복사 모달 스타일 재사용) -->
     <div id="delModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body center">
@@ -582,7 +597,7 @@
       </div>
     </div>
 
-    <!-- 복사 완료 모달 (현상 유지) -->
+    <!-- 복사 완료 모달 -->
     <div id="copyModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body center">
@@ -610,7 +625,7 @@
     function openModal(el){ if(!el) return; el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
     function closeModal(el){ if(!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
 
-    /* ===== 카운트 (원본 유지) ===== */
+    /* ===== 카운트 (손대지 않음) ===== */
     function setSecondRowWidths(tbody){
       const row = tbody.querySelector('tr');
       if(!row) return;
@@ -730,68 +745,49 @@
         return b;
       }
 
-      let list = [];
-      let idx  = 0;
-      let curImg = null;
-      let animating = false;
-      let drag = {active:false, startX:0, dx:0, dir:0, ghost:null};
-
+      let list=[]; let idx=0; let curImg=null; let animating=false;
+      let drag={active:false,startX:0,dx:0,dir:0,ghost:null};
       function width(){ return zone.getBoundingClientRect().width; }
 
       function mountInitial(src){
-        curImg = document.createElement('img');
-        curImg.className = 'slide';
-        curImg.src = src+'?v=1';
-        curImg.style.transform = 'translateX(0px)';
+        curImg=document.createElement('img');
+        curImg.className='slide';
+        curImg.src=src+'?v=1';
+        curImg.style.transform='translateX(0px)';
         zone.appendChild(curImg);
       }
-
       function createGhost(src){
-        const g = document.createElement('img');
-        g.className='slide';
-        g.src=src+'?v=1';
+        const g=document.createElement('img');
+        g.className='slide'; g.src=src+'?v=1';
         return g;
       }
 
       function show(newIndex, dir=0, instant=false){
         if(!list.length) return;
         newIndex=(newIndex+list.length)%list.length;
-        if(!curImg){
-          mountInitial(list[newIndex]);
-          idx=newIndex;
-          return;
-        }
+        if(!curImg){ mountInitial(list[newIndex]); idx=newIndex; return; }
         if(animating) return;
         if(newIndex===idx && dir===0) return;
 
-        const toLeft = dir>0;   // next
-        const toRight= dir<0;   // prev
-
-        const incoming = createGhost(list[newIndex]);
-        const w = width();
-        incoming.style.transform = `translateX(${toLeft? w : toRight? -w : 0}px)`;
+        const toLeft = dir>0, toRight = dir<0;
+        const incoming=createGhost(list[newIndex]);
+        const w=width();
+        incoming.style.transform=`translateX(${toLeft? w : toRight? -w : 0}px)`;
         zone.appendChild(incoming);
 
         if(instant){
-          zone.removeChild(curImg);
-          curImg = incoming;
-          curImg.style.transform = 'translateX(0px)';
-          idx=newIndex;
-          return;
+          zone.removeChild(curImg); curImg=incoming; curImg.style.transform='translateX(0px)'; idx=newIndex; return;
         }
 
-        animating = true;
+        animating=true;
         requestAnimationFrame(()=>{
-          curImg.style.transition = 'transform 300ms ease';
-          incoming.style.transition = 'transform 300ms ease';
-          curImg.style.transform = `translateX(${toLeft? -w : w}px)`;
-          incoming.style.transform = 'translateX(0px)';
-          const done = ()=>{
+          curImg.style.transition='transform 300ms ease';
+          incoming.style.transition='transform 300ms ease';
+          curImg.style.transform=`translateX(${toLeft? -w : w}px)`;
+          incoming.style.transform='translateX(0px)';
+          const done=()=>{
             curImg.removeEventListener('transitionend', done);
-            zone.removeChild(curImg);
-            curImg = incoming;
-            curImg.style.transition = '';
-            animating=false;
+            zone.removeChild(curImg); curImg=incoming; curImg.style.transition=''; animating=false;
           };
           curImg.addEventListener('transitionend', done, {once:true});
           idx=newIndex;
@@ -802,52 +798,49 @@
       zone.addEventListener('pointerdown',(e)=>{
         if(!list.length || animating) return;
         drag.active=true; drag.startX=e.clientX; drag.dx=0; drag.dir=0;
-        zone.setPointerCapture(e.pointerId);
-        zone.style.cursor='grabbing';
+        zone.setPointerCapture(e.pointerId); zone.style.cursor='grabbing';
       });
       zone.addEventListener('pointermove',(e)=>{
         if(!drag.active || !curImg) return;
         drag.dx = e.clientX - drag.startX;
-        const w = width();
-        const dir = drag.dx<0 ? 1 : -1; // 좌로 끌면 next(+1), 우로 끌면 prev(-1)
+        const w=width();
+        const dir = drag.dx<0 ? 1 : -1;
         if(dir !== drag.dir){
           if(drag.ghost && drag.ghost.parentNode) zone.removeChild(drag.ghost);
-          const nextIndex = (idx + dir + list.length)%list.length;
-          drag.ghost = createGhost(list[nextIndex]);
-          drag.ghost.style.transform = `translateX(${dir>0? w : -w}px)`;
+          const nextIndex=(idx+dir+list.length)%list.length;
+          drag.ghost=createGhost(list[nextIndex]);
+          drag.ghost.style.transform=`translateX(${dir>0? w : -w}px)`;
           zone.appendChild(drag.ghost);
-          drag.dir = dir;
+          drag.dir=dir;
         }
         if(drag.ghost){
-          curImg.style.transform = `translateX(${drag.dx}px)`;
-          drag.ghost.style.transform = `translateX(${(drag.dir>0? w : -w) + drag.dx}px)`;
+          curImg.style.transform=`translateX(${drag.dx}px)`;
+          drag.ghost.style.transform=`translateX(${(drag.dir>0? w : -w)+drag.dx}px)`;
         }
       });
       function endDrag(){
-        if(!drag.active){ return; }
+        if(!drag.active) return;
         zone.style.cursor='grab';
-        const w = width();
-        const threshold = Math.min(120, w*0.25);
-        if(Math.abs(drag.dx) > threshold && drag.dir !== 0){
-          animating = true;
-          curImg.style.transition = 'transform 250ms ease';
-          drag.ghost.style.transition = 'transform 250ms ease';
-          curImg.style.transform = `translateX(${drag.dir>0? -w : w}px)`;
-          drag.ghost.style.transform = 'translateX(0px)';
-          const old = curImg, incoming = drag.ghost, newIndex = (idx + drag.dir + list.length)%list.length;
+        const w=width();
+        const threshold=Math.min(120, w*0.25);
+        if(Math.abs(drag.dx)>threshold && drag.dir!==0){
+          animating=true;
+          curImg.style.transition='transform 250ms ease';
+          drag.ghost.style.transition='transform 250ms ease';
+          curImg.style.transform=`translateX(${drag.dir>0? -w : w}px)`;
+          drag.ghost.style.transform='translateX(0px)';
+          const old=curImg, incoming=drag.ghost, newIndex=(idx+drag.dir+list.length)%list.length;
           old.addEventListener('transitionend', ()=>{
             if(old.parentNode) old.parentNode.removeChild(old);
             incoming.style.transition='';
-            curImg = incoming;
-            idx = newIndex;
-            animating=false;
+            curImg=incoming; idx=newIndex; animating=false;
           }, {once:true});
         }else{
-          curImg.style.transition = 'transform 200ms ease';
-          curImg.style.transform = 'translateX(0px)';
+          curImg.style.transition='transform 200ms ease';
+          curImg.style.transform='translateX(0px)';
           if(drag.ghost){
             drag.ghost.style.transition='transform 200ms ease';
-            drag.ghost.style.transform = `translateX(${drag.dir>0? w : -w}px)`;
+            drag.ghost.style.transform=`translateX(${drag.dir>0? w : -w}px)`;
             drag.ghost.addEventListener('transitionend', ()=>{
               if(drag.ghost && drag.ghost.parentNode) drag.ghost.parentNode.removeChild(drag.ghost);
             }, {once:true});
@@ -859,27 +852,25 @@
       zone.addEventListener('pointercancel', endDrag);
       zone.addEventListener('dragstart', e=>e.preventDefault());
 
-      prev.addEventListener('click', ()=> show(idx-1, -1));
-      next.addEventListener('click', ()=> show(idx+1, +1));
+      prev.addEventListener('click', ()=>show(idx-1, -1));
+      next.addEventListener('click', ()=>show(idx+1, +1));
 
       function render(){
-        const first25 = list.slice(0,25);
-        const next25  = list.slice(25,50);
-
+        const first25=list.slice(0,25);
+        const next25=list.slice(25,50);
         thumbsTop.innerHTML=''; thumbsMore.innerHTML='';
         first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
-
         show(0,0,true);
 
-        // 더보기 버튼 토글 (항상 동작하도록 수정)
+        // 토글 (항상 동작)
         moreBtn.hidden = next25.length===0;
         moreBtn.setAttribute('aria-expanded','false');
         thumbsMore.hidden = true;
-        moreIcon.src = 'images/down.png';
+        moreIcon.src='images/down.png';
         moreBtn.addEventListener('click', ()=>{
-          const willOpen = thumbsMore.hidden;
-          thumbsMore.hidden = !willOpen;
+          const willOpen=thumbsMore.hidden;
+          thumbsMore.hidden=!willOpen;
           moreBtn.setAttribute('aria-expanded', String(willOpen));
           moreIcon.src = willOpen ? 'images/up.png' : 'images/down.png';
         });
@@ -888,20 +879,16 @@
       async function loadFromGitHub(){
         try{
           if(!GH.owner || !GH.repo) throw new Error('GitHub 저장소 정보를 설정하세요.');
-          const api = `https://api.github.com/repos/${encodeURIComponent(GH.owner)}/${encodeURIComponent(GH.repo)}/contents/${encPath(GH.dir)}?ref=${encodeURIComponent(GH.ref)}`;
-          const res = await fetch(api, { headers:{ 'Accept':'application/vnd.github+json' } });
-          if(!res.ok) throw new Error('GitHub API 요청 실패: ' + res.status);
-          const items = await res.json();
-          const exts = /\.(jpe?g|png|webp|gif|avif)$/i;
-          const basePath = encPath(GH.dir) + '/';
-          const files = items.filter(it=>it.type==='file' && exts.test(it.name))
-                             .map(it => basePath + encodeURIComponent(it.name));
-          // 랜덤 유지
+          const api=`https://api.github.com/repos/${encodeURIComponent(GH.owner)}/${encodeURIComponent(GH.repo)}/contents/${encPath(GH.dir)}?ref=${encodeURIComponent(GH.ref)}`;
+          const res=await fetch(api, { headers:{ 'Accept':'application/vnd.github+json' } });
+          if(!res.ok) throw new Error('GitHub API 요청 실패: '+res.status);
+          const items=await res.json();
+          const exts=/\.(jpe?g|png|webp|gif|avif)$/i;
+          const basePath=encPath(GH.dir) + '/';
+          const files=items.filter(it=>it.type==='file' && exts.test(it.name))
+                           .map(it=> basePath + encodeURIComponent(it.name));
           return shuffle(files).slice(0,50);
-        }catch(e){
-          console.warn(e);
-          return [];
-        }
+        }catch(e){ console.warn(e); return []; }
       }
 
       (async function init(){
@@ -917,61 +904,55 @@
       // JSONP helper
       function jsonp(url){
         return new Promise((resolve, reject)=>{
-          const cb = '__gb_cb_' + Date.now() + Math.random().toString(36).slice(2);
-          window[cb] = (data)=>{ resolve(data); cleanup(); };
-          function cleanup(){ try{ delete window[cb]; }catch{} if(s && s.parentNode) s.parentNode.removeChild(s); }
-          const s = document.createElement('script');
-          s.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb + '&_=' + Date.now();
-          s.onerror = ()=>{ cleanup(); reject(new Error('JSONP failed')); };
+          const cb='__gb_cb_'+Date.now()+Math.random().toString(36).slice(2);
+          window[cb]=(data)=>{ resolve(data); cleanup(); };
+          function cleanup(){ try{ delete window[cb]; }catch{} if(s&&s.parentNode) s.parentNode.removeChild(s); }
+          const s=document.createElement('script');
+          s.src=url+(url.includes('?')?'&':'?')+'callback='+cb+'&_='+Date.now();
+          s.onerror=()=>{ cleanup(); reject(new Error('JSONP failed')); };
           document.head.appendChild(s);
         });
       }
 
-      const PAGE_SIZE = 5;
+      const PAGE_SIZE=5;
+      const listEl=document.getElementById('gbList');
+      const prevWindowBtn=document.getElementById('gbPrevWindow');
+      const nextWindowBtn=document.getElementById('gbNextWindow');
+      const pagesWrap=document.getElementById('gbPages');
 
-      const listEl = document.getElementById('gbList');
-      const prevWindowBtn = document.getElementById('gbPrevWindow');
-      const nextWindowBtn = document.getElementById('gbNextWindow');
-      const pagesWrap = document.getElementById('gbPages');
-
-      // 작성 폼
-      const nameEl = document.getElementById('gbName');
-      const passEl = document.getElementById('gbPass');
-      const msgEl  = document.getElementById('gbMsg');
-      const submitBtn = document.getElementById('gbSubmit');
+      const nameEl=document.getElementById('gbName');
+      const passEl=document.getElementById('gbPass');
+      const msgEl=document.getElementById('gbMsg');
+      const submitBtn=document.getElementById('gbSubmit');
 
       // 삭제 모달
-      const delModal = document.getElementById('delModal');
-      const delPass  = document.getElementById('delPass');
-      const delOk    = document.getElementById('delOk');
-      const delCancel= document.getElementById('delCancel');
-      const delError = document.getElementById('delError');
-      let targetDeleteId = null;
+      const delModal=document.getElementById('delModal');
+      const delPass=document.getElementById('delPass');
+      const delOk=document.getElementById('delOk');
+      const delCancel=document.getElementById('delCancel');
+      const delError=document.getElementById('delError');
+      let targetDeleteId=null;
 
-      let data = [];
-      let page = 1;
-      let winStart = 1;
+      let data=[]; let page=1; let winStart=1;
 
       function fmtDate(iso){
-        try{
-          const d = iso ? new Date(iso) : new Date();
-          return d.toLocaleDateString('ko-KR');
-        }catch(e){ return iso || ''; }
+        try{ const d = iso ? new Date(iso) : new Date(); return d.toLocaleDateString('ko-KR'); }
+        catch(e){ return iso||''; }
       }
       function escapeHtml(s){
         return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
       }
 
       function renderList(){
-        const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
-        page = Math.min(Math.max(1, page), totalPages);
+        const totalPages=Math.max(1, Math.ceil(data.length/PAGE_SIZE));
+        page=Math.min(Math.max(1,page), totalPages);
 
-        listEl.innerHTML = '';
-        const start = (page-1)*PAGE_SIZE;
+        listEl.innerHTML='';
+        const start=(page-1)*PAGE_SIZE;
         data.slice(start, start+PAGE_SIZE).forEach(item=>{
-          const card = document.createElement('div');
-          card.className = 'gb-card';
-          card.innerHTML = `
+          const card=document.createElement('div');
+          card.className='gb-card';
+          card.innerHTML=`
             <div class="gb-row">
               <div class="gb-name">${escapeHtml(item.name)}</div>
               <div class="gb-date">${escapeHtml(fmtDate(item.date))}</div>
@@ -979,171 +960,128 @@
             <div class="gb-msg">${escapeHtml(item.msg)}</div>
             <div class="gb-actions">
               <button class="gb-del" data-id="${item.id}">삭제</button>
-            </div>
-          `;
+            </div>`;
           listEl.appendChild(card);
         });
-
         renderPager(totalPages);
       }
 
       function renderPager(totalPages){
-        if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
-        if(page > winStart+4) winStart = Math.floor((page-1)/5)*5 + 1;
+        if(page<winStart) winStart=Math.floor((page-1)/5)*5+1;
+        if(page>winStart+4) winStart=Math.floor((page-1)/5)*5+1;
+        const end=Math.min(winStart+4, totalPages);
 
-        const end = Math.min(winStart + 4, totalPages);
-
-        pagesWrap.innerHTML = '';
+        pagesWrap.innerHTML='';
         for(let p=winStart; p<=end; p++){
-          const b = document.createElement('button');
-          b.className = 'gb-pagebtn';
-          b.textContent = String(p);
+          const b=document.createElement('button');
+          b.className='gb-pagebtn';
+          b.textContent=String(p);
           b.setAttribute('aria-current', p===page ? 'true' : 'false');
-          b.addEventListener('click', ()=>{ page = p; renderList(); });
+          b.addEventListener('click', ()=>{ page=p; renderList(); });
           pagesWrap.appendChild(b);
         }
-
-        prevWindowBtn.hidden = (winStart <= 1);
-        nextWindowBtn.hidden = (end >= totalPages);
+        prevWindowBtn.hidden=(winStart<=1);
+        nextWindowBtn.hidden=(end>=totalPages);
       }
 
       prevWindowBtn.addEventListener('click', ()=>{
-        winStart = Math.max(1, winStart - 5);
-        page = winStart;
-        renderList();
+        winStart=Math.max(1, winStart-5); page=winStart; renderList();
       });
       nextWindowBtn.addEventListener('click', ()=>{
-        const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
-        const newStart = winStart + 5;
-        if(newStart <= totalPages){
-          winStart = newStart;
-          page = winStart;
-          renderList();
-        }
+        const totalPages=Math.max(1, Math.ceil(data.length/PAGE_SIZE));
+        const newStart=winStart+5;
+        if(newStart<=totalPages){ winStart=newStart; page=winStart; renderList(); }
       });
 
-      // 작성(폼) → 저장
+      // 작성
       submitBtn.addEventListener('click', async ()=>{
-        const name = (nameEl.value||'').trim();
-        const pass = (passEl.value||'').trim();
-        const msg  = (msgEl.value||'').trim();
-        if(!name || !pass || !msg){
-          alert('내용을 모두 입력하세요.');
-          return;
-        }
-        const passhash = await sha256(pass);
-        const entry = {
-          id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
-          name, msg, passhash, date: new Date().toISOString()
-        };
-        const ok = await apiCreate(entry);
+        const name=(nameEl.value||'').trim();
+        const pass=(passEl.value||'').trim();
+        const msg =(msgEl.value||'').trim();
+        if(!name || !pass || !msg){ alert('내용을 모두 입력하세요.'); return; }
+        const passhash=await sha256(pass);
+        const entry={ id:'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,7), name, msg, passhash, date:new Date().toISOString() };
+        const ok=await apiCreate(entry);
         if(!ok){ alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.'); return; }
         nameEl.value=''; passEl.value=''; msgEl.value='';
-        await load(); page = 1; winStart = 1; renderList();
+        await load(); page=1; winStart=1; renderList();
       });
 
-      // 삭제 버튼 → 모달
+      // 삭제(모달)
       document.addEventListener('click', (e)=>{
-        const btn = e.target.closest('.gb-del');
-        if(!btn) return;
-        targetDeleteId = btn.getAttribute('data-id');
+        const btn=e.target.closest('.gb-del'); if(!btn) return;
+        targetDeleteId=btn.getAttribute('data-id');
         delPass.value=''; delError.style.display='none';
         openModal(delModal);
       });
       delCancel.addEventListener('click', ()=> closeModal(delModal));
       delOk.addEventListener('click', async ()=>{
-        const pw = delPass.value || '';
-        if(!pw) return;
-        const passhash = await sha256(pw);
-        const ok = await apiDelete(targetDeleteId, passhash);
-        if(!ok){
-          delError.style.display='block'; // 비밀번호 틀림
-          return;
-        }
+        const pw=delPass.value||''; if(!pw) return;
+        const passhash=await sha256(pw);
+        const ok=await apiDelete(targetDeleteId, passhash);
+        if(!ok){ delError.style.display='block'; return; }
         closeModal(delModal);
         await load();
-        const totalPages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
-        if(page > totalPages) page = totalPages;
-        if(page < winStart) winStart = Math.floor((page-1)/5)*5 + 1;
+        const totalPages=Math.max(1, Math.ceil(data.length/PAGE_SIZE));
+        if(page>totalPages) page=totalPages;
+        if(page<winStart) winStart=Math.floor((page-1)/5)*5+1;
         renderList();
       });
 
-      // ==== API 래퍼 ====
+      // API
       async function apiList(){
-        try{
-          return await jsonp(GUESTBOOK_API + '?method=list');
-        }catch(e){
-          console.warn(e); return [];
-        }
+        try{ return await jsonp(GUESTBOOK_API+'?method=list'); }
+        catch(e){ console.warn(e); return []; }
       }
       async function apiCreate(entry){
         try{
-          await fetch(GUESTBOOK_API, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify({ method:'create', entry })
-          });
+          await fetch(GUESTBOOK_API, { method:'POST', mode:'no-cors', body:JSON.stringify({ method:'create', entry }) });
           return true;
-        }catch(e){
-          console.warn(e); return false;
-        }
+        }catch(e){ console.warn(e); return false; }
       }
       async function apiDelete(id, passhash){
         try{
-          await fetch(GUESTBOOK_API, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify({ method:'delete', id, passhash })
-          });
+          await fetch(GUESTBOOK_API, { method:'POST', mode:'no-cors', body:JSON.stringify({ method:'delete', id, passhash }) });
           return true;
-        }catch(e){
-          console.warn(e); return false;
-        }
+        }catch(e){ console.warn(e); return false; }
       }
 
       async function load(){ data = await apiList(); }
-
       async function sha256(str){
-        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        const buf=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
         return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
       }
 
-      (async function init(){
-        await load();
-        renderList();
-      })();
+      (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 (정상 버전 그대로) */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
-        const btn = tbl.querySelector('.acc-heading');
-        const body = tbl.querySelector('tbody');
-        if(!btn || !body) return;
+        const btn=tbl.querySelector('.acc-heading');
+        const body=tbl.querySelector('tbody');
+        if(!btn||!body) return;
         btn.addEventListener('click', ()=>{
-          const open = btn.getAttribute('aria-expanded') === 'true';
+          const open = btn.getAttribute('aria-expanded')==='true';
           btn.setAttribute('aria-expanded', String(!open));
           body.hidden = open;
         });
       });
 
       function defangTel(str){
-        return str
-          .replace(/\d/g, d => d + '\u200B')
-          .replace(/-/g, '-' + '\u200B');
+        return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B');
       }
       document.querySelectorAll('.acc-line').forEach(td=>{
-        const raw = td.textContent;
-        td.innerHTML = raw.replace(/[0-9-]{3,}/g, m => defangTel(m));
+        const raw=td.textContent;
+        td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
       });
 
       const copyModal=document.getElementById('copyModal');
       const copyOk=document.getElementById('copyOk');
-      if(copyOk) copyOk.addEventListener('click',()=>closeModal(copyModal));
+      if(copyOk) copyOk.addEventListener('click', ()=>closeModal(copyModal));
 
       document.addEventListener('click', (e)=>{
-        const b=e.target.closest('.copy-mini');
-        if(!b) return;
+        const b=e.target.closest('.copy-mini'); if(!b) return;
         const txt=b.getAttribute('data-copy')||'';
         if(navigator.clipboard){
           navigator.clipboard.writeText(txt).then(()=>openModal(copyModal));
@@ -1166,7 +1104,7 @@
       });
     })();
 
-    /* ===== 아래에서 위로 애니메이션: .share-box 제외(현상 유지) ===== */
+    /* ===== 아래에서 위로 애니메이션 (현상 유지) ===== */
     (function(){
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const all = Array.from(document.querySelectorAll('main > section, .thin'));

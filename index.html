@@ -119,7 +119,7 @@
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
     .go-info {
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      color:#9d9b9b; /* 요청: 세 줄 색상 */
+      color:#9d9b9b; /* 요청 색상 */
       text-align:center; line-height:2.0; margin-top:0;
     }
 
@@ -148,20 +148,20 @@
       position:relative; overflow:hidden; width:100%; aspect-ratio:4/6;
       background:#f7f7f7; touch-action:pan-y; cursor:grab;
     }
-    .hero-photo img{
-      user-select:none; -webkit-user-drag:none;
-    }
-    /* 슬라이드용 레이어 */
+    /* 슬라이드 레이어/버튼 z-index 보정 */
     .hero-photo .slide{
       position:absolute; inset:0; width:100%; height:100%;
       object-fit:cover; display:block;
       will-change:transform;
       transform:translateX(0);
+      z-index:1;
+      user-select:none; -webkit-user-drag:none;
     }
     .hero-arrow{
       position:absolute; top:50%; transform:translateY(-50%);
       background:transparent; border:none; cursor:pointer; line-height:1;
-      padding:0; /* 원본 크기 유지 */
+      padding:0;
+      z-index:2; /* 버튼이 위로 올라오게 */
     }
     .hero-arrow.prev{ left:4px; }
     .hero-arrow.next{ right:4px; }
@@ -237,7 +237,7 @@
     /* 요청: 내용 칸을 위 칸들과 더 가깝게 */
     #gbForm .gb-msg{ margin-top:4px; }
 
-    /* 복사/삭제 모달 공통 스타일(현상 유지 + 재활용) */
+    /* 복사/삭제 모달 공통 스타일 */
     .copy-modal .sheet{
       width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto;
     }
@@ -268,10 +268,10 @@
     .when .meta{ font-size:12pt; color:#585353; }
     .count-table{ margin:8px auto 0; border-collapse:separate; border-spacing:0; }
     .count-table th, .count-table td{ text-align:center; vertical-align:middle; padding:2px 0; }
-    .count-labels th{ font-size:6pt; color:var(--hint); font-weight:400; }
+    .count-labels th{ font-size:6pt; color:#hint; font-weight:400; }
     .count-values td{ font-size:14pt; color:#585353; font-weight:700; }
     .count-values .colon{ font-weight:700; font-size:12pt; }
-    
+
     /* ===== 공유 버튼(하단, 현상 유지) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-cta{
@@ -333,13 +333,13 @@
       </p>
     </section>
 
-    <section><img src="images/3-photo.png?v=1" alt="하단 사진"></section>
+    <section><img src="images/3-photo.jpg?v=1" alt="하단 사진"></section>
 
-    <!-- 달력 (현상 유지) -->
+    <!-- 달력 -->
     <section class="pad" aria-label="달력">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="cal-title after-heart">결혼합니다</div>
-      <div class="cal-sub">2025년 11월 1일 토요일 오후 2시</div><!-- ← 텍스트 수정 -->
+      <div class="cal-sub">2025년 11월 1일 토요일 오후 2시</div>
       <div id="weddingStatus" class="cal-msg">지선, 기환의 결혼식이 <span class="dleft">0일</span> 남았습니다.</div>
       <div class="thin thin-70"></div>
       <div class="calendar">
@@ -370,7 +370,57 @@
       <div class="thin thin-70"></div>
     </section>
 
-    <!-- 얇은 선 추가: 결혼합니다 ↔ 오시는 길 -->
+    <!-- 카운트 1 (현상 유지) -->
+    <section class="pad when">
+      <div class="title">우리가 나무를 심은 날</div>
+      <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
+      <table class="count-table" id="pastTable">
+        <colgroup><col><col><col><col><col><col><col></colgroup>
+        <thead class="count-labels">
+          <tr>
+            <th>DAYS</th><th class="colon"></th>
+            <th>HOUR</th><th class="colon"></th>
+            <th>MIN</th><th class="colon"></th>
+            <th>SEC</th>
+          </tr>
+        </thead>
+        <tbody class="count-values">
+          <tr>
+            <td class="d"></td><td class="colon">:</td>
+            <td class="h"></td><td class="colon">:</td>
+            <td class="m"></td><td class="colon">:</td>
+            <td class="s"></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 카운트 2 (현상 유지) -->
+    <section class="pad when">
+      <div class="title" id="fruitTitle">그 나무가 열매를 맺을 날</div>
+      <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
+      <table class="count-table" id="futureTable">
+        <colgroup><col><col><col><col><col><col><col></colgroup>
+        <thead class="count-labels">
+          <tr>
+            <th>DAYS</th><th class="colon"></th>
+            <th>HOUR</th><th class="colon"></th>
+            <th>MIN</th><th class="colon"></th>
+            <th>SEC</th>
+          </tr>
+        </thead>
+        <tbody class="count-values">
+          <tr>
+            <td class="d"></td><td class="colon">:</td>
+            <td class="h"></td><td class="colon">:</td>
+            <td class="m"></td><td class="colon">:</td>
+            <td class="s"></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 얇은 선: 결혼합니다 ↔ 오시는 길 (카운트 뒤에 배치) -->
     <div class="thin"></div>
 
     <!-- 오시는 길 -->
@@ -410,7 +460,7 @@
       </div>
     </section>
 
-    <!-- 얇은 선 추가: 오시는 길 ↔ 갤러리 -->
+    <!-- 얇은 선: 오시는 길 ↔ 갤러리 -->
     <div class="thin"></div>
 
     <!-- 갤러리 -->
@@ -419,7 +469,6 @@
       <div class="section-title">갤러리</div>
 
       <div class="hero-photo" id="heroZone">
-        <!-- 슬라이드 이미지들은 JS가 동적으로 관리 -->
         <button id="heroPrev" class="hero-arrow prev" aria-label="이전">
           <img src="images/left.png" alt="">
         </button>
@@ -442,7 +491,7 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="gb-title after-heart">방명록</div>
 
-      <!-- 작성 폼 (가로 100%) -->
+      <!-- 작성 폼 -->
       <div class="gb-card" id="gbForm">
         <div class="gb-row">
           <input id="gbName" class="gb-input" placeholder="이름"/>
@@ -456,7 +505,7 @@
         </div>
       </div>
 
-      <!-- 작성 목록 -->
+      <!-- 목록 -->
       <div id="gbList" class="gb-list" style="margin-top:12px;"></div>
 
       <div class="gb-pager">
@@ -468,7 +517,7 @@
 
     <div class="thin"></div>
 
-    <!-- 마음 전하실 곳 -->
+    <!-- 마음 전하실 곳 (원본 스타일 유지) -->
     <section class="pad" id="accounts">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
@@ -518,7 +567,7 @@
       </table>
     </section>
 
-    <!-- 삭제 확인 모달 (복사 모달과 동일한 디자인) -->
+    <!-- 삭제 확인 모달 -->
     <div id="delModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body center">
@@ -543,10 +592,10 @@
       </div>
     </div>
 
-    <!-- 얇은 선 추가: 마음 전하실 곳 ↔ 공유 -->
+    <!-- 얇은 선: 마음 전하실 곳 ↔ 공유 -->
     <div class="thin"></div>
 
-    <!-- 공유 (하단 버튼) -->
+    <!-- 공유 -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
         <img src="images/message.png" alt="" class="img-original">
@@ -557,11 +606,11 @@
   </main>
 
   <script>
-    /* ===== 모달 유틸 (공통) ===== */
+    /* ===== 모달 유틸 ===== */
     function openModal(el){ if(!el) return; el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
     function closeModal(el){ if(!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
 
-    /* ===== 카운트 (절대 수정하지 않음) ===== */
+    /* ===== 카운트 (원본 유지) ===== */
     function setSecondRowWidths(tbody){
       const row = tbody.querySelector('tr');
       if(!row) return;
@@ -724,7 +773,6 @@
         zone.appendChild(incoming);
 
         if(instant){
-          // 즉시 교체(썸네일 클릭 시)
           zone.removeChild(curImg);
           curImg = incoming;
           curImg.style.transform = 'translateX(0px)';
@@ -733,7 +781,6 @@
         }
 
         animating = true;
-        // 다음 프레임에 트랜지션
         requestAnimationFrame(()=>{
           curImg.style.transition = 'transform 300ms ease';
           incoming.style.transition = 'transform 300ms ease';
@@ -741,7 +788,6 @@
           incoming.style.transform = 'translateX(0px)';
           const done = ()=>{
             curImg.removeEventListener('transitionend', done);
-            // 정리
             zone.removeChild(curImg);
             curImg = incoming;
             curImg.style.transition = '';
@@ -765,7 +811,6 @@
         const w = width();
         const dir = drag.dx<0 ? 1 : -1; // 좌로 끌면 next(+1), 우로 끌면 prev(-1)
         if(dir !== drag.dir){
-          // 방향 바뀌면 유령 이미지 재생성
           if(drag.ghost && drag.ghost.parentNode) zone.removeChild(drag.ghost);
           const nextIndex = (idx + dir + list.length)%list.length;
           drag.ghost = createGhost(list[nextIndex]);
@@ -773,7 +818,6 @@
           zone.appendChild(drag.ghost);
           drag.dir = dir;
         }
-        // 실시간 이동
         if(drag.ghost){
           curImg.style.transform = `translateX(${drag.dx}px)`;
           drag.ghost.style.transform = `translateX(${(drag.dir>0? w : -w) + drag.dx}px)`;
@@ -785,7 +829,6 @@
         const w = width();
         const threshold = Math.min(120, w*0.25);
         if(Math.abs(drag.dx) > threshold && drag.dir !== 0){
-          // 슬라이드 완료 애니메이션
           animating = true;
           curImg.style.transition = 'transform 250ms ease';
           drag.ghost.style.transition = 'transform 250ms ease';
@@ -800,7 +843,6 @@
             animating=false;
           }, {once:true});
         }else{
-          // 되돌리기
           curImg.style.transition = 'transform 200ms ease';
           curImg.style.transform = 'translateX(0px)';
           if(drag.ghost){
@@ -830,7 +872,7 @@
 
         show(0,0,true);
 
-        // 더보기 이미지 버튼 토글
+        // 더보기 버튼 토글 (항상 동작하도록 수정)
         moreBtn.hidden = next25.length===0;
         moreBtn.setAttribute('aria-expanded','false');
         thumbsMore.hidden = true;
@@ -840,7 +882,7 @@
           thumbsMore.hidden = !willOpen;
           moreBtn.setAttribute('aria-expanded', String(willOpen));
           moreIcon.src = willOpen ? 'images/up.png' : 'images/down.png';
-        }, {once:true}); // 중복 핸들러 방지
+        });
       }
 
       async function loadFromGitHub(){
@@ -854,7 +896,8 @@
           const basePath = encPath(GH.dir) + '/';
           const files = items.filter(it=>it.type==='file' && exts.test(it.name))
                              .map(it => basePath + encodeURIComponent(it.name));
-          return shuffle(files).slice(0,50); // 랜덤 유지
+          // 랜덤 유지
+          return shuffle(files).slice(0,50);
         }catch(e){
           console.warn(e);
           return [];
@@ -999,7 +1042,7 @@
         await load(); page = 1; winStart = 1; renderList();
       });
 
-      // 삭제 버튼 → 모달 열기
+      // 삭제 버튼 → 모달
       document.addEventListener('click', (e)=>{
         const btn = e.target.closest('.gb-del');
         if(!btn) return;
@@ -1007,16 +1050,14 @@
         delPass.value=''; delError.style.display='none';
         openModal(delModal);
       });
-      // 모달 취소
       delCancel.addEventListener('click', ()=> closeModal(delModal));
-      // 모달 삭제 실행
       delOk.addEventListener('click', async ()=>{
         const pw = delPass.value || '';
         if(!pw) return;
         const passhash = await sha256(pw);
         const ok = await apiDelete(targetDeleteId, passhash);
         if(!ok){
-          delError.style.display='block'; // 요청: 비밀번호 틀림 표시
+          delError.style.display='block'; // 비밀번호 틀림
           return;
         }
         closeModal(delModal);
@@ -1030,13 +1071,11 @@
       // ==== API 래퍼 ====
       async function apiList(){
         try{
-          // 시트는 최신글이 위로 오도록 서버에서 reverse() 적용됨
           return await jsonp(GUESTBOOK_API + '?method=list');
         }catch(e){
           console.warn(e); return [];
         }
       }
-      // no-cors POST
       async function apiCreate(entry){
         try{
           await fetch(GUESTBOOK_API, {

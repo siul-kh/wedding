@@ -123,13 +123,13 @@
       text-align:center; line-height:2.0; margin-top:0;
     }
 
-    /* 네비 앱 버튼 (폰트 10pt로 수정) */
+    /* 네비 앱 버튼 (10pt) */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
     .nav-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5em;
       padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
       font-family:'GowunBatang',serif;
-      font-size: 10pt; /* 수정 */
+      font-size: 10pt;
       color:#585353; text-decoration:none;
       background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer;
       white-space:nowrap; flex-wrap:nowrap; max-width:100%;
@@ -220,27 +220,27 @@
       background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
       resize:vertical;
     }
-    /* 작성하기 버튼을 삭제 버튼과 동일한 모양으로 */
+    /* 작성하기 버튼을 삭제 버튼과 동일하게 */
     .gb-write{
       font:inherit; font-size:9pt; color:#9d9b9b;
       background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer;
     }
-    /* 이전 요청용 오버라이드 값 정합성 유지(삭제 버튼과 동일한 스타일로 맞춤) */
     #gbSubmit{ font-size:9pt!important; color:#9d9b9b!important; font-weight:400!important; }
-    /* 이름칸–내용칸 사이 간격 더 축소 */
+    /* 이름칸–내용칸 사이 간격 축소 */
     #gbForm .gb-msg{ margin-top:2px; }
 
-    /* ===== 마음 전하실 곳 (정상 버전 + 요청 반영) ===== */
+    /* ===== 마음 전하실 곳 (요청 반영: 중앙 정렬 + 공백 라인) ===== */
     .acc-title{
       font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
     }
     .acc-note{
-      width:100%; max-width:var(--maxw); margin:0 auto 14px; text-align:left;
+      width:100%; max-width:var(--maxw); margin:0 auto 14px; text-align:center;  /* ← 중앙 정렬 */
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
       line-height:1.9;
     }
     .acc-note p{ margin:0 0 2px 0; }
     .acc-note .muted{ color:#9d9b9b; }
+    .acc-gap{ height:1em; } /* 한 줄 띄우기 */
 
     .acc-table{
       width:100%; border-collapse:separate; border-spacing:0;
@@ -258,7 +258,7 @@
     .copy-mini{
       font-family:'GowunBatang',serif; font-size:8pt;
       padding:6px 10px; border-radius:10px;
-      background:transparent; color:#9d9b9b; /* 색상 수정 */
+      background:transparent; color:#9d9b9b;
       border:1px solid var(--thin);
       cursor:pointer;
     }
@@ -295,11 +295,11 @@
     .when .meta{ font-size:12pt; color:#585353; }
     .count-table{ margin:8px auto 0; border-collapse:separate; border-spacing:0; }
     .count-table th, .count-table td{ text-align:center; vertical-align:middle; padding:2px 0; }
-    .count-labels th{ font-size:6pt; color:var(--hint); font-weight:400; } /* var(--hint) 유지 */
+    .count-labels th{ font-size:6pt; color:var(--hint); font-weight:400; }
     .count-values td{ font-size:14pt; color:#585353; font-weight:700; }
     .count-values .colon{ font-weight:700; font-size:12pt; }
 
-    /* ===== 공유 버튼(하단, 현상 유지) ===== */
+    /* ===== 공유 버튼(하단) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-cta{
       width:50%;
@@ -549,14 +549,16 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 안내 문구(요청 텍스트 6줄) -->
+      <!-- 안내 문구(중앙 정렬 + 한 줄 띄우기) -->
       <div class="acc-note">
         <p>저희의 결혼과 광복 80주년을 맞아</p>
         <p>또 다른 나무를 심으려 합니다.</p>
         <p>축의금의 일부는 아래 단체에 기부됩니다.</p>
+        <div class="acc-gap" aria-hidden="true"></div>
         <p>1. 정의기억연대: <span class="muted">일본군 '위안부' 피해 지원</span></p>
         <p>2. 한국해비타트: <span class="muted">독립유공자 후손 주거 지원</span></p>
         <p>3. 흥사단: <span class="muted">독립유공자 후손 장학금 지원</span></p>
+        <div class="acc-gap" aria-hidden="true"></div>
       </div>
 
       <!-- 신랑 측 -->
@@ -604,7 +606,7 @@
       </table>
     </section>
 
-    <!-- 삭제 확인 모달 (복사 모달 스타일 재사용) -->
+    <!-- 삭제 확인 모달 -->
     <div id="delModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body center">
@@ -629,7 +631,7 @@
       </div>
     </div>
 
-    <!-- 얇은 선: 마음 전하실 곳 ↔ 공유 (요청 사항 충족: 이미 동일 스타일의 얇은 선 존재) -->
+    <!-- 얇은 선: 마음 전하실 곳 ↔ 공유 -->
     <div class="thin"></div>
 
     <!-- 공유 -->
@@ -1077,7 +1079,7 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 (정상 버전 그대로) */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn=tbl.querySelector('.acc-heading');

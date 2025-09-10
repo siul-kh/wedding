@@ -229,7 +229,7 @@
     /* 이름칸–내용칸 사이 간격 축소 */
     #gbForm .gb-msg{ margin-top:2px; }
 
-    /* ===== 마음 전하실 곳 (요청 반영: 중앙 정렬 + 공백 라인) ===== */
+    /* ===== 마음 전하실 곳 ===== */
     .acc-title{
       font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
     }
@@ -240,7 +240,7 @@
     }
     .acc-note p{ margin:0 0 2px 0; }
     .acc-note .muted{ color:#9d9b9b; }
-    .acc-gap{ height:1em; } /* 한 줄 띄우기 */
+    .acc-gap{ height:1em; }
 
     .acc-table{
       width:100%; border-collapse:separate; border-spacing:0;
@@ -264,31 +264,25 @@
     }
     .copy-col{ width:80px; text-align:right; }
 
-    /* ===== 플레이리스트(토글 UI는 acc-table 재사용) ===== */
+    /* ===== 플레이리스트 ===== */
     .playlist .section-title{
       font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
-    .playlist .pl-empty{
-      text-align:center; color:#9d9b9b; font-size:8pt;
-    }
-    /* 트랙 텍스트 8pt */
-    .playlist .pl-title{ font-size:8pt; color:#585353; font-weight:700; }
-    .playlist .pl-artist{ font-size:8pt; color:#9d9b9b; margin-left:.4em; }
-    /* 버튼 줄 */
-    .playlist .pl-top{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
-    .playlist .pl-ctrls{ display:flex; align-items:center; gap:8px; }
+    .playlist .pl-row{ padding:8px 10px; }
+    .playlist .pl-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .playlist .pl-title{ font-size:8pt; color:#585353; font-weight:400; }
+    .playlist .pl-artist{ font-size:8pt; color:#9d9b9b; margin-top:2px; }
+    .playlist .pl-ctrls{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
     .playlist .pl-ctrls button{
       background:transparent; border:none; padding:0; cursor:pointer; line-height:1; outline:none;
     }
     .playlist .pl-ctrls img{ display:block; width:16px; height:16px; }
-    /* 진행 막대 */
     .playlist .pl-bar{ height:4px; background:#f1f1f1; border-radius:999px; overflow:hidden; margin-top:6px; }
     .playlist .pl-fill{ height:100%; width:0%; background:#7b9155; }
-
-    /* 플레이리스트에서는 트랙 사이 선 제거 */
+    /* 트랙 사이 얇은 선 제거(한 박스 안에 리스트) */
     .playlist .acc-table tbody td{ border-top:none; }
 
-    /* 복사/삭제 공통 모달 */
+    /* 모달 공통 */
     .copy-modal .sheet{
       width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto;
     }
@@ -304,12 +298,7 @@
       cursor:pointer;
     }
 
-    /* ===== 모달 공통 ===== */
-    .modal{
-      position:fixed; inset:0; display:none;
-      align-items:center; justify-content:center;
-      background:rgba(0,0,0,.4); z-index:1000; padding:16px;
-    }
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.4); z-index:1000; padding:16px; }
     .modal.open{ display:flex; }
     .modal .sheet{ background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.18); }
 
@@ -579,12 +568,7 @@
           <tr><th><button class="acc-heading" type="button" aria-expanded="false">지선이가 고른 결혼 음악 추천</button></th></tr>
         </thead>
         <tbody hidden>
-          <!-- 여기에 트랙들을 추가하면 됩니다. (예: 한 행에 하나의 트랙 블록) -->
-          <tr>
-            <td>
-              <div class="pl-empty">음악을 준비 중입니다.</div>
-            </td>
-          </tr>
+          <!-- JS가 폴더 'jisun music/' 목록을 읽어 트랙을 채웁니다 -->
         </tbody>
       </table>
 
@@ -596,16 +580,12 @@
           <tr><th><button class="acc-heading" type="button" aria-expanded="false">기환이가 고른 결혼 음악 추천</button></th></tr>
         </thead>
         <tbody hidden>
-          <tr>
-            <td>
-              <div class="pl-empty">음악을 준비 중입니다.</div>
-            </td>
-          </tr>
+          <!-- JS가 폴더 'kihwan music/' 목록을 읽어 트랙을 채웁니다 -->
         </tbody>
       </table>
     </section>
 
-    <!-- 얇은 선: 플레이리스트 ↔ 마음 전하실 곳 (요청) -->
+    <!-- 얇은 선: 플레이리스트 ↔ 마음 전하실 곳 -->
     <div class="thin"></div>
 
     <!-- 마음 전하실 곳 -->
@@ -613,7 +593,7 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 안내 문구(중앙 정렬 + 한 줄 띄우기) -->
+      <!-- 안내 문구 -->
       <div class="acc-note">
         <p>저희의 결혼과 광복 80주년을 맞아</p>
         <p>또 다른 나무를 심으려 합니다.</p>
@@ -800,7 +780,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리: 랜덤 유지 + 슬라이드/드래그 애니메이션 + 이미지 버튼 ===== */
+    /* ===== 갤러리: 랜덤 유지 + 슬라이드/드래그 ===== */
     (function(){
       const zone=document.getElementById('heroZone');
       const prev=document.getElementById('heroPrev');
@@ -820,7 +800,6 @@
           GH.repo  = GH.repo || (seg[0] || (GH.owner + '.github.io'));
         }
       }
-
       function encPath(p){ return p.split('/').map(encodeURIComponent).join('/'); }
       function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
       function makeThumb(src, i){
@@ -882,7 +861,6 @@
         });
       }
 
-      // 드래그
       zone.addEventListener('pointerdown',(e)=>{
         if(!list.length || animating) return;
         drag.active=true; drag.startX=e.clientX; drag.dx=0; drag.dir=0;
@@ -951,7 +929,6 @@
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
         show(0,0,true);
 
-        // 토글 (항상 동작)
         moreBtn.hidden = next25.length===0;
         moreBtn.setAttribute('aria-expanded','false');
         thumbsMore.hidden = true;
@@ -980,16 +957,24 @@
       }
 
       (async function init(){
-        list = await loadFromGitHub();
-        render();
+        try{
+          const host = location.hostname;
+          let owner='', repo='';
+          if(host.endsWith('github.io')){
+            owner = host.split('.')[0];
+            const seg = location.pathname.replace(/^\/+/,'').split('/');
+            repo  = (seg[0] || (owner + '.github.io'));
+          }
+          list = await loadFromGitHub();
+          render();
+        }catch(e){ console.warn(e); }
       })();
     })();
 
     /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) ===== */
     (function(){
-      const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbxp2VAXos-C8Z3pJOYQiV9JDAKuF8zEf9uMIfGulxWf9KegrhwtQ8KTLh7mMronT9HK/exec';
+      const GUESTBOOK_API = 'YOUR_SCRIPT_URL_HERE'; /* 실제 배포 URL로 유지/교체 (현상 유지 지침) */
 
-      // JSONP helper
       function jsonp(url){
         return new Promise((resolve, reject)=>{
           const cb='__gb_cb_'+Date.now()+Math.random().toString(36).slice(2);
@@ -1013,7 +998,6 @@
       const msgEl=document.getElementById('gbMsg');
       const submitBtn=document.getElementById('gbSubmit');
 
-      // 삭제 모달
       const delModal=document.getElementById('delModal');
       const delPass=document.getElementById('delPass');
       const delOk=document.getElementById('delOk');
@@ -1081,7 +1065,6 @@
         if(newStart<=totalPages){ winStart=newStart; page=winStart; renderList(); }
       });
 
-      // 작성
       submitBtn.addEventListener('click', async ()=>{
         const name=(nameEl.value||'').trim();
         const pass=(passEl.value||'').trim();
@@ -1095,7 +1078,6 @@
         await load(); page=1; winStart=1; renderList();
       });
 
-      // 삭제(모달)
       document.addEventListener('click', (e)=>{
         const btn=e.target.closest('.gb-del'); if(!btn) return;
         targetDeleteId=btn.getAttribute('data-id');
@@ -1116,7 +1098,6 @@
         renderList();
       });
 
-      // API
       async function apiList(){
         try{ return await jsonp(GUESTBOOK_API+'?method=list'); }
         catch(e){ console.warn(e); return []; }
@@ -1145,7 +1126,7 @@
 
     /* 마음 전하실 곳 & 플레이리스트: 토글 + 복사 팝업 */
     (function(){
-      // 모든 .acc-group(=신랑/신부/플레이리스트 그룹) 공통 토글
+      // 모든 .acc-group 공통 토글(신랑/신부/플레이리스트)
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn=tbl.querySelector('.acc-heading');
         const body=tbl.querySelector('tbody');
@@ -1154,19 +1135,21 @@
           const open = btn.getAttribute('aria-expanded')==='true';
           btn.setAttribute('aria-expanded', String(!open));
           body.hidden = open;
+
+          // 플레이리스트 섹션은 처음 펼칠 때만 로드
+          if(!open){
+            if(tbl.id==='plJisunTbl') buildPlaylist(body, 'jisun music', JISUN_OVERRIDES);
+            if(tbl.id==='plKihwanTbl') buildPlaylist(body, 'kihwan music', KIHWAN_OVERRIDES);
+          }
         });
       });
 
-      // 계좌 안내 텍스트 내 번호 가독성 처리
-      function defangTel(str){
-        return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B');
-      }
+      // 계좌번호 가독성
+      function defangTel(str){ return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B'); }
       document.querySelectorAll('.acc-line').forEach(td=>{
-        const raw=td.textContent;
-        td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
+        const raw=td.textContent; td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
       });
 
-      // 복사 모달
       const copyModal=document.getElementById('copyModal');
       const copyOk=document.getElementById('copyOk');
       if(copyOk) copyOk.addEventListener('click', ()=>closeModal(copyModal));
@@ -1174,15 +1157,163 @@
       document.addEventListener('click', (e)=>{
         const b=e.target.closest('.copy-mini'); if(!b) return;
         const txt=b.getAttribute('data-copy')||'';
-        if(navigator.clipboard){
-          navigator.clipboard.writeText(txt).then(()=>openModal(copyModal));
-        }else{
+        if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(()=>openModal(copyModal)); }
+        else{
           const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
-          ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-          openModal(copyModal);
+          ta.select(); document.execCommand('copy'); document.body.removeChild(ta); openModal(copyModal);
         }
       });
     })();
+
+    /* ===== 플레이리스트 로더 & 플레이어 ===== */
+    const AUDIO_EXT = /\.(mp3|m4a|ogg|wav)$/i;
+
+    // 표시 텍스트 오버라이드(파일명이 깨져도 이 텍스트로 보여줌)
+    const JISUN_OVERRIDES = [
+      { match:'Romeo', title:"Romeo n Juliet(feat. 유라)", artist:"죠지" },
+      { match:'French', title:"내가 그대를 위해 할 수 있는 건(French)", artist:"다린" },
+      { match:'Stood', title:"Stood", artist:"다린" },
+      { match:'너만 있으면', title:"너만 있으면", artist:"박소은" },
+      { match:'도망', title:"도망가자", artist:"선우정아" },
+      { match:'바닷', title:"바닷가", artist:"다린" },
+      { match:'내가 그대를 위해 할 수 있는 건', title:"내가 그대를 위해 할 수 있는 건", artist:"다린" }
+    ];
+    const KIHWAN_OVERRIDES = []; // 필요 시 여기에 추가
+
+    function encPath(p){ return p.split('/').map(encodeURIComponent).join('/'); }
+    function ghRepoInfo(){
+      const host = location.hostname;
+      let owner='', repo='';
+      if(host.endsWith('github.io')){
+        owner = host.split('.')[0];
+        const seg = location.pathname.replace(/^\/+/,'').split('/');
+        repo  = (seg[0] || (owner + '.github.io'));
+      }
+      return { owner, repo, ref:'main' };
+    }
+
+    async function listAudio(dir){
+      const { owner, repo, ref } = ghRepoInfo();
+      if(!owner||!repo) return [];
+      const api=`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${encPath(dir)}?ref=${encodeURIComponent(ref)}`;
+      try{
+        const res=await fetch(api, { headers:{ 'Accept':'application/vnd.github+json' } });
+        if(!res.ok) throw new Error('dir list fail '+res.status);
+        const items=await res.json();
+        return items
+          .filter(it=>it.type==='file' && AUDIO_EXT.test(it.name))
+          .map(it=>({
+            src: `${encPath(dir)}/${encodeURIComponent(it.name)}`,
+            name: decodeURIComponent(it.name)
+          }));
+      }catch(e){ console.warn(e); return []; }
+    }
+    function pickOverride(name, overrides){
+      const low = name.toLowerCase();
+      for(const o of overrides){
+        if(o.match && low.includes(o.match.toLowerCase())) return { title:o.title, artist:o.artist };
+      }
+      return null;
+    }
+    function parseTitleArtist(name){
+      // 확장자 제거
+      const base = name.replace(AUDIO_EXT,'');
+      if(base.includes(' - ')){
+        const [t,a] = base.split(' - ');
+        return { title:t.trim(), artist:a.trim() };
+      }
+      return { title:base.trim(), artist:'' };
+    }
+
+    function makeTrackRow(file, overrides){
+      const oa = pickOverride(file.name, overrides) || parseTitleArtist(file.name);
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.className='pl-row';
+
+      const top = document.createElement('div');
+      top.className='pl-top';
+
+      const left = document.createElement('div');
+      left.style.flex='1 1 auto';
+      const t1 = document.createElement('div');
+      t1.className='pl-title';
+      t1.textContent = oa.title || '제목 없음';
+      const t2 = document.createElement('div');
+      t2.className='pl-artist';
+      t2.textContent = oa.artist || '';
+      left.appendChild(t1);
+      left.appendChild(t2);
+
+      const ctrls = document.createElement('div');
+      ctrls.className='pl-ctrls';
+      const audio = new Audio(file.src + '?v=1');
+      audio.preload='metadata';
+
+      const btnPlay = document.createElement('button');
+      btnPlay.innerHTML = `<img src="images/play.png" alt="재생">`;
+      const btnPause = document.createElement('button');
+      btnPause.innerHTML = `<img src="images/pause.png" alt="일시정지">`;
+      const btnStop = document.createElement('button');
+      btnStop.innerHTML = `<img src="images/stop.png" alt="정지">`;
+
+      const bar = document.createElement('div');
+      bar.className='pl-bar';
+      const fill = document.createElement('div');
+      fill.className='pl-fill';
+      bar.appendChild(fill);
+
+      let rafId = null;
+      function updateBar(){
+        if(audio.duration>0){
+          const ratio = Math.min(1, Math.max(0, audio.currentTime / audio.duration));
+          fill.style.width = (ratio*100).toFixed(2) + '%';
+        }
+        if(!audio.paused && !audio.ended) rafId = requestAnimationFrame(updateBar);
+      }
+
+      btnPlay.addEventListener('click', ()=>{ audio.play(); cancelAnimationFrame(rafId); updateBar(); });
+      btnPause.addEventListener('click', ()=>{ audio.pause(); cancelAnimationFrame(rafId); });
+      btnStop.addEventListener('click', ()=>{
+        audio.pause();
+        audio.currentTime = 0;
+        fill.style.width='0%';
+        cancelAnimationFrame(rafId);
+      });
+      audio.addEventListener('ended', ()=>{
+        fill.style.width='0%';
+        cancelAnimationFrame(rafId);
+      });
+
+      ctrls.appendChild(btnPlay);
+      ctrls.appendChild(btnPause);
+      ctrls.appendChild(btnStop);
+
+      top.appendChild(left);
+      top.appendChild(ctrls);
+
+      td.appendChild(top);
+      td.appendChild(bar);
+      tr.appendChild(td);
+      return tr;
+    }
+
+    async function buildPlaylist(tbody, dir, overrides){
+      if(tbody.getAttribute('data-built')==='1') return; // 중복 생성 방지
+      tbody.innerHTML = '';
+      const files = await listAudio(dir);
+      if(!files.length){
+        const tr=document.createElement('tr');
+        const td=document.createElement('td');
+        td.className='pl-row';
+        td.innerHTML='<div class="pl-artist">음악 파일이 아직 없거나 불러오지 못했습니다.</div>';
+        tr.appendChild(td); tbody.appendChild(tr);
+        tbody.setAttribute('data-built','1');
+        return;
+      }
+      files.forEach(f=> tbody.appendChild(makeTrackRow(f, overrides||[])));
+      tbody.setAttribute('data-built','1');
+    }
 
     /* ===== 공유 (현상 유지) ===== */
     (function(){

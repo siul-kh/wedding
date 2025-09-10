@@ -119,11 +119,10 @@
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
     .go-info {
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      color:#9d9b9b;
-      text-align:center; line-height:2.0; margin-top:0;
+      color:#9d9b9b; text-align:center; line-height:2.0; margin-top:0;
     }
 
-    /* 네비 앱 버튼 (10pt) */
+    /* 네비 앱 버튼 (10pt 유지) */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
     .nav-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5em;
@@ -158,7 +157,7 @@
       background:transparent; border:none; cursor:pointer; line-height:1;
       padding:0; z-index:2;
       outline:none; -webkit-tap-highlight-color:transparent; appearance:none;
-      box-shadow:none;
+      box-shadow:none; /* 화이트 라인 제거 */
     }
     .hero-arrow.prev{ left:4px; }
     .hero-arrow.next{ right:4px; }
@@ -229,18 +228,18 @@
     /* 이름칸–내용칸 사이 간격 축소 */
     #gbForm .gb-msg{ margin-top:2px; }
 
-    /* ===== 마음 전하실 곳 (요청 반영: 중앙 정렬 + 공백 라인) ===== */
+    /* ===== 마음 전하실 곳 ===== */
     .acc-title{
       font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
     }
     .acc-note{
-      width:100%; max-width:var(--maxw); margin:0 auto 14px; text-align:center;  /* ← 중앙 정렬 */
+      width:100%; max-width:var(--maxw); margin:0 auto 14px; text-align:center;
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
       line-height:1.9;
     }
     .acc-note p{ margin:0 0 2px 0; }
     .acc-note .muted{ color:#9d9b9b; }
-    .acc-gap{ height:1em; } /* 한 줄 띄우기 */
+    .acc-gap{ height:1em; }
 
     .acc-table{
       width:100%; border-collapse:separate; border-spacing:0;
@@ -279,6 +278,48 @@
       background:transparent; color:#585353;
       cursor:pointer;
     }
+
+    /* ===== 플레이리스트 ===== */
+    #playlist .pl-title{
+      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 2px;
+    }
+    #playlist .pl-sub{
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; margin:0 0 8px;
+    }
+    .song-list{ display:grid; gap:12px; }
+
+    .song-card{
+      /* 요청: 가로폭 10% 사각형 박스 + 얇은 테두리 + 라운딩 */
+      width:100%; /* 실제 사용성을 위해 컨테이너는 100%로 확장 */
+      border:1px solid var(--thin); border-radius:12px; padding:10px; background:#fff;
+    }
+    .song-row{
+      display:flex; align-items:center; justify-content:space-between; gap:8px;
+    }
+    .song-meta{
+      min-width:0;
+    }
+    .song-title{
+      font-family:'GowunBatang',serif; font-weight:700; font-size:12pt; color:#585353; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .song-artist{
+      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#9d9b9b; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .song-ctrls{
+      display:flex; align-items:center; gap:6px; flex-shrink:0;
+    }
+    .song-btn{
+      border:none; background:transparent; padding:0; cursor:pointer; line-height:1; outline:none; -webkit-tap-highlight-color:transparent;
+    }
+    .song-btn img{ display:block; width:22px; height:22px; }
+    .song-bar{
+      margin-top:8px; height:6px; width:100%; background:#f1f1f1; border-radius:999px; overflow:hidden;
+    }
+    .song-bar .fill{
+      height:100%; width:0%; background:#7b9155; transition:width .15s linear;
+    }
+    /* 곡 사이 구분선 (사각형 기준 가로폭 70%) */
+    .song-sep{ width:70%; height:1px; background:var(--thin); margin:0 auto; }
 
     /* ===== 모달 공통 ===== */
     .modal{
@@ -335,25 +376,21 @@
     <section class="pad poem" aria-label="시">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title after-heart">13년 전,<br>우리는 처음 만나 나무를 심었습니다.</div>
-
       <p class="normal" style="margin:30px 0 0 0;">
         여린 묘목에 흙과 물을 주고,<br>
         적당한 햇살이 비치기를,<br>
         적당한 바람이 불기를 바랐습니다.
       </p>
-
       <p class="normal" style="margin:30px 0 0 0;">
         맘과 달리 적당하지 않은 날이<br>
         많았는지도 모르겠습니다.
       </p>
-
       <p class="normal" style="margin:30px 0 0 0;">
         그 덕에 적당한 목질이 되어<br>
         이제는 제법 단단한 뿌리를 뻗고,<br>
         위로는 숱한 가지를 내어<br>
         그늘을 만들었습니다.
       </p>
-
       <p class="normal" style="margin:30px 0 0 0;">
         그 아래서 우리는<br>
         적당한 날들을 맞이하려 합니다.
@@ -513,6 +550,24 @@
 
     <div class="thin"></div>
 
+    <!-- ===== 플레이리스트 ===== -->
+    <section class="pad" id="playlist" aria-label="플레이리스트">
+      <img src="images/heart.png" alt="하트" class="img-original">
+      <div class="pl-title after-heart">플레이리스트</div>
+
+      <!-- 지선 -->
+      <div class="pl-sub">지선이가 고른 결혼 음악 추천</div>
+      <div id="plJisun" class="song-list" aria-live="polite"></div>
+
+      <div class="thin thin-70" style="margin-top:8px;"></div>
+
+      <!-- 기환 -->
+      <div class="pl-sub">기환이가 고른 결혼 음악 추천</div>
+      <div id="plKihwan" class="song-list" aria-live="polite"></div>
+    </section>
+
+    <div class="thin"></div>
+
     <!-- ===== 방명록 ===== -->
     <section class="pad" id="guestbook">
       <img src="images/heart.png" alt="하트" class="img-original">
@@ -549,7 +604,6 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 안내 문구(중앙 정렬 + 한 줄 띄우기) -->
       <div class="acc-note">
         <p>저희의 결혼과 광복 80주년을 맞아</p>
         <p>또 다른 나무를 심으려 합니다.</p>
@@ -887,7 +941,6 @@
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
         show(0,0,true);
 
-        // 토글 (항상 동작)
         moreBtn.hidden = next25.length===0;
         moreBtn.setAttribute('aria-expanded','false');
         thumbsMore.hidden = true;
@@ -1115,6 +1168,147 @@
           openModal(copyModal);
         }
       });
+    })();
+
+    /* ===== 플레이리스트 로더 & 컨트롤 ===== */
+    (function(){
+      // GitHub Pages 저장소 추론 (gallery와 동일 로직 별도 사용)
+      const GH = { owner:'', repo:'', ref:'main' };
+      if(!GH.owner || !GH.repo){
+        const host = location.hostname;
+        if(host.endsWith('github.io')){
+          GH.owner = GH.owner || host.split('.')[0];
+          const seg = location.pathname.replace(/^\/+/,'').split('/');
+          GH.repo  = GH.repo || (seg[0] || (GH.owner + '.github.io'));
+        }
+      }
+      function encPath(p){ return p.split('/').map(encodeURIComponent).join('/'); }
+
+      // 곡 불러오기: 디렉터리의 파일명을 기반으로 "제목 - 가수" 파싱
+      async function loadTracks(dir){
+        try{
+          if(!GH.owner || !GH.repo) throw new Error('GitHub 저장소 정보를 설정하세요.');
+          const api=`https://api.github.com/repos/${encodeURIComponent(GH.owner)}/${encodeURIComponent(GH.repo)}/contents/${encPath(dir)}?ref=${encodeURIComponent(GH.ref)}`;
+          const res=await fetch(api, { headers:{ 'Accept':'application/vnd.github+json' } });
+          if(!res.ok) throw new Error('API 실패:'+res.status);
+          const items=await res.json();
+          const exts=/\.(mp3|m4a|aac|wav|ogg)$/i;
+          return items.filter(it=>it.type==='file' && exts.test(it.name)).map(it=>{
+            const name=decodeURIComponent(it.name);
+            const noExt=name.replace(/\.[^.]+$/, '');
+            const parts=noExt.split(' - ');
+            const title=parts[0]||noExt;
+            const artist=parts.slice(1).join(' - ')||'';
+            const url = encPath(dir)+'/'+encodeURIComponent(it.name);
+            return { title, artist, url };
+          });
+        }catch(e){ console.warn(e); return []; }
+      }
+
+      // UI 생성
+      function makeSongCard(track, groupId, idx){
+        const card=document.createElement('div');
+        card.className='song-card';
+
+        const row=document.createElement('div');
+        row.className='song-row';
+
+        const meta=document.createElement('div');
+        meta.className='song-meta';
+        const t=document.createElement('div'); t.className='song-title'; t.textContent=track.title;
+        const a=document.createElement('div'); a.className='song-artist'; a.textContent=track.artist;
+        meta.appendChild(t); meta.appendChild(a);
+
+        const ctrls=document.createElement('div'); ctrls.className='song-ctrls';
+        const btnPlay=document.createElement('button'); btnPlay.className='song-btn'; btnPlay.setAttribute('aria-label','재생');
+        btnPlay.innerHTML='<img src="images/play.png" alt="">';
+        const btnPause=document.createElement('button'); btnPause.className='song-btn'; btnPause.setAttribute('aria-label','일시정지');
+        btnPause.innerHTML='<img src="images/pause.png" alt="">';
+        const btnStop=document.createElement('button'); btnStop.className='song-btn'; btnStop.setAttribute('aria-label','정지');
+        btnStop.innerHTML='<img src="images/stop.png" alt="">';
+        ctrls.append(btnPlay, btnPause, btnStop);
+
+        row.append(meta, ctrls);
+
+        const bar=document.createElement('div'); bar.className='song-bar';
+        const fill=document.createElement('div'); fill.className='fill';
+        bar.appendChild(fill);
+
+        const audio=new Audio(track.url+'?v=1'); // 캐시 버전 파라미터
+        audio.preload='metadata';
+
+        // 컨트롤 동작
+        btnPlay.addEventListener('click', ()=>{
+          // 같은 그룹의 다른 곡 정지
+          stopOthers(groupId, audio);
+          audio.play();
+        });
+        btnPause.addEventListener('click', ()=> audio.pause());
+        btnStop.addEventListener('click', ()=>{ audio.pause(); audio.currentTime=0; });
+
+        // 진행바
+        audio.addEventListener('timeupdate', ()=>{
+          if(!isFinite(audio.duration) || audio.duration<=0) return;
+          const pct=(audio.currentTime / audio.duration) * 100;
+          fill.style.width = Math.max(0, Math.min(100, pct)) + '%';
+        });
+        audio.addEventListener('ended', ()=>{
+          audio.currentTime=0;
+          fill.style.width='0%';
+        });
+
+        // 카드 구성
+        card.append(row, bar);
+
+        // 접근성/그룹 관리
+        card.dataset.group = groupId;
+        card._audio = audio;
+
+        return card;
+      }
+
+      function stopOthers(groupId, exceptAudio){
+        document.querySelectorAll(`.song-card[data-group="${groupId}"]`).forEach(c=>{
+          const au=c._audio;
+          if(au && au!==exceptAudio){
+            au.pause(); au.currentTime=0;
+            const f=c.querySelector('.song-bar .fill'); if(f) f.style.width='0%';
+          }
+        });
+      }
+
+      async function init(){
+        const jisunWrap=document.getElementById('plJisun');
+        const kihwanWrap=document.getElementById('plKihwan');
+        if(!jisunWrap || !kihwanWrap) return;
+
+        const jisun = await loadTracks('jisun music');
+        const kihwan = await loadTracks('kihwan music');
+
+        // 지선 목록 렌더
+        jisunWrap.innerHTML='';
+        jisun.forEach((tr,i)=>{
+          const card=makeSongCard(tr, 'jisun', i);
+          jisunWrap.appendChild(card);
+          if(i < jisun.length-1){
+            const sep=document.createElement('div'); sep.className='song-sep';
+            jisunWrap.appendChild(sep);
+          }
+        });
+
+        // 기환 목록 렌더
+        kihwanWrap.innerHTML='';
+        kihwan.forEach((tr,i)=>{
+          const card=makeSongCard(tr, 'kihwan', i);
+          kihwanWrap.appendChild(card);
+          if(i < kihwan.length-1){
+            const sep=document.createElement('div'); sep.className='song-sep';
+            kihwanWrap.appendChild(sep);
+          }
+        });
+      }
+
+      init();
     })();
 
     /* ===== 공유 (현상 유지) ===== */

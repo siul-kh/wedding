@@ -139,8 +139,7 @@
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
     .gallery .section-title{
-      font-family:'GowunBatang',serif; font-weight:700;
-      font-size:16pt; color:#585353; text-align:center; margin:8px 0;
+      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
     .gallery .heart-top{ margin:0 auto 6px; }
 
@@ -163,8 +162,13 @@
     .hero-arrow.next{ right:4px; }
     .hero-arrow img{ display:block; border:none; outline:none; box-shadow:none; }
 
-    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%; margin-block:var(--thumb-gap); }
-    .thumbs5 .thumb{ padding:0; border:none; background:#fff; cursor:pointer; overflow:hidden; aspect-ratio:1/1; display:block; }
+    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%;
+      margin-block:var(--thumb-gap); }
+    .thumbs5 .thumb{
+      padding:0; border:none;
+      background:#fff; cursor:pointer; overflow:hidden;
+      aspect-ratio:1/1; display:block;
+    }
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; cursor:pointer; }
     .more-tri img{ display:block; }
@@ -207,7 +211,8 @@
       background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
     }
     .gb-textarea{
-      width:100%; font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
+      width:100%;
+      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
       background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px; resize:vertical;
     }
     .gb-write{
@@ -230,7 +235,8 @@
 
     .acc-table{
       width:100%; border-collapse:separate; border-spacing:0;
-      border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff;
+      border:1px solid #f1f1f1;
+      border-radius:12px; overflow:hidden; background:#fff;
     }
     .acc-table thead th{ padding:0; background:#f1f1f1; }
     .acc-heading{
@@ -241,8 +247,10 @@
     .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
     .acc-line{ font-size:10pt; color:#585353; }
     .copy-mini{
-      font-family:'GowunBatang',serif; font-size:8pt; padding:6px 10px; border-radius:10px;
-      background:transparent; color:#9d9b9b; border:1px solid var(--thin); cursor:pointer;
+      font-family:'GowunBatang',serif; font-size:8pt;
+      padding:6px 10px; border-radius:10px;
+      background:transparent; color:#9d9b9b; border:1px solid var(--thin);
+      cursor:pointer;
     }
     .copy-col{ width:80px; text-align:right; }
 
@@ -253,23 +261,15 @@
     .pl-box{
       border:1px solid var(--thin); border-radius:12px; padding:8px; background:#fff;
     }
-    .track{
-      padding:8px 4px;
-    }
-    .track-head{
-      display:flex; align-items:center; justify-content:space-between; gap:8px;
-    }
-    .track-text{
-      min-width:0; flex:1;
-    }
+    .track{ padding:8px 4px; }
+    .track-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .track-text{ min-width:0; flex:1; }
     .t-title,.t-artist{
       font-family:'GowunBatang',serif; font-weight:400; color:#585353; font-size:8pt; line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
     .t-artist{ color:#9d9b9b; }
     .t-ctrls{ display:flex; align-items:center; gap:8px; }
-    .ctrl-btn{
-      background:transparent; border:none; padding:0; cursor:pointer; line-height:1; outline:none; -webkit-tap-highlight-color:transparent;
-    }
+    .ctrl-btn{ background:transparent; border:none; padding:0; cursor:pointer; line-height:1; outline:none; -webkit-tap-highlight-color:transparent; }
     .ctrl-btn img{ width:20px; height:20px; display:block; }
     .bar{ width:100%; height:6px; background:#f1f1f1; border-radius:999px; overflow:hidden; margin-top:6px; }
     .bar .fill{ width:0%; height:100%; background:#7b9155; }
@@ -519,12 +519,15 @@
       </table>
     </section>
 
+    <!-- 👇 구분용 얇은 선 추가 -->
+    <div class="thin"></div>
+
     <!-- ===== 플레이리스트 ===== -->
     <section class="pad" id="playlist">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="pl-title after-heart">플레이리스트</div>
 
-      <!-- 지선이가 고른 결혼 음악 추천 (신랑 측 버튼과 동일한 UI/동작) -->
+      <!-- 지선이가 고른 결혼 음악 추천 -->
       <table class="acc-table acc-group pl-group" id="plJisunTbl">
         <thead>
           <tr>
@@ -536,7 +539,7 @@
         <tbody hidden>
           <tr>
             <td>
-              <div class="pl-box" id="plJisunBox"><!-- 곡 리스트가 JS로 렌더링됩니다 --></div>
+              <div class="pl-box" id="plJisunBox"></div>
             </td>
           </tr>
         </tbody>
@@ -544,7 +547,7 @@
 
       <div style="height:10px"></div>
 
-      <!-- 기환이가 고른 결혼 음악 추천 (동일 UI/동작) -->
+      <!-- 기환이가 고른 결혼 음악 추천 -->
       <table class="acc-table acc-group pl-group" id="plKihwanTbl">
         <thead>
           <tr>
@@ -556,14 +559,14 @@
         <tbody hidden>
           <tr>
             <td>
-              <div class="pl-box" id="plKihwanBox"><!-- 곡 리스트가 JS로 렌더링됩니다 --></div>
+              <div class="pl-box" id="plKihwanBox"></div>
             </td>
           </tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 얇은 선: 마음 전하실 곳/플레이리스트 ↔ 공유 -->
+    <!-- 얇은 선: 플레이리스트 ↔ 공유 -->
     <div class="thin"></div>
 
     <!-- 공유 -->
@@ -999,19 +1002,37 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) */
+    /* 마음 전하실 곳/플레이리스트: 토글(열림/닫힘) — 이벤트 위임으로 안정화 */
     (function(){
-      document.querySelectorAll('.acc-group').forEach(tbl=>{
-        const btn=tbl.querySelector('.acc-heading');
-        const body=tbl.querySelector('tbody');
-        if(!btn||!body) return;
-        btn.addEventListener('click', ()=>{
-          const open = btn.getAttribute('aria-expanded')==='true';
-          btn.setAttribute('aria-expanded', String(!open));
-          body.hidden = open;
-        });
+      function toggleGroup(btn){
+        const table = btn.closest('.acc-group');
+        if(!table) return;
+        const body = table.querySelector('tbody');
+        if(!body) return;
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        body.hidden = open; // 열려있으면 닫기, 닫혀있으면 열기
+      }
+
+      // 클릭으로 토글
+      document.addEventListener('click', (e)=>{
+        const btn = e.target.closest('.acc-heading');
+        if(btn) toggleGroup(btn);
       });
 
+      // 키보드(Enter/Space)로도 토글
+      document.addEventListener('keydown', (e)=>{
+        if(e.key !== 'Enter' && e.key !== ' ') return;
+        const btn = e.target.closest && e.target.closest('.acc-heading');
+        if(btn){
+          e.preventDefault();
+          toggleGroup(btn);
+        }
+      });
+    })();
+
+    /* 전화번호 디펑 + 복사 팝업 (현상 유지) */
+    (function(){
       function defangTel(str){ return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B'); }
       document.querySelectorAll('.acc-line').forEach(td=>{
         const raw=td.textContent;
@@ -1041,7 +1062,6 @@
       const PAUSE_ICON = 'images/pause.png';
       const STOP_ICON = 'images/stop.png';
 
-      // 제공해주신(표기가 깨진) 한글 파일명을 "정상 표기" 그대로 사용해 경로 생성
       const JISUN_FOLDER = 'jisun music';
       const KIHWAN_FOLDER = 'kihwan music';
 
@@ -1055,7 +1075,6 @@
         { title: 'Stood', artist: '다린' },
       ];
 
-      // 필요 시 여기 곡을 추가하면 즉시 반영됩니다.
       const KIHWAN_TRACKS = [
         // { title:'제목', artist:'가수' },
       ];
@@ -1067,7 +1086,7 @@
 
       function renderList(container, folder, tracks){
         container.innerHTML = '';
-        tracks.forEach((t, i)=>{
+        tracks.forEach((t)=>{
           const row = document.createElement('div');
           row.className = 'track';
           row.innerHTML = `
@@ -1117,7 +1136,7 @@
         if(!row) return;
         const audio = row.querySelector('audio');
 
-        // 진행 바 업데이트 핸들러(중복 등록 방지)
+        // 진행 바 업데이트(중복 방지)
         if(!audio._bound){
           audio.addEventListener('timeupdate', ()=>{
             const fill = row.querySelector('.fill');
@@ -1136,7 +1155,6 @@
         }
 
         if(playBtn){
-          // 다른 곡 정지
           if(currentAudio && currentAudio !== audio){
             const prevRow = currentAudio.closest('.track');
             stopAudio(currentAudio, prevRow);
@@ -1187,5 +1205,30 @@
       targets.forEach(el => io.observe(el));
     })();
   </script>
+
+  <!-- 복사 완료 모달 (현상 유지) -->
+  <div id="copyModal" class="modal copy-modal" aria-hidden="true">
+    <div class="sheet">
+      <div class="body center">
+        <div>복사가 완료되었습니다.</div>
+        <button id="copyOk" class="copy-ok">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 삭제 확인 모달 (현상 유지) -->
+  <div id="delModal" class="modal copy-modal" aria-hidden="true">
+    <div class="sheet">
+      <div class="body center">
+        <div>삭제 비밀번호를 입력하세요.</div>
+        <input id="delPass" class="gb-input" type="password" placeholder="비밀번호">
+        <div id="delError" style="display:none; color:#d00; font-size:10pt;">비밀번호가 틀렸습니다.</div>
+        <div style="display:flex; gap:10px;">
+          <button id="delOk" class="copy-ok">삭제</button>
+          <button id="delCancel" class="copy-ok">취소</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

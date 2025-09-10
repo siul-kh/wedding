@@ -139,7 +139,8 @@
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
     .gallery .section-title{
-      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0;
+      font-family:'GowunBatang',serif; font-weight:700;
+      font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
     .gallery .heart-top{ margin:0 auto 6px; }
 
@@ -156,7 +157,8 @@
       position:absolute; top:50%; transform:translateY(-50%);
       background:transparent; border:none; cursor:pointer; line-height:1;
       padding:0; z-index:2;
-      outline:none; -webkit-tap-highlight-color:transparent; appearance:none; box-shadow:none;
+      outline:none; -webkit-tap-highlight-color:transparent; appearance:none;
+      box-shadow:none;
     }
     .hero-arrow.prev{ left:4px; }
     .hero-arrow.next{ right:4px; }
@@ -202,7 +204,9 @@
       font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
       padding:6px 10px; border-radius:8px; cursor:pointer;
     }
-    .gb-pagebtn[aria-current="true"]{ color:#585353; font-weight:700; }
+    .gb-pagebtn[aria-current="true"]{
+      color:#585353; font-weight:700;
+    }
 
     /* 작성 폼 */
     .gb-input{
@@ -213,25 +217,30 @@
     .gb-textarea{
       width:100%;
       font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
-      background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px; resize:vertical;
+      background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
+      resize:vertical;
     }
+    /* 작성하기 버튼을 삭제 버튼과 동일하게 */
     .gb-write{
-      font:inherit; font-size:9pt; color:#9d9b9b; background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer;
+      font:inherit; font-size:9pt; color:#9d9b9b;
+      background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer;
     }
     #gbSubmit{ font-size:9pt!important; color:#9d9b9b!important; font-weight:400!important; }
+    /* 이름칸–내용칸 사이 간격 축소 */
     #gbForm .gb-msg{ margin-top:2px; }
 
-    /* ===== 마음 전하실 곳 ===== */
+    /* ===== 마음 전하실 곳 (요청 반영: 중앙 정렬 + 공백 라인) ===== */
     .acc-title{
       font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
     }
     .acc-note{
       width:100%; max-width:var(--maxw); margin:0 auto 14px; text-align:center;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; line-height:1.9;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
+      line-height:1.9;
     }
     .acc-note p{ margin:0 0 2px 0; }
     .acc-note .muted{ color:#9d9b9b; }
-    .acc-gap{ height:1em; }
+    .acc-gap{ height:1em; } /* 한 줄 띄우기 */
 
     .acc-table{
       width:100%; border-collapse:separate; border-spacing:0;
@@ -249,38 +258,58 @@
     .copy-mini{
       font-family:'GowunBatang',serif; font-size:8pt;
       padding:6px 10px; border-radius:10px;
-      background:transparent; color:#9d9b9b; border:1px solid var(--thin);
+      background:transparent; color:#9d9b9b;
+      border:1px solid var(--thin);
       cursor:pointer;
     }
     .copy-col{ width:80px; text-align:right; }
 
-    /* ===== 플레이리스트 ===== */
-    .pl-title{
+    /* ===== 플레이리스트(토글 UI는 acc-table 재사용) ===== */
+    .playlist .section-title{
       font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
-    .pl-box{
-      border:1px solid var(--thin); border-radius:12px; padding:8px; background:#fff;
+    .playlist .pl-empty{
+      text-align:center; color:#9d9b9b; font-size:8pt;
     }
-    .track{ padding:8px 4px; }
-    .track-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
-    .track-text{ min-width:0; flex:1; }
-    .t-title,.t-artist{
-      font-family:'GowunBatang',serif; font-weight:400; color:#585353; font-size:8pt; line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    /* 트랙 텍스트 8pt */
+    .playlist .pl-title{ font-size:8pt; color:#585353; font-weight:700; }
+    .playlist .pl-artist{ font-size:8pt; color:#9d9b9b; margin-left:.4em; }
+    /* 버튼 줄 */
+    .playlist .pl-top{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .playlist .pl-ctrls{ display:flex; align-items:center; gap:8px; }
+    .playlist .pl-ctrls button{
+      background:transparent; border:none; padding:0; cursor:pointer; line-height:1; outline:none;
     }
-    .t-artist{ color:#9d9b9b; }
-    .t-ctrls{ display:flex; align-items:center; gap:8px; }
-    .ctrl-btn{ background:transparent; border:none; padding:0; cursor:pointer; line-height:1; outline:none; -webkit-tap-highlight-color:transparent; }
-    .ctrl-btn img{ width:20px; height:20px; display:block; }
-    .bar{ width:100%; height:6px; background:#f1f1f1; border-radius:999px; overflow:hidden; margin-top:6px; }
-    .bar .fill{ width:0%; height:100%; background:#7b9155; }
+    .playlist .pl-ctrls img{ display:block; width:16px; height:16px; }
+    /* 진행 막대 */
+    .playlist .pl-bar{ height:4px; background:#f1f1f1; border-radius:999px; overflow:hidden; margin-top:6px; }
+    .playlist .pl-fill{ height:100%; width:0%; background:#7b9155; }
 
-    /* 복사/삭제 모달 & 공통 모달 */
-    .copy-modal .sheet{ width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto; }
-    .copy-modal .body{ display:grid; place-items:center; gap:14px; padding:24px 18px; font-family:'GowunBatang',serif; font-weight:400; color:#585353; }
-    .copy-ok{ font-family:'GowunBatang',serif; font-size:10pt; padding:8px 14px; border-radius:10px; border:1px solid var(--thin); background:transparent; color:#585353; cursor:pointer; }
+    /* 플레이리스트에서는 트랙 사이 선 제거 */
+    .playlist .acc-table tbody td{ border-top:none; }
+
+    /* 복사/삭제 공통 모달 */
+    .copy-modal .sheet{
+      width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto;
+    }
+    .copy-modal .body{
+      display:grid; place-items:center; gap:14px;
+      padding:24px 18px;
+      font-family:'GowunBatang',serif; font-weight:400; color:#585353;
+    }
+    .copy-ok{
+      font-family:'GowunBatang',serif; font-size:10pt;
+      padding:8px 14px; border-radius:10px; border:1px solid var(--thin);
+      background:transparent; color:#585353;
+      cursor:pointer;
+    }
 
     /* ===== 모달 공통 ===== */
-    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.4); z-index:1000; padding:16px; }
+    .modal{
+      position:fixed; inset:0; display:none;
+      align-items:center; justify-content:center;
+      background:rgba(0,0,0,.4); z-index:1000; padding:16px;
+    }
     .modal.open{ display:flex; }
     .modal .sheet{ background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.18); }
 
@@ -297,15 +326,20 @@
     /* ===== 공유 버튼(하단) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-cta{
-      width:50%; display:inline-flex; align-items:center; justify-content:center; gap:4px;
-      background:#fff; border:none; border-radius:10px; padding:10px 12px; cursor:pointer;
+      width:50%;
+      display:inline-flex; align-items:center; justify-content:center; gap:4px;
+      background:#fff; border:none; border-radius:10px;
+      padding:10px 12px; cursor:pointer;
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
     }
     .share-cta img{ display:inline-block; margin:0 2px; }
     .share-cta span{ line-height:1; }
 
     /* ===== 아래에서 위로 애니메이션 (현상 유지) ===== */
-    @keyframes riseIn{ from{ transform:translateY(24px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
+    @keyframes riseIn{
+      from{ transform:translateY(24px); opacity:0; }
+      to{   transform:translateY(0);   opacity:1; }
+    }
     .reveal-up{ opacity:0; transform:translateY(24px); will-change:transform,opacity; }
     .reveal-up.show{ animation:riseIn 1100ms cubic-bezier(.2,.7,.2,1) forwards; }
     @media (prefers-reduced-motion:reduce){
@@ -317,19 +351,37 @@
 <body>
   <main class="container">
 
-    <!-- 상단 이미지들 -->
+    <!-- 상단 이미지들 (현상 유지) -->
     <section><img src="images/1-photo.jpg?v=1" alt="상단 사진1"></section>
     <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
 
-    <!-- 시 -->
+    <!-- 시 (현상 유지) -->
     <section class="pad poem" aria-label="시">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title after-heart">13년 전,<br>우리는 처음 만나 나무를 심었습니다.</div>
 
-      <p class="normal" style="margin:30px 0 0 0;">여린 묘목에 흙과 물을 주고,<br>적당한 햇살이 비치기를,<br>적당한 바람이 불기를 바랐습니다.</p>
-      <p class="normal" style="margin:30px 0 0 0;">맘과 달리 적당하지 않은 날이<br>많았는지도 모르겠습니다.</p>
-      <p class="normal" style="margin:30px 0 0 0;">그 덕에 적당한 목질이 되어<br>이제는 제법 단단한 뿌리를 뻗고,<br>위로는 숱한 가지를 내어<br>그늘을 만들었습니다.</p>
-      <p class="normal" style="margin:30px 0 0 0;">그 아래서 우리는<br>적당한 날들을 맞이하려 합니다.</p>
+      <p class="normal" style="margin:30px 0 0 0;">
+        여린 묘목에 흙과 물을 주고,<br>
+        적당한 햇살이 비치기를,<br>
+        적당한 바람이 불기를 바랐습니다.
+      </p>
+
+      <p class="normal" style="margin:30px 0 0 0;">
+        맘과 달리 적당하지 않은 날이<br>
+        많았는지도 모르겠습니다.
+      </p>
+
+      <p class="normal" style="margin:30px 0 0 0;">
+        그 덕에 적당한 목질이 되어<br>
+        이제는 제법 단단한 뿌리를 뻗고,<br>
+        위로는 숱한 가지를 내어<br>
+        그늘을 만들었습니다.
+      </p>
+
+      <p class="normal" style="margin:30px 0 0 0;">
+        그 아래서 우리는<br>
+        적당한 날들을 맞이하려 합니다.
+      </p>
     </section>
 
     <section><img src="images/3-photo.jpg?v=1" alt="하단 사진"></section>
@@ -342,7 +394,9 @@
       <div id="weddingStatus" class="cal-msg">지선, 기환의 결혼식이 <span class="dleft">0일</span> 남았습니다.</div>
       <div class="thin thin-70"></div>
       <div class="calendar">
-        <div class="cal-head"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div>
+        <div class="cal-head">
+          <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+        </div>
         <div class="cal-grid">
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
@@ -367,28 +421,57 @@
       <div class="thin thin-70"></div>
     </section>
 
-    <!-- 카운트 1 -->
+    <!-- 카운트 1 (현상 유지) -->
     <section class="pad when">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
       <table class="count-table" id="pastTable">
         <colgroup><col><col><col><col><col><col><col></colgroup>
-        <thead class="count-labels"><tr><th>DAYS</th><th class="colon"></th><th>HOUR</th><th class="colon"></th><th>MIN</th><th class="colon"></th><th>SEC</th></tr></thead>
-        <tbody class="count-values"><tr><td class="d"></td><td class="colon">:</td><td class="h"></td><td class="colon">:</td><td class="m"></td><td class="colon">:</td><td class="s"></td></tr></tbody>
+        <thead class="count-labels">
+          <tr>
+            <th>DAYS</th><th class="colon"></th>
+            <th>HOUR</th><th class="colon"></th>
+            <th>MIN</th><th class="colon"></th>
+            <th>SEC</th>
+          </tr>
+        </thead>
+        <tbody class="count-values">
+          <tr>
+            <td class="d"></td><td class="colon">:</td>
+            <td class="h"></td><td class="colon">:</td>
+            <td class="m"></td><td class="colon">:</td>
+            <td class="s"></td>
+          </tr>
+        </tbody>
       </table>
     </section>
 
-    <!-- 카운트 2 -->
+    <!-- 카운트 2 (현상 유지) -->
     <section class="pad when">
       <div class="title" id="fruitTitle">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
       <table class="count-table" id="futureTable">
         <colgroup><col><col><col><col><col><col><col></colgroup>
-        <thead class="count-labels"><tr><th>DAYS</th><th class="colon"></th><th>HOUR</th><th class="colon"></th><th>MIN</th><th class="colon"></th><th>SEC</th></tr></thead>
-        <tbody class="count-values"><tr><td class="d"></td><td class="colon">:</td><td class="h"></td><td class="colon">:</td><td class="m"></td><td class="colon">:</td><td class="s"></td></tr></tbody>
+        <thead class="count-labels">
+          <tr>
+            <th>DAYS</th><th class="colon"></th>
+            <th>HOUR</th><th class="colon"></th>
+            <th>MIN</th><th class="colon"></th>
+            <th>SEC</th>
+          </tr>
+        </thead>
+        <tbody class="count-values">
+          <tr>
+            <td class="d"></td><td class="colon">:</td>
+            <td class="h"></td><td class="colon">:</td>
+            <td class="m"></td><td class="colon">:</td>
+            <td class="s"></td>
+          </tr>
+        </tbody>
       </table>
     </section>
 
+    <!-- 얇은 선: 결혼합니다 ↔ 오시는 길 -->
     <div class="thin"></div>
 
     <!-- 오시는 길 -->
@@ -397,7 +480,10 @@
       <div class="go-title" style="margin-top:8px">오시는 길</div>
 
       <div class="map">
-        <iframe title="서울가정행정법원 융선당" src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%EA%B0%80%EC%A0%95%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe
+          title="서울가정행정법원 융선당"
+          src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%EA%B0%80%EC%A0%95%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
 
       <div>
@@ -411,18 +497,21 @@
       </div>
 
       <div class="nav-apps">
-        <a class="nav-btn" target="_blank" rel="noopener" href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
+        <a class="nav-btn" target="_blank" rel="noopener"
+           href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
           <img src="images/navermap.png" alt="">네이버 지도
         </a>
         <a class="nav-btn" target="_blank" rel="noopener" href="https://tmap.life/c31c6940">
           <img src="images/tmap.png" alt="">티맵
         </a>
-        <a class="nav-btn" target="_blank" rel="noopener" href="https://map.kakao.com/?q=서울행정법원%20융선당예식장">
+        <a class="nav-btn" target="_blank" rel="noopener"
+           href="https://map.kakao.com/?q=서울행정법원%20융선당예식장">
           <img src="images/kakaomap.png" alt="">카카오맵
         </a>
       </div>
     </section>
 
+    <!-- 얇은 선: 오시는 길 ↔ 갤러리 -->
     <div class="thin"></div>
 
     <!-- 갤러리 -->
@@ -479,12 +568,52 @@
 
     <div class="thin"></div>
 
+    <!-- ===== 플레이리스트 ===== -->
+    <section class="pad playlist" id="playlist">
+      <img src="images/heart.png" alt="하트" class="img-original">
+      <div class="section-title after-heart">플레이리스트</div>
+
+      <!-- 지선 선택 -->
+      <table class="acc-table acc-group" id="plJisunTbl">
+        <thead>
+          <tr><th><button class="acc-heading" type="button" aria-expanded="false">지선이가 고른 결혼 음악 추천</button></th></tr>
+        </thead>
+        <tbody hidden>
+          <!-- 여기에 트랙들을 추가하면 됩니다. (예: 한 행에 하나의 트랙 블록) -->
+          <tr>
+            <td>
+              <div class="pl-empty">음악을 준비 중입니다.</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="height:10px"></div>
+
+      <!-- 기환 선택 -->
+      <table class="acc-table acc-group" id="plKihwanTbl">
+        <thead>
+          <tr><th><button class="acc-heading" type="button" aria-expanded="false">기환이가 고른 결혼 음악 추천</button></th></tr>
+        </thead>
+        <tbody hidden>
+          <tr>
+            <td>
+              <div class="pl-empty">음악을 준비 중입니다.</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 얇은 선: 플레이리스트 ↔ 마음 전하실 곳 (요청) -->
+    <div class="thin"></div>
+
     <!-- 마음 전하실 곳 -->
     <section class="pad" id="accounts">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 안내 문구 -->
+      <!-- 안내 문구(중앙 정렬 + 한 줄 띄우기) -->
       <div class="acc-note">
         <p>저희의 결혼과 광복 80주년을 맞아</p>
         <p>또 다른 나무를 심으려 합니다.</p>
@@ -498,11 +627,22 @@
 
       <!-- 신랑 측 -->
       <table class="acc-table acc-group" id="accGroomTbl">
-        <thead><tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr></thead>
+        <thead>
+          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr>
+        </thead>
         <tbody hidden>
-          <tr><td class="acc-line">김기환 국민은행 90513110424</td><td class="copy-col"><button class="copy-mini" data-copy="국민은행 90513110424 (김기환)">복사</button></td></tr>
-          <tr><td class="acc-line">김정호 국민은행 430502-93-118573</td><td class="copy-col"><button class="copy-mini" data-copy="국민은행 430502-93-118573 (김정호)">복사</button></td></tr>
-          <tr><td class="acc-line">이이순 우리은행 1002-038-271451</td><td class="copy-col"><button class="copy-mini" data-copy="우리은행 1002-038-271451 (이이순)">복사</button></td></tr>
+          <tr>
+            <td class="acc-line">김기환 국민은행 90513110424</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 90513110424 (김기환)">복사</button></td>
+          </tr>
+          <tr>
+            <td class="acc-line">김정호 국민은행 430502-93-118573</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 430502-93-118573 (김정호)">복사</button></td>
+          </tr>
+          <tr>
+            <td class="acc-line">이이순 우리은행 1002-038-271451</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="우리은행 1002-038-271451 (이이순)">복사</button></td>
+          </tr>
         </tbody>
       </table>
 
@@ -510,63 +650,52 @@
 
       <!-- 신부 측 -->
       <table class="acc-table acc-group" id="accBrideTbl">
-        <thead><tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr></thead>
-        <tbody hidden>
-          <tr><td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td><td class="copy-col"><button class="copy-mini" data-copy="카카오뱅크 3333-22-7850739 (목지선)">복사</button></td></tr>
-          <tr><td class="acc-line">목승우 국민은행 659401-01-191168</td><td class="copy-col"><button class="copy-mini" data-copy="국민은행 659401-01-191168 (목승우)">복사</button></td></tr>
-          <tr><td class="acc-line">성미화 새마을금고 9002197239365</td><td class="copy-col"><button class="copy-mini" data-copy="새마을금고 9002197239365 (성미화)">복사</button></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 👇 구분용 얇은 선 추가 -->
-    <div class="thin"></div>
-
-    <!-- ===== 플레이리스트 ===== -->
-    <section class="pad" id="playlist">
-      <img src="images/heart.png" alt="하트" class="img-original">
-      <div class="pl-title after-heart">플레이리스트</div>
-
-      <!-- 지선이가 고른 결혼 음악 추천 -->
-      <table class="acc-table acc-group pl-group" id="plJisunTbl">
         <thead>
-          <tr>
-            <th>
-              <button class="acc-heading" type="button" aria-expanded="false">지선이가 고른 결혼 음악 추천</button>
-            </th>
-          </tr>
+          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr>
         </thead>
         <tbody hidden>
           <tr>
-            <td>
-              <div class="pl-box" id="plJisunBox"></div>
-            </td>
+            <td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="카카오뱅크 3333-22-7850739 (목지선)">복사</button></td>
           </tr>
-        </tbody>
-      </table>
-
-      <div style="height:10px"></div>
-
-      <!-- 기환이가 고른 결혼 음악 추천 -->
-      <table class="acc-table acc-group pl-group" id="plKihwanTbl">
-        <thead>
           <tr>
-            <th>
-              <button class="acc-heading" type="button" aria-expanded="false">기환이가 고른 결혼 음악 추천</button>
-            </th>
+            <td class="acc-line">목승우 국민은행 659401-01-191168</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 659401-01-191168 (목승우)">복사</button></td>
           </tr>
-        </thead>
-        <tbody hidden>
           <tr>
-            <td>
-              <div class="pl-box" id="plKihwanBox"></div>
-            </td>
+            <td class="acc-line">성미화 새마을금고 9002197239365</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="새마을금고 9002197239365 (성미화)">복사</button></td>
           </tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 얇은 선: 플레이리스트 ↔ 공유 -->
+    <!-- 삭제 확인 모달 -->
+    <div id="delModal" class="modal copy-modal" aria-hidden="true">
+      <div class="sheet">
+        <div class="body center">
+          <div>삭제 비밀번호를 입력하세요.</div>
+          <input id="delPass" class="gb-input" type="password" placeholder="비밀번호">
+          <div id="delError" style="display:none; color:#d00; font-size:10pt;">비밀번호가 틀렸습니다.</div>
+          <div style="display:flex; gap:10px;">
+            <button id="delOk" class="copy-ok">삭제</button>
+            <button id="delCancel" class="copy-ok">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 복사 완료 모달 -->
+    <div id="copyModal" class="modal copy-modal" aria-hidden="true">
+      <div class="sheet">
+        <div class="body center">
+          <div>복사가 완료되었습니다.</div>
+          <button id="copyOk" class="copy-ok">확인</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 얇은 선: 마음 전하실 곳 ↔ 공유 -->
     <div class="thin"></div>
 
     <!-- 공유 -->
@@ -671,7 +800,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리: 랜덤 유지 + 슬라이드/드래그 + 버튼 ===== */
+    /* ===== 갤러리: 랜덤 유지 + 슬라이드/드래그 애니메이션 + 이미지 버튼 ===== */
     (function(){
       const zone=document.getElementById('heroZone');
       const prev=document.getElementById('heroPrev');
@@ -709,9 +838,17 @@
       function width(){ return zone.getBoundingClientRect().width; }
 
       function mountInitial(src){
-        curImg=document.createElement('img'); curImg.className='slide'; curImg.src=src+'?v=1'; curImg.style.transform='translateX(0px)'; zone.appendChild(curImg);
+        curImg=document.createElement('img');
+        curImg.className='slide';
+        curImg.src=src+'?v=1';
+        curImg.style.transform='translateX(0px)';
+        zone.appendChild(curImg);
       }
-      function createGhost(src){ const g=document.createElement('img'); g.className='slide'; g.src=src+'?v=1'; return g; }
+      function createGhost(src){
+        const g=document.createElement('img');
+        g.className='slide'; g.src=src+'?v=1';
+        return g;
+      }
 
       function show(newIndex, dir=0, instant=false){
         if(!list.length) return;
@@ -787,7 +924,8 @@
             curImg=incoming; idx=newIndex; animating=false;
           }, {once:true});
         }else{
-          curImg.style.transition='transform 200ms ease'; curImg.style.transform='translateX(0px)';
+          curImg.style.transition='transform 200ms ease';
+          curImg.style.transform='translateX(0px)';
           if(drag.ghost){
             drag.ghost.style.transition='transform 200ms ease';
             drag.ghost.style.transform=`translateX(${drag.dir>0? w : -w}px)`;
@@ -813,7 +951,7 @@
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
         show(0,0,true);
 
-        // 토글
+        // 토글 (항상 동작)
         moreBtn.hidden = next25.length===0;
         moreBtn.setAttribute('aria-expanded','false');
         thumbsMore.hidden = true;
@@ -841,7 +979,10 @@
         }catch(e){ console.warn(e); return []; }
       }
 
-      (async function init(){ list = await loadFromGitHub(); render(); })();
+      (async function init(){
+        list = await loadFromGitHub();
+        render();
+      })();
     })();
 
     /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) ===== */
@@ -1002,43 +1143,30 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳/플레이리스트: 토글(열림/닫힘) — 이벤트 위임으로 안정화 */
+    /* 마음 전하실 곳 & 플레이리스트: 토글 + 복사 팝업 */
     (function(){
-      function toggleGroup(btn){
-        const table = btn.closest('.acc-group');
-        if(!table) return;
-        const body = table.querySelector('tbody');
-        if(!body) return;
-        const open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        body.hidden = open; // 열려있으면 닫기, 닫혀있으면 열기
+      // 모든 .acc-group(=신랑/신부/플레이리스트 그룹) 공통 토글
+      document.querySelectorAll('.acc-group').forEach(tbl=>{
+        const btn=tbl.querySelector('.acc-heading');
+        const body=tbl.querySelector('tbody');
+        if(!btn||!body) return;
+        btn.addEventListener('click', ()=>{
+          const open = btn.getAttribute('aria-expanded')==='true';
+          btn.setAttribute('aria-expanded', String(!open));
+          body.hidden = open;
+        });
+      });
+
+      // 계좌 안내 텍스트 내 번호 가독성 처리
+      function defangTel(str){
+        return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B');
       }
-
-      // 클릭으로 토글
-      document.addEventListener('click', (e)=>{
-        const btn = e.target.closest('.acc-heading');
-        if(btn) toggleGroup(btn);
-      });
-
-      // 키보드(Enter/Space)로도 토글
-      document.addEventListener('keydown', (e)=>{
-        if(e.key !== 'Enter' && e.key !== ' ') return;
-        const btn = e.target.closest && e.target.closest('.acc-heading');
-        if(btn){
-          e.preventDefault();
-          toggleGroup(btn);
-        }
-      });
-    })();
-
-    /* 전화번호 디펑 + 복사 팝업 (현상 유지) */
-    (function(){
-      function defangTel(str){ return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B'); }
       document.querySelectorAll('.acc-line').forEach(td=>{
         const raw=td.textContent;
         td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
       });
 
+      // 복사 모달
       const copyModal=document.getElementById('copyModal');
       const copyOk=document.getElementById('copyOk');
       if(copyOk) copyOk.addEventListener('click', ()=>closeModal(copyModal));
@@ -1052,120 +1180,6 @@
           const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
           ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
           openModal(copyModal);
-        }
-      });
-    })();
-
-    /* ===== 플레이리스트 렌더/재생 로직 ===== */
-    (function(){
-      const PLAY_ICON = 'images/play.png';
-      const PAUSE_ICON = 'images/pause.png';
-      const STOP_ICON = 'images/stop.png';
-
-      const JISUN_FOLDER = 'jisun music';
-      const KIHWAN_FOLDER = 'kihwan music';
-
-      const JISUN_TRACKS = [
-        { title: 'Romeo n Juliet(feat. 유라)', artist: '죠지' },
-        { title: '내가 그대를 위해 할 수 있는 건(French)', artist: '다린' },
-        { title: '내가 그대를 위해 할 수 있는 건', artist: '다린' },
-        { title: '너만 있으면', artist: '박소은' },
-        { title: '도망가자', artist: '선우정아' },
-        { title: '바닷가', artist: '다린' },
-        { title: 'Stood', artist: '다린' },
-      ];
-
-      const KIHWAN_TRACKS = [
-        // { title:'제목', artist:'가수' },
-      ];
-
-      function fileUrl(folder, title, artist){
-        const filename = `${title} - ${artist}.mp3`;
-        return `${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`;
-      }
-
-      function renderList(container, folder, tracks){
-        container.innerHTML = '';
-        tracks.forEach((t)=>{
-          const row = document.createElement('div');
-          row.className = 'track';
-          row.innerHTML = `
-            <div class="track-head">
-              <div class="track-text">
-                <div class="t-title">${t.title}</div>
-                <div class="t-artist">${t.artist}</div>
-              </div>
-              <div class="t-ctrls">
-                <button class="ctrl-btn play"  aria-label="재생"><img src="${PLAY_ICON}"  alt=""></button>
-                <button class="ctrl-btn pause" aria-label="일시정지"><img src="${PAUSE_ICON}" alt=""></button>
-                <button class="ctrl-btn stop"  aria-label="정지"><img src="${STOP_ICON}"  alt=""></button>
-              </div>
-            </div>
-            <div class="bar"><div class="fill"></div></div>
-          `;
-          const audio = document.createElement('audio');
-          audio.preload = 'none';
-          audio.src = fileUrl(folder, t.title, t.artist);
-          row.appendChild(audio);
-          container.appendChild(row);
-        });
-      }
-
-      const plJisunBox = document.getElementById('plJisunBox');
-      const plKihwanBox = document.getElementById('plKihwanBox');
-      if(plJisunBox) renderList(plJisunBox, JISUN_FOLDER, JISUN_TRACKS);
-      if(plKihwanBox) renderList(plKihwanBox, KIHWAN_FOLDER, KIHWAN_TRACKS);
-
-      // 단일 재생 보장
-      let currentAudio = null;
-      function stopAudio(aud, row){
-        if(!aud) return;
-        aud.pause();
-        aud.currentTime = 0;
-        const fill = row.querySelector('.fill');
-        if(fill) fill.style.width = '0%';
-      }
-
-      document.addEventListener('click', (e)=>{
-        const playBtn = e.target.closest('.ctrl-btn.play');
-        const pauseBtn = e.target.closest('.ctrl-btn.pause');
-        const stopBtn = e.target.closest('.ctrl-btn.stop');
-        if(!playBtn && !pauseBtn && !stopBtn) return;
-
-        const row = e.target.closest('.track');
-        if(!row) return;
-        const audio = row.querySelector('audio');
-
-        // 진행 바 업데이트(중복 방지)
-        if(!audio._bound){
-          audio.addEventListener('timeupdate', ()=>{
-            const fill = row.querySelector('.fill');
-            if(!fill) return;
-            const d = audio.duration || 0;
-            const c = audio.currentTime || 0;
-            const pct = d>0 ? (c/d)*100 : 0;
-            fill.style.width = pct + '%';
-          });
-          audio.addEventListener('ended', ()=>{
-            const fill = row.querySelector('.fill');
-            if(fill) fill.style.width = '0%';
-            if(currentAudio === audio) currentAudio = null;
-          });
-          audio._bound = true;
-        }
-
-        if(playBtn){
-          if(currentAudio && currentAudio !== audio){
-            const prevRow = currentAudio.closest('.track');
-            stopAudio(currentAudio, prevRow);
-          }
-          currentAudio = audio;
-          audio.play();
-        } else if(pauseBtn){
-          audio.pause();
-        } else if(stopBtn){
-          stopAudio(audio, row);
-          if(currentAudio === audio) currentAudio = null;
         }
       });
     })();
@@ -1205,30 +1219,5 @@
       targets.forEach(el => io.observe(el));
     })();
   </script>
-
-  <!-- 복사 완료 모달 (현상 유지) -->
-  <div id="copyModal" class="modal copy-modal" aria-hidden="true">
-    <div class="sheet">
-      <div class="body center">
-        <div>복사가 완료되었습니다.</div>
-        <button id="copyOk" class="copy-ok">확인</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 삭제 확인 모달 (현상 유지) -->
-  <div id="delModal" class="modal copy-modal" aria-hidden="true">
-    <div class="sheet">
-      <div class="body center">
-        <div>삭제 비밀번호를 입력하세요.</div>
-        <input id="delPass" class="gb-input" type="password" placeholder="비밀번호">
-        <div id="delError" style="display:none; color:#d00; font-size:10pt;">비밀번호가 틀렸습니다.</div>
-        <div style="display:flex; gap:10px;">
-          <button id="delOk" class="copy-ok">삭제</button>
-          <button id="delCancel" class="copy-ok">취소</button>
-        </div>
-      </div>
-    </div>
-  </div>
 </body>
 </html>

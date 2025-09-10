@@ -119,10 +119,11 @@
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
     .go-info {
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      color:#9d9b9b; text-align:center; line-height:2.0; margin-top:0;
+      color:#9d9b9b;
+      text-align:center; line-height:2.0; margin-top:0;
     }
 
-    /* 네비 앱 버튼 (10pt 유지) */
+    /* 네비 앱 버튼 (10pt) */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
     .nav-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5em;
@@ -156,20 +157,14 @@
       position:absolute; top:50%; transform:translateY(-50%);
       background:transparent; border:none; cursor:pointer; line-height:1;
       padding:0; z-index:2;
-      outline:none; -webkit-tap-highlight-color:transparent; appearance:none;
-      box-shadow:none; /* 화이트 라인 제거 */
+      outline:none; -webkit-tap-highlight-color:transparent; appearance:none; box-shadow:none;
     }
     .hero-arrow.prev{ left:4px; }
     .hero-arrow.next{ right:4px; }
     .hero-arrow img{ display:block; border:none; outline:none; box-shadow:none; }
 
-    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%;
-      margin-block:var(--thumb-gap); }
-    .thumbs5 .thumb{
-      padding:0; border:none;
-      background:#fff; cursor:pointer; overflow:hidden;
-      aspect-ratio:1/1; display:block;
-    }
+    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%; margin-block:var(--thumb-gap); }
+    .thumbs5 .thumb{ padding:0; border:none; background:#fff; cursor:pointer; overflow:hidden; aspect-ratio:1/1; display:block; }
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; cursor:pointer; }
     .more-tri img{ display:block; }
@@ -203,9 +198,7 @@
       font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
       padding:6px 10px; border-radius:8px; cursor:pointer;
     }
-    .gb-pagebtn[aria-current="true"]{
-      color:#585353; font-weight:700;
-    }
+    .gb-pagebtn[aria-current="true"]{ color:#585353; font-weight:700; }
 
     /* 작성 폼 */
     .gb-input{
@@ -214,18 +207,13 @@
       background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
     }
     .gb-textarea{
-      width:100%;
-      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
-      background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
-      resize:vertical;
+      width:100%; font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
+      background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px; resize:vertical;
     }
-    /* 작성하기 버튼을 삭제 버튼과 동일하게 */
     .gb-write{
-      font:inherit; font-size:9pt; color:#9d9b9b;
-      background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer;
+      font:inherit; font-size:9pt; color:#9d9b9b; background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer;
     }
     #gbSubmit{ font-size:9pt!important; color:#9d9b9b!important; font-weight:400!important; }
-    /* 이름칸–내용칸 사이 간격 축소 */
     #gbForm .gb-msg{ margin-top:2px; }
 
     /* ===== 마음 전하실 곳 ===== */
@@ -234,8 +222,7 @@
     }
     .acc-note{
       width:100%; max-width:var(--maxw); margin:0 auto 14px; text-align:center;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
-      line-height:1.9;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; line-height:1.9;
     }
     .acc-note p{ margin:0 0 2px 0; }
     .acc-note .muted{ color:#9d9b9b; }
@@ -243,8 +230,7 @@
 
     .acc-table{
       width:100%; border-collapse:separate; border-spacing:0;
-      border:1px solid #f1f1f1;
-      border-radius:12px; overflow:hidden; background:#fff;
+      border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff;
     }
     .acc-table thead th{ padding:0; background:#f1f1f1; }
     .acc-heading{
@@ -255,78 +241,46 @@
     .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
     .acc-line{ font-size:10pt; color:#585353; }
     .copy-mini{
-      font-family:'GowunBatang',serif; font-size:8pt;
-      padding:6px 10px; border-radius:10px;
-      background:transparent; color:#9d9b9b;
-      border:1px solid var(--thin);
-      cursor:pointer;
+      font-family:'GowunBatang',serif; font-size:8pt; padding:6px 10px; border-radius:10px;
+      background:transparent; color:#9d9b9b; border:1px solid var(--thin); cursor:pointer;
     }
     .copy-col{ width:80px; text-align:right; }
 
-    /* 복사/삭제 공통 모달 */
-    .copy-modal .sheet{
-      width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto;
-    }
-    .copy-modal .body{
-      display:grid; place-items:center; gap:14px;
-      padding:24px 18px;
-      font-family:'GowunBatang',serif; font-weight:400; color:#585353;
-    }
-    .copy-ok{
-      font-family:'GowunBatang',serif; font-size:10pt;
-      padding:8px 14px; border-radius:10px; border:1px solid var(--thin);
-      background:transparent; color:#585353;
-      cursor:pointer;
-    }
-
     /* ===== 플레이리스트 ===== */
-    #playlist .pl-title{
-      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 2px;
+    .pl-title{
+      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
-    #playlist .pl-sub{
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; margin:0 0 8px;
+    .pl-box{
+      border:1px solid var(--thin); border-radius:12px; padding:8px; background:#fff;
     }
-    .song-list{ display:grid; gap:12px; }
-
-    .song-card{
-      /* 요청: 가로폭 10% 사각형 박스 + 얇은 테두리 + 라운딩 */
-      width:100%; /* 실제 사용성을 위해 컨테이너는 100%로 확장 */
-      border:1px solid var(--thin); border-radius:12px; padding:10px; background:#fff;
+    .track{
+      padding:8px 4px;
     }
-    .song-row{
+    .track-head{
       display:flex; align-items:center; justify-content:space-between; gap:8px;
     }
-    .song-meta{
-      min-width:0;
+    .track-text{
+      min-width:0; flex:1;
     }
-    .song-title{
-      font-family:'GowunBatang',serif; font-weight:700; font-size:12pt; color:#585353; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    .t-title,.t-artist{
+      font-family:'GowunBatang',serif; font-weight:400; color:#585353; font-size:8pt; line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
-    .song-artist{
-      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#9d9b9b; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    .t-artist{ color:#9d9b9b; }
+    .t-ctrls{ display:flex; align-items:center; gap:8px; }
+    .ctrl-btn{
+      background:transparent; border:none; padding:0; cursor:pointer; line-height:1; outline:none; -webkit-tap-highlight-color:transparent;
     }
-    .song-ctrls{
-      display:flex; align-items:center; gap:6px; flex-shrink:0;
-    }
-    .song-btn{
-      border:none; background:transparent; padding:0; cursor:pointer; line-height:1; outline:none; -webkit-tap-highlight-color:transparent;
-    }
-    .song-btn img{ display:block; width:22px; height:22px; }
-    .song-bar{
-      margin-top:8px; height:6px; width:100%; background:#f1f1f1; border-radius:999px; overflow:hidden;
-    }
-    .song-bar .fill{
-      height:100%; width:0%; background:#7b9155; transition:width .15s linear;
-    }
-    /* 곡 사이 구분선 (사각형 기준 가로폭 70%) */
-    .song-sep{ width:70%; height:1px; background:var(--thin); margin:0 auto; }
+    .ctrl-btn img{ width:20px; height:20px; display:block; }
+    .bar{ width:100%; height:6px; background:#f1f1f1; border-radius:999px; overflow:hidden; margin-top:6px; }
+    .bar .fill{ width:0%; height:100%; background:#7b9155; }
+
+    /* 복사/삭제 모달 & 공통 모달 */
+    .copy-modal .sheet{ width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto; }
+    .copy-modal .body{ display:grid; place-items:center; gap:14px; padding:24px 18px; font-family:'GowunBatang',serif; font-weight:400; color:#585353; }
+    .copy-ok{ font-family:'GowunBatang',serif; font-size:10pt; padding:8px 14px; border-radius:10px; border:1px solid var(--thin); background:transparent; color:#585353; cursor:pointer; }
 
     /* ===== 모달 공통 ===== */
-    .modal{
-      position:fixed; inset:0; display:none;
-      align-items:center; justify-content:center;
-      background:rgba(0,0,0,.4); z-index:1000; padding:16px;
-    }
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.4); z-index:1000; padding:16px; }
     .modal.open{ display:flex; }
     .modal .sheet{ background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.18); }
 
@@ -343,20 +297,15 @@
     /* ===== 공유 버튼(하단) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-cta{
-      width:50%;
-      display:inline-flex; align-items:center; justify-content:center; gap:4px;
-      background:#fff; border:none; border-radius:10px;
-      padding:10px 12px; cursor:pointer;
+      width:50%; display:inline-flex; align-items:center; justify-content:center; gap:4px;
+      background:#fff; border:none; border-radius:10px; padding:10px 12px; cursor:pointer;
       font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
     }
     .share-cta img{ display:inline-block; margin:0 2px; }
     .share-cta span{ line-height:1; }
 
     /* ===== 아래에서 위로 애니메이션 (현상 유지) ===== */
-    @keyframes riseIn{
-      from{ transform:translateY(24px); opacity:0; }
-      to{   transform:translateY(0);   opacity:1; }
-    }
+    @keyframes riseIn{ from{ transform:translateY(24px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
     .reveal-up{ opacity:0; transform:translateY(24px); will-change:transform,opacity; }
     .reveal-up.show{ animation:riseIn 1100ms cubic-bezier(.2,.7,.2,1) forwards; }
     @media (prefers-reduced-motion:reduce){
@@ -368,33 +317,19 @@
 <body>
   <main class="container">
 
-    <!-- 상단 이미지들 (현상 유지) -->
+    <!-- 상단 이미지들 -->
     <section><img src="images/1-photo.jpg?v=1" alt="상단 사진1"></section>
     <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
 
-    <!-- 시 (현상 유지) -->
+    <!-- 시 -->
     <section class="pad poem" aria-label="시">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title after-heart">13년 전,<br>우리는 처음 만나 나무를 심었습니다.</div>
-      <p class="normal" style="margin:30px 0 0 0;">
-        여린 묘목에 흙과 물을 주고,<br>
-        적당한 햇살이 비치기를,<br>
-        적당한 바람이 불기를 바랐습니다.
-      </p>
-      <p class="normal" style="margin:30px 0 0 0;">
-        맘과 달리 적당하지 않은 날이<br>
-        많았는지도 모르겠습니다.
-      </p>
-      <p class="normal" style="margin:30px 0 0 0;">
-        그 덕에 적당한 목질이 되어<br>
-        이제는 제법 단단한 뿌리를 뻗고,<br>
-        위로는 숱한 가지를 내어<br>
-        그늘을 만들었습니다.
-      </p>
-      <p class="normal" style="margin:30px 0 0 0;">
-        그 아래서 우리는<br>
-        적당한 날들을 맞이하려 합니다.
-      </p>
+
+      <p class="normal" style="margin:30px 0 0 0;">여린 묘목에 흙과 물을 주고,<br>적당한 햇살이 비치기를,<br>적당한 바람이 불기를 바랐습니다.</p>
+      <p class="normal" style="margin:30px 0 0 0;">맘과 달리 적당하지 않은 날이<br>많았는지도 모르겠습니다.</p>
+      <p class="normal" style="margin:30px 0 0 0;">그 덕에 적당한 목질이 되어<br>이제는 제법 단단한 뿌리를 뻗고,<br>위로는 숱한 가지를 내어<br>그늘을 만들었습니다.</p>
+      <p class="normal" style="margin:30px 0 0 0;">그 아래서 우리는<br>적당한 날들을 맞이하려 합니다.</p>
     </section>
 
     <section><img src="images/3-photo.jpg?v=1" alt="하단 사진"></section>
@@ -407,9 +342,7 @@
       <div id="weddingStatus" class="cal-msg">지선, 기환의 결혼식이 <span class="dleft">0일</span> 남았습니다.</div>
       <div class="thin thin-70"></div>
       <div class="calendar">
-        <div class="cal-head">
-          <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
-        </div>
+        <div class="cal-head"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div>
         <div class="cal-grid">
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
           <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
@@ -434,57 +367,28 @@
       <div class="thin thin-70"></div>
     </section>
 
-    <!-- 카운트 1 (현상 유지) -->
+    <!-- 카운트 1 -->
     <section class="pad when">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
       <table class="count-table" id="pastTable">
         <colgroup><col><col><col><col><col><col><col></colgroup>
-        <thead class="count-labels">
-          <tr>
-            <th>DAYS</th><th class="colon"></th>
-            <th>HOUR</th><th class="colon"></th>
-            <th>MIN</th><th class="colon"></th>
-            <th>SEC</th>
-          </tr>
-        </thead>
-        <tbody class="count-values">
-          <tr>
-            <td class="d"></td><td class="colon">:</td>
-            <td class="h"></td><td class="colon">:</td>
-            <td class="m"></td><td class="colon">:</td>
-            <td class="s"></td>
-          </tr>
-        </tbody>
+        <thead class="count-labels"><tr><th>DAYS</th><th class="colon"></th><th>HOUR</th><th class="colon"></th><th>MIN</th><th class="colon"></th><th>SEC</th></tr></thead>
+        <tbody class="count-values"><tr><td class="d"></td><td class="colon">:</td><td class="h"></td><td class="colon">:</td><td class="m"></td><td class="colon">:</td><td class="s"></td></tr></tbody>
       </table>
     </section>
 
-    <!-- 카운트 2 (현상 유지) -->
+    <!-- 카운트 2 -->
     <section class="pad when">
       <div class="title" id="fruitTitle">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
       <table class="count-table" id="futureTable">
         <colgroup><col><col><col><col><col><col><col></colgroup>
-        <thead class="count-labels">
-          <tr>
-            <th>DAYS</th><th class="colon"></th>
-            <th>HOUR</th><th class="colon"></th>
-            <th>MIN</th><th class="colon"></th>
-            <th>SEC</th>
-          </tr>
-        </thead>
-        <tbody class="count-values">
-          <tr>
-            <td class="d"></td><td class="colon">:</td>
-            <td class="h"></td><td class="colon">:</td>
-            <td class="m"></td><td class="colon">:</td>
-            <td class="s"></td>
-          </tr>
-        </tbody>
+        <thead class="count-labels"><tr><th>DAYS</th><th class="colon"></th><th>HOUR</th><th class="colon"></th><th>MIN</th><th class="colon"></th><th>SEC</th></tr></thead>
+        <tbody class="count-values"><tr><td class="d"></td><td class="colon">:</td><td class="h"></td><td class="colon">:</td><td class="m"></td><td class="colon">:</td><td class="s"></td></tr></tbody>
       </table>
     </section>
 
-    <!-- 얇은 선: 결혼합니다 ↔ 오시는 길 -->
     <div class="thin"></div>
 
     <!-- 오시는 길 -->
@@ -493,10 +397,7 @@
       <div class="go-title" style="margin-top:8px">오시는 길</div>
 
       <div class="map">
-        <iframe
-          title="서울가정행정법원 융선당"
-          src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%EA%B0%80%EC%A0%95%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9&output=embed"
-          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe title="서울가정행정법원 융선당" src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%EA%B0%80%EC%A0%95%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%20%EC%9C%B5%EC%84%A0%EB%8B%B9&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
 
       <div>
@@ -510,21 +411,18 @@
       </div>
 
       <div class="nav-apps">
-        <a class="nav-btn" target="_blank" rel="noopener"
-           href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
+        <a class="nav-btn" target="_blank" rel="noopener" href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
           <img src="images/navermap.png" alt="">네이버 지도
         </a>
         <a class="nav-btn" target="_blank" rel="noopener" href="https://tmap.life/c31c6940">
           <img src="images/tmap.png" alt="">티맵
         </a>
-        <a class="nav-btn" target="_blank" rel="noopener"
-           href="https://map.kakao.com/?q=서울행정법원%20융선당예식장">
+        <a class="nav-btn" target="_blank" rel="noopener" href="https://map.kakao.com/?q=서울행정법원%20융선당예식장">
           <img src="images/kakaomap.png" alt="">카카오맵
         </a>
       </div>
     </section>
 
-    <!-- 얇은 선: 오시는 길 ↔ 갤러리 -->
     <div class="thin"></div>
 
     <!-- 갤러리 -->
@@ -546,24 +444,6 @@
       <button id="thumbsMoreBtn" class="more-tri" aria-expanded="false" aria-controls="thumbsMore">
         <img id="thumbsMoreIcon" src="images/down.png" alt="">
       </button>
-    </section>
-
-    <div class="thin"></div>
-
-    <!-- ===== 플레이리스트 ===== -->
-    <section class="pad" id="playlist" aria-label="플레이리스트">
-      <img src="images/heart.png" alt="하트" class="img-original">
-      <div class="pl-title after-heart">플레이리스트</div>
-
-      <!-- 지선 -->
-      <div class="pl-sub">지선이가 고른 결혼 음악 추천</div>
-      <div id="plJisun" class="song-list" aria-live="polite"></div>
-
-      <div class="thin thin-70" style="margin-top:8px;"></div>
-
-      <!-- 기환 -->
-      <div class="pl-sub">기환이가 고른 결혼 음악 추천</div>
-      <div id="plKihwan" class="song-list" aria-live="polite"></div>
     </section>
 
     <div class="thin"></div>
@@ -604,6 +484,7 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
+      <!-- 안내 문구 -->
       <div class="acc-note">
         <p>저희의 결혼과 광복 80주년을 맞아</p>
         <p>또 다른 나무를 심으려 합니다.</p>
@@ -617,22 +498,11 @@
 
       <!-- 신랑 측 -->
       <table class="acc-table acc-group" id="accGroomTbl">
-        <thead>
-          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr>
-        </thead>
+        <thead><tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr></thead>
         <tbody hidden>
-          <tr>
-            <td class="acc-line">김기환 국민은행 90513110424</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 90513110424 (김기환)">복사</button></td>
-          </tr>
-          <tr>
-            <td class="acc-line">김정호 국민은행 430502-93-118573</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 430502-93-118573 (김정호)">복사</button></td>
-          </tr>
-          <tr>
-            <td class="acc-line">이이순 우리은행 1002-038-271451</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="우리은행 1002-038-271451 (이이순)">복사</button></td>
-          </tr>
+          <tr><td class="acc-line">김기환 국민은행 90513110424</td><td class="copy-col"><button class="copy-mini" data-copy="국민은행 90513110424 (김기환)">복사</button></td></tr>
+          <tr><td class="acc-line">김정호 국민은행 430502-93-118573</td><td class="copy-col"><button class="copy-mini" data-copy="국민은행 430502-93-118573 (김정호)">복사</button></td></tr>
+          <tr><td class="acc-line">이이순 우리은행 1002-038-271451</td><td class="copy-col"><button class="copy-mini" data-copy="우리은행 1002-038-271451 (이이순)">복사</button></td></tr>
         </tbody>
       </table>
 
@@ -640,52 +510,60 @@
 
       <!-- 신부 측 -->
       <table class="acc-table acc-group" id="accBrideTbl">
+        <thead><tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr></thead>
+        <tbody hidden>
+          <tr><td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td><td class="copy-col"><button class="copy-mini" data-copy="카카오뱅크 3333-22-7850739 (목지선)">복사</button></td></tr>
+          <tr><td class="acc-line">목승우 국민은행 659401-01-191168</td><td class="copy-col"><button class="copy-mini" data-copy="국민은행 659401-01-191168 (목승우)">복사</button></td></tr>
+          <tr><td class="acc-line">성미화 새마을금고 9002197239365</td><td class="copy-col"><button class="copy-mini" data-copy="새마을금고 9002197239365 (성미화)">복사</button></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===== 플레이리스트 ===== -->
+    <section class="pad" id="playlist">
+      <img src="images/heart.png" alt="하트" class="img-original">
+      <div class="pl-title after-heart">플레이리스트</div>
+
+      <!-- 지선이가 고른 결혼 음악 추천 (신랑 측 버튼과 동일한 UI/동작) -->
+      <table class="acc-table acc-group pl-group" id="plJisunTbl">
         <thead>
-          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr>
+          <tr>
+            <th>
+              <button class="acc-heading" type="button" aria-expanded="false">지선이가 고른 결혼 음악 추천</button>
+            </th>
+          </tr>
         </thead>
         <tbody hidden>
           <tr>
-            <td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="카카오뱅크 3333-22-7850739 (목지선)">복사</button></td>
+            <td>
+              <div class="pl-box" id="plJisunBox"><!-- 곡 리스트가 JS로 렌더링됩니다 --></div>
+            </td>
           </tr>
+        </tbody>
+      </table>
+
+      <div style="height:10px"></div>
+
+      <!-- 기환이가 고른 결혼 음악 추천 (동일 UI/동작) -->
+      <table class="acc-table acc-group pl-group" id="plKihwanTbl">
+        <thead>
           <tr>
-            <td class="acc-line">목승우 국민은행 659401-01-191168</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 659401-01-191168 (목승우)">복사</button></td>
+            <th>
+              <button class="acc-heading" type="button" aria-expanded="false">기환이가 고른 결혼 음악 추천</button>
+            </th>
           </tr>
+        </thead>
+        <tbody hidden>
           <tr>
-            <td class="acc-line">성미화 새마을금고 9002197239365</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="새마을금고 9002197239365 (성미화)">복사</button></td>
+            <td>
+              <div class="pl-box" id="plKihwanBox"><!-- 곡 리스트가 JS로 렌더링됩니다 --></div>
+            </td>
           </tr>
         </tbody>
       </table>
     </section>
 
-    <!-- 삭제 확인 모달 -->
-    <div id="delModal" class="modal copy-modal" aria-hidden="true">
-      <div class="sheet">
-        <div class="body center">
-          <div>삭제 비밀번호를 입력하세요.</div>
-          <input id="delPass" class="gb-input" type="password" placeholder="비밀번호">
-          <div id="delError" style="display:none; color:#d00; font-size:10pt;">비밀번호가 틀렸습니다.</div>
-          <div style="display:flex; gap:10px;">
-            <button id="delOk" class="copy-ok">삭제</button>
-            <button id="delCancel" class="copy-ok">취소</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 복사 완료 모달 -->
-    <div id="copyModal" class="modal copy-modal" aria-hidden="true">
-      <div class="sheet">
-        <div class="body center">
-          <div>복사가 완료되었습니다.</div>
-          <button id="copyOk" class="copy-ok">확인</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 얇은 선: 마음 전하실 곳 ↔ 공유 -->
+    <!-- 얇은 선: 마음 전하실 곳/플레이리스트 ↔ 공유 -->
     <div class="thin"></div>
 
     <!-- 공유 -->
@@ -790,7 +668,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리: 랜덤 유지 + 슬라이드/드래그 애니메이션 + 이미지 버튼 ===== */
+    /* ===== 갤러리: 랜덤 유지 + 슬라이드/드래그 + 버튼 ===== */
     (function(){
       const zone=document.getElementById('heroZone');
       const prev=document.getElementById('heroPrev');
@@ -828,17 +706,9 @@
       function width(){ return zone.getBoundingClientRect().width; }
 
       function mountInitial(src){
-        curImg=document.createElement('img');
-        curImg.className='slide';
-        curImg.src=src+'?v=1';
-        curImg.style.transform='translateX(0px)';
-        zone.appendChild(curImg);
+        curImg=document.createElement('img'); curImg.className='slide'; curImg.src=src+'?v=1'; curImg.style.transform='translateX(0px)'; zone.appendChild(curImg);
       }
-      function createGhost(src){
-        const g=document.createElement('img');
-        g.className='slide'; g.src=src+'?v=1';
-        return g;
-      }
+      function createGhost(src){ const g=document.createElement('img'); g.className='slide'; g.src=src+'?v=1'; return g; }
 
       function show(newIndex, dir=0, instant=false){
         if(!list.length) return;
@@ -914,8 +784,7 @@
             curImg=incoming; idx=newIndex; animating=false;
           }, {once:true});
         }else{
-          curImg.style.transition='transform 200ms ease';
-          curImg.style.transform='translateX(0px)';
+          curImg.style.transition='transform 200ms ease'; curImg.style.transform='translateX(0px)';
           if(drag.ghost){
             drag.ghost.style.transition='transform 200ms ease';
             drag.ghost.style.transform=`translateX(${drag.dir>0? w : -w}px)`;
@@ -941,6 +810,7 @@
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
         show(0,0,true);
 
+        // 토글
         moreBtn.hidden = next25.length===0;
         moreBtn.setAttribute('aria-expanded','false');
         thumbsMore.hidden = true;
@@ -968,10 +838,7 @@
         }catch(e){ console.warn(e); return []; }
       }
 
-      (async function init(){
-        list = await loadFromGitHub();
-        render();
-      })();
+      (async function init(){ list = await loadFromGitHub(); render(); })();
     })();
 
     /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) ===== */
@@ -1145,9 +1012,7 @@
         });
       });
 
-      function defangTel(str){
-        return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B');
-      }
+      function defangTel(str){ return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B'); }
       document.querySelectorAll('.acc-line').forEach(td=>{
         const raw=td.textContent;
         td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
@@ -1170,145 +1035,121 @@
       });
     })();
 
-    /* ===== 플레이리스트 로더 & 컨트롤 ===== */
+    /* ===== 플레이리스트 렌더/재생 로직 ===== */
     (function(){
-      // GitHub Pages 저장소 추론 (gallery와 동일 로직 별도 사용)
-      const GH = { owner:'', repo:'', ref:'main' };
-      if(!GH.owner || !GH.repo){
-        const host = location.hostname;
-        if(host.endsWith('github.io')){
-          GH.owner = GH.owner || host.split('.')[0];
-          const seg = location.pathname.replace(/^\/+/,'').split('/');
-          GH.repo  = GH.repo || (seg[0] || (GH.owner + '.github.io'));
-        }
-      }
-      function encPath(p){ return p.split('/').map(encodeURIComponent).join('/'); }
+      const PLAY_ICON = 'images/play.png';
+      const PAUSE_ICON = 'images/pause.png';
+      const STOP_ICON = 'images/stop.png';
 
-      // 곡 불러오기: 디렉터리의 파일명을 기반으로 "제목 - 가수" 파싱
-      async function loadTracks(dir){
-        try{
-          if(!GH.owner || !GH.repo) throw new Error('GitHub 저장소 정보를 설정하세요.');
-          const api=`https://api.github.com/repos/${encodeURIComponent(GH.owner)}/${encodeURIComponent(GH.repo)}/contents/${encPath(dir)}?ref=${encodeURIComponent(GH.ref)}`;
-          const res=await fetch(api, { headers:{ 'Accept':'application/vnd.github+json' } });
-          if(!res.ok) throw new Error('API 실패:'+res.status);
-          const items=await res.json();
-          const exts=/\.(mp3|m4a|aac|wav|ogg)$/i;
-          return items.filter(it=>it.type==='file' && exts.test(it.name)).map(it=>{
-            const name=decodeURIComponent(it.name);
-            const noExt=name.replace(/\.[^.]+$/, '');
-            const parts=noExt.split(' - ');
-            const title=parts[0]||noExt;
-            const artist=parts.slice(1).join(' - ')||'';
-            const url = encPath(dir)+'/'+encodeURIComponent(it.name);
-            return { title, artist, url };
+      // 제공해주신(표기가 깨진) 한글 파일명을 "정상 표기" 그대로 사용해 경로 생성
+      const JISUN_FOLDER = 'jisun music';
+      const KIHWAN_FOLDER = 'kihwan music';
+
+      const JISUN_TRACKS = [
+        { title: 'Romeo n Juliet(feat. 유라)', artist: '죠지' },
+        { title: '내가 그대를 위해 할 수 있는 건(French)', artist: '다린' },
+        { title: '내가 그대를 위해 할 수 있는 건', artist: '다린' },
+        { title: '너만 있으면', artist: '박소은' },
+        { title: '도망가자', artist: '선우정아' },
+        { title: '바닷가', artist: '다린' },
+        { title: 'Stood', artist: '다린' },
+      ];
+
+      // 필요 시 여기 곡을 추가하면 즉시 반영됩니다.
+      const KIHWAN_TRACKS = [
+        // { title:'제목', artist:'가수' },
+      ];
+
+      function fileUrl(folder, title, artist){
+        const filename = `${title} - ${artist}.mp3`;
+        return `${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`;
+      }
+
+      function renderList(container, folder, tracks){
+        container.innerHTML = '';
+        tracks.forEach((t, i)=>{
+          const row = document.createElement('div');
+          row.className = 'track';
+          row.innerHTML = `
+            <div class="track-head">
+              <div class="track-text">
+                <div class="t-title">${t.title}</div>
+                <div class="t-artist">${t.artist}</div>
+              </div>
+              <div class="t-ctrls">
+                <button class="ctrl-btn play"  aria-label="재생"><img src="${PLAY_ICON}"  alt=""></button>
+                <button class="ctrl-btn pause" aria-label="일시정지"><img src="${PAUSE_ICON}" alt=""></button>
+                <button class="ctrl-btn stop"  aria-label="정지"><img src="${STOP_ICON}"  alt=""></button>
+              </div>
+            </div>
+            <div class="bar"><div class="fill"></div></div>
+          `;
+          const audio = document.createElement('audio');
+          audio.preload = 'none';
+          audio.src = fileUrl(folder, t.title, t.artist);
+          row.appendChild(audio);
+          container.appendChild(row);
+        });
+      }
+
+      const plJisunBox = document.getElementById('plJisunBox');
+      const plKihwanBox = document.getElementById('plKihwanBox');
+      if(plJisunBox) renderList(plJisunBox, JISUN_FOLDER, JISUN_TRACKS);
+      if(plKihwanBox) renderList(plKihwanBox, KIHWAN_FOLDER, KIHWAN_TRACKS);
+
+      // 단일 재생 보장
+      let currentAudio = null;
+      function stopAudio(aud, row){
+        if(!aud) return;
+        aud.pause();
+        aud.currentTime = 0;
+        const fill = row.querySelector('.fill');
+        if(fill) fill.style.width = '0%';
+      }
+
+      document.addEventListener('click', (e)=>{
+        const playBtn = e.target.closest('.ctrl-btn.play');
+        const pauseBtn = e.target.closest('.ctrl-btn.pause');
+        const stopBtn = e.target.closest('.ctrl-btn.stop');
+        if(!playBtn && !pauseBtn && !stopBtn) return;
+
+        const row = e.target.closest('.track');
+        if(!row) return;
+        const audio = row.querySelector('audio');
+
+        // 진행 바 업데이트 핸들러(중복 등록 방지)
+        if(!audio._bound){
+          audio.addEventListener('timeupdate', ()=>{
+            const fill = row.querySelector('.fill');
+            if(!fill) return;
+            const d = audio.duration || 0;
+            const c = audio.currentTime || 0;
+            const pct = d>0 ? (c/d)*100 : 0;
+            fill.style.width = pct + '%';
           });
-        }catch(e){ console.warn(e); return []; }
-      }
+          audio.addEventListener('ended', ()=>{
+            const fill = row.querySelector('.fill');
+            if(fill) fill.style.width = '0%';
+            if(currentAudio === audio) currentAudio = null;
+          });
+          audio._bound = true;
+        }
 
-      // UI 생성
-      function makeSongCard(track, groupId, idx){
-        const card=document.createElement('div');
-        card.className='song-card';
-
-        const row=document.createElement('div');
-        row.className='song-row';
-
-        const meta=document.createElement('div');
-        meta.className='song-meta';
-        const t=document.createElement('div'); t.className='song-title'; t.textContent=track.title;
-        const a=document.createElement('div'); a.className='song-artist'; a.textContent=track.artist;
-        meta.appendChild(t); meta.appendChild(a);
-
-        const ctrls=document.createElement('div'); ctrls.className='song-ctrls';
-        const btnPlay=document.createElement('button'); btnPlay.className='song-btn'; btnPlay.setAttribute('aria-label','재생');
-        btnPlay.innerHTML='<img src="images/play.png" alt="">';
-        const btnPause=document.createElement('button'); btnPause.className='song-btn'; btnPause.setAttribute('aria-label','일시정지');
-        btnPause.innerHTML='<img src="images/pause.png" alt="">';
-        const btnStop=document.createElement('button'); btnStop.className='song-btn'; btnStop.setAttribute('aria-label','정지');
-        btnStop.innerHTML='<img src="images/stop.png" alt="">';
-        ctrls.append(btnPlay, btnPause, btnStop);
-
-        row.append(meta, ctrls);
-
-        const bar=document.createElement('div'); bar.className='song-bar';
-        const fill=document.createElement('div'); fill.className='fill';
-        bar.appendChild(fill);
-
-        const audio=new Audio(track.url+'?v=1'); // 캐시 버전 파라미터
-        audio.preload='metadata';
-
-        // 컨트롤 동작
-        btnPlay.addEventListener('click', ()=>{
-          // 같은 그룹의 다른 곡 정지
-          stopOthers(groupId, audio);
+        if(playBtn){
+          // 다른 곡 정지
+          if(currentAudio && currentAudio !== audio){
+            const prevRow = currentAudio.closest('.track');
+            stopAudio(currentAudio, prevRow);
+          }
+          currentAudio = audio;
           audio.play();
-        });
-        btnPause.addEventListener('click', ()=> audio.pause());
-        btnStop.addEventListener('click', ()=>{ audio.pause(); audio.currentTime=0; });
-
-        // 진행바
-        audio.addEventListener('timeupdate', ()=>{
-          if(!isFinite(audio.duration) || audio.duration<=0) return;
-          const pct=(audio.currentTime / audio.duration) * 100;
-          fill.style.width = Math.max(0, Math.min(100, pct)) + '%';
-        });
-        audio.addEventListener('ended', ()=>{
-          audio.currentTime=0;
-          fill.style.width='0%';
-        });
-
-        // 카드 구성
-        card.append(row, bar);
-
-        // 접근성/그룹 관리
-        card.dataset.group = groupId;
-        card._audio = audio;
-
-        return card;
-      }
-
-      function stopOthers(groupId, exceptAudio){
-        document.querySelectorAll(`.song-card[data-group="${groupId}"]`).forEach(c=>{
-          const au=c._audio;
-          if(au && au!==exceptAudio){
-            au.pause(); au.currentTime=0;
-            const f=c.querySelector('.song-bar .fill'); if(f) f.style.width='0%';
-          }
-        });
-      }
-
-      async function init(){
-        const jisunWrap=document.getElementById('plJisun');
-        const kihwanWrap=document.getElementById('plKihwan');
-        if(!jisunWrap || !kihwanWrap) return;
-
-        const jisun = await loadTracks('jisun music');
-        const kihwan = await loadTracks('kihwan music');
-
-        // 지선 목록 렌더
-        jisunWrap.innerHTML='';
-        jisun.forEach((tr,i)=>{
-          const card=makeSongCard(tr, 'jisun', i);
-          jisunWrap.appendChild(card);
-          if(i < jisun.length-1){
-            const sep=document.createElement('div'); sep.className='song-sep';
-            jisunWrap.appendChild(sep);
-          }
-        });
-
-        // 기환 목록 렌더
-        kihwanWrap.innerHTML='';
-        kihwan.forEach((tr,i)=>{
-          const card=makeSongCard(tr, 'kihwan', i);
-          kihwanWrap.appendChild(card);
-          if(i < kihwan.length-1){
-            const sep=document.createElement('div'); sep.className='song-sep';
-            kihwanWrap.appendChild(sep);
-          }
-        });
-      }
-
-      init();
+        } else if(pauseBtn){
+          audio.pause();
+        } else if(stopBtn){
+          stopAudio(audio, row);
+          if(currentAudio === audio) currentAudio = null;
+        }
+      });
     })();
 
     /* ===== 공유 (현상 유지) ===== */

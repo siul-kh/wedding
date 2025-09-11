@@ -220,26 +220,12 @@
       background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
       resize:vertical;
     }
-    /* 작성하기 버튼을 삭제 버튼과 동일하게 */
     .gb-write{
       font:inherit; font-size:9pt; color:#9d9b9b;
       background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer;
     }
     #gbSubmit{ font-size:9pt!important; color:#9d9b9b!important; font-weight:400!important; }
-    /* 이름칸–내용칸 사이 간격 축소 */
     #gbForm .gb-msg{ margin-top:2px; }
-
-    /* ===== 플레이리스트 ===== */
-    .pl-title{
-      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px;
-    }
-    .song-line{ font-size:10pt; line-height:1.7; color:#585353; }
-    .song-line .s-title{ font-weight:700; color:#585353; }
-    .song-line .s-artist{ font-weight:400; color:#9d9b9b; }
-
-    /* ★ 곡 사이 얇은 선 (첫 곡은 없음) */
-    .pl-group tbody td{ border-top:1px solid var(--thin); }
-    .pl-group tbody tr:first-child td{ border-top:none; }
 
     /* ===== 마음 전하실 곳 ===== */
     .acc-title{
@@ -270,27 +256,41 @@
     .copy-mini{
       font-family:'GowunBatang',serif; font-size:8pt;
       padding:6px 10px; border-radius:10px;
-      background:transparent; color:#9d9b9b;
+      background:transparent; color:#9d9b9b; /* 요청 색상 유지 */
       border:1px solid var(--thin);
       cursor:pointer;
     }
     .copy-col{ width:80px; text-align:right; }
 
-    /* 복사/삭제 공통 모달 */
-    .copy-modal .sheet{
-      width:min(92vw, 360px); border-radius:14px; display:grid; grid-template-rows:1fr auto;
+    /* ===== 플레이리스트(토글만, 재생 UI 제거) ===== */
+    .pl-title{
+      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
-    .copy-modal .body{
-      display:grid; place-items:center; gap:14px;
-      padding:24px 18px;
-      font-family:'GowunBatang',serif; font-weight:400; color:#585353;
+    .pl-note{
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; margin:4px 0 8px;
     }
-    .copy-ok{
-      font-family:'GowunBatang',serif; font-size:10pt;
-      padding:8px 14px; border-radius:10px; border:1px solid var(--thin);
-      background:transparent; color:#585353;
-      cursor:pointer;
+    .pl-group{ width:100%; border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff; }
+    .pl-heading{
+      width:100%; display:block; text-align:center; cursor:pointer;
+      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
+      padding:12px 14px; border:0;
     }
+    .pl-body[hidden]{ display:none; }
+    .song-line{
+      display:flex; align-items:center; justify-content:space-between; gap:8px;
+      padding:10px 12px;
+    }
+    .song-meta{
+      display:block; width:100%;
+      font-family:'GowunBatang',serif;
+    }
+    .song-title{
+      font-size:10pt; color:#585353; font-weight:700; /* Bold 요청 */
+    }
+    .song-artist{
+      font-size:10pt; color:#9d9b9b; font-weight:400;
+    }
+    .song-sep{ width:70%; height:1px; background:var(--thin); margin:0 auto; }
 
     /* ===== 모달 공통 ===== */
     .modal{
@@ -301,7 +301,7 @@
     .modal.open{ display:flex; }
     .modal .sheet{ background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.18); }
 
-    /* ===== 카운트 블럭 (현상 유지) ===== */
+    /* ===== 카운트 블럭 (손대지 않음) ===== */
     .when{ text-align:center; }
     .when .title{ font-size:14pt; color:var(--accent); font-weight:700; }
     .when .meta{ font-size:12pt; color:#585353; }
@@ -409,6 +409,56 @@
       <div class="thin thin-70"></div>
     </section>
 
+    <!-- 카운트 1 -->
+    <section class="pad when">
+      <div class="title">우리가 나무를 심은 날</div>
+      <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
+      <table class="count-table" id="pastTable">
+        <colgroup><col><col><col><col><col><col><col></colgroup>
+        <thead class="count-labels">
+          <tr>
+            <th>DAYS</th><th class="colon"></th>
+            <th>HOUR</th><th class="colon"></th>
+            <th>MIN</th><th class="colon"></th>
+            <th>SEC</th>
+          </tr>
+        </thead>
+        <tbody class="count-values">
+          <tr>
+            <td class="d"></td><td class="colon">:</td>
+            <td class="h"></td><td class="colon">:</td>
+            <td class="m"></td><td class="colon">:</td>
+            <td class="s"></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 카운트 2 -->
+    <section class="pad when">
+      <div class="title" id="fruitTitle">그 나무가 열매를 맺을 날</div>
+      <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
+      <table class="count-table" id="futureTable">
+        <colgroup><col><col><col><col><col><col><col></colgroup>
+        <thead class="count-labels">
+          <tr>
+            <th>DAYS</th><th class="colon"></th>
+            <th>HOUR</th><th class="colon"></th>
+            <th>MIN</th><th class="colon"></th>
+            <th>SEC</th>
+          </tr>
+        </thead>
+        <tbody class="count-values">
+          <tr>
+            <td class="d"></td><td class="colon">:</td>
+            <td class="h"></td><td class="colon">:</td>
+            <td class="m"></td><td class="colon">:</td>
+            <td class="s"></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
     <!-- 얇은 선: 결혼합니다 ↔ 오시는 길 -->
     <div class="thin"></div>
 
@@ -476,54 +526,51 @@
     <!-- 얇은 선: 갤러리 ↔ 플레이리스트 -->
     <div class="thin"></div>
 
-    <!-- ===== 플레이리스트 (갤러리 바로 아래로 이동) ===== -->
+    <!-- ===== 플레이리스트(토글 전용) ===== -->
     <section class="pad" id="playlist">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="pl-title after-heart">플레이리스트</div>
 
       <!-- 지선 -->
-      <table class="acc-table acc-group pl-group" id="plJisunTbl">
-        <thead>
-          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">지선이가 고른 결혼 음악 추천</button></th></tr>
-        </thead>
-        <tbody hidden>
-          <tr><td class="song-line" colspan="2"><span class="s-title">BACK ON TOP(feat. Griff)</span> - <span class="s-artist">HONNE</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">Better With You(feat. Benjamin Kheng)</span> - <span class="s-artist">Gentle Bones</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">COMING HOME(feat. NIKI)</span> - <span class="s-artist">HONNE</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">ILYSB</span> - <span class="s-artist">LANY</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">Steal The Show</span> - <span class="s-artist">Lauv</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">The Reason</span> - <span class="s-artist">Hoobastank</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">This Happy Madness</span> - <span class="s-artist">Stacey Kent</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">What A Wonderful World</span> - <span class="s-artist">HONNE</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">Wonderwall(Remastered)</span> - <span class="s-artist">Oasis</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">by my side(dream edit)</span> - <span class="s-artist">HONNE</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">free love</span> - <span class="s-artist">HONNE</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">la la la that's how it goes</span> - <span class="s-artist">HONNE</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">no song without you(london session)</span> - <span class="s-artist">HONNE</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">permanent +1</span> - <span class="s-artist">Luz</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">the author</span> - <span class="s-artist">Luz</span></td></tr>
-        </tbody>
-      </table>
+      <div class="pl-group" id="plJisun">
+        <button class="pl-heading" type="button" aria-expanded="false">지선이가 고른 결혼 음악 추천</button>
+        <div class="pl-body" hidden>
+          <!-- 노래 목록 (제목 - 가수, 얇은 선 포함) -->
+          <div class="song-line"><span class="song-meta"><span class="song-title">BACK ON TOP(feat. Griff)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">Better With You(feat. Benjamin Kheng)</span> - <span class="song-artist">Gentle Bones</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">COMING HOME(feat. NIKI)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">ILYSB</span> - <span class="song-artist">LANY</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">Steal The Show</span> - <span class="song-artist">Lauv</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">The Reason</span> - <span class="song-artist">Hoobastank</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">This Happy Madness</span> - <span class="song-artist">Stacey Kent</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">What A Wonderful World</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">Wonderwall(Remastered)</span> - <span class="song-artist">Oasis</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">by my side(dream edit)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">free love</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">la la la that's how it goes</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">no song without you(london session)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">permanent +1</span> - <span class="song-artist">Luz</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">the author</span> - <span class="song-artist">Luz</span></span></div>
+        </div>
+      </div>
 
       <div style="height:10px"></div>
 
       <!-- 기환 -->
-      <table class="acc-table acc-group pl-group" id="plKihwanTbl">
-        <thead>
-          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">기환이가 고른 결혼 음악 추천</button></th></tr>
-        </thead>
-        <tbody hidden>
-          <tr><td class="song-line" colspan="2"><span class="s-title">Okinawa</span> - <span class="s-artist">92914</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">Romeo n Juliet(feat. 유라)</span> - <span class="s-artist">죠지</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">Stood</span> - <span class="s-artist">다린</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">Summer Is for Falling in Love</span> - <span class="s-artist">Sarah Kang</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">내가 그대를 위해 할 수 있는 건</span> - <span class="s-artist">다린</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">내가 그대를 위해 할 수 있는 건(French)</span> - <span class="s-artist">다린</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">너만 있으면</span> - <span class="s-artist">박소은</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">도망가자</span> - <span class="s-artist">선우정아</span></td></tr>
-          <tr><td class="song-line" colspan="2"><span class="s-title">바닷가</span> - <span class="s-artist">다린</span></td></tr>
-        </tbody>
-      </table>
+      <div class="pl-group" id="plKihwan">
+        <button class="pl-heading" type="button" aria-expanded="false">기환이가 고른 결혼 음악 추천</button>
+        <div class="pl-body" hidden>
+          <div class="song-line"><span class="song-meta"><span class="song-title">Okinawa</span> - <span class="song-artist">92914</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">Romeo n Juliet(feat. 유라)</span> - <span class="song-artist">죠지</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">Stood</span> - <span class="song-artist">다린</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">Summer Is for Falling in Love</span> - <span class="song-artist">Sarah Kang</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">내가 그대를 위해 할 수 있는 건</span> - <span class="song-artist">다린</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">내가 그대를 위해 할 수 있는 건(French)</span> - <span class="song-artist">다린</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">너만 있으면</span> - <span class="song-artist">박소은</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">도망가자</span> - <span class="song-artist">선우정아</span></span></div><div class="song-sep"></div>
+          <div class="song-line"><span class="song-meta"><span class="song-title">바닷가</span> - <span class="song-artist">다린</span></span></div>
+        </div>
+      </div>
     </section>
 
     <!-- 얇은 선: 플레이리스트 ↔ 방명록 -->
@@ -565,7 +612,7 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 안내 문구(‘피해자 지원’ 반영) -->
+      <!-- 안내 문구(중앙 정렬 + 한 줄 띄우기) -->
       <div class="acc-note">
         <p>저희의 결혼과 광복 80주년을 맞아</p>
         <p>또 다른 나무를 심으려 합니다.</p>
@@ -1095,7 +1142,7 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳 & 플레이리스트: 토글 */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn=tbl.querySelector('.acc-heading');
@@ -1108,7 +1155,6 @@
         });
       });
 
-      // 계좌번호 가독성 처리(하이픈/숫자)
       function defangTel(str){
         return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B');
       }
@@ -1117,7 +1163,6 @@
         td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
       });
 
-      // 복사 모달(계좌 복사 전용)
       const copyModal=document.getElementById('copyModal');
       const copyOk=document.getElementById('copyOk');
       if(copyOk) copyOk.addEventListener('click', ()=>closeModal(copyModal));
@@ -1132,6 +1177,20 @@
           ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
           openModal(copyModal);
         }
+      });
+    })();
+
+    /* ===== 플레이리스트 토글 ===== */
+    (function(){
+      document.querySelectorAll('.pl-group').forEach(box=>{
+        const btn = box.querySelector('.pl-heading');
+        const body = box.querySelector('.pl-body');
+        if(!btn || !body) return;
+        btn.addEventListener('click', ()=>{
+          const open = btn.getAttribute('aria-expanded')==='true';
+          btn.setAttribute('aria-expanded', String(!open));
+          body.hidden = open;
+        });
       });
     })();
 

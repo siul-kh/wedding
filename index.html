@@ -31,8 +31,7 @@
       --accent:#7b9155;
       --hint:#9d9b9b;
       --thin:#e5e5e5;
-      --heart-gap:8px;
-      --thumb-gap:6px;
+      --overlay:#00000066;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -55,7 +54,7 @@
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
 
     /* === 요청: 3-photo 더 둥글게 + 위/아래 한 줄 띄우기 === */
-    .rounded-photo{ border-radius:24px; margin:16px 0; }
+    .rounded-photo{ border-radius:32px; margin:16px 0; }
 
     /* 시 */
     .poem{text-align:center}
@@ -64,7 +63,7 @@
     .poem .big.tight{ line-height:0.9; margin:4px 0; }
     .poem .big + .big{ margin-top:12px; }
     .poem .normal{font-size:12pt; color:#585353}
-    .after-heart{ margin-top:var(--heart-gap)!important; }
+    .after-heart{ margin-top:8px!important; }
     .poem .go-title{ font-size:14pt; }
 
     /* ===== 달력 ===== */
@@ -103,207 +102,104 @@
     .cal-grid .cal-cell:nth-child(7n){   color:#6dafff; }
 
     /* ===== 오시는 길 ===== */
-    .go-title {
-      font-family: 'GowunBatang', serif;
-      font-weight: 700;
-      font-size: 16pt;
-      color: #585353;
-      text-align: center;
-    }
+    .go-title { font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; }
     .map { margin: 1.5em 0; }
-    .map iframe {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border: 0;
-      display: block;
-      margin: 0 auto;
-    }
+    .map iframe { width: 100%; aspect-ratio: 1 / 1; border: 0; display: block; margin: 0 auto; }
     .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; }
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
-    .go-info {
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      color:#9d9b9b;
-      text-align:center; line-height:2.0; margin-top:0;
-    }
+    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#9d9b9b; text-align:center; line-height:2.0; margin-top:0; }
 
     /* 네비 앱 버튼 (10pt) */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
     .nav-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5em;
       padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
-      font-family:'GowunBatang',serif;
-      font-size: 10pt;
-      color:#585353; text-decoration:none;
-      background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer;
-      white-space:nowrap; flex-wrap:nowrap; max-width:100%;
+      font-family:'GowunBatang',serif; font-size: 10pt; color:#585353; text-decoration:none;
+      background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer; white-space:nowrap; max-width:100%;
     }
     .nav-btn img{ height:1em; width:auto; display:inline-block; }
 
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
-    .gallery .section-title{
-      font-family:'GowunBatang',serif; font-weight:700;
-      font-size:16pt; color:#585353; text-align:center; margin:8px 0;
-    }
+    .gallery .section-title{ font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0; }
     .gallery .heart-top{ margin:0 auto 6px; }
-
-    .hero-photo{
-      position:relative; overflow:hidden; width:100%; aspect-ratio:4/6;
-      background:#f7f7f7; touch-action:pan-y; cursor:grab;
-    }
-    .hero-photo .slide{
-      position:absolute; inset:0; width:100%; height:100%;
-      object-fit:cover; display:block; user-select:none; -webkit-user-drag:none;
-      will-change:transform; transform:translateX(0); z-index:1;
-    }
-    .hero-arrow{
-      position:absolute; top:50%; transform:translateY(-50%);
-      background:transparent; border:none; cursor:pointer; line-height:1;
-      padding:0; z-index:2;
-      outline:none; -webkit-tap-highlight-color:transparent; appearance:none;
-      box-shadow:none;
-    }
-    .hero-arrow.prev{ left:4px; }
-    .hero-arrow.next{ right:4px; }
-    .hero-arrow img{ display:block; border:none; outline:none; box-shadow:none; }
-
-    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%;
-      margin-block:var(--thumb-gap); }
-    .thumbs5 .thumb{
-      padding:0; border:none;
-      background:#fff; cursor:pointer; overflow:hidden;
-      aspect-ratio:1/1; display:block;
-    }
+    .hero-photo{ position:relative; overflow:hidden; width:100%; aspect-ratio:4/6; background:#f7f7f7; touch-action:pan-y; cursor:grab; }
+    .hero-photo .slide{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transform:translateX(0); z-index:1; }
+    .hero-arrow{ position:absolute; top:50%; transform:translateY(-50%); background:transparent; border:none; cursor:pointer; padding:0; z-index:2; }
+    .hero-arrow.prev{ left:4px; } .hero-arrow.next{ right:4px; }
+    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; width:100%; margin-block:6px; }
+    .thumbs5 .thumb{ padding:0; border:none; background:#fff; cursor:pointer; overflow:hidden; aspect-ratio:1/1; display:block; }
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; cursor:pointer; }
     .more-tri img{ display:block; }
     .thumbs-more[hidden]{ display:none; }
 
     /* ===== 방명록 ===== */
-    #guestbook .gb-title{
-      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px;
-    }
+    #guestbook .gb-title{ font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px; }
     .gb-list{ display:grid; gap:12px; }
-
-    .gb-card{
-      width:100%; margin:0 auto; background:#fff;
-      border:1px solid var(--thin); border-radius:12px; padding:12px;
-    }
+    .gb-card{ width:100%; background:#fff; border:1px solid var(--thin); border-radius:12px; padding:12px; }
     .gb-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
-    .gb-name{ font-family:'GowunBatang',serif; font-weight:700; font-size:10pt; color:#585353; }
-    .gb-date{ font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#9d9b9b; }
-    .gb-msg{ margin-top:6px; font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#585353; white-space:pre-wrap; word-break:break-word; }
+    .gb-name{ font-weight:700; font-size:10pt; color:#585353; }
+    .gb-date{ font-weight:400; font-size:10pt; color:#9d9b9b; }
+    .gb-msg{ margin-top:6px; font-weight:400; font-size:10pt; color:#585353; white-space:pre-wrap; word-break:break-word; }
     .gb-actions{ margin-top:6px; text-align:right; }
     .gb-del{ font:inherit; font-size:9pt; color:#9d9b9b; background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer; }
-
     .gb-pager{ display:flex; align-items:center; justify-content:center; gap:6px; margin-top:12px; flex-wrap:wrap; }
-    .gb-pager .arrow{
-      border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer;
-    }
+    .gb-pager .arrow{ border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer; }
     .gb-pages{ display:flex; gap:6px; }
-    .gb-pagebtn{
-      border:none; background:transparent;
-      color:#9d9b9b;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
-      padding:6px 10px; border-radius:8px; cursor:pointer;
-    }
-    .gb-pagebtn[aria-current="true"]{
-      color:#585353; font-weight:700;
-    }
-
-    /* 작성 폼 */
-    .gb-input{
-      flex:1; min-width:0;
-      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
-      background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
-    }
-    .gb-textarea{
-      width:100%;
-      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
-      background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
-      resize:vertical;
-    }
-    .gb-write{
-      font:inherit; font-size:9pt; color:#9d9b9b;
-      background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer;
-    }
+    .gb-pagebtn{ border:none; background:transparent; color:#9d9b9b; font-weight:400; font-size:10pt; padding:6px 10px; border-radius:8px; cursor:pointer; }
+    .gb-pagebtn[aria-current="true"]{ color:#585353; font-weight:700; }
+    .gb-input{ flex:1; min-width:0; font-size:10pt; color:#585353; background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px; }
+    .gb-textarea{ width:100%; font-size:10pt; color:#585353; background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px; resize:vertical; }
+    .gb-write{ font:inherit; font-size:9pt; color:#9d9b9b; background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer; }
     #gbSubmit{ font-size:9pt!important; color:#9d9b9b!important; font-weight:400!important; }
     #gbForm .gb-msg{ margin-top:2px; }
 
     /* ===== 마음 전하실 곳 ===== */
-    .acc-title{
-      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
-    }
-    .acc-note{
-      width:100%; max-width:var(--maxw); margin:0 auto 14px; text-align:center;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
-      line-height:1.9;
-    }
+    .acc-title{ font-size:16pt; font-weight:700; color:#585353; text-align:center; margin-bottom:10px; }
+    .acc-note{ width:100%; max-width:var(--maxw); margin:0 auto 14px; text-align:center; font-weight:400; font-size:12pt; color:#585353; line-height:1.9; }
     .acc-note p{ margin:0 0 2px 0; }
     .acc-note .muted{ color:#9d9b9b; }
     .acc-gap{ height:1em; }
 
-    .acc-table{
-      width:100%; border-collapse:separate; border-spacing:0;
-      border:1px solid #f1f1f1;
-      border-radius:12px; overflow:hidden; background:#fff;
-    }
+    .acc-table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff; }
     .acc-table thead th{ padding:0; background:#f1f1f1; }
-    .acc-heading{
-      width:100%; display:block; text-align:center; cursor:pointer;
-      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1;
-    }
+    .acc-heading{ width:100%; display:block; text-align:center; cursor:pointer; background:#f1f1f1; color:#585353; font-weight:400; font-size:12pt; padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1; }
     .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
     .acc-line{ font-size:10pt; color:#585353; }
-    .copy-mini{
-      font-family:'GowunBatang',serif; font-size:8pt;
-      padding:6px 10px; border-radius:10px;
-      background:transparent; color:#9d9b9b; /* 요청 색상 유지 */
-      border:1px solid var(--thin);
-      cursor:pointer;
-    }
+    .copy-mini{ font-size:8pt; padding:6px 10px; border-radius:10px; background:transparent; color:#9d9b9b; border:1px solid var(--thin); cursor:pointer; }
     .copy-col{ width:80px; text-align:right; }
 
-    /* ===== 플레이리스트(토글만, 재생 UI 제거) ===== */
-    .pl-title{
-      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0;
-    }
-    .pl-note{
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; margin:4px 0 8px;
-    }
+    /* ===== 플레이리스트(토글 전용) ===== */
+    .pl-title{ font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0; }
     .pl-group{ width:100%; border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff; }
-    .pl-heading{
-      width:100%; display:block; text-align:center; cursor:pointer;
-      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      padding:12px 14px; border:0;
-    }
+    .pl-heading{ width:100%; display:block; text-align:center; cursor:pointer; background:#f1f1f1; color:#585353; font-weight:400; font-size:12pt; padding:12px 14px; border:0; }
     .pl-body[hidden]{ display:none; }
-    .song-line{
-      display:flex; align-items:center; justify-content:space-between; gap:8px;
-      padding:10px 12px;
-    }
-    .song-meta{
-      display:block; width:100%;
-      font-family:'GowunBatang',serif;
-    }
-    .song-title{
-      font-size:10pt; color:#585353; font-weight:700; /* Bold 요청 */
-    }
-    .song-artist{
-      font-size:10pt; color:#9d9b9b; font-weight:400;
-    }
-    /* === 요청: 구분선 가로폭 100%로 === */
-    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; }
+    .song-line{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; }
+    .song-meta{ display:block; width:100%; }
+    .song-title{ font-size:10pt; color:#585353; font-weight:700; }
+    .song-artist{ font-size:10pt; color:#9d9b9b; font-weight:400; }
+    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; } /* ← 요청사항 유지 */
 
-    /* ===== 모달 공통 ===== */
-    .modal{
-      position:fixed; inset:0; display:none;
-      align-items:center; justify-content:center;
-      background:rgba(0,0,0,.4); z-index:1000; padding:16px;
-    }
+    /* ===== 모달 공통(복사/삭제 동일 스타일) ===== */
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:var(--overlay); z-index:1000; padding:16px; }
     .modal.open{ display:flex; }
-    .modal .sheet{ background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.18); }
+    .modal .sheet{
+      width:min(88vw, 360px);
+      border-radius:16px;
+      background:#fff;
+      box-shadow:0 20px 40px rgba(0,0,0,.25);
+      overflow:hidden;
+      animation:pop .18s ease-out;
+    }
+    .modal .body{ padding:16px 16px 12px; }
+    .modal .body .gb-input{ width:100%; margin:10px 0; }
+    .modal .actions{ display:flex; gap:10px; justify-content:center; padding:0 16px 16px; }
+    .copy-ok{
+      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
+      background:#fff; border:1px solid var(--thin); border-radius:10px; padding:6px 12px; cursor:pointer;
+    }
+    @keyframes pop{ from{ transform:scale(.97); opacity:.0 } to{ transform:scale(1); opacity:1 } }
 
     /* ===== 카운트 블럭 (손대지 않음) ===== */
     .when{ text-align:center; }
@@ -318,26 +214,33 @@
     /* ===== 공유 버튼(하단) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
     .share-cta{
-      width:50%;
-      display:inline-flex; align-items:center; justify-content:center; gap:4px;
-      background:#fff; border:none; border-radius:10px;
-      padding:10px 12px; cursor:pointer;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
+      width:50%; display:inline-flex; align-items:center; justify-content:center; gap:4px;
+      background:#fff; border:none; border-radius:10px; padding:10px 12px; cursor:pointer;
+      font-weight:400; font-size:12pt; color:#585353;
     }
     .share-cta img{ display:inline-block; margin:0 2px; }
     .share-cta span{ line-height:1; }
 
     /* ===== 아래에서 위로 애니메이션 (현상 유지) ===== */
-    @keyframes riseIn{
-      from{ transform:translateY(24px); opacity:0; }
-      to{   transform:translateY(0);   opacity:1; }
-    }
+    @keyframes riseIn{ from{ transform:translateY(24px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
     .reveal-up{ opacity:0; transform:translateY(24px); will-change:transform,opacity; }
     .reveal-up.show{ animation:riseIn 1100ms cubic-bezier(.2,.7,.2,1) forwards; }
-    @media (prefers-reduced-motion:reduce){
-      .reveal-up{ opacity:1; transform:none; }
-      .reveal-up.show{ animation:none; }
+    @media (prefers-reduced-motion:reduce){ .reveal-up{ opacity:1; transform:none; } .reveal-up.show{ animation:none; } }
+
+    /* ===== 신부측: 동백나무 키우기 안내 ===== */
+    .camellia-wrap{ text-align:center; margin-top:16px; }
+    .camellia-gap{ height:1.6em; }
+    .camellia-title{ font-weight:700; color:#7b9155; font-size:12pt; }
+    .camellia-line{ font-weight:400; color:#585353; font-size:12pt; }
+    .camellia-line.small{ color:#9d9b9b; font-size:10pt; display:inline-flex; align-items:center; gap:6px; }
+    .camellia-toggle{
+      appearance:none; border:none; background:transparent; padding:0 2px; margin-left:6px; cursor:pointer;
+      line-height:1; font-size:12pt; color:#585353;
     }
+    .camellia-toggle .caret{ font-size:10pt; color:#9d9b9b; vertical-align:middle; }
+    .camellia-fold[hidden]{ display:none; }
+    .camellia-img{ width:100%; height:auto; display:block; margin-top:8px; }
+    .camellia-cap{ color:#9d9b9b; font-size:10pt; margin-top:6px; }
   </style>
 </head>
 <body>
@@ -515,12 +418,8 @@
       <div class="section-title">갤러리</div>
 
       <div class="hero-photo" id="heroZone">
-        <button id="heroPrev" class="hero-arrow prev" aria-label="이전">
-          <img src="images/left.png" alt="">
-        </button>
-        <button id="heroNext" class="hero-arrow next" aria-label="다음">
-          <img src="images/right.png" alt="">
-        </button>
+        <button id="heroPrev" class="hero-arrow prev" aria-label="이전"><img src="images/left.png" alt=""></button>
+        <button id="heroNext" class="hero-arrow next" aria-label="다음"><img src="images/right.png" alt=""></button>
       </div>
 
       <div class="thumbs5" id="thumbsTop"></div>
@@ -542,7 +441,6 @@
       <div class="pl-group" id="plJisun">
         <button class="pl-heading" type="button" aria-expanded="false">지선이가 고른 결혼 음악 추천</button>
         <div class="pl-body" hidden>
-          <!-- 노래 목록 (제목 - 가수, 얇은 선 포함) -->
           <div class="song-line"><span class="song-meta"><span class="song-title">BACK ON TOP(feat. Griff)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
           <div class="song-line"><span class="song-meta"><span class="song-title">Better With You(feat. Benjamin Kheng)</span> - <span class="song-artist">Gentle Bones</span></span></div><div class="song-sep"></div>
           <div class="song-line"><span class="song-meta"><span class="song-title">COMING HOME(feat. NIKI)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
@@ -595,7 +493,7 @@
           <input id="gbPass" class="gb-input" placeholder="비밀번호" type="password"/>
         </div>
         <div class="gb-msg" style="margin-top:2px;">
-          <textarea id="gbMsg" class="gb-textarea" rows="4" placeholder="내용을 입력하세요;"></textarea>
+          <textarea id="gbMsg" class="gb-textarea" rows="4" placeholder="내용을 입력하세요."></textarea>
         </div>
         <div class="gb-actions">
           <button id="gbSubmit" class="gb-write">작성하기</button>
@@ -674,6 +572,32 @@
           </tr>
         </tbody>
       </table>
+
+      <!-- === 요청: 신부 측 아래 동백나무 키우기 안내 + 토글 이미지 === -->
+      <div class="camellia-wrap">
+        <div class="camellia-gap" aria-hidden="true"></div>
+        <div class="camellia-gap" aria-hidden="true"></div>
+        <div class="camellia-title">동백나무 키우기</div>
+        <div class="camellia-gap" aria-hidden="true"></div>
+
+        <div class="camellia-line">축의대에서 동백나무 씨앗을 나눠드립니다.</div>
+        <div class="camellia-line">저희가 나무를 심었던 것처럼</div>
+        <div class="camellia-line">여러분도 나무를 심으면 좋겠습니다.</div>
+
+        <div class="camellia-line small">
+          제주 4·3사건과 여수·순천 10·19사건을 기억하면서
+          <button type="button" class="camellia-toggle" id="camelliaToggle" aria-expanded="false" aria-controls="camelliaFold">
+            <span class="caret" id="camelliaCaret">▼</span>
+          </button>
+        </div>
+
+        <div id="camelliaFold" class="camellia-fold" hidden>
+          <img class="camellia-img" src="images/siul-camellia.jpg" alt="시울 동백꽃 작품">
+          <div class="camellia-cap">시울, 동백꽃, 2024. 805×606mm, Mixed media on mirror</div>
+        </div>
+      </div>
+      <!-- === /동백나무 안내 끝 === -->
+
     </section>
 
     <!-- 삭제 확인 모달 -->
@@ -683,10 +607,10 @@
           <div>삭제 비밀번호를 입력하세요.</div>
           <input id="delPass" class="gb-input" type="password" placeholder="비밀번호">
           <div id="delError" style="display:none; color:#d00; font-size:10pt;">비밀번호가 틀렸습니다.</div>
-          <div style="display:flex; gap:10px;">
-            <button id="delOk" class="copy-ok">삭제</button>
-            <button id="delCancel" class="copy-ok">취소</button>
-          </div>
+        </div>
+        <div class="actions">
+          <button id="delOk" class="copy-ok">삭제</button>
+          <button id="delCancel" class="copy-ok">취소</button>
         </div>
       </div>
     </div>
@@ -696,6 +620,8 @@
       <div class="sheet">
         <div class="body center">
           <div>복사가 완료되었습니다.</div>
+        </div>
+        <div class="actions">
           <button id="copyOk" class="copy-ok">확인</button>
         </div>
       </div>
@@ -1149,7 +1075,7 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) */
+    /* 마음 전하실 곳: 토글 + 복사 팝업(문구/기능 유지, 스타일만 상단 CSS로 통일) */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn=tbl.querySelector('.acc-heading');
@@ -1162,14 +1088,14 @@
         });
       });
 
-      function defangTel(str){
-        return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B');
-      }
+      // 전화번호 줄바꿈 보정(현상 유지)
+      function defangTel(str){ return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B'); }
       document.querySelectorAll('.acc-line').forEach(td=>{
         const raw=td.textContent;
         td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
       });
 
+      // 복사 모달 연동 (문구/기능 그대로)
       const copyModal=document.getElementById('copyModal');
       const copyOk=document.getElementById('copyOk');
       if(copyOk) copyOk.addEventListener('click', ()=>closeModal(copyModal));
@@ -1185,6 +1111,19 @@
           openModal(copyModal);
         }
       });
+
+      // 동백나무 이미지 토글
+      const tgl = document.getElementById('camelliaToggle');
+      const fold = document.getElementById('camelliaFold');
+      const caret = document.getElementById('camelliaCaret');
+      if(tgl && fold && caret){
+        tgl.addEventListener('click', ()=>{
+          const open = tgl.getAttribute('aria-expanded') === 'true';
+          tgl.setAttribute('aria-expanded', String(!open));
+          fold.hidden = open;
+          caret.textContent = open ? '▼' : '▲';
+        });
+      }
     })();
 
     /* ===== 플레이리스트 토글 ===== */

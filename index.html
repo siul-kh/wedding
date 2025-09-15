@@ -53,8 +53,6 @@
     img{display:block; height:auto;}
     img:not(.img-original){ width:100%; }
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
-    /* 요청: 3-photo 라운드 */
-    .rounded{ border-radius:12px; overflow:hidden; }
 
     /* 시 */
     .poem{text-align:center}
@@ -264,7 +262,7 @@
     }
     .copy-col{ width:80px; text-align:right; }
 
-    /* ===== 플레이리스트(토글 전용) ===== */
+    /* ===== 플레이리스트(토글만, 재생 UI 제거) ===== */
     .pl-title{
       font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
@@ -287,22 +285,44 @@
       font-family:'GowunBatang',serif;
     }
     .song-title{
-      font-size:10pt; color:#585353; font-weight:700;
+      font-size:10pt; color:#585353; font-weight:700; /* Bold 요청 */
     }
     .song-artist{
       font-size:10pt; color:#9d9b9b; font-weight:400;
     }
-    /* 요청: 구분선 100% */
-    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; }
+    .song-sep{ width:70%; height:1px; background:var(--thin); margin:0 auto; }
 
-    /* ===== 모달 공통 ===== */
+    /* ===== 모달 공통: 스타일 강화(텍스트/기능 불변) ===== */
     .modal{
       position:fixed; inset:0; display:none;
       align-items:center; justify-content:center;
       background:rgba(0,0,0,.4); z-index:1000; padding:16px;
     }
-    .modal.open{ display:flex; }
-    .modal .sheet{ background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.18); }
+    .modal.open{ display:flex; animation:fadeIn .18s ease-out; }
+    @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+
+    .modal .sheet{
+      background:#fff;
+      border-radius:16px;
+      width:min(92vw, 360px);
+      box-shadow:0 12px 40px rgba(0,0,0,.18);
+      overflow:hidden;
+      transform:translateY(6px);
+      animation:rise .22s ease-out;
+    }
+    @keyframes rise{ from{ transform:translateY(16px); opacity:.96 } to{ transform:translateY(6px); opacity:1 } }
+
+    .modal .body{
+      padding:18px 16px 14px;
+      font-family:'GowunBatang',serif; color:#585353; font-size:12pt; text-align:center;
+    }
+    .modal .body input.gb-input{ margin:10px 0; width:100%; }
+    .modal .body .copy-ok{
+      font-family:'GowunBatang',serif; font-size:11pt; color:#585353;
+      background:#fff; border:1px solid var(--thin); border-radius:10px;
+      padding:8px 12px; cursor:pointer;
+    }
+    .modal .body .copy-ok + .copy-ok{ margin-left:6px; }
 
     /* ===== 카운트 블럭 (손대지 않음) ===== */
     .when{ text-align:center; }
@@ -338,17 +358,18 @@
       .reveal-up.show{ animation:none; }
     }
 
-    /* ===== 신부측 추가 블록(동백나무) – 기존 유지 ===== */
-    .camellia{ text-align:center; margin:12px 0 0; }
-    .camellia .c-gap{ height:1em; }
-    .camellia .c-title{ font-weight:700; color:#7b9155; font-size:12pt; }
-    .camellia .c-line{ font-weight:400; color:#585353; font-size:12pt; }
-    .camellia .c-last{ color:#9d9b9b; font-size:10pt; display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
-    .tri{ width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:6px solid #9d9b9b; transition:transform .2s ease; }
-    .tri.up{ transform:rotate(180deg); }
-    .camellia-body[hidden]{ display:none; }
-    .camellia-img{ width:100%; display:block; margin-top:8px; }
-    .camellia-cap{ color:#9d9b9b; font-size:10pt; margin-top:4px; }
+    /* === 추가: 하단 이미지 더 둥글게 === */
+    img[src*="3-photo.jpg"]{ border-radius:20px; overflow:hidden; }
+    /* === 동백나무 섹션 보조 스타일(현상유지 지향, 문구/이미지 교체만) === */
+    .camellia-wrap{ text-align:center; margin:14px 0 0; }
+    .camellia-title{ font-family:'GowunBatang',serif; font-weight:700; color:#7b9155; font-size:12pt; margin:12px 0; }
+    .camellia-desc{ font-family:'GowunBatang',serif; font-weight:400; color:#585353; font-size:12pt; line-height:1.9; margin:0; }
+    .camellia-desc.muted{ color:#9d9b9b; font-size:10pt; display:inline-flex; align-items:center; gap:6px; cursor:pointer; user-select:none; }
+    .tri{ width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:6px solid #9d9b9b; display:inline-block; transform:translateY(1px); }
+    .tri.up{ border-top:none; border-bottom:6px solid #9d9b9b; }
+    .camellia-panel[hidden]{ display:none; }
+    .camellia-img{ width:100%; height:auto; display:block; margin-top:10px; }
+    .camellia-cap{ font-family:'GowunBatang',serif; color:#9d9b9b; font-size:10pt; margin-top:6px; }
   </style>
 </head>
 <body>
@@ -387,8 +408,7 @@
       </p>
     </section>
 
-    <!-- 요청: 3-photo 라운드 클래스 추가 -->
-    <section><img src="images/3-photo.jpg?v=1" alt="하단 사진" class="rounded"></section>
+    <section><img src="images/3-photo.jpg?v=1" alt="하단 사진"></section>
 
     <!-- 달력 -->
     <section class="pad" aria-label="달력">
@@ -684,22 +704,21 @@
         </tbody>
       </table>
 
-      <!-- 동백나무 섹션(현상 유지, 단 이미지 경로 수정) -->
-      <div class="camellia" id="camellia">
-        <div class="c-gap" aria-hidden="true"></div>
-        <div class="c-gap" aria-hidden="true"></div>
-        <div class="c-title">동백나무 키우기</div>
-        <div class="c-gap" aria-hidden="true"></div>
-        <div class="c-line">축의대에서 식권과 함께 동백나무 씨앗을 나눠드립니다.</div>
-        <div class="c-line">저희가 나무를 심었던 것처럼</div>
-        <div class="c-line">여러분도 나무를 심으면 좋겠습니다.</div>
-        <div class="c-last" id="camelliaToggle" role="button" aria-expanded="false">
+      <!-- 동백나무 키우기 블록(문구/이미지 교체만) -->
+      <div class="camellia-wrap">
+        <div style="height:14px"></div>
+        <div style="height:14px"></div>
+        <div class="camellia-title">동백나무 키우기</div>
+        <div style="height:14px"></div>
+        <p class="camellia-desc">축의대에서 동백나무 씨앗을 나눠드립니다.</p>
+        <p class="camellia-desc">저희가 나무를 심었던 것처럼</p>
+        <p class="camellia-desc">여러분도 나무를 심으면 좋겠습니다.</p>
+        <p id="camelliaToggle" class="camellia-desc muted" role="button" aria-expanded="false" aria-controls="camelliaPanel">
           제주 4·3사건과 여수·순천 10·19사건을 기억하면서
-          <span class="tri" id="camelliaTri"></span>
-        </div>
-        <div class="camellia-body" id="camelliaBody" hidden>
-          <!-- 요청: 공백 %20 인코딩으로 경로 수정 -->
-          <img class="camellia-img" src="images/시울_동백꽃_2024_Mixed%20media%20on%20mirror_805x606.jpg" alt="시울 동백꽃 작품">
+          <span class="tri" aria-hidden="true"></span>
+        </p>
+        <div id="camelliaPanel" class="camellia-panel" hidden>
+          <img class="camellia-img" src="images/siul-camellia.jpg" alt="시울 동백꽃 작품">
           <div class="camellia-cap">시울, 동백꽃, 2024. 805×606mm, Mixed media on mirror</div>
         </div>
       </div>
@@ -712,7 +731,7 @@
           <div>삭제 비밀번호를 입력하세요.</div>
           <input id="delPass" class="gb-input" type="password" placeholder="비밀번호">
           <div id="delError" style="display:none; color:#d00; font-size:10pt;">비밀번호가 틀렸습니다.</div>
-          <div style="display:flex; gap:10px;">
+          <div style="display:flex; gap:10px; justify-content:center; margin-top:6px;">
             <button id="delOk" class="copy-ok">삭제</button>
             <button id="delCancel" class="copy-ok">취소</button>
           </div>
@@ -725,7 +744,9 @@
       <div class="sheet">
         <div class="body center">
           <div>복사가 완료되었습니다.</div>
-          <button id="copyOk" class="copy-ok">확인</button>
+          <div style="margin-top:8px;">
+            <button id="copyOk" class="copy-ok">확인</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1178,7 +1199,7 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) + 동백나무 토글 */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지, 모달 스타일만 상단 CSS에서 개선) */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn=tbl.querySelector('.acc-heading');
@@ -1214,19 +1235,6 @@
           openModal(copyModal);
         }
       });
-
-      // 동백나무 토글
-      const cBtn=document.getElementById('camelliaToggle');
-      const cBody=document.getElementById('camelliaBody');
-      const cTri=document.getElementById('camelliaTri');
-      if(cBtn && cBody && cTri){
-        cBtn.addEventListener('click', ()=>{
-          const open = cBtn.getAttribute('aria-expanded')==='true';
-          cBtn.setAttribute('aria-expanded', String(!open));
-          cBody.hidden = open;
-          cTri.classList.toggle('up', !open);
-        });
-      }
     })();
 
     /* ===== 플레이리스트 토글 ===== */
@@ -1240,6 +1248,20 @@
           btn.setAttribute('aria-expanded', String(!open));
           body.hidden = open;
         });
+      });
+    })();
+
+    /* ===== 동백나무 토글 버튼 ===== */
+    (function(){
+      const t = document.getElementById('camelliaToggle');
+      const p = document.getElementById('camelliaPanel');
+      if(!t || !p) return;
+      const tri = t.querySelector('.tri');
+      t.addEventListener('click', ()=>{
+        const open = t.getAttribute('aria-expanded')==='true';
+        t.setAttribute('aria-expanded', String(!open));
+        p.hidden = open;
+        if(tri){ tri.classList.toggle('up', !open); }
       });
     })();
 

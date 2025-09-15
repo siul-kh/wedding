@@ -53,7 +53,7 @@
     img:not(.img-original){ width:100%; }
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
 
-    /* === 요청: 3-photo 더 둥글게 + 위/아래 한 줄 띄우기 === */
+    /* 3-photo 더 둥글게 + 위/아래 한 줄 간격(유지) */
     .rounded-photo{ border-radius:32px; margin:16px 0; }
 
     /* 시 */
@@ -67,47 +67,26 @@
     .poem .go-title{ font-size:14pt; }
 
     /* ===== 달력 ===== */
-    .cal-title{
-      font-family:'GowunBatang',serif; font-weight:700;
-      font-size:16pt; color:#585353; text-align:center; margin:6px 0;
-    }
-    .cal-sub{
-      text-align:center; font-family:'GowunBatang',serif; font-weight:400;
-      font-size:12pt; color:#585353; margin:3px 0 4px;
-    }
-    .cal-msg{
-      text-align:center; font-family:'GowunBatang',serif; font-weight:400;
-      font-size:12pt; color:#585353; margin:4px 0 7px;
-    }
+    .cal-title{ font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:6px 0; }
+    .cal-sub{ text-align:center; font-weight:400; font-size:12pt; color:#585353; margin:3px 0 4px; }
+    .cal-msg{ text-align:center; font-weight:400; font-size:12pt; color:#585353; margin:4px 0 7px; }
     .cal-msg .dleft{ color:var(--accent); font-weight:700; }
-
     .calendar{ width:70%; margin:0 auto; padding:0 4px; }
     .cal-head, .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
     .cal-head div{ text-align:center; font-size:12pt; color:#585353; letter-spacing:.04em; padding:4px 0; }
-    .cal-cell{
-      aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
-      font-size:12pt; color:#585353;
-    }
-    .cal-cell .dot{
-      display:inline-grid; place-items:center;
-      width:28px; height:28px; border-radius:50%;
-      background:#7b9155; color:#fff !important; font-weight:700;
-    }
-    @media (min-width:480px){
-      .cal-cell .dot{ width:32px; height:32px; }
-    }
-    .cal-head div:nth-child(1){ color:#ff6b9c; }
-    .cal-head div:nth-child(7){ color:#6dafff; }
-    .cal-grid .cal-cell:nth-child(7n+1){ color:#ff6b9c; }
-    .cal-grid .cal-cell:nth-child(7n){   color:#6dafff; }
+    .cal-cell{ aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; font-size:12pt; color:#585353; }
+    .cal-cell .dot{ display:inline-grid; place-items:center; width:28px; height:28px; border-radius:50%; background:#7b9155; color:#fff!important; font-weight:700; }
+    @media (min-width:480px){ .cal-cell .dot{ width:32px; height:32px; } }
+    .cal-head div:nth-child(1){ color:#ff6b9c; } .cal-head div:nth-child(7){ color:#6dafff; }
+    .cal-grid .cal-cell:nth-child(7n+1){ color:#ff6b9c; } .cal-grid .cal-cell:nth-child(7n){ color:#6dafff; }
 
     /* ===== 오시는 길 ===== */
-    .go-title { font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; }
+    .go-title { font-weight:700; font-size:16pt; color:#585353; text-align:center; }
     .map { margin: 1.5em 0; }
     .map iframe { width: 100%; aspect-ratio: 1 / 1; border: 0; display: block; margin: 0 auto; }
-    .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; }
-    .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
-    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#9d9b9b; text-align:center; line-height:2.0; margin-top:0; }
+    .go-name { font-weight:700; font-size:14pt; color:#585353; text-align:center; }
+    .go-addr { font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
+    .go-info { font-weight:400; font-size:12pt; color:#9d9b9b; text-align:center; line-height:2.0; margin-top:0; }
 
     /* 네비 앱 버튼 (10pt) */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
@@ -121,7 +100,7 @@
 
     /* ===== 갤러리 ===== */
     .gallery{padding:16px}
-    .gallery .section-title{ font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0; }
+    .gallery .section-title{ font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0; }
     .gallery .heart-top{ margin:0 auto 6px; }
     .hero-photo{ position:relative; overflow:hidden; width:100%; aspect-ratio:4/6; background:#f7f7f7; touch-action:pan-y; cursor:grab; }
     .hero-photo .slide{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transform:translateX(0); z-index:1; }
@@ -135,7 +114,7 @@
     .thumbs-more[hidden]{ display:none; }
 
     /* ===== 방명록 ===== */
-    #guestbook .gb-title{ font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px; }
+    #guestbook .gb-title{ font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px; }
     .gb-list{ display:grid; gap:12px; }
     .gb-card{ width:100%; background:#fff; border:1px solid var(--thin); border-radius:12px; padding:12px; }
     .gb-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
@@ -164,7 +143,13 @@
 
     .acc-table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff; }
     .acc-table thead th{ padding:0; background:#f1f1f1; }
-    .acc-heading{ width:100%; display:block; text-align:center; cursor:pointer; background:#f1f1f1; color:#585353; font-weight:400; font-size:12pt; padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1; }
+    /* 요청: 토글 버튼 폰트 명시적으로 Regular 고정 */
+    .acc-heading{
+      width:100%; display:block; text-align:center; cursor:pointer;
+      background:#f1f1f1; color:#585353;
+      font-family:'GowunBatang',serif; font-weight:400; font-style:normal;
+      font-size:12pt; padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1;
+    }
     .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
     .acc-line{ font-size:10pt; color:#585353; }
     .copy-mini{ font-size:8pt; padding:6px 10px; border-radius:10px; background:transparent; color:#9d9b9b; border:1px solid var(--thin); cursor:pointer; }
@@ -173,13 +158,19 @@
     /* ===== 플레이리스트(토글 전용) ===== */
     .pl-title{ font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0; }
     .pl-group{ width:100%; border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff; }
-    .pl-heading{ width:100%; display:block; text-align:center; cursor:pointer; background:#f1f1f1; color:#585353; font-weight:400; font-size:12pt; padding:12px 14px; border:0; }
+    /* 요청: 토글 버튼 폰트 명시적으로 Regular 고정 */
+    .pl-heading{
+      width:100%; display:block; text-align:center; cursor:pointer;
+      background:#f1f1f1; color:#585353;
+      font-family:'GowunBatang',serif; font-weight:400; font-style:normal;
+      font-size:12pt; padding:12px 14px; border:0;
+    }
     .pl-body[hidden]{ display:none; }
     .song-line{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; }
     .song-meta{ display:block; width:100%; }
     .song-title{ font-size:10pt; color:#585353; font-weight:700; }
     .song-artist{ font-size:10pt; color:#9d9b9b; font-weight:400; }
-    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; } /* ← 요청사항 유지 */
+    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; }
 
     /* ===== 모달 공통(복사/삭제 동일 스타일) ===== */
     .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:var(--overlay); z-index:1000; padding:16px; }
@@ -232,12 +223,11 @@
     .camellia-gap{ height:1.6em; }
     .camellia-title{ font-weight:700; color:#7b9155; font-size:12pt; }
     .camellia-line{ font-weight:400; color:#585353; font-size:12pt; }
-    .camellia-line.small{ color:#9d9b9b; font-size:10pt; display:inline-flex; align-items:center; gap:6px; }
-    .camellia-toggle{
-      appearance:none; border:none; background:transparent; padding:0 2px; margin-left:6px; cursor:pointer;
-      line-height:1; font-size:12pt; color:#585353;
+    .camellia-line.small{
+      color:#9d9b9b; font-size:10pt;
+      text-decoration:underline; text-underline-offset:2px;
+      cursor:pointer; display:inline-block;
     }
-    .camellia-toggle .caret{ font-size:10pt; color:#9d9b9b; vertical-align:middle; }
     .camellia-fold[hidden]{ display:none; }
     .camellia-img{ width:100%; height:auto; display:block; margin-top:8px; }
     .camellia-cap{ color:#9d9b9b; font-size:10pt; margin-top:6px; }
@@ -279,7 +269,7 @@
       </p>
     </section>
 
-    <!-- 요청: 더 둥근 모서리 + 위/아래 한 줄 간격 -->
+    <!-- 더 둥근 모서리 + 위/아래 한 줄 간격 -->
     <section>
       <img src="images/3-photo.jpg?v=1" alt="하단 사진" class="rounded-photo">
     </section>
@@ -369,7 +359,7 @@
       </table>
     </section>
 
-    <!-- 얇은 선: 결혼합니다 ↔ 오시는 길 -->
+    <!-- 얇은 선 -->
     <div class="thin"></div>
 
     <!-- 오시는 길 -->
@@ -409,7 +399,6 @@
       </div>
     </section>
 
-    <!-- 얇은 선: 오시는 길 ↔ 갤러리 -->
     <div class="thin"></div>
 
     <!-- 갤러리 -->
@@ -429,10 +418,9 @@
       </button>
     </section>
 
-    <!-- 얇은 선: 갤러리 ↔ 플레이리스트 -->
     <div class="thin"></div>
 
-    <!-- ===== 플레이리스트(토글 전용) ===== -->
+    <!-- 플레이리스트 -->
     <section class="pad" id="playlist">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="pl-title after-heart">플레이리스트</div>
@@ -478,10 +466,9 @@
       </div>
     </section>
 
-    <!-- 얇은 선: 플레이리스트 ↔ 방명록 -->
     <div class="thin"></div>
 
-    <!-- ===== 방명록 ===== -->
+    <!-- 방명록 -->
     <section class="pad" id="guestbook">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="gb-title after-heart">방명록</div>
@@ -517,7 +504,7 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 안내 문구(중앙 정렬 + 한 줄 띄우기) -->
+      <!-- 안내 문구 -->
       <div class="acc-note">
         <p>저희의 결혼과 광복 80주년을 맞아</p>
         <p>또 다른 나무를 심으려 합니다.</p>
@@ -573,7 +560,7 @@
         </tbody>
       </table>
 
-      <!-- === 요청: 신부 측 아래 동백나무 키우기 안내 + 토글 이미지 === -->
+      <!-- 동백나무 키우기 안내 + 텍스트 클릭 토글 -->
       <div class="camellia-wrap">
         <div class="camellia-gap" aria-hidden="true"></div>
         <div class="camellia-gap" aria-hidden="true"></div>
@@ -584,11 +571,9 @@
         <div class="camellia-line">저희가 나무를 심었던 것처럼</div>
         <div class="camellia-line">여러분도 나무를 심으면 좋겠습니다.</div>
 
-        <div class="camellia-line small">
+        <!-- 요청: 밑줄 + 클릭 시 토글, 삼각형 제거 -->
+        <div id="camelliaToggleText" class="camellia-line small" role="button" aria-expanded="false" aria-controls="camelliaFold">
           제주 4·3사건과 여수·순천 10·19사건을 기억하면서
-          <button type="button" class="camellia-toggle" id="camelliaToggle" aria-expanded="false" aria-controls="camelliaFold">
-            <span class="caret" id="camelliaCaret">▼</span>
-          </button>
         </div>
 
         <div id="camelliaFold" class="camellia-fold" hidden>
@@ -596,8 +581,6 @@
           <div class="camellia-cap">시울, 동백꽃, 2024. 805×606mm, Mixed media on mirror</div>
         </div>
       </div>
-      <!-- === /동백나무 안내 끝 === -->
-
     </section>
 
     <!-- 삭제 확인 모달 -->
@@ -627,7 +610,6 @@
       </div>
     </div>
 
-    <!-- 얇은 선: 마음 전하실 곳 ↔ 공유 -->
     <div class="thin"></div>
 
     <!-- 공유 -->
@@ -732,7 +714,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리: 랜덤 유지 + 슬라이드/드래그 애니메이션 + 이미지 버튼 ===== */
+    /* ===== 갤러리 ===== */
     (function(){
       const zone=document.getElementById('heroZone');
       const prev=document.getElementById('heroPrev');
@@ -883,7 +865,6 @@
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
         show(0,0,true);
 
-        // 토글 (항상 동작)
         moreBtn.hidden = next25.length===0;
         moreBtn.setAttribute('aria-expanded','false');
         thumbsMore.hidden = true;
@@ -917,11 +898,10 @@
       })();
     })();
 
-    /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) ===== */
+    /* ===== 방명록: JSONP + POST ===== */
     (function(){
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbxp2VAXos-C8Z3pJOYQiV9JDAKuF8zEf9uMIfGulxWf9KegrhwtQ8KTLh7mMronT9HK/exec';
 
-      // JSONP helper
       function jsonp(url){
         return new Promise((resolve, reject)=>{
           const cb='__gb_cb_'+Date.now()+Math.random().toString(36).slice(2);
@@ -945,7 +925,6 @@
       const msgEl=document.getElementById('gbMsg');
       const submitBtn=document.getElementById('gbSubmit');
 
-      // 삭제 모달
       const delModal=document.getElementById('delModal');
       const delPass=document.getElementById('delPass');
       const delOk=document.getElementById('delOk');
@@ -1013,7 +992,6 @@
         if(newStart<=totalPages){ winStart=newStart; page=winStart; renderList(); }
       });
 
-      // 작성
       submitBtn.addEventListener('click', async ()=>{
         const name=(nameEl.value||'').trim();
         const pass=(passEl.value||'').trim();
@@ -1027,7 +1005,6 @@
         await load(); page=1; winStart=1; renderList();
       });
 
-      // 삭제(모달)
       document.addEventListener('click', (e)=>{
         const btn=e.target.closest('.gb-del'); if(!btn) return;
         targetDeleteId=btn.getAttribute('data-id');
@@ -1048,23 +1025,9 @@
         renderList();
       });
 
-      // API
-      async function apiList(){
-        try{ return await jsonp(GUESTBOOK_API+'?method=list'); }
-        catch(e){ console.warn(e); return []; }
-      }
-      async function apiCreate(entry){
-        try{
-          await fetch(GUESTBOOK_API, { method:'POST', mode:'no-cors', body:JSON.stringify({ method:'create', entry }) });
-          return true;
-        }catch(e){ console.warn(e); return false; }
-      }
-      async function apiDelete(id, passhash){
-        try{
-          await fetch(GUESTBOOK_API, { method:'POST', mode:'no-cors', body:JSON.stringify({ method:'delete', id, passhash }) });
-          return true;
-        }catch(e){ console.warn(e); return false; }
-      }
+      async function apiList(){ try{ return await jsonp(GUESTBOOK_API+'?method=list'); } catch(e){ console.warn(e); return []; } }
+      async function apiCreate(entry){ try{ await fetch(GUESTBOOK_API, { method:'POST', mode:'no-cors', body:JSON.stringify({ method:'create', entry }) }); return true; } catch(e){ console.warn(e); return false; } }
+      async function apiDelete(id, passhash){ try{ await fetch(GUESTBOOK_API, { method:'POST', mode:'no-cors', body:JSON.stringify({ method:'delete', id, passhash }) }); return true; } catch(e){ console.warn(e); return false; } }
 
       async function load(){ data = await apiList(); }
       async function sha256(str){
@@ -1075,7 +1038,7 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업(문구/기능 유지, 스타일만 상단 CSS로 통일) */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn=tbl.querySelector('.acc-heading');
@@ -1088,14 +1051,12 @@
         });
       });
 
-      // 전화번호 줄바꿈 보정(현상 유지)
       function defangTel(str){ return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B'); }
       document.querySelectorAll('.acc-line').forEach(td=>{
         const raw=td.textContent;
         td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
       });
 
-      // 복사 모달 연동 (문구/기능 그대로)
       const copyModal=document.getElementById('copyModal');
       const copyOk=document.getElementById('copyOk');
       if(copyOk) copyOk.addEventListener('click', ()=>closeModal(copyModal));
@@ -1112,21 +1073,19 @@
         }
       });
 
-      // 동백나무 이미지 토글
-      const tgl = document.getElementById('camelliaToggle');
-      const fold = document.getElementById('camelliaFold');
-      const caret = document.getElementById('camelliaCaret');
-      if(tgl && fold && caret){
-        tgl.addEventListener('click', ()=>{
-          const open = tgl.getAttribute('aria-expanded') === 'true';
-          tgl.setAttribute('aria-expanded', String(!open));
+      /* 요청: 동백 텍스트 클릭으로 토글 */
+      const tText = document.getElementById('camelliaToggleText');
+      const fold  = document.getElementById('camelliaFold');
+      if(tText && fold){
+        tText.addEventListener('click', ()=>{
+          const open = tText.getAttribute('aria-expanded') === 'true';
+          tText.setAttribute('aria-expanded', String(!open));
           fold.hidden = open;
-          caret.textContent = open ? '▼' : '▲';
         });
       }
     })();
 
-    /* ===== 플레이리스트 토글 ===== */
+    /* 플레이리스트 토글 */
     (function(){
       document.querySelectorAll('.pl-group').forEach(box=>{
         const btn = box.querySelector('.pl-heading');
@@ -1140,7 +1099,7 @@
       });
     })();
 
-    /* ===== 공유 (현상 유지) ===== */
+    /* 공유 (현상 유지) */
     (function(){
       const btn=document.getElementById('shareCta');
       if(!btn) return;
@@ -1151,7 +1110,7 @@
       });
     })();
 
-    /* ===== 아래에서 위로 애니메이션 (현상 유지) ===== */
+    /* 아래에서 위로 애니메이션 (현상 유지) */
     (function(){
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const all = Array.from(document.querySelectorAll('main > section, .thin'));

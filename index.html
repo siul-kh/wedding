@@ -53,6 +53,8 @@
     img{display:block; height:auto;}
     img:not(.img-original){ width:100%; }
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
+    /* 3번 사진 라운드 */
+    .rounded-12{ border-radius:12px; overflow:hidden; }
 
     /* 시 */
     .poem{text-align:center}
@@ -256,7 +258,7 @@
     .copy-mini{
       font-family:'GowunBatang',serif; font-size:8pt;
       padding:6px 10px; border-radius:10px;
-      background:transparent; color:#9d9b9b; /* 요청 색상 유지 */
+      background:transparent; color:#9d9b9b;
       border:1px solid var(--thin);
       cursor:pointer;
     }
@@ -285,30 +287,34 @@
       font-family:'GowunBatang',serif;
     }
     .song-title{
-      font-size:10pt; color:#585353; font-weight:700; /* Bold 요청 */
+      font-size:10pt; color:#585353; font-weight:700;
     }
     .song-artist{
       font-size:10pt; color:#9d9b9b; font-weight:400;
     }
+    /* 곡 사이 구분선: 100% */
     .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; }
 
     /* ===== 모달 공통(사이트 톤) ===== */
-    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.45); z-index:1000; padding:16px; }
+    .modal{
+      position:fixed; inset:0; display:none;
+      align-items:center; justify-content:center;
+      background:rgba(0,0,0,.45); z-index:1000; padding:16px;
+    }
     .modal.open{ display:flex; }
-    .modal .sheet{ background:#fff; border-radius:16px; box-shadow:0 20px 50px rgba(0,0,0,.26); padding:18px 16px; max-width:320px; width:min(90vw, 360px); transform:translateY(8px) scale(.98); animation:popIn .22s ease forwards; }
+    .modal .sheet{
+      background:#fff; border-radius:16px;
+      box-shadow:0 20px 50px rgba(0,0,0,.26);
+      padding:18px 16px; max-width:320px; width:min(90vw, 360px);
+      transform:translateY(8px) scale(.98); animation:popIn .22s ease forwards;
+    }
     .modal .body{ font-family:'GowunBatang',serif; color:#585353; font-size:12pt; display:grid; gap:12px; text-align:center; }
-    .copy-ok{ font-family:'GowunBatang',serif; font-size:10pt; color:#585353; background:#fff; border:1px solid var(--thin); border-radius:10px; padding:8px 12px; cursor:pointer; }
+    .modal .body input.gb-input{ width:100%; }
+    .copy-ok{
+      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
+      background:#fff; border:1px solid var(--thin); border-radius:10px; padding:8px 12px; cursor:pointer;
+    }
     @keyframes popIn{ from{ opacity:0; transform:translateY(14px) scale(.96);} to{ opacity:1; transform:translateY(0) scale(1);} }
-
-    /* ===== 카운트 블럭 (손대지 않음) ===== */
-    .when{ text-align:center; }
-    .when .title{ font-size:14pt; color:var(--accent); font-weight:700; }
-    .when .meta{ font-size:12pt; color:#585353; }
-    .count-table{ margin:8px auto 0; border-collapse:separate; border-spacing:0; }
-    .count-table th, .count-table td{ text-align:center; vertical-align:middle; padding:2px 0; }
-    .count-labels th{ font-size:6pt; color:var(--hint); font-weight:400; }
-    .count-values td{ font-size:14pt; color:#585353; font-weight:700; }
-    .count-values .colon{ font-weight:700; font-size:12pt; }
 
     /* ===== 공유 버튼(하단) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
@@ -333,16 +339,15 @@
       .reveal-up{ opacity:1; transform:none; }
       .reveal-up.show{ animation:none; }
     }
-  </style>
-  <style>
-    /* 인트로 전체 화면 비디오 */
+
+    /* ===== 인트로 전체 화면 비디오(최초 접속) ===== */
     .intro-cover{ position:fixed; inset:0; background:#000; z-index:2000; display:flex; align-items:center; justify-content:center; }
     .intro-cover video{ width:100%; height:100%; object-fit:cover; display:block; }
     .intro-fade{ animation:introFade .6s ease forwards; }
     @keyframes introFade{ to{ opacity:0; visibility:hidden; } }
-    /* 3번 사진 라운드 */
-    .rounded-12{ border-radius:12px; overflow:hidden; }
-    /* 신부측 추가 블록(동백나무) */
+    .intro-hidden{ display:none !important; }
+
+    /* ===== 신부측 추가 블록(동백나무) ===== */
     .camellia{ text-align:center; margin:12px 0 0; }
     .camellia .c-title{ font-weight:700; color:#7b9155; font-size:12pt; }
     .camellia .c-line{ font-weight:400; color:#585353; font-size:12pt; }
@@ -357,8 +362,12 @@
 <body>
   <!-- 접속 시 1회 재생되는 인트로 영상 오버레이 -->
   <div id="introCover" class="intro-cover" aria-hidden="false">
-    <video id=\"introVideo\" src=\"images/250912%20식전%20영상%20인트로.mp4\" playsinline muted autoplay></video>
+    <video id="introVideo" playsinline muted autoplay preload="auto">
+      <source src="images/250912 식전 영상 인트로.mp4" type="video/mp4">
+      <source src="images/250912%20식전%20영상%20인트로.mp4" type="video/mp4">
+    </video>
   </div>
+
   <main class="container">
 
     <!-- 상단 이미지들 (현상 유지) -->
@@ -670,7 +679,25 @@
       <div style="height:10px"></div>
 
       <!-- 신부 측 -->
-      $1
+      <table class="acc-table acc-group" id="accBrideTbl">
+        <thead>
+          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr>
+        </thead>
+        <tbody hidden>
+          <tr>
+            <td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="카카오뱅크 3333-22-7850739 (목지선)">복사</button></td>
+          </tr>
+          <tr>
+            <td class="acc-line">목승우 국민은행 659401-01-191168</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 659401-01-191168 (목승우)">복사</button></td>
+          </tr>
+          <tr>
+            <td class="acc-line">성미화 새마을금고 9002197239365</td>
+            <td class="copy-col"><button class="copy-mini" data-copy="새마을금고 9002197239365 (성미화)">복사</button></td>
+          </tr>
+        </tbody>
+      </table>
 
       <!-- 신부측 추가 안내(토글) -->
       <div class="camellia" id="camellia">
@@ -696,7 +723,7 @@
           <div>삭제 비밀번호를 입력하세요.</div>
           <input id="delPass" class="gb-input" type="password" placeholder="비밀번호">
           <div id="delError" style="display:none; color:#d00; font-size:10pt;">비밀번호가 틀렸습니다.</div>
-          <div style="display:flex; gap:10px;">
+          <div style="display:flex; gap:10px; justify-content:center;">
             <button id="delOk" class="copy-ok">삭제</button>
             <button id="delCancel" class="copy-ok">취소</button>
           </div>
@@ -1047,7 +1074,7 @@
         catch(e){ return iso||''; }
       }
       function escapeHtml(s){
-        return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;' }[c]));
+        return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
       }
 
       function renderList(){
@@ -1198,20 +1225,19 @@
           openModal(copyModal);
         }
       });
-    })();
 
-    /* ===== 플레이리스트 토글 ===== */
-    (function(){
-      document.querySelectorAll('.pl-group').forEach(box=>{
-        const btn = box.querySelector('.pl-heading');
-        const body = box.querySelector('.pl-body');
-        if(!btn || !body) return;
-        btn.addEventListener('click', ()=>{
-          const open = btn.getAttribute('aria-expanded')==='true';
-          btn.setAttribute('aria-expanded', String(!open));
-          body.hidden = open;
+      // 신부측 동백나무 토글
+      const cBtn=document.getElementById('camelliaToggle');
+      const cBody=document.getElementById('camelliaBody');
+      const cTri=document.getElementById('camelliaTri');
+      if(cBtn && cBody && cTri){
+        cBtn.addEventListener('click', ()=>{
+          const open = cBtn.getAttribute('aria-expanded')==='true';
+          cBtn.setAttribute('aria-expanded', String(!open));
+          cBody.hidden = open;
+          cTri.classList.toggle('up', !open);
         });
-      });
+      }
     })();
 
     /* ===== 공유 (현상 유지) ===== */
@@ -1248,59 +1274,57 @@
 
       targets.forEach(el => io.observe(el));
     })();
-      /* 인트로 비디오 제어: 종료 시 페이드아웃 후 제거 + 자동재생 실패 대비 */
+
+    /* 인트로 비디오 제어: 어떤 경우에도 콘텐츠가 막히지 않게 함 */
     (function(){
-      const cover=document.getElementById('introCover');
-      const v=document.getElementById('introVideo');
-      if(!cover||!v) return;
+      const cover = document.getElementById('introCover');
+      const video = document.getElementById('introVideo');
+      if(!cover || !video) return;
 
-      const hide=()=>{
-        if(!cover) return;
+      let removed = false;
+      function hideOverlay(){
+        if(removed) return;
+        removed = true;
         cover.classList.add('intro-fade');
-        cover.addEventListener('animationend', ()=>{ if(cover && cover.parentNode) cover.parentNode.removeChild(cover); }, {once:true});
-      };
+        cover.addEventListener('animationend', ()=>{
+          cover.classList.add('intro-hidden');
+          if(cover.parentNode) cover.parentNode.removeChild(cover);
+        }, { once:true });
+        setTimeout(()=>{
+          if(cover && cover.parentNode){
+            cover.classList.add('intro-hidden');
+            cover.parentNode.removeChild(cover);
+          }
+        }, 800);
+      }
 
-      // 안전 타이머: 어떤 이유로든 8초가 지나면 자동으로 숨김
-      let watchdog=setTimeout(hide, 8000);
+      // 무조건 1.5초 안에 제거(재생 실패/경로 오류/자동재생 차단 대비)
+      const forceTimer = setTimeout(hideOverlay, 1500);
 
-      v.addEventListener('ended', hide);
-      v.addEventListener('error', hide);
-      v.addEventListener('stalled', ()=>{ /* 네트워크 정체 시 */ hide(); });
+      // 정상 재생이면 끝날 때 제거
+      video.addEventListener('ended', hideOverlay);
+      // 실패/중단도 제거
+      ['error','stalled','abort','emptied'].forEach(ev=> video.addEventListener(ev, hideOverlay));
 
-      // 메타데이터 로드되면 즉시 재생 시도
-      v.addEventListener('loadedmetadata', ()=>{ v.play().catch(()=>{}); });
+      // 메타데이터 로드되면 재생 시도
+      video.addEventListener('loadedmetadata', ()=>{ video.play().catch(()=>{}); });
 
-      // 첫 프레임이 보이면(재생/진행 이벤트) 워치독 해제
-      const clearDog=()=>{ if(watchdog){ clearTimeout(watchdog); watchdog=null; } };
-      v.addEventListener('timeupdate', clearDog);
-      v.addEventListener('playing', clearDog);
-
-      // 자동재생 차단 대비: 실패하면 클릭 한 번으로 해제 또는 바로 숨김
-      v.play().then(()=>{/* ok */}).catch(()=>{
-        // 사용자 제스처 요구되는 환경(iOS 등)
-        const one=()=>{ v.muted=true; v.play().then(()=>{/* 재생되면 끝까지 */}).catch(hide); cover.removeEventListener('click', one); };
-        cover.addEventListener('click', one, {once:true});
-        // 그래도 못 보는 사용자를 위해 2초 후 콘텐츠 노출
-        setTimeout(hide, 2000);
+      // 첫 프레임 감지되면 강제 타이머 해제
+      const clearForce=()=>{ try{ clearTimeout(forceTimer); }catch{} };
+      ['playing','timeupdate','canplay','loadeddata'].forEach(ev=>{
+        video.addEventListener(ev, clearForce, { once:true });
       });
 
-      // 탭 전환 후 복귀 시 재생 보조
-      document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible'){ v.play().catch(()=>{}); } });
-    })();
+      // 자동재생 실패 시 탭으로 재생 시도(오버레이는 타이머로 제거됨)
+      video.play().catch(()=>{
+        const once = ()=>{ video.muted = true; video.play().catch(()=>{}); cover.removeEventListener('click', once); };
+        cover.addEventListener('click', once, { once:true });
+      });
 
-    // 신부측 동백나무 토글
-    (function(){
-      const cBtn=document.getElementById('camelliaToggle');
-      const cBody=document.getElementById('camelliaBody');
-      const cTri=document.getElementById('camelliaTri');
-      if(cBtn && cBody && cTri){
-        cBtn.addEventListener('click', ()=>{
-          const open = cBtn.getAttribute('aria-expanded')==='true';
-          cBtn.setAttribute('aria-expanded', String(!open));
-          cBody.hidden = open;
-          cTri.classList.toggle('up', !open);
-        });
-      }
+      // 탭 전환 후 복귀 보조
+      document.addEventListener('visibilitychange', ()=>{
+        if(document.visibilityState==='visible'){ video.play().catch(()=>{}); }
+      });
     })();
   </script>
 </body>

@@ -6,7 +6,7 @@
   <meta name="format-detection" content="telephone=no">
   <title>2025년 11월 1일 목지선 ♥︎ 김기환</title>
 
-  <!-- 폰트 프리로드(선택) -->
+  <!-- 폰트 프리로드 -->
   <link rel="preload" href="fonts/GowunBatang-Regular.woff2?v=1" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/GowunBatang-Bold.woff2?v=1" as="font" type="font/woff2" crossorigin>
 
@@ -32,6 +32,7 @@
       --hint:#9d9b9b;
       --thin:#e5e5e5;
       --overlay:#000;
+      --thumb-gap:6px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -68,8 +69,11 @@
     img:not(.img-original){ width:100%; }
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
 
-    /* 3-photo(현상 유지 중 더 둥근 라운드) */
+    /* 3-photo: 더 둥근 라운드 + 모바일 90% 폭 */
     .rounded-photo{ border-radius:32px; margin:16px 0; }
+    @media (max-width:480px){
+      .rounded-photo{ width:90%; margin:16px auto; }
+    }
 
     /* 시 */
     .poem{text-align:center}
@@ -121,7 +125,7 @@
     .hero-photo .slide{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transform:translateX(0); z-index:1; }
     .hero-arrow{ position:absolute; top:50%; transform:translateY(-50%); background:transparent; border:none; cursor:pointer; padding:0; z-index:2; }
     .hero-arrow.prev{ left:4px; } .hero-arrow.next{ right:4px; }
-    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; width:100%; margin-block:6px; }
+    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%; margin-block:var(--thumb-gap); }
     .thumbs5 .thumb{ padding:0; border:none; background:#fff; cursor:pointer; overflow:hidden; aspect-ratio:1/1; display:block; }
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; cursor:pointer; }
@@ -250,7 +254,6 @@
            class="intro-video"
            preload="auto"
            playsinline
-           muted
            autoplay>
       <source src="images/250912-pre-wedding-intro.mp4" type="video/mp4">
     </video>
@@ -422,7 +425,7 @@
 
     <div class="thin"></div>
 
-    <!-- 갤러리 (현상 유지) -->
+    <!-- 갤러리 (정상 동작 복구) -->
     <section class="gallery pad" id="gallery">
       <img src="images/heart.png" alt="하트" class="img-original heart-top">
       <div class="section-title">갤러리</div>
@@ -643,15 +646,16 @@
   </main>
 
   <script>
-    /* ===== 인트로 비디오 제어 (오류 예방 포함) ===== */
+    /* ===== 인트로 비디오 제어(소리 포함 시도 + 오류 예방) ===== */
     (function(){
       const overlay = document.getElementById('introOverlay');
       const video   = document.getElementById('introVideo');
-      if(!overlay || !video){
-        return;
-      }
-      // 항상 음소거(모바일 자동재생 조건), 인라인 재생
-      video.muted = true; video.playsInline = true;
+      if(!overlay || !video) return;
+
+      // 우선 "소리 켜고" 재생 시도 → 실패하면 자동으로 무음 재시도
+      video.muted = false;       // 소리 시도
+      video.playsInline = true;  // iOS 인라인
+      video.autoplay = true;
 
       let cleaned = false;
       function hideOverlay(){
@@ -660,43 +664,51 @@
         setTimeout(()=>{ overlay.classList.add('gone'); overlay.setAttribute('aria-hidden','true'); }, 500);
       }
 
-      // 정상 종료 시 페이드아웃
-      video.addEventListener('ended', hideOverlay, { once:true });
-
-      // 영상이 시작되면 문제 없음
-      video.addEventListener('playing', ()=>{/* noop */}, { once:true });
-
-      // 재생 시도 + 실패시 즉시 제거(검은 화면 방지)
-      function tryPlay(){
-        const p = video.play();
-        if(p && typeof p.then === 'function'){
-          p.then(()=>{
-            // 재생 시작. 혹시 로딩 실패 등으로 'ended'가 안 오면
-            // 안전망: 최대 길이 정보가 없다면 30초 후 제거
-            setTimeout(()=>{ if(!cleaned && video.paused) hideOverlay(); }, 30000);
-          }).catch(()=>{
-            hideOverlay(); // 자동재생 제한이나 파일 오류 시 즉시 사이트 노출
-          });
-        }else{
-          // 브라우저가 Promise 미지원인 경우, 시간 안전망
-          setTimeout(hideOverlay, 10000);
-        }
+      function tryPlayWithSound(){
+        return video.play().catch(()=>{ throw new Error('autoplay-with-audio-blocked'); });
+      }
+      function tryPlayMuted(){
+        video.muted = true;
+        return video.play();
       }
 
-      // 소스 로드 에러 → 즉시 제거
+      // 재생 성공 시 종료되면 페이드아웃
+      video.addEventListener('ended', hideOverlay, { once:true });
+      // 파일 에러 → 즉시 사이트 노출
       video.addEventListener('error', hideOverlay, { once:true });
 
-      // 메타데이터 로드되면 재생 시도(일부 브라우저에서 더 안정적)
-      video.addEventListener('loadedmetadata', tryPlay, { once:true });
+      // 자동재생 트라이
+      (async function init(){
+        try{
+          await tryPlayWithSound(); // 소리 켜고 시도
+          // playing 되면 그대로 진행 (끝나면 hideOverlay)
+        }catch(_){
+          // 오디오 차단 → 무음으로 즉시 재생하여 검은화면 방지
+          try{
+            await tryPlayMuted();
+          }catch(e){
+            // 이것도 실패하면 바로 사이트 노출
+            hideOverlay();
+          }
+        }
+        // 사용자가 화면 어딘가 탭/클릭하면 즉시 소리 켜기 (UI 변경 없음)
+        const enableSound = ()=>{
+          if (video && !video.paused){
+            try{
+              video.muted = false;
+              video.volume = 1.0;
+              video.play().catch(()=>{}); // 일부 브라우저 필요
+            }catch{}
+          }
+          document.removeEventListener('click', enableSound);
+          document.removeEventListener('touchstart', enableSound);
+        };
+        document.addEventListener('click', enableSound, {passive:true});
+        document.addEventListener('touchstart', enableSound, {passive:true});
 
-      // 혹시 loadedmetadata가 오지 않는 경우에도 시도
-      setTimeout(tryPlay, 500);
-
-      // 사용자가 터치하면 다시 재생 시도(드물게 필요)
-      overlay.addEventListener('click', ()=>{
-        if(cleaned) return;
-        tryPlay();
-      });
+        // 안전망: 30초 내 종료 신호가 없고 영상이 멈춰있으면 오버레이 제거
+        setTimeout(()=>{ if(!cleaned && (video.paused || video.readyState < 2)) hideOverlay(); }, 30000);
+      })();
     })();
 
     /* ===== 모달 유틸 ===== */
@@ -790,7 +802,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리 (현상 유지) ===== */
+    /* ===== 갤러리: 정상 동작 버전(슬라이드/드래그/토글) ===== */
     (function(){
       const zone=document.getElementById('heroZone');
       const prev=document.getElementById('heroPrev');
@@ -941,6 +953,7 @@
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
         show(0,0,true);
 
+        // 더보기 토글
         moreBtn.hidden = next25.length===0;
         moreBtn.setAttribute('aria-expanded','false');
         thumbsMore.hidden = true;
@@ -969,11 +982,12 @@
       }
 
       (async function init(){
-        const list = await loadFromGitHub();
-        const thumbsTop=document.getElementById('thumbsTop');
-        const thumbsMore=document.getElementById('thumbsMore');
-        const show=()=>{}; // 이 블록은 기존 기능 유지용(상단 전역 show와 충돌 방지)
-        if(!list.length){ return; }
+        list = await loadFromGitHub();
+        if(!list.length){
+          // 폴백: 로컬 이미지가 있다면 여기에 수동 배열로 채울 수 있음
+          return;
+        }
+        render();
       })();
     })();
 

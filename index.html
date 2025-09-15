@@ -290,16 +290,15 @@
     .song-artist{
       font-size:10pt; color:#9d9b9b; font-weight:400;
     }
-    .song-sep{ width:70%; height:1px; background:var(--thin); margin:0 auto; }
+    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; }
 
-    /* ===== 모달 공통 ===== */
-    .modal{
-      position:fixed; inset:0; display:none;
-      align-items:center; justify-content:center;
-      background:rgba(0,0,0,.4); z-index:1000; padding:16px;
-    }
+    /* ===== 모달 공통(사이트 톤) ===== */
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.45); z-index:1000; padding:16px; }
     .modal.open{ display:flex; }
-    .modal .sheet{ background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.18); }
+    .modal .sheet{ background:#fff; border-radius:16px; box-shadow:0 20px 50px rgba(0,0,0,.26); padding:18px 16px; max-width:320px; width:min(90vw, 360px); transform:translateY(8px) scale(.98); animation:popIn .22s ease forwards; }
+    .modal .body{ font-family:'GowunBatang',serif; color:#585353; font-size:12pt; display:grid; gap:12px; text-align:center; }
+    .copy-ok{ font-family:'GowunBatang',serif; font-size:10pt; color:#585353; background:#fff; border:1px solid var(--thin); border-radius:10px; padding:8px 12px; cursor:pointer; }
+    @keyframes popIn{ from{ opacity:0; transform:translateY(14px) scale(.96);} to{ opacity:1; transform:translateY(0) scale(1);} }
 
     /* ===== 카운트 블럭 (손대지 않음) ===== */
     .when{ text-align:center; }
@@ -335,8 +334,31 @@
       .reveal-up.show{ animation:none; }
     }
   </style>
+  <style>
+    /* 인트로 전체 화면 비디오 */
+    .intro-cover{ position:fixed; inset:0; background:#000; z-index:2000; display:flex; align-items:center; justify-content:center; }
+    .intro-cover video{ width:100%; height:100%; object-fit:cover; display:block; }
+    .intro-fade{ animation:introFade .6s ease forwards; }
+    @keyframes introFade{ to{ opacity:0; visibility:hidden; } }
+    /* 3번 사진 라운드 */
+    .rounded-12{ border-radius:12px; overflow:hidden; }
+    /* 신부측 추가 블록(동백나무) */
+    .camellia{ text-align:center; margin:12px 0 0; }
+    .camellia .c-title{ font-weight:700; color:#7b9155; font-size:12pt; }
+    .camellia .c-line{ font-weight:400; color:#585353; font-size:12pt; }
+    .camellia .c-last{ color:#9d9b9b; font-size:12pt; display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
+    .tri{ width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:6px solid #9d9b9b; transition:transform .2s ease; }
+    .tri.up{ transform:rotate(180deg); }
+    .camellia-body[hidden]{ display:none; }
+    .camellia-img{ width:100%; display:block; margin-top:8px; }
+    .camellia-cap{ color:#9d9b9b; font-size:8pt; margin-top:4px; }
+  </style>
 </head>
 <body>
+  <!-- 접속 시 1회 재생되는 인트로 영상 오버레이 -->
+  <div id="introCover" class="intro-cover" aria-hidden="false">
+    <video id="introVideo" src="images/250912 식전 영상 인트로.mp4" playsinline muted autoplay></video>
+  </div>
   <main class="container">
 
     <!-- 상단 이미지들 (현상 유지) -->
@@ -372,7 +394,7 @@
       </p>
     </section>
 
-    <section><img src="images/3-photo.jpg?v=1" alt="하단 사진"></section>
+    <section><img src="images/3-photo.jpg?v=1" alt="하단 사진" class="rounded-12"></section>
 
     <!-- 달력 -->
     <section class="pad" aria-label="달력">
@@ -648,25 +670,23 @@
       <div style="height:10px"></div>
 
       <!-- 신부 측 -->
-      <table class="acc-table acc-group" id="accBrideTbl">
-        <thead>
-          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr>
-        </thead>
-        <tbody hidden>
-          <tr>
-            <td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="카카오뱅크 3333-22-7850739 (목지선)">복사</button></td>
-          </tr>
-          <tr>
-            <td class="acc-line">목승우 국민은행 659401-01-191168</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="국민은행 659401-01-191168 (목승우)">복사</button></td>
-          </tr>
-          <tr>
-            <td class="acc-line">성미화 새마을금고 9002197239365</td>
-            <td class="copy-col"><button class="copy-mini" data-copy="새마을금고 9002197239365 (성미화)">복사</button></td>
-          </tr>
-        </tbody>
-      </table>
+      $1
+
+      <!-- 신부측 추가 안내(토글) -->
+      <div class="camellia" id="camellia">
+        <div class="c-title">동백나무 키우기</div>
+        <div class="c-line">축의대에서 식권과 함께 동백나무 씨앗을 나눠드립니다.</div>
+        <div class="c-line">저희가 나무를 심었던 것처럼</div>
+        <div class="c-line">여러분도 나무를 심으면 좋겠습니다.</div>
+        <div class="c-last" id="camelliaToggle" role="button" aria-expanded="false">
+          제주 4·3사건과 여수·순천 10·19사건을 기억하면서.
+          <span class="tri" id="camelliaTri"></span>
+        </div>
+        <div class="camellia-body" id="camelliaBody" hidden>
+          <img class="camellia-img" src="Images/시울_동백꽃_2024_Mixed media on mirror_805x606.jpg" alt="시울 동백꽃 작품">
+          <div class="camellia-cap">시울, 동백꽃, 2024. 805×606mm, Mixed media on mirror</div>
+        </div>
+      </div>
     </section>
 
     <!-- 삭제 확인 모달 -->
@@ -1027,7 +1047,7 @@
         catch(e){ return iso||''; }
       }
       function escapeHtml(s){
-        return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+        return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;' }[c]));
       }
 
       function renderList(){
@@ -1227,6 +1247,31 @@
       }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
 
       targets.forEach(el => io.observe(el));
+    })();
+      /* 인트로 비디오 제어: 종료 시 페이드아웃 후 제거 */
+    (function(){
+      const cover=document.getElementById('introCover');
+      const v=document.getElementById('introVideo');
+      if(!cover||!v) return;
+      const done=()=>{ cover.classList.add('intro-fade'); cover.addEventListener('animationend', ()=>{ cover.remove(); }, {once:true}); };
+      v.addEventListener('ended', done);
+      // 자동재생 보조
+      document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible'){ v.play().catch(()=>{}); } });
+    })();
+
+    // 신부측 동백나무 토글
+    (function(){
+      const cBtn=document.getElementById('camelliaToggle');
+      const cBody=document.getElementById('camelliaBody');
+      const cTri=document.getElementById('camelliaTri');
+      if(cBtn && cBody && cTri){
+        cBtn.addEventListener('click', ()=>{
+          const open = cBtn.getAttribute('aria-expanded')==='true';
+          cBtn.setAttribute('aria-expanded', String(!open));
+          cBody.hidden = open;
+          cTri.classList.toggle('up', !open);
+        });
+      }
     })();
   </script>
 </body>

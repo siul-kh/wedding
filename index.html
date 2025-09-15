@@ -357,7 +357,7 @@
 <body>
   <!-- 접속 시 1회 재생되는 인트로 영상 오버레이 -->
   <div id="introCover" class="intro-cover" aria-hidden="false">
-    <video id="introVideo" src="images/250912 식전 영상 인트로.mp4" playsinline muted autoplay></video>
+    <video id=\"introVideo\" src=\"images/250912%20식전%20영상%20인트로.mp4\" playsinline muted autoplay></video>
   </div>
   <main class="container">
 
@@ -1248,14 +1248,43 @@
 
       targets.forEach(el => io.observe(el));
     })();
-      /* 인트로 비디오 제어: 종료 시 페이드아웃 후 제거 */
+      /* 인트로 비디오 제어: 종료 시 페이드아웃 후 제거 + 자동재생 실패 대비 */
     (function(){
       const cover=document.getElementById('introCover');
       const v=document.getElementById('introVideo');
       if(!cover||!v) return;
-      const done=()=>{ cover.classList.add('intro-fade'); cover.addEventListener('animationend', ()=>{ cover.remove(); }, {once:true}); };
-      v.addEventListener('ended', done);
-      // 자동재생 보조
+
+      const hide=()=>{
+        if(!cover) return;
+        cover.classList.add('intro-fade');
+        cover.addEventListener('animationend', ()=>{ if(cover && cover.parentNode) cover.parentNode.removeChild(cover); }, {once:true});
+      };
+
+      // 안전 타이머: 어떤 이유로든 8초가 지나면 자동으로 숨김
+      let watchdog=setTimeout(hide, 8000);
+
+      v.addEventListener('ended', hide);
+      v.addEventListener('error', hide);
+      v.addEventListener('stalled', ()=>{ /* 네트워크 정체 시 */ hide(); });
+
+      // 메타데이터 로드되면 즉시 재생 시도
+      v.addEventListener('loadedmetadata', ()=>{ v.play().catch(()=>{}); });
+
+      // 첫 프레임이 보이면(재생/진행 이벤트) 워치독 해제
+      const clearDog=()=>{ if(watchdog){ clearTimeout(watchdog); watchdog=null; } };
+      v.addEventListener('timeupdate', clearDog);
+      v.addEventListener('playing', clearDog);
+
+      // 자동재생 차단 대비: 실패하면 클릭 한 번으로 해제 또는 바로 숨김
+      v.play().then(()=>{/* ok */}).catch(()=>{
+        // 사용자 제스처 요구되는 환경(iOS 등)
+        const one=()=>{ v.muted=true; v.play().then(()=>{/* 재생되면 끝까지 */}).catch(hide); cover.removeEventListener('click', one); };
+        cover.addEventListener('click', one, {once:true});
+        // 그래도 못 보는 사용자를 위해 2초 후 콘텐츠 노출
+        setTimeout(hide, 2000);
+      });
+
+      // 탭 전환 후 복귀 시 재생 보조
       document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible'){ v.play().catch(()=>{}); } });
     })();
 

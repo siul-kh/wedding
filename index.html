@@ -53,8 +53,6 @@
     img{display:block; height:auto;}
     img:not(.img-original){ width:100%; }
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
-    /* 3번 사진 라운드 */
-    .rounded-12{ border-radius:12px; overflow:hidden; }
 
     /* 시 */
     .poem{text-align:center}
@@ -264,7 +262,7 @@
     }
     .copy-col{ width:80px; text-align:right; }
 
-    /* ===== 플레이리스트(토글만, 재생 UI 제거) ===== */
+    /* ===== 플레이리스트(토글 전용) ===== */
     .pl-title{
       font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0;
     }
@@ -285,29 +283,26 @@
     .song-meta{ display:block; width:100%; font-family:'GowunBatang',serif; }
     .song-title{ font-size:10pt; color:#585353; font-weight:700; }
     .song-artist{ font-size:10pt; color:#9d9b9b; font-weight:400; }
-    /* 곡 사이 구분선: 100% */
-    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; }
+    .song-sep{ width:70%; height:1px; background:var(--thin); margin:0 auto; } /* (현상 유지: 이전 디자인) */
 
-    /* ===== 모달 공통(사이트 톤) ===== */
+    /* ===== 모달 공통 ===== */
     .modal{
       position:fixed; inset:0; display:none;
       align-items:center; justify-content:center;
-      background:rgba(0,0,0,.45); z-index:1000; padding:16px;
+      background:rgba(0,0,0,.4); z-index:1000; padding:16px;
     }
     .modal.open{ display:flex; }
-    .modal .sheet{
-      background:#fff; border-radius:16px;
-      box-shadow:0 20px 50px rgba(0,0,0,.26);
-      padding:18px 16px; max-width:320px; width:min(90vw, 360px);
-      transform:translateY(8px) scale(.98); animation:popIn .22s ease forwards;
-    }
-    .modal .body{ font-family:'GowunBatang',serif; color:#585353; font-size:12pt; display:grid; gap:12px; text-align:center; }
-    .modal .body input.gb-input{ width:100%; }
-    .copy-ok{
-      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
-      background:#fff; border:1px solid var(--thin); border-radius:10px; padding:8px 12px; cursor:pointer;
-    }
-    @keyframes popIn{ from{ opacity:0; transform:translateY(14px) scale(.96);} to{ opacity:1; transform:translateY(0) scale(1);} }
+    .modal .sheet{ background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.18); }
+
+    /* ===== 카운트 블럭 (디자인 복구 & 기능 손대지 않음) ===== */
+    .when{ text-align:center; }
+    .when .title{ font-size:14pt; color:var(--accent); font-weight:700; }
+    .when .meta{ font-size:12pt; color:#585353; }
+    .count-table{ margin:8px auto 0; border-collapse:separate; border-spacing:0; }
+    .count-table th, .count-table td{ text-align:center; vertical-align:middle; padding:2px 0; }
+    .count-labels th{ font-size:6pt; color:var(--hint); font-weight:400; }
+    .count-values td{ font-size:14pt; color:#585353; font-weight:700; }
+    .count-values .colon{ font-weight:700; font-size:12pt; }
 
     /* ===== 공유 버튼(하단) ===== */
     .share-box{ text-align:center; padding:20px 16px 40px; }
@@ -333,35 +328,20 @@
       .reveal-up.show{ animation:none; }
     }
 
-    /* ===== 인트로 전체 화면 비디오(최초 접속) ===== */
-    .intro-cover{ position:fixed; inset:0; background:#000; z-index:2000; display:flex; align-items:center; justify-content:center; }
-    .intro-cover video{ width:100%; height:100%; object-fit:cover; display:block; }
-    .intro-fade{ animation:introFade .6s ease forwards; }
-    @keyframes introFade{ to{ opacity:0; visibility:hidden; } }
-    .intro-hidden{ display:none !important; }
-
-    /* ===== 신부측 추가 블록(동백나무) ===== */
+    /* ===== 신부측 추가 블록(동백나무) – 규격 반영 ===== */
     .camellia{ text-align:center; margin:12px 0 0; }
-    .camellia .c-gap{ height:1em; }
+    .camellia .c-gap{ height:1em; } /* 한 줄 띄우기 */
     .camellia .c-title{ font-weight:700; color:#7b9155; font-size:12pt; }
-    .camellia .c-line{ font-weight:400; color:#585353; font-size:10pt; }
+    .camellia .c-line{ font-weight:400; color:#585353; font-size:12pt; } /* 12pt로 상향 */
     .camellia .c-last{ color:#9d9b9b; font-size:10pt; display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
     .tri{ width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:6px solid #9d9b9b; transition:transform .2s ease; }
     .tri.up{ transform:rotate(180deg); }
     .camellia-body[hidden]{ display:none; }
     .camellia-img{ width:100%; display:block; margin-top:8px; }
-    .camellia-cap{ color:#9d9b9b; font-size:8pt; margin-top:4px; }
+    .camellia-cap{ color:#9d9b9b; font-size:10pt; margin-top:4px; } /* 캡션 10pt */
   </style>
 </head>
 <body>
-  <!-- 접속 시 1회 재생되는 인트로 영상 오버레이 -->
-  <div id="introCover" class="intro-cover" aria-hidden="false">
-    <video id="introVideo" playsinline muted autoplay preload="auto">
-      <source src="images/250912 식전 영상 인트로.mp4" type="video/mp4">
-      <source src="images/250912%20식전%20영상%20인트로.mp4" type="video/mp4">
-    </video>
-  </div>
-
   <main class="container">
 
     <!-- 상단 이미지들 (현상 유지) -->
@@ -397,7 +377,7 @@
       </p>
     </section>
 
-    <section><img src="images/3-photo.jpg?v=1" alt="하단 사진" class="rounded-12"></section>
+    <section><img src="images/3-photo.jpg?v=1" alt="하단 사진"></section>
 
     <!-- 달력 -->
     <section class="pad" aria-label="달력">
@@ -434,7 +414,7 @@
       <div class="thin thin-70"></div>
     </section>
 
-    <!-- 카운트 1 (손대지 않음) -->
+    <!-- 카운트 1 (기능/디자인 유지) -->
     <section class="pad when">
       <div class="title">우리가 나무를 심은 날</div>
       <div class="meta">2012. 06. 09. SAT. 08:30, 남산원</div>
@@ -459,7 +439,7 @@
       </table>
     </section>
 
-    <!-- 카운트 2 (손대지 않음) -->
+    <!-- 카운트 2 (기능/디자인 유지) -->
     <section class="pad when">
       <div class="title" id="fruitTitle">그 나무가 열매를 맺을 날</div>
       <div class="meta">2025. 11. 01. SAT. 14:00, 서울행정법원 융선당</div>
@@ -487,7 +467,7 @@
     <!-- 얇은 선: 결혼합니다 ↔ 오시는 길 -->
     <div class="thin"></div>
 
-    <!-- 오시는 길 -->
+    <!-- 오시는 길 (현상 유지) -->
     <section class="pad" id="way">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title" style="margin-top:8px">오시는 길</div>
@@ -527,7 +507,7 @@
     <!-- 얇은 선: 오시는 길 ↔ 갤러리 -->
     <div class="thin"></div>
 
-    <!-- 갤러리 -->
+    <!-- 갤러리 (현상 유지) -->
     <section class="gallery pad" id="gallery">
       <img src="images/heart.png" alt="하트" class="img-original heart-top">
       <div class="section-title">갤러리</div>
@@ -551,7 +531,7 @@
     <!-- 얇은 선: 갤러리 ↔ 플레이리스트 -->
     <div class="thin"></div>
 
-    <!-- ===== 플레이리스트(토글 전용) ===== -->
+    <!-- 플레이리스트 (현상 유지) -->
     <section class="pad" id="playlist">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="pl-title after-heart">플레이리스트</div>
@@ -560,7 +540,6 @@
       <div class="pl-group" id="plJisun">
         <button class="pl-heading" type="button" aria-expanded="false">지선이가 고른 결혼 음악 추천</button>
         <div class="pl-body" hidden>
-          <!-- 노래 목록 (제목 - 가수, 얇은 선 포함) -->
           <div class="song-line"><span class="song-meta"><span class="song-title">BACK ON TOP(feat. Griff)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
           <div class="song-line"><span class="song-meta"><span class="song-title">Better With You(feat. Benjamin Kheng)</span> - <span class="song-artist">Gentle Bones</span></span></div><div class="song-sep"></div>
           <div class="song-line"><span class="song-meta"><span class="song-title">COMING HOME(feat. NIKI)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
@@ -601,7 +580,7 @@
     <!-- 얇은 선: 플레이리스트 ↔ 방명록 -->
     <div class="thin"></div>
 
-    <!-- ===== 방명록 ===== -->
+    <!-- 방명록 (현상 유지) -->
     <section class="pad" id="guestbook">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="gb-title after-heart">방명록</div>
@@ -637,7 +616,7 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 안내 문구(중앙 정렬 + 한 줄 띄우기) -->
+      <!-- 안내 문구(현상 유지) -->
       <div class="acc-note">
         <p>저희의 결혼과 광복 80주년을 맞아</p>
         <p>또 다른 나무를 심으려 합니다.</p>
@@ -649,7 +628,7 @@
         <div class="acc-gap" aria-hidden="true"></div>
       </div>
 
-      <!-- 신랑 측 -->
+      <!-- 신랑 측 (현상 유지) -->
       <table class="acc-table acc-group" id="accGroomTbl">
         <thead>
           <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr>
@@ -672,7 +651,7 @@
 
       <div style="height:10px"></div>
 
-      <!-- 신부 측 -->
+      <!-- 신부 측 (현상 유지) -->
       <table class="acc-table acc-group" id="accBrideTbl">
         <thead>
           <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr>
@@ -693,11 +672,11 @@
         </tbody>
       </table>
 
-      <!-- (한 줄 띄우기) -->
+      <!-- (한 줄 띄우기) x2 + 타이틀 + (한 줄 띄우기) + 문구들 + 토글 이미지/캡션 -->
       <div class="camellia" id="camellia">
         <div class="c-gap" aria-hidden="true"></div>
+        <div class="c-gap" aria-hidden="true"></div>
         <div class="c-title">동백나무 키우기</div>
-        <!-- (한 줄 띄우기) -->
         <div class="c-gap" aria-hidden="true"></div>
         <div class="c-line">축의대에서 식권과 함께 동백나무 씨앗을 나눠드립니다.</div>
         <div class="c-line">저희가 나무를 심었던 것처럼</div>
@@ -707,20 +686,20 @@
           <span class="tri" id="camelliaTri"></span>
         </div>
         <div class="camellia-body" id="camelliaBody" hidden>
-          <img class="camellia-img" src="images/시울_동백꽃_2024_Mixed media on mirror_805x606.jpg" alt="시울 동백꽃 작품">
+          <img class="camellia-img" src="images/시울_동백꽃_2024_Mixed%media%on%mirror_805x606.jpg" alt="시울 동백꽃 작품">
           <div class="camellia-cap">시울, 동백꽃, 2024. 805×606mm, Mixed media on mirror</div>
         </div>
       </div>
     </section>
 
-    <!-- 삭제 확인 모달 -->
+    <!-- 삭제 확인 모달 (현상 유지) -->
     <div id="delModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body center">
           <div>삭제 비밀번호를 입력하세요.</div>
           <input id="delPass" class="gb-input" type="password" placeholder="비밀번호">
           <div id="delError" style="display:none; color:#d00; font-size:10pt;">비밀번호가 틀렸습니다.</div>
-          <div style="display:flex; gap:10px; justify-content:center;">
+          <div style="display:flex; gap:10px;">
             <button id="delOk" class="copy-ok">삭제</button>
             <button id="delCancel" class="copy-ok">취소</button>
           </div>
@@ -728,7 +707,7 @@
       </div>
     </div>
 
-    <!-- 복사 완료 모달 -->
+    <!-- 복사 완료 모달 (현상 유지) -->
     <div id="copyModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body center">
@@ -741,7 +720,7 @@
     <!-- 얇은 선: 마음 전하실 곳 ↔ 공유 -->
     <div class="thin"></div>
 
-    <!-- 공유 -->
+    <!-- 공유 (현상 유지) -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
         <img src="images/message.png" alt="" class="img-original">
@@ -752,11 +731,11 @@
   </main>
 
   <script>
-    /* ===== 모달 유틸 ===== */
+    /* ===== 모달 유틸 (현상 유지) ===== */
     function openModal(el){ if(!el) return; el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
     function closeModal(el){ if(!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
 
-    /* ===== 카운트 (손대지 않음) ===== */
+    /* ===== 카운트 (기능 손대지 않음) ===== */
     function setSecondRowWidths(tbody){
       const row = tbody.querySelector('tr');
       if(!row) return;
@@ -843,7 +822,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리: 랜덤 유지 + 슬라이드/드래그 애니메이션 + 이미지 버튼 ===== */
+    /* ===== 갤러리: 랜덤 유지 + 슬라이드/드래그 애니메이션 + 이미지 버튼 (현상 유지) ===== */
     (function(){
       const zone=document.getElementById('heroZone');
       const prev=document.getElementById('heroPrev');
@@ -994,7 +973,7 @@
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
         show(0,0,true);
 
-        // 토글 (항상 동작)
+        // 토글
         moreBtn.hidden = next25.length===0;
         moreBtn.setAttribute('aria-expanded','false');
         thumbsMore.hidden = true;
@@ -1028,7 +1007,7 @@
       })();
     })();
 
-    /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) ===== */
+    /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) (현상 유지) ===== */
     (function(){
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbxp2VAXos-C8Z3pJOYQiV9JDAKuF8zEf9uMIfGulxWf9KegrhwtQ8KTLh7mMronT9HK/exec';
 
@@ -1186,7 +1165,7 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) + 동백나무 토글 */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn=tbl.querySelector('.acc-heading');
@@ -1223,7 +1202,7 @@
         }
       });
 
-      // 신부측 동백나무 토글
+      // 동백나무 토글
       const cBtn=document.getElementById('camelliaToggle');
       const cBody=document.getElementById('camelliaBody');
       const cTri=document.getElementById('camelliaTri');
@@ -1237,7 +1216,7 @@
       }
     })();
 
-    /* ===== 플레이리스트 토글 (복구) ===== */
+    /* ===== 플레이리스트 토글 (현상 유지) ===== */
     (function(){
       document.querySelectorAll('.pl-group').forEach(box=>{
         const btn = box.querySelector('.pl-heading');
@@ -1284,58 +1263,6 @@
       }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
 
       targets.forEach(el => io.observe(el));
-    })();
-
-    /* 인트로 비디오 제어: 어떤 경우에도 콘텐츠가 막히지 않게 함 */
-    (function(){
-      const cover = document.getElementById('introCover');
-      const video = document.getElementById('introVideo');
-      if(!cover || !video) return;
-
-      let removed = false;
-      function hideOverlay(){
-        if(removed) return;
-        removed = true;
-        cover.classList.add('intro-fade');
-        cover.addEventListener('animationend', ()=>{
-          cover.classList.add('intro-hidden');
-          if(cover.parentNode) cover.parentNode.removeChild(cover);
-        }, { once:true });
-        setTimeout(()=>{
-          if(cover && cover.parentNode){
-            cover.classList.add('intro-hidden');
-            cover.parentNode.removeChild(cover);
-          }
-        }, 800);
-      }
-
-      // 무조건 1.5초 안에 제거(재생 실패/경로 오류/자동재생 차단 대비)
-      const forceTimer = setTimeout(hideOverlay, 1500);
-
-      // 정상 재생이면 끝날 때 제거
-      video.addEventListener('ended', hideOverlay);
-      // 실패/중단도 제거
-      ['error','stalled','abort','emptied'].forEach(ev=> video.addEventListener(ev, hideOverlay));
-
-      // 메타데이터 로드되면 재생 시도
-      video.addEventListener('loadedmetadata', ()=>{ video.play().catch(()=>{}); });
-
-      // 첫 프레임 감지되면 강제 타이머 해제
-      const clearForce=()=>{ try{ clearTimeout(forceTimer); }catch{} };
-      ['playing','timeupdate','canplay','loadeddata'].forEach(ev=>{
-        video.addEventListener(ev, clearForce, { once:true });
-      });
-
-      // 자동재생 실패 시 탭으로 재생 시도(오버레이는 타이머로 제거됨)
-      video.play().catch(()=>{
-        const once = ()=>{ video.muted = true; video.play().catch(()=>{}); cover.removeEventListener('click', once); };
-        cover.addEventListener('click', once, { once:true });
-      });
-
-      // 탭 전환 후 복귀 보조
-      document.addEventListener('visibilitychange', ()=>{
-        if(document.visibilityState==='visible'){ video.play().catch(()=>{}); }
-      });
     })();
   </script>
 </body>

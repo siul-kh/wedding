@@ -56,13 +56,13 @@
     img:not(.img-original){ width:100%; }
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
 
-    /* ===== 키 비주얼 ===== */
-    .vh-photo{ width:100%; height:100vh; object-fit:cover; }
+    /* ===== 키 비주얼(요청대로: 비율 유지, 가로 100%) ===== */
+    .vh-photo{ width:100%; height:auto; object-fit:contain; }
 
-    /* ===== 라운드 이미지 공통 ===== */
+    /* ===== 라운드 이미지(요청대로: 가로 382px, 라운드 유지) ===== */
     .rounded-photo{
-      width:90%; margin:16px auto; border-radius:22px;
-      overflow:hidden;
+      width:382px; max-width:100%;
+      margin:16px auto; border-radius:22px; overflow:hidden;
     }
 
     /* ===== 시 ===== */
@@ -123,7 +123,7 @@
     .nav-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5em;
       padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
-      font-family:'GowunBatang',serif; font-weight:400; /* 명시 */
+      font-family:'GowunBatang',serif; font-weight:400;
       font-size: 10pt; color:#585353; text-decoration:none;
       background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer;
       white-space:nowrap; flex-wrap:nowrap; max-width:100%;
@@ -199,7 +199,7 @@
     .acc-table thead th{ padding:0; background:#f1f1f1; }
     .acc-heading{
       width:100%; display:block; text-align:center; cursor:pointer;
-      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; /* Regular 고정 */
+      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400;
       font-size:12pt; padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1;
     }
     .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
@@ -213,7 +213,7 @@
     .pl-group{ width:100%; border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff; }
     .pl-heading{
       width:100%; display:block; text-align:center; cursor:pointer;
-      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; /* Regular 고정 */
+      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400;
       font-size:12pt; padding:12px 14px; border:0;
     }
     .pl-body[hidden]{ display:none; }
@@ -221,7 +221,7 @@
     .song-meta{ display:block; width:100%; font-family:'GowunBatang',serif; }
     .song-title{ font-size:10pt; color:#585353; font-weight:700; }
     .song-artist{ font-size:10pt; color:#9d9b9b; font-weight:400; }
-    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; } /* 100%로 수정 */
+    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; } /* 100% 유지 */
 
     /* ===== 카운트 블럭 (손대지 않음) ===== */
     .when{ text-align:center; }
@@ -243,79 +243,97 @@
     .share-cta img{ display:inline-block; margin:0 2px; }
     .share-cta span{ line-height:1; }
 
-    /* ===== 모달 공통 (새 스타일) ===== */
+    /* ===== 모달 공통 (유지) ===== */
     .modal{
       position:fixed; inset:0; display:none; align-items:center; justify-content:center;
       background:rgba(0,0,0,.35); z-index:3000; padding:16px;
     }
     .modal.open{ display:flex; }
-    .modal .sheet{
-      width:min(88vw, 360px); background:#fff; border-radius:var(--popup-radius);
-      box-shadow:var(--popup-shadow); overflow:hidden;
-    }
+    .modal .sheet{ width:min(88vw, 360px); background:#fff; border-radius:var(--popup-radius); box-shadow:var(--popup-shadow); overflow:hidden; }
     .modal .body{ padding:18px 16px 14px; }
     .modal .title{ font-weight:700; color:#585353; margin-bottom:8px; text-align:center; }
     .modal .text{ font-weight:400; color:#585353; font-size:11pt; text-align:center; margin:8px 0 14px; }
     .modal .row{ display:flex; gap:10px; justify-content:center; }
     .modal input.gb-input{ width:100%; }
-
-    .copy-modal .copy-ok,
-    .alert-modal .copy-ok{
+    .copy-modal .copy-ok, .alert-modal .copy-ok{
       font:inherit; font-size:10pt; color:#585353; background:#fff; border:1px solid var(--thin);
       border-radius:10px; padding:8px 14px; cursor:pointer;
     }
 
-    /* ===== 인트로 영상 오버레이 ===== */
+    /* ===== 인트로 영상 오버레이 & 상단 사각형 바 ===== */
     .intro-overlay{ position:fixed; inset:0; z-index:2000; display:flex; align-items:center; justify-content:center; background:#fff; transition:opacity .6s ease; }
     .intro-overlay.hidden{ opacity:0; pointer-events:none; }
     .intro-wrap{ position:relative; width:100vw; height:100vh; background:#fff; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .intro-video{ width:100vw; height:100vh; object-fit:contain; background:#fff; }
-    .intro-speaker{ position:absolute; top:12px; right:12px; border:none; background:transparent; padding:0; cursor:pointer; opacity:.55; }
-    .intro-speaker svg{ display:block; width:40px; height:40px; }
-
-    /* ===== 배경음악 토글(고정) ===== */
-    .bgm-toggle{
-      position:fixed; top:12px; right:12px; z-index:1500;
-      border:none; background:transparent; padding:0; cursor:pointer; display:none; /* 처음엔 숨김 */
-      opacity:.65;
+    .intro-bar{
+      position:absolute; left:0; right:0; top:0;
+      background:rgba(0,0,0,.3); color:#fff; padding:8px 12px;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
+      display:flex; align-items:center; justify-content:center; gap:8px; cursor:pointer;
     }
-    .bgm-toggle.show{ display:block; }
-    .bgm-toggle svg{ width:40px; height:40px; display:block; }
+    .intro-bar .inner{
+      width:100%; max-width:var(--maxw); display:grid; grid-template-columns:1fr auto; align-items:center;
+    }
+    .intro-bar .txt{ text-align:center; grid-column:1 / -1; }
+    .intro-bar .ico{ grid-column:2 / 3; justify-self:end; opacity:.5; width:20px; height:auto; }
+
+    /* ===== 배경음악 상단 안내 바(2초 노출) & FAB ===== */
+    .bgm-banner{
+      position:fixed; left:0; right:0; top:0; z-index:1600;
+      background:rgba(0,0,0,.3); color:#fff;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
+      display:flex; align-items:center; justify-content:center; padding:8px 12px;
+      opacity:0; pointer-events:none; transition:opacity .4s ease;
+    }
+    .bgm-banner.show{ opacity:1; pointer-events:auto; }
+
+    .fixed-rail{
+      position:fixed; top:12px; left:50%; transform:translateX(-50%);
+      width:100%; max-width:var(--maxw); z-index:1500; pointer-events:none;
+    }
+    .bgm-fab{
+      float:right; pointer-events:auto; display:none; opacity:0; transition:opacity .3s ease;
+    }
+    .bgm-fab.show{ display:block; opacity:1; }
+    .bgm-fab img{ width:40px; height:auto; opacity:.5; display:block; }
   </style>
 </head>
 <body>
 
-  <!-- 인트로 영상 오버레이 -->
+  <!-- 인트로 영상 오버레이: 상단 바 클릭으로 '동영상' 소리 토글, 끝나면 둘 다 사라짐 -->
   <div id="introOverlay" class="intro-overlay" aria-hidden="false">
     <div class="intro-wrap">
       <video id="introVideo" class="intro-video"
              src="images/250912-pre-wedding-intro.mp4"
              playsinline webkit-playsinline preload="auto" muted autoplay></video>
 
-      <!-- 스피커 토글: 영상 '내부' 우상단 -->
-      <button id="introSpeaker" class="intro-speaker" aria-label="사운드 토글">
-        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="2" y="2" width="44" height="44" rx="10" fill="#ffffff" stroke="#cfcfcf"/>
-          <path d="M22 16l-6 5H10v6h6l6 5V16z" fill="#585353"/>
-          <path id="muteSlash" d="M32 16 L16 32" stroke="#d05" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-      </button>
+      <!-- 요청된 상단 가로 바(30% 불투명, 가운데 텍스트, 우측 상태 아이콘) -->
+      <div id="introBar" class="intro-bar" role="button" aria-label="동영상 소리 토글">
+        <div class="inner">
+          <div class="txt">여기를 누르면 소리가 재생됩니다.</div>
+          <img id="introBarIcon" class="ico" src="images/mute.png" alt="음소거 상태">
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- 배경음악 오디오 & 고정 토글 버튼 -->
+  <!-- 배경음악 -->
   <audio id="bgm" src="music/dreams-in-nature-149261.mp3" preload="auto" loop></audio>
-  <button id="bgmToggle" class="bgm-toggle" aria-label="배경음악 토글">
-    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <rect x="2" y="2" width="44" height="44" rx="10" fill="#ffffff" stroke="#cfcfcf"/>
-      <path d="M22 16l-6 5H10v6h6l6 5V16z" fill="#585353"/>
-      <!-- 재생/일시정지 상태표시는 slash 유무로 통일 -->
-      <path id="bgmSlash" d="M32 16 L16 32" stroke="#d05" stroke-width="3" stroke-linecap="round" style="display:block"/>
-    </svg>
-  </button>
+
+  <!-- 영상 종료 후: 2초 보여주는 상단 고정 바 -->
+  <div id="bgmBanner" class="bgm-banner" aria-hidden="true">
+    여기를 누르면 배경음악이 재생됩니다.
+  </div>
+
+  <!-- 414px 내부 우상단 고정 FAB(이미지: play/mute.png, 불투명도 50%) -->
+  <div class="fixed-rail">
+    <a id="bgmFab" class="bgm-fab" href="javascript:void(0)" aria-label="배경음악 토글">
+      <img id="bgmFabIcon" src="images/mute.png" alt="음소거">
+    </a>
+  </div>
 
   <main class="container">
-    <!-- 최상단: 세로 100vh 이미지 -->
+    <!-- 최상단: images/1-photo.jpg (비율 유지, 가로 100%) -->
     <section>
       <img src="images/1-photo.jpg" alt="키 비주얼" class="vh-photo">
     </section>
@@ -352,7 +370,7 @@
       </p>
     </section>
 
-    <!-- 결혼합니다 섹션 '위'에 3-photo.jpg (라운드, 90%) -->
+    <!-- 결혼합니다 섹션 '위'에 3-photo.jpg (382px, 라운드 유지, 가로 가득 금지) -->
     <section>
       <img src="images/3-photo.jpg" alt="프리 웨딩" class="rounded-photo">
     </section>
@@ -442,7 +460,7 @@
       </table>
     </section>
 
-    <!-- ▼ 여기: 얇은 선 제거하고 4-photo.jpg 배치 -->
+    <!-- 4-photo: 같은 위치, 382px, 라운드 유지 -->
     <section>
       <img src="images/4-photo.jpg" alt="포토 4" class="rounded-photo">
     </section>
@@ -484,7 +502,6 @@
       </div>
     </section>
 
-    <!-- 얇은 선: 오시는 길 ↔ 갤러리 (현상 유지) -->
     <div class="thin"></div>
 
     <!-- 갤러리 (현상 유지) -->
@@ -504,19 +521,17 @@
       </button>
     </section>
 
-    <!-- 얇은 선: 갤러리 ↔ 플레이리스트 (현상 유지) -->
     <div class="thin"></div>
 
-    <!-- 플레이리스트 -->
+    <!-- 플레이리스트 (타이틀 위 초록하트 → playlist.png 로 교체) -->
     <section class="pad" id="playlist">
-      <img src="images/heart.png" alt="하트" class="img-original">
+      <img src="images/playlist.png" alt="플레이리스트 아이콘" class="img-original">
       <div class="pl-title after-heart">플레이리스트</div>
 
       <!-- 지선 -->
       <div class="pl-group" id="plJisun">
         <button class="pl-heading" type="button" aria-expanded="false">지선이가 고른 결혼 음악 추천</button>
         <div class="pl-body" hidden>
-          <!-- 노래 목록 -->
           <div class="song-line"><span class="song-meta"><span class="song-title">BACK ON TOP(feat. Griff)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
           <div class="song-line"><span class="song-meta"><span class="song-title">Better With You(feat. Benjamin Kheng)</span> - <span class="song-artist">Gentle Bones</span></span></div><div class="song-sep"></div>
           <div class="song-line"><span class="song-meta"><span class="song-title">COMING HOME(feat. NIKI)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
@@ -554,12 +569,12 @@
       </div>
     </section>
 
-    <!-- ▼ 여기: 얇은 선 제거하고 5-photo.jpg 배치 -->
+    <!-- 5-photo: 같은 위치, 382px, 라운드 유지 -->
     <section>
       <img src="images/5-photo.jpg" alt="포토 5" class="rounded-photo">
     </section>
 
-    <!-- 방명록 -->
+    <!-- 방명록 (현상 유지) -->
     <section class="pad" id="guestbook">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="gb-title after-heart">방명록</div>
@@ -588,9 +603,9 @@
       </div>
     </section>
 
-    <!-- ▼ 여기: 얇은 선 제거하고 6-photo.jpg 배치 -->
+    <!-- 6-photo: 마음 전하실 곳 '아래', 공유 '위' / 라운드 없음, 가로 100% -->
     <section>
-      <img src="images/6-photo.jpg" alt="포토 6" class="rounded-photo">
+      <img src="images/6-photo.jpg" alt="포토 6" style="width:100%; height:auto; display:block;">
     </section>
 
     <!-- 마음 전하실 곳 -->
@@ -598,7 +613,6 @@
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
-      <!-- 안내 문구(중앙 정렬 + 한 줄 띄우기) -->
       <div class="acc-note">
         <p>저희의 결혼과 광복 80주년을 맞아</p>
         <p>또 다른 나무를 심으려 합니다.</p>
@@ -650,7 +664,7 @@
         </tbody>
       </table>
 
-      <!-- ▼ 신부 측 토글 '아래' 추가 블록 -->
+      <!-- ▼ 신부 측 토글 아래 안내 블록(문구만 요청대로 교체, 폰트 유지 / 제주4·3 토글 제거) -->
       <div class="pad center" id="camelliaBlock">
         <div style="height:1.8em"></div>
         <div style="height:1.8em"></div>
@@ -659,24 +673,9 @@
         <div style="font-family:'GowunBatang',serif; font-weight:700; color:#7b9155; font-size:12pt;">동백나무 키우기</div>
         <div style="height:1em"></div>
         <div style="font-family:'GowunBatang',serif; font-weight:400; color:#585353; font-size:12pt;">
-          축의대에서 동백나무 씨앗을 나눠드립니다. 저희가 나무를 심었던 것처럼<br>
-          여러분도 나무를 심으면 좋겠습니다.
-        </div>
-        <div style="height:.8em"></div>
-
-        <!-- 밑줄 + 클릭 토글 -->
-        <button id="camelliaToggle" type="button"
-          style="display:inline; background:transparent; border:none; padding:0; cursor:pointer;
-                 font-family:'GowunBatang',serif; font-weight:400; color:#9d9b9b; font-size:10pt; text-decoration:underline;">
-          제주 4·3사건과 여수·순천 10·19사건을 기억하면서
-        </button>
-
-        <!-- 펼침 패널 -->
-        <div id="camelliaPanel" hidden style="margin-top:10px;">
-          <img src="images/siul-camellia.jpg" alt="시울, 동백꽃" style="width:100%; display:block; margin:0 auto;">
-          <div style="font-family:'GowunBatang',serif; font-weight:400; color:#9d9b9b; font-size:10pt; margin-top:6px;">
-            시울, 동백꽃, 2024. 805×606mm, Mixed media on mirror
-          </div>
+          축의대에서 동백나무 씨앗을 나눠드립니다.<br>
+          저희가 나무를 심은 것처럼<br>
+          여러분도 나무를 심어 주세요.
         </div>
       </div>
     </section>
@@ -708,7 +707,7 @@
       </div>
     </div>
 
-    <!-- 모달: 경고(작성 미입력 등 알림용) -->
+    <!-- 모달: 경고(작성 미입력 등) -->
     <div id="alertModal" class="modal alert-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body">
@@ -719,7 +718,7 @@
       </div>
     </div>
 
-    <!-- 공유 -->
+    <!-- 공유(현상 유지) -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
         <img src="images/message.png" alt="" class="img-original">
@@ -733,62 +732,80 @@
     function openModal(el){ if(!el) return; el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
     function closeModal(el){ if(!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
 
-    /* ===== 인트로 영상 오버레이 제어 ===== */
+    /* ===== 인트로 영상: 상단 바로 사운드 토글, 끝나면 바와 함께 사라짐 ===== */
     (function(){
       const overlay = document.getElementById('introOverlay');
       const video = document.getElementById('introVideo');
-      const speaker = document.getElementById('introSpeaker');
-      const bgmBtn = document.getElementById('bgmToggle');
-      const bgmSlash = document.getElementById('bgmSlash');
-      if(!overlay || !video || !speaker || !bgmBtn || !bgmSlash) return;
+      const bar = document.getElementById('introBar');
+      const barIcon = document.getElementById('introBarIcon');
+      const bgmBanner = document.getElementById('bgmBanner');
+      const bgmFab = document.getElementById('bgmFab');
+      const bgmFabIcon = document.getElementById('bgmFabIcon');
+      const bgm = document.getElementById('bgm');
+      if(!overlay||!video||!bar||!barIcon||!bgmBanner||!bgmFab||!bgmFabIcon||!bgm) return;
 
-      const safePlay = () => video.play().catch(()=>{});
+      const setIntroIcon = ()=>{ barIcon.src = video.muted ? 'images/mute.png' : 'images/play.png'; };
+      video.muted = true; setIntroIcon();
+      const safePlay = ()=> video.play().catch(()=>{});
 
-      const closeOverlay = () => {
-        overlay.classList.add('hidden');
-        setTimeout(()=>{ overlay?.parentNode?.removeChild(overlay); }, 700);
-        bgmBtn.classList.add('show'); // 배경음악 버튼 노출
-      };
-
-      const setMutedIcon = (muted) => {
-        const slash = speaker.querySelector('#muteSlash');
-        if(slash) slash.style.display = muted ? 'block' : 'none';
-      };
-
-      video.addEventListener('ended', closeOverlay);
-      video.addEventListener('error', closeOverlay);
-      let started = false;
-      video.addEventListener('playing', ()=>{ started = true; });
-      setTimeout(()=>{ if(!started) closeOverlay(); }, 15000);
-
-      video.muted = true; setMutedIcon(true); safePlay();
-
-      speaker.addEventListener('click', ()=>{
+      bar.addEventListener('click', ()=>{
         video.muted = !video.muted;
-        setMutedIcon(video.muted);
+        setIntroIcon();
         safePlay();
       });
+
+      function endIntro(){
+        overlay.classList.add('hidden');
+        setTimeout(()=>{ overlay?.parentNode?.removeChild(overlay); }, 600);
+
+        // 배경음악 안내 바 페이드인 → 2초 후 페이드아웃 → FAB 표시
+        bgmBanner.classList.add('show');
+        const bannerClick = async ()=>{
+          try{ await bgm.play(); }catch(e){}
+          reflectBgmIcon();
+        };
+        bgmBanner.addEventListener('click', bannerClick, { once:true });
+
+        setTimeout(()=>{
+          bgmBanner.classList.remove('show');
+          setTimeout(()=>{ bgmFab.classList.add('show'); }, 200);
+        }, 2000);
+      }
+      video.addEventListener('ended', endIntro);
+      video.addEventListener('error', endIntro);
+
+      // 보수용 타임아웃(만약 자동재생 실패 등)
+      let started=false;
+      video.addEventListener('playing', ()=>{ started=true; });
+      setTimeout(()=>{ if(!started) endIntro(); }, 15000);
+
+      safePlay();
     })();
 
-    /* ===== 배경음악 토글(고정 버튼) ===== */
+    /* ===== 배경음악: 상단 FAB(이미지)로 재생/일시정지 토글, 아이콘 동기화 ===== */
     (function(){
-      const audio = document.getElementById('bgm');
-      const btn = document.getElementById('bgmToggle');
-      const slash = document.getElementById('bgmSlash');
-      if(!audio || !btn || !slash) return;
+      const bgm = document.getElementById('bgm');
+      const fab = document.getElementById('bgmFab');
+      const fabIcon = document.getElementById('bgmFabIcon');
+      if(!bgm||!fab||!fabIcon) return;
 
-      const setIcon = () => { slash.style.display = audio.paused ? 'block' : 'none'; };
-      setIcon();
+      function reflectBgmIcon(){
+        fabIcon.src = bgm.paused ? 'images/mute.png' : 'images/play.png';
+      }
+      window.reflectBgmIcon = reflectBgmIcon; // 인트로 스크립트에서 호출
 
-      btn.addEventListener('click', async ()=>{
+      reflectBgmIcon();
+
+      fab.addEventListener('click', async ()=>{
         try{
-          if(audio.paused){ await audio.play(); }
-          else{ audio.pause(); }
-        }catch(e){ /* 모바일 정책으로 실패시 무시 */ }
-        setIcon();
+          if(bgm.paused){ await bgm.play(); } else { bgm.pause(); }
+        }catch(e){}
+        reflectBgmIcon();
       });
 
-      audio.addEventListener('ended', ()=>{ /* loop 속성으로 자동 반복 */ });
+      bgm.addEventListener('play', reflectBgmIcon);
+      bgm.addEventListener('pause', reflectBgmIcon);
+      bgm.addEventListener('ended', ()=>{ /* loop 속성으로 자동 반복 */ });
     })();
 
     /* ===== 카운트 (손대지 않음) ===== */
@@ -1049,7 +1066,7 @@
       })();
     })();
 
-    /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) ===== */
+    /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) (현상 유지) ===== */
     (function(){
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbxp2VAXos-C8Z3pJOYQiV9JDAKuF8zEf9uMIfGulxWf9KegrhwtQ8KTLh7mMronT9HK/exec';
 
@@ -1161,7 +1178,7 @@
         const pass=(passEl.value||'').trim();
         const msg =(msgEl.value||'').trim();
         if(!name || !pass || !msg){
-          openAlert('내용을 모두 입력하세요.'); // alert 대체(문구 동일)
+          openAlert('내용을 모두 입력하세요.');
           return;
         }
         const passhash=await sha256(pass);
@@ -1220,7 +1237,7 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지 + 모달 스타일 개선) */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn=tbl.querySelector('.acc-heading');
@@ -1256,15 +1273,6 @@
           openModal(copyModal);
         }
       });
-
-      // 동백 토글
-      const camBtn=document.getElementById('camelliaToggle');
-      const camPanel=document.getElementById('camelliaPanel');
-      if(camBtn && camPanel){
-        camBtn.addEventListener('click', ()=>{
-          camPanel.hidden = !camPanel.hidden;
-        });
-      }
     })();
 
     /* ===== 플레이리스트 토글 (현상 유지) ===== */

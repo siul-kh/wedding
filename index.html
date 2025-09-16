@@ -6,7 +6,7 @@
   <meta name="format-detection" content="telephone=no">
   <title>2025년 11월 1일 목지선 ♥︎ 김기환</title>
 
-  <!-- 폰트 프리로드(선택) -->
+  <!-- 폰트 프리로드 -->
   <link rel="preload" href="fonts/GowunBatang-Regular.woff2?v=1" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/GowunBatang-Bold.woff2?v=1" as="font" type="font/woff2" crossorigin>
 
@@ -33,6 +33,8 @@
       --thin:#e5e5e5;
       --heart-gap:8px;
       --thumb-gap:6px;
+      --popup-shadow:0 16px 40px rgba(0,0,0,.18);
+      --popup-radius:16px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -54,10 +56,14 @@
     img:not(.img-original){ width:100%; }
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
 
-    /* ===== 상단/중간 삽입 이미지 스타일 (요구사항) ===== */
-    .top-photo{ width:100%; height:auto; } /* 1-photo: 비율 유지, 가로 100% */
-    .photo-382{ width:382px; max-width:100%; margin:16px auto; } /* 3/4/5: 비율 유지, 382px */
-    .rounded-22{ border-radius:22px; overflow:hidden; } /* 3번은 기존 둥근 모서리 유지 */
+    /* ===== 키 비주얼 ===== */
+    .vh-photo{ width:100%; height:100vh; object-fit:cover; }
+
+    /* ===== 라운드 이미지 공통 ===== */
+    .rounded-photo{
+      width:90%; margin:16px auto; border-radius:22px;
+      overflow:hidden;
+    }
 
     /* ===== 시 ===== */
     .poem{text-align:center}
@@ -105,38 +111,20 @@
     .cal-grid .cal-cell:nth-child(7n){   color:#6dafff; }
 
     /* ===== 오시는 길 ===== */
-    .go-title {
-      font-family: 'GowunBatang', serif;
-      font-weight: 700;
-      font-size: 16pt;
-      color: #585353;
-      text-align: center;
-    }
+    .go-title { font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; }
     .map { margin: 1.5em 0; }
-    .map iframe {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border: 0;
-      display: block;
-      margin: 0 auto;
-    }
+    .map iframe { width: 100%; aspect-ratio: 1 / 1; border: 0; display:block; margin:0 auto; }
     .go-name { font-family:'GowunBatang',serif; font-weight:700; font-size:14pt; color:#585353; text-align:center; }
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
-    .go-info {
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt;
-      color:#9d9b9b;
-      text-align:center; line-height:2.0; margin-top:0;
-    }
+    .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#9d9b9b; text-align:center; line-height:2.0; margin-top:0; }
 
     /* 네비 앱 버튼 (10pt) */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
     .nav-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5em;
       padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
-      font-family:'GowunBatang',serif;
-      font-weight:400;
-      font-size: 10pt;
-      color:#585353; text-decoration:none;
+      font-family:'GowunBatang',serif; font-weight:400; /* 명시 */
+      font-size: 10pt; color:#585353; text-decoration:none;
       background:#fff; border:1px solid #e5e5e5; border-radius:10px; cursor:pointer;
       white-space:nowrap; flex-wrap:nowrap; max-width:100%;
     }
@@ -162,36 +150,24 @@
     .hero-arrow{
       position:absolute; top:50%; transform:translateY(-50%);
       background:transparent; border:none; cursor:pointer; line-height:1;
-      padding:0; z-index:2;
-      outline:none; -webkit-tap-highlight-color:transparent; appearance:none;
-      box-shadow:none;
+      padding:0; z-index:2; outline:none; -webkit-tap-highlight-color:transparent; appearance:none; box-shadow:none;
     }
     .hero-arrow.prev{ left:4px; }
     .hero-arrow.next{ right:4px; }
     .hero-arrow img{ display:block; border:none; outline:none; box-shadow:none; }
 
-    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%;
-      margin-block:var(--thumb-gap); }
-    .thumbs5 .thumb{
-      padding:0; border:none;
-      background:#fff; cursor:pointer; overflow:hidden;
-      aspect-ratio:1/1; display:block;
-    }
+    .thumbs5{ display:grid; grid-template-columns:repeat(5,1fr); gap:var(--thumb-gap); width:100%; margin-block:var(--thumb-gap); }
+    .thumbs5 .thumb{ padding:0; border:none; background:#fff; cursor:pointer; overflow:hidden; aspect-ratio:1/1; display:block; }
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; cursor:pointer; }
     .more-tri img{ display:block; }
     .thumbs-more[hidden]{ display:none; }
 
     /* ===== 방명록 ===== */
-    #guestbook .gb-title{
-      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px;
-    }
+    #guestbook .gb-title{ font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px; }
     .gb-list{ display:grid; gap:12px; }
 
-    .gb-card{
-      width:100%; margin:0 auto; background:#fff;
-      border:1px solid var(--thin); border-radius:12px; padding:12px;
-    }
+    .gb-card{ width:100%; margin:0 auto; background:#fff; border:1px solid var(--thin); border-radius:12px; padding:12px; }
     .gb-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
     .gb-name{ font-family:'GowunBatang',serif; font-weight:700; font-size:10pt; color:#585353; }
     .gb-date{ font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; color:#9d9b9b; }
@@ -200,224 +176,151 @@
     .gb-del{ font:inherit; font-size:9pt; color:#9d9b9b; background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer; }
 
     .gb-pager{ display:flex; align-items:center; justify-content:center; gap:6px; margin-top:12px; flex-wrap:wrap; }
-    .gb-pager .arrow{
-      border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer;
-    }
+    .gb-pager .arrow{ border:1px solid var(--thin); background:#fff; color:#585353; font:inherit; padding:6px 10px; border-radius:8px; cursor:pointer; }
     .gb-pages{ display:flex; gap:6px; }
-    .gb-pagebtn{
-      border:none; background:transparent;
-      color:#9d9b9b;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
-      padding:6px 10px; border-radius:8px; cursor:pointer;
-    }
-    .gb-pagebtn[aria-current="true"]{
-      color:#585353; font-weight:700;
-    }
+    .gb-pagebtn{ border:none; background:transparent; color:#9d9b9b; font-family:'GowunBatang',serif; font-weight:400; font-size:10pt; padding:6px 10px; border-radius:8px; cursor:pointer; }
+    .gb-pagebtn[aria-current="true"]{ color:#585353; font-weight:700; }
 
     /* 작성 폼 */
-    .gb-input{
-      flex:1; min-width:0;
-      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
-      background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
-    }
-    .gb-textarea{
-      width:100%;
-      font-family:'GowunBatang',serif; font-size:10pt; color:#585353;
-      background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px;
-      resize:vertical;
-    }
-    .gb-write{
-      font:inherit; font-size:9pt; color:#9d9b9b;
-      background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer;
-    }
+    .gb-input{ flex:1; min-width:0; font-family:'GowunBatang',serif; font-size:10pt; color:#585353; background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px; }
+    .gb-textarea{ width:100%; font-family:'GowunBatang',serif; font-size:10pt; color:#585353; background:#fff; border:1px solid var(--thin); border-radius:8px; padding:6px 8px; resize:vertical; }
+    .gb-write{ font:inherit; font-size:9pt; color:#9d9b9b; background:transparent; border:1px solid var(--thin); border-radius:8px; padding:3px 8px; cursor:pointer; }
     #gbSubmit{ font-size:9pt!important; color:#9d9b9b!important; font-weight:400!important; }
     #gbForm .gb-msg{ margin-top:2px; }
 
     /* ===== 마음 전하실 곳 ===== */
-    .acc-title{
-      font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px;
-    }
-    .acc-note{
-      width:100%; max-width:var(--maxw); margin:0 auto 14px; text-align:center;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
-      line-height:1.9;
-    }
+    .acc-title{ font-size:16pt; font-family:'GowunBatang',serif; font-weight:700; color:#585353; text-align:center; margin-bottom:10px; }
+    .acc-note{ width:100%; max-width:var(--maxw); margin:0 auto 14px; text-align:center; font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; line-height:1.9; }
     .acc-note p{ margin:0 0 2px 0; }
     .acc-note .muted{ color:#9d9b9b; }
     .acc-gap{ height:1em; }
 
-    .acc-table{
-      width:100%; border-collapse:separate; border-spacing:0;
-      border:1px solid #f1f1f1;
-      border-radius:12px; overflow:hidden; background:#fff;
-    }
+    .acc-table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff; }
     .acc-table thead th{ padding:0; background:#f1f1f1; }
     .acc-heading{
       width:100%; display:block; text-align:center; cursor:pointer;
-      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400;
+      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; /* Regular 고정 */
       font-size:12pt; padding:12px 14px; border:0; border-bottom:1px solid #f1f1f1;
     }
     .acc-table tbody td{ padding:10px; border-top:1px solid #f1f1f1; vertical-align:middle; }
     .acc-line{ font-size:10pt; color:#585353; }
-    .copy-mini{
-      font-family:'GowunBatang',serif; font-size:8pt;
-      padding:6px 10px; border-radius:10px;
-      background:transparent; color:#9d9b9b;
-      border:1px solid var(--thin);
-      cursor:pointer;
-    }
+    .copy-mini{ font-family:'GowunBatang',serif; font-size:8pt; padding:6px 10px; border-radius:10px; background:transparent; color:#9d9b9b; border:1px solid var(--thin); cursor:pointer; }
     .copy-col{ width:80px; text-align:right; }
 
     /* ===== 플레이리스트(토글만) ===== */
-    .pl-title{
-      font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0;
-    }
-    .pl-note{
-      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; margin:4px 0 8px;
-    }
+    .pl-title{ font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0; }
+    .pl-note{ font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; margin:4px 0 8px; }
     .pl-group{ width:100%; border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff; }
     .pl-heading{
       width:100%; display:block; text-align:center; cursor:pointer;
-      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400;
+      background:#f1f1f1; color:#585353; font-family:'GowunBatang',serif; font-weight:400; /* Regular 고정 */
       font-size:12pt; padding:12px 14px; border:0;
     }
     .pl-body[hidden]{ display:none; }
-    .song-line{
-      display:flex; align-items:center; justify-content:space-between; gap:8px;
-      padding:10px 12px;
-    }
+    .song-line{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; }
     .song-meta{ display:block; width:100%; font-family:'GowunBatang',serif; }
     .song-title{ font-size:10pt; color:#585353; font-weight:700; }
     .song-artist{ font-size:10pt; color:#9d9b9b; font-weight:400; }
-    .song-sep{ width:70%; height:1px; background:var(--thin); margin:0 auto; } /* (현상 유지) */
+    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; } /* 100%로 수정 */
 
-    /* ===== 모달 공통 ===== */
+    /* ===== 카운트 블럭 (손대지 않음) ===== */
+    .when{ text-align:center; }
+    .when .title{ font-size:14pt; color:var(--accent); font-weight:700; }
+    .when .meta{ font-size:12pt; color:#585353; }
+    .count-table{ margin:8px auto 0; border-collapse:separate; border-spacing:0; }
+    .count-table th, .count-table td{ text-align:center; vertical-align:middle; padding:2px 0; }
+    .count-labels th{ font-size:6pt; color:var(--hint); font-weight:400; }
+    .count-values td{ font-size:14pt; color:#585353; font-weight:700; }
+    .count-values .colon{ font-weight:700; font-size:12pt; }
+
+    /* ===== 공유 버튼(하단) ===== */
+    .share-box{ text-align:center; padding:20px 16px 40px; }
+    .share-cta{
+      width:50%; display:inline-flex; align-items:center; justify-content:center; gap:4px;
+      background:#fff; border:none; border-radius:10px; padding:10px 12px; cursor:pointer;
+      font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353;
+    }
+    .share-cta img{ display:inline-block; margin:0 2px; }
+    .share-cta span{ line-height:1; }
+
+    /* ===== 모달 공통 (새 스타일) ===== */
     .modal{
-      position:fixed; inset:0; display:none;
-      align-items:center; justify-content:center;
-      background:rgba(0,0,0,.4); z-index:1000; padding:16px;
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.35); z-index:3000; padding:16px;
     }
     .modal.open{ display:flex; }
-    .modal .sheet{ background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.18); }
+    .modal .sheet{
+      width:min(88vw, 360px); background:#fff; border-radius:var(--popup-radius);
+      box-shadow:var(--popup-shadow); overflow:hidden;
+    }
+    .modal .body{ padding:18px 16px 14px; }
+    .modal .title{ font-weight:700; color:#585353; margin-bottom:8px; text-align:center; }
+    .modal .text{ font-weight:400; color:#585353; font-size:11pt; text-align:center; margin:8px 0 14px; }
+    .modal .row{ display:flex; gap:10px; justify-content:center; }
+    .modal input.gb-input{ width:100%; }
+
+    .copy-modal .copy-ok,
+    .alert-modal .copy-ok{
+      font:inherit; font-size:10pt; color:#585353; background:#fff; border:1px solid var(--thin);
+      border-radius:10px; padding:8px 14px; cursor:pointer;
+    }
 
     /* ===== 인트로 영상 오버레이 ===== */
-    .intro-overlay{
-      position:fixed; inset:0; z-index:2000;
-      display:flex; align-items:center; justify-content:center;
-      background:#fff;
-      transition:opacity .6s ease;
-    }
+    .intro-overlay{ position:fixed; inset:0; z-index:2000; display:flex; align-items:center; justify-content:center; background:#fff; transition:opacity .6s ease; }
     .intro-overlay.hidden{ opacity:0; pointer-events:none; }
-    .intro-wrap{
-      position:relative; width:100vw; height:100vh; background:#fff;
-      display:flex; align-items:center; justify-content:center;
-      overflow:hidden;
-    }
-    .intro-video{
-      width:100vw; height:100vh; object-fit:contain; background:#fff;
-    }
+    .intro-wrap{ position:relative; width:100vw; height:100vh; background:#fff; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .intro-video{ width:100vw; height:100vh; object-fit:contain; background:#fff; }
+    .intro-speaker{ position:absolute; top:12px; right:12px; border:none; background:transparent; padding:0; cursor:pointer; opacity:.55; }
+    .intro-speaker svg{ display:block; width:40px; height:40px; }
 
-    /* 오버레이 상단 안내 바(30% 투명, 가운데 텍스트, 우측 상태 아이콘) */
-    .intro-audiobar{
-      position:absolute; left:0; right:0; top:0;
-      display:flex; align-items:center; justify-content:center;
-      background:rgba(0,0,0,.3); color:#fff;
-      padding:8px 12px; gap:8px;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
-      cursor:pointer;
+    /* ===== 배경음악 토글(고정) ===== */
+    .bgm-toggle{
+      position:fixed; top:12px; right:12px; z-index:1500;
+      border:none; background:transparent; padding:0; cursor:pointer; display:none; /* 처음엔 숨김 */
+      opacity:.65;
     }
-    .intro-audiobar .bar-inner{
-      width:100%; max-width:var(--maxw);
-      display:grid; grid-template-columns:1fr auto; align-items:center;
-    }
-    .intro-audiobar .bar-text{ text-align:center; grid-column:1 / -1; }
-    .intro-audiobar .bar-icon{
-      grid-column:2 / 3; justify-self:end; opacity:.5;
-      width:20px; height:auto;
-    }
-
-    /* ===== 페이지 상단 고정 배너(2초 노출) ===== */
-    .page-bgm-banner{
-      position:fixed; left:0; right:0; top:0; z-index:1600;
-      background:rgba(0,0,0,.3); color:#fff;
-      font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
-      display:flex; align-items:center; justify-content:center;
-      padding:8px 12px; opacity:0; pointer-events:none; transition:opacity .4s ease;
-    }
-    .page-bgm-banner.show{ opacity:1; pointer-events:auto; }
-
-    /* ===== 배경음악 우상단 고정 아이콘(414px 내부, 페이드) ===== */
-    .fixed-rail{
-      position:fixed; top:12px; left:50%; transform:translateX(-50%);
-      width:100%; max-width:var(--maxw); z-index:1500; pointer-events:none;
-    }
-    .bgm-fab{
-      float:right; pointer-events:auto; display:none; transition:opacity .3s ease;
-      opacity:0;
-    }
-    .bgm-fab.show{ display:block; opacity:1; }
-    .bgm-fab img{ width:40px; height:auto; opacity:.5; display:block; }
-
-    /* ===== 아래에서 위로 애니메이션 (현상 유지) ===== */
-    @keyframes riseIn{
-      from{ transform:translateY(24px); opacity:0; }
-      to{   transform:translateY(0);   opacity:1; }
-    }
-    .reveal-up{ opacity:0; transform:translateY(24px); will-change:transform,opacity; }
-    .reveal-up.show{ animation:riseIn 1100ms cubic-bezier(.2,.7,.2,1) forwards; }
-    @media (prefers-reduced-motion:reduce){
-      .reveal-up{ opacity:1; transform:none; }
-      .reveal-up.show{ animation:none; }
-    }
+    .bgm-toggle.show{ display:block; }
+    .bgm-toggle svg{ width:40px; height:40px; display:block; }
   </style>
 </head>
 <body>
 
-  <!-- 인트로 영상 오버레이 (스피커 아이콘 제거, 상단 바로 대체) -->
+  <!-- 인트로 영상 오버레이 -->
   <div id="introOverlay" class="intro-overlay" aria-hidden="false">
     <div class="intro-wrap">
-      <video id="introVideo"
-             class="intro-video"
+      <video id="introVideo" class="intro-video"
              src="images/250912-pre-wedding-intro.mp4"
-             playsinline
-             webkit-playsinline
-             preload="auto"
-             muted
-             autoplay></video>
+             playsinline webkit-playsinline preload="auto" muted autoplay></video>
 
-      <!-- 상단 전체 바(클릭=동영상 사운드 토글) -->
-      <div id="introAudioBar" class="intro-audiobar" role="button" aria-label="동영상 소리 토글">
-        <div class="bar-inner">
-          <div class="bar-text">여기를 누르면 소리가 재생됩니다.</div>
-          <img id="introBarIcon" class="bar-icon" src="images/mute.png" alt="음소거 상태">
-        </div>
-      </div>
+      <!-- 스피커 토글: 영상 '내부' 우상단 -->
+      <button id="introSpeaker" class="intro-speaker" aria-label="사운드 토글">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="2" width="44" height="44" rx="10" fill="#ffffff" stroke="#cfcfcf"/>
+          <path d="M22 16l-6 5H10v6h6l6 5V16z" fill="#585353"/>
+          <path id="muteSlash" d="M32 16 L16 32" stroke="#d05" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <!-- 배경음악 -->
+  <!-- 배경음악 오디오 & 고정 토글 버튼 -->
   <audio id="bgm" src="music/dreams-in-nature-149261.mp3" preload="auto" loop></audio>
-
-  <!-- 상단 고정 배너(2초 노출 후 사라짐) -->
-  <div id="pageBgmBanner" class="page-bgm-banner" aria-hidden="true">
-    여기를 누르면 배경음악이 재생됩니다.
-  </div>
-
-  <!-- 414px 내부 우상단 고정 플레이/뮤트 아이콘 -->
-  <div class="fixed-rail">
-    <a id="bgmFab" class="bgm-fab" href="javascript:void(0)" aria-label="배경음악 음소거 토글">
-      <img id="bgmFabIcon" src="images/mute.png" alt="음소거">
-    </a>
-  </div>
+  <button id="bgmToggle" class="bgm-toggle" aria-label="배경음악 토글">
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="2" y="2" width="44" height="44" rx="10" fill="#ffffff" stroke="#cfcfcf"/>
+      <path d="M22 16l-6 5H10v6h6l6 5V16z" fill="#585353"/>
+      <!-- 재생/일시정지 상태표시는 slash 유무로 통일 -->
+      <path id="bgmSlash" d="M32 16 L16 32" stroke="#d05" stroke-width="3" stroke-linecap="round" style="display:block"/>
+    </svg>
+  </button>
 
   <main class="container">
-
-    <!-- 최상단: images/1-photo.jpg (비율 유지, 가로 100%) -->
+    <!-- 최상단: 세로 100vh 이미지 -->
     <section>
-      <img src="images/1-photo.jpg" alt="상단 이미지" class="top-photo">
+      <img src="images/1-photo.jpg" alt="키 비주얼" class="vh-photo">
     </section>
 
-    <!-- 상단 이미지들 (현상 유지) -->
+    <!-- (기존) 상단 타이포 유지 -->
     <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
 
     <!-- 시 (현상 유지) -->
@@ -449,9 +352,9 @@
       </p>
     </section>
 
-    <!-- 결혼합니다 섹션 위: images/3-photo.jpg (382px, 기존 둥근모서리 유지) -->
+    <!-- 결혼합니다 섹션 '위'에 3-photo.jpg (라운드, 90%) -->
     <section>
-      <img src="images/3-photo.jpg" alt="사진 3" class="photo-382 rounded-22">
+      <img src="images/3-photo.jpg" alt="프리 웨딩" class="rounded-photo">
     </section>
 
     <!-- 달력(현상 유지) -->
@@ -539,12 +442,12 @@
       </table>
     </section>
 
-    <!-- images/4-photo.jpg (동일 위치, 비율 유지 382px) -->
+    <!-- ▼ 여기: 얇은 선 제거하고 4-photo.jpg 배치 -->
     <section>
-      <img src="images/4-photo.jpg" alt="사진 4" class="photo-382">
+      <img src="images/4-photo.jpg" alt="포토 4" class="rounded-photo">
     </section>
 
-    <!-- 오시는 길 (현상 유지) -->
+    <!-- 오시는 길 -->
     <section class="pad" id="way">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="go-title" style="margin-top:8px">오시는 길</div>
@@ -568,7 +471,7 @@
 
       <div class="nav-apps">
         <a class="nav-btn" target="_blank" rel="noopener"
-           href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%B5%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
+           href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%ED%96%89%EC%A0%95%EB%B2%95%EC%9B%90%EC%9C%A1%EC%84%A0%EB%8B%B9%EC%98%88%EC%8B%9D%EC%9E%A5">
           <img src="images/navermap.png" alt="">네이버 지도
         </a>
         <a class="nav-btn" target="_blank" rel="noopener" href="https://tmap.life/c31c6940">
@@ -581,6 +484,7 @@
       </div>
     </section>
 
+    <!-- 얇은 선: 오시는 길 ↔ 갤러리 (현상 유지) -->
     <div class="thin"></div>
 
     <!-- 갤러리 (현상 유지) -->
@@ -589,12 +493,8 @@
       <div class="section-title">갤러리</div>
 
       <div class="hero-photo" id="heroZone">
-        <button id="heroPrev" class="hero-arrow prev" aria-label="이전">
-          <img src="images/left.png" alt="">
-        </button>
-        <button id="heroNext" class="hero-arrow next" aria-label="다음">
-          <img src="images/right.png" alt="">
-        </button>
+        <button id="heroPrev" class="hero-arrow prev" aria-label="이전"><img src="images/left.png" alt=""></button>
+        <button id="heroNext" class="hero-arrow next" aria-label="다음"><img src="images/right.png" alt=""></button>
       </div>
 
       <div class="thumbs5" id="thumbsTop"></div>
@@ -604,17 +504,19 @@
       </button>
     </section>
 
+    <!-- 얇은 선: 갤러리 ↔ 플레이리스트 (현상 유지) -->
     <div class="thin"></div>
 
-    <!-- 플레이리스트: 타이틀 위 초록 하트 → playlist.png 로 교체 -->
+    <!-- 플레이리스트 -->
     <section class="pad" id="playlist">
-      <img src="images/playlist.png" alt="플레이리스트 아이콘" class="img-original">
+      <img src="images/heart.png" alt="하트" class="img-original">
       <div class="pl-title after-heart">플레이리스트</div>
 
       <!-- 지선 -->
       <div class="pl-group" id="plJisun">
         <button class="pl-heading" type="button" aria-expanded="false">지선이가 고른 결혼 음악 추천</button>
         <div class="pl-body" hidden>
+          <!-- 노래 목록 -->
           <div class="song-line"><span class="song-meta"><span class="song-title">BACK ON TOP(feat. Griff)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
           <div class="song-line"><span class="song-meta"><span class="song-title">Better With You(feat. Benjamin Kheng)</span> - <span class="song-artist">Gentle Bones</span></span></div><div class="song-sep"></div>
           <div class="song-line"><span class="song-meta"><span class="song-title">COMING HOME(feat. NIKI)</span> - <span class="song-artist">HONNE</span></span></div><div class="song-sep"></div>
@@ -652,14 +554,12 @@
       </div>
     </section>
 
-    <!-- images/5-photo.jpg (동일 위치, 비율 유지 382px) -->
+    <!-- ▼ 여기: 얇은 선 제거하고 5-photo.jpg 배치 -->
     <section>
-      <img src="images/5-photo.jpg" alt="사진 5" class="photo-382">
+      <img src="images/5-photo.jpg" alt="포토 5" class="rounded-photo">
     </section>
 
-    <div class="thin"></div>
-
-    <!-- 방명록 (현상 유지) -->
+    <!-- 방명록 -->
     <section class="pad" id="guestbook">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="gb-title after-heart">방명록</div>
@@ -688,13 +588,17 @@
       </div>
     </section>
 
-    <div class="thin"></div>
+    <!-- ▼ 여기: 얇은 선 제거하고 6-photo.jpg 배치 -->
+    <section>
+      <img src="images/6-photo.jpg" alt="포토 6" class="rounded-photo">
+    </section>
 
-    <!-- 마음 전하실 곳 (현상 유지, 지정 텍스트만 수정) -->
+    <!-- 마음 전하실 곳 -->
     <section class="pad" id="accounts">
       <img src="images/heart.png" alt="하트" class="img-original">
       <div class="acc-title after-heart">마음 전하실 곳</div>
 
+      <!-- 안내 문구(중앙 정렬 + 한 줄 띄우기) -->
       <div class="acc-note">
         <p>저희의 결혼과 광복 80주년을 맞아</p>
         <p>또 다른 나무를 심으려 합니다.</p>
@@ -704,18 +608,11 @@
         <p>2. 한국해비타트: <span class="muted">독립유공자 후손 주거 지원</span></p>
         <p>3. 흥사단: <span class="muted">독립유공자 후손 장학금 지원</span></p>
         <div class="acc-gap" aria-hidden="true"></div>
-
-        <!-- (요청된 문구 교체본) -->
-        <p>축의대에서 동백나무 씨앗을 나눠드립니다.</p>
-        <p>저희가 나무를 심은 것처럼</p>
-        <p>여러분도 나무를 심어 주세요.</p>
       </div>
 
       <!-- 신랑 측 -->
       <table class="acc-table acc-group" id="accGroomTbl">
-        <thead>
-          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr>
-        </thead>
+        <thead><tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신랑 측</button></th></tr></thead>
         <tbody hidden>
           <tr>
             <td class="acc-line">김기환 국민은행 90513110424</td>
@@ -736,9 +633,7 @@
 
       <!-- 신부 측 -->
       <table class="acc-table acc-group" id="accBrideTbl">
-        <thead>
-          <tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr>
-        </thead>
+        <thead><tr><th colspan="2"><button class="acc-heading" type="button" aria-expanded="false">신부 측</button></th></tr></thead>
         <tbody hidden>
           <tr>
             <td class="acc-line">목지선 카카오뱅크 3333-22-7850739</td>
@@ -754,21 +649,47 @@
           </tr>
         </tbody>
       </table>
+
+      <!-- ▼ 신부 측 토글 '아래' 추가 블록 -->
+      <div class="pad center" id="camelliaBlock">
+        <div style="height:1.8em"></div>
+        <div style="height:1.8em"></div>
+        <img src="images/camellia.png" alt="동백" style="width:30%; margin:0 auto; display:block;">
+        <div style="height:1em"></div>
+        <div style="font-family:'GowunBatang',serif; font-weight:700; color:#7b9155; font-size:12pt;">동백나무 키우기</div>
+        <div style="height:1em"></div>
+        <div style="font-family:'GowunBatang',serif; font-weight:400; color:#585353; font-size:12pt;">
+          축의대에서 동백나무 씨앗을 나눠드립니다. 저희가 나무를 심었던 것처럼<br>
+          여러분도 나무를 심으면 좋겠습니다.
+        </div>
+        <div style="height:.8em"></div>
+
+        <!-- 밑줄 + 클릭 토글 -->
+        <button id="camelliaToggle" type="button"
+          style="display:inline; background:transparent; border:none; padding:0; cursor:pointer;
+                 font-family:'GowunBatang',serif; font-weight:400; color:#9d9b9b; font-size:10pt; text-decoration:underline;">
+          제주 4·3사건과 여수·순천 10·19사건을 기억하면서
+        </button>
+
+        <!-- 펼침 패널 -->
+        <div id="camelliaPanel" hidden style="margin-top:10px;">
+          <img src="images/siul-camellia.jpg" alt="시울, 동백꽃" style="width:100%; display:block; margin:0 auto;">
+          <div style="font-family:'GowunBatang',serif; font-weight:400; color:#9d9b9b; font-size:10pt; margin-top:6px;">
+            시울, 동백꽃, 2024. 805×606mm, Mixed media on mirror
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- images/6-photo.jpg: 계정 섹션 아래, 공유 위. 라운드 없음, 가로 100% -->
-    <section>
-      <img src="images/6-photo.jpg" alt="사진 6" style="width:100%; height:auto; display:block;">
-    </section>
-
-    <!-- 삭제 확인 모달 -->
+    <!-- 모달: 삭제 확인 -->
     <div id="delModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
-        <div class="body center">
-          <div>삭제 비밀번호를 입력하세요.</div>
+        <div class="body">
+          <div class="title">삭제 확인</div>
+          <div class="text">삭제 비밀번호를 입력하세요.</div>
           <input id="delPass" class="gb-input" type="password" placeholder="비밀번호">
-          <div id="delError" style="display:none; color:#d00; font-size:10pt;">비밀번호가 틀렸습니다.</div>
-          <div style="display:flex; gap:10px;">
+          <div id="delError" style="display:none; color:#d00; font-size:10pt; text-align:center; margin-top:6px;">비밀번호가 틀렸습니다.</div>
+          <div class="row" style="margin-top:12px;">
             <button id="delOk" class="copy-ok">삭제</button>
             <button id="delCancel" class="copy-ok">취소</button>
           </div>
@@ -776,17 +697,27 @@
       </div>
     </div>
 
-    <!-- 복사 완료 모달 -->
+    <!-- 모달: 복사 완료 -->
     <div id="copyModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
-        <div class="body center">
-          <div>복사가 완료되었습니다.</div>
-          <button id="copyOk" class="copy-ok">확인</button>
+        <div class="body">
+          <div class="title">알림</div>
+          <div class="text">복사가 완료되었습니다.</div>
+          <div class="row"><button id="copyOk" class="copy-ok">확인</button></div>
         </div>
       </div>
     </div>
 
-    <div class="thin"></div>
+    <!-- 모달: 경고(작성 미입력 등 알림용) -->
+    <div id="alertModal" class="modal alert-modal" aria-hidden="true">
+      <div class="sheet">
+        <div class="body">
+          <div class="title">알림</div>
+          <div id="alertText" class="text">내용을 모두 입력하세요.</div>
+          <div class="row"><button id="alertOk" class="copy-ok">확인</button></div>
+        </div>
+      </div>
+    </div>
 
     <!-- 공유 -->
     <section class="share-box">
@@ -795,7 +726,6 @@
         <span>청첩장 공유하기</span>
       </button>
     </section>
-
   </main>
 
   <script>
@@ -803,106 +733,74 @@
     function openModal(el){ if(!el) return; el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
     function closeModal(el){ if(!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
 
-    /* ===== 인트로: 상단 바로 동영상 사운드 토글, 끝나면 배너 & BGM FAB 처리 ===== */
+    /* ===== 인트로 영상 오버레이 제어 ===== */
     (function(){
       const overlay = document.getElementById('introOverlay');
       const video = document.getElementById('introVideo');
-      const bar = document.getElementById('introAudioBar');
-      const barIcon = document.getElementById('introBarIcon');
+      const speaker = document.getElementById('introSpeaker');
+      const bgmBtn = document.getElementById('bgmToggle');
+      const bgmSlash = document.getElementById('bgmSlash');
+      if(!overlay || !video || !speaker || !bgmBtn || !bgmSlash) return;
 
-      const pageBanner = document.getElementById('pageBgmBanner');
-      const bgm = document.getElementById('bgm');
-      const fab = document.getElementById('bgmFab');
-      const fabIcon = document.getElementById('bgmFabIcon');
+      const safePlay = () => video.play().catch(()=>{});
 
-      if(!overlay || !video || !bar || !barIcon || !pageBanner || !bgm || !fab || !fabIcon) return;
-
-      // 동영상 자동재생 보장 시도(무음)
-      const safePlayVideo = ()=> video.play().catch(()=>{});
-
-      // 아이콘 반영: 재생중(음소거 해제) -> play.png, 음소거 -> mute.png
-      function reflectVideoIcon(){
-        barIcon.src = video.muted ? 'images/mute.png' : 'images/play.png';
-      }
-      reflectVideoIcon();
-
-      // 바 클릭: 동영상 음소거 토글
-      bar.addEventListener('click', ()=>{
-        video.muted = !video.muted;
-        reflectVideoIcon();
-        safePlayVideo();
-      });
-
-      // 비디오 종료/에러 → 오버레이 페이드아웃 → 배너 2초 표시 → FAB 표시
-      function closeOverlay(){
+      const closeOverlay = () => {
         overlay.classList.add('hidden');
-        setTimeout(()=>{
-          overlay?.parentNode?.removeChild(overlay);
+        setTimeout(()=>{ overlay?.parentNode?.removeChild(overlay); }, 700);
+        bgmBtn.classList.add('show'); // 배경음악 버튼 노출
+      };
 
-          // BGM: 브라우저 정책을 위해 mute 상태로 미리 재생 시도, 이후 사용자가 FAB/배너로 음소거 해제
-          bgm.muted = true;
-          bgm.play().catch(()=>{ /* 사용자 상호작용 후 재생 */ });
+      const setMutedIcon = (muted) => {
+        const slash = speaker.querySelector('#muteSlash');
+        if(slash) slash.style.display = muted ? 'block' : 'none';
+      };
 
-          // 배너 표시(페이드인)
-          pageBanner.classList.add('show');
-
-          // 배너 클릭 시 배경음악 음소거 해제
-          const bannerClick = ()=>{
-            bgm.muted = false;
-            updateFabIcon();
-          };
-          pageBanner.addEventListener('click', bannerClick, { once:true });
-
-          // 2초 뒤 배너 페이드아웃, FAB 페이드인
-          setTimeout(()=>{
-            pageBanner.classList.remove('show');
-            setTimeout(()=>{ fab.classList.add('show'); }, 200); // 약간의 간격 후 노출
-          }, 2000);
-        }, 600);
-      }
       video.addEventListener('ended', closeOverlay);
       video.addEventListener('error', closeOverlay);
-
       let started = false;
       video.addEventListener('playing', ()=>{ started = true; });
       setTimeout(()=>{ if(!started) closeOverlay(); }, 15000);
 
-      // 초기 상태
-      video.muted = true;
-      safePlayVideo();
+      video.muted = true; setMutedIcon(true); safePlay();
 
-      // ===== 배경음악 FAB: 음소거 토글(재생은 유지) =====
-      function updateFabIcon(){
-        fabIcon.src = bgm.muted ? 'images/mute.png' : 'images/play.png';
-      }
-      updateFabIcon();
+      speaker.addEventListener('click', ()=>{
+        video.muted = !video.muted;
+        setMutedIcon(video.muted);
+        safePlay();
+      });
+    })();
 
-      fab.addEventListener('click', ()=>{
-        // bgm이 재생 중이 아닐 수 있으니 보장
-        bgm.play().catch(()=>{});
-        bgm.muted = !bgm.muted;
-        updateFabIcon();
+    /* ===== 배경음악 토글(고정 버튼) ===== */
+    (function(){
+      const audio = document.getElementById('bgm');
+      const btn = document.getElementById('bgmToggle');
+      const slash = document.getElementById('bgmSlash');
+      if(!audio || !btn || !slash) return;
+
+      const setIcon = () => { slash.style.display = audio.paused ? 'block' : 'none'; };
+      setIcon();
+
+      btn.addEventListener('click', async ()=>{
+        try{
+          if(audio.paused){ await audio.play(); }
+          else{ audio.pause(); }
+        }catch(e){ /* 모바일 정책으로 실패시 무시 */ }
+        setIcon();
       });
 
-      // 만약 사용자가 외부 컨트롤로 바꿨을 때도 동기화
-      bgm.addEventListener('volumechange', updateFabIcon);
-      bgm.addEventListener('play', updateFabIcon);
-      bgm.addEventListener('pause', updateFabIcon);
+      audio.addEventListener('ended', ()=>{ /* loop 속성으로 자동 반복 */ });
     })();
 
     /* ===== 카운트 (손대지 않음) ===== */
     function setSecondRowWidths(tbody){
-      const row = tbody.querySelector('tr');
-      if(!row) return;
-      const cells = row.children;
-      if(!cells || cells.length !== 7) return;
+      const row = tbody.querySelector('tr'); if(!row) return;
+      const cells = row.children; if(!cells || cells.length !== 7) return;
       const dLen = (cells[0].textContent || '').length || 1;
       cells[0].style.width = dLen + 'ch';
       for(let i=1;i<cells.length;i++){ cells[i].style.width = '2ch'; }
     }
     function fillCountRow(tbody, d,h,m,s){
-      const cells = tbody.querySelector('tr')?.children;
-      if(!cells || cells.length !== 7) return;
+      const cells = tbody.querySelector('tr')?.children; if(!cells || cells.length !== 7) return;
       cells[0].textContent = String(d);
       cells[2].textContent = String(h).padStart(2,'0');
       cells[4].textContent = String(m).padStart(2,'0');
@@ -958,7 +856,6 @@
         const weddingDate = new Date('2025-11-01T00:00:00+09:00');
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const msPerDay = 86400000;
-
         const diff = today - weddingDate;
         if (diff < 0){
           const daysLeft = Math.ceil((weddingDate - today)/msPerDay);
@@ -977,7 +874,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리(현상 유지) ===== */
+    /* ===== 갤러리: (현상 유지) ===== */
     (function(){
       const zone=document.getElementById('heroZone');
       const prev=document.getElementById('heroPrev');
@@ -1015,17 +912,10 @@
       function width(){ return zone.getBoundingClientRect().width; }
 
       function mountInitial(src){
-        curImg=document.createElement('img');
-        curImg.className='slide';
-        curImg.src=src+'?v=1';
-        curImg.style.transform='translateX(0px)';
-        zone.appendChild(curImg);
+        curImg=document.createElement('img'); curImg.className='slide'; curImg.src=src+'?v=1';
+        curImg.style.transform='translateX(0px)'; zone.appendChild(curImg);
       }
-      function createGhost(src){
-        const g=document.createElement('img');
-        g.className='slide'; g.src=src+'?v=1';
-        return g;
-      }
+      function createGhost(src){ const g=document.createElement('img'); g.className='slide'; g.src=src+'?v=1'; return g; }
 
       function show(newIndex, dir=0, instant=false){
         if(!list.length) return;
@@ -1116,8 +1006,8 @@
       zone.addEventListener('pointercancel', endDrag);
       zone.addEventListener('dragstart', e=>e.preventDefault());
 
-      document.getElementById('heroPrev').addEventListener('click', ()=>show(idx-1, -1));
-      document.getElementById('heroNext').addEventListener('click', ()=>show(idx+1, +1));
+      prev.addEventListener('click', ()=>show(idx-1, -1));
+      next.addEventListener('click', ()=>show(idx+1, +1));
 
       function render(){
         const first25=list.slice(0,25);
@@ -1127,7 +1017,6 @@
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
         show(0,0,true);
 
-        // 토글 (항상 동작)
         moreBtn.hidden = next25.length===0;
         moreBtn.setAttribute('aria-expanded','false');
         thumbsMore.hidden = true;
@@ -1149,8 +1038,7 @@
           const items=await res.json();
           const exts=/\.(jpe?g|png|webp|gif|avif)$/i;
           const basePath=encPath(GH.dir) + '/';
-          const files=items.filter(it=>it.type==='file' && exts.test(it.name))
-                           .map(it=> basePath + encodeURIComponent(it.name));
+          const files=items.filter(it=>it.type==='file' && exts.test(it.name)).map(it=> basePath + encodeURIComponent(it.name));
           return shuffle(files).slice(0,50);
         }catch(e){ console.warn(e); return []; }
       }
@@ -1161,7 +1049,7 @@
       })();
     })();
 
-    /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) (현상 유지) ===== */
+    /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) ===== */
     (function(){
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbxp2VAXos-C8Z3pJOYQiV9JDAKuF8zEf9uMIfGulxWf9KegrhwtQ8KTLh7mMronT9HK/exec';
 
@@ -1188,12 +1076,24 @@
       const msgEl=document.getElementById('gbMsg');
       const submitBtn=document.getElementById('gbSubmit');
 
+      // 삭제 모달
       const delModal=document.getElementById('delModal');
       const delPass=document.getElementById('delPass');
       const delOk=document.getElementById('delOk');
       const delCancel=document.getElementById('delCancel');
       const delError=document.getElementById('delError');
       let targetDeleteId=null;
+
+      // 알림 모달
+      const alertModal=document.getElementById('alertModal');
+      const alertText=document.getElementById('alertText');
+      const alertOk=document.getElementById('alertOk');
+
+      function openAlert(text){
+        if(alertText) alertText.textContent = text || '';
+        openModal(alertModal);
+      }
+      if(alertOk) alertOk.addEventListener('click', ()=>closeModal(alertModal));
 
       let data=[]; let page=1; let winStart=1;
 
@@ -1255,19 +1155,24 @@
         if(newStart<=totalPages){ winStart=newStart; page=winStart; renderList(); }
       });
 
+      // 작성
       submitBtn.addEventListener('click', async ()=>{
         const name=(nameEl.value||'').trim();
         const pass=(passEl.value||'').trim();
         const msg =(msgEl.value||'').trim();
-        if(!name || !pass || !msg){ alert('내용을 모두 입력하세요.'); return; }
+        if(!name || !pass || !msg){
+          openAlert('내용을 모두 입력하세요.'); // alert 대체(문구 동일)
+          return;
+        }
         const passhash=await sha256(pass);
         const entry={ id:'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,7), name, msg, passhash, date:new Date().toISOString() };
         const ok=await apiCreate(entry);
-        if(!ok){ alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.'); return; }
+        if(!ok){ openAlert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.'); return; }
         nameEl.value=''; passEl.value=''; msgEl.value='';
         await load(); page=1; winStart=1; renderList();
       });
 
+      // 삭제(모달)
       document.addEventListener('click', (e)=>{
         const btn=e.target.closest('.gb-del'); if(!btn) return;
         targetDeleteId=btn.getAttribute('data-id');
@@ -1288,6 +1193,7 @@
         renderList();
       });
 
+      // API
       async function apiList(){
         try{ return await jsonp(GUESTBOOK_API+'?method=list'); }
         catch(e){ console.warn(e); return []; }
@@ -1314,7 +1220,7 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) */
+    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지 + 모달 스타일 개선) */
     (function(){
       document.querySelectorAll('.acc-group').forEach(tbl=>{
         const btn=tbl.querySelector('.acc-heading');
@@ -1329,7 +1235,7 @@
 
       function defangTel(str){
         return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B');
-        }
+      }
       document.querySelectorAll('.acc-line').forEach(td=>{
         const raw=td.textContent;
         td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
@@ -1350,6 +1256,15 @@
           openModal(copyModal);
         }
       });
+
+      // 동백 토글
+      const camBtn=document.getElementById('camelliaToggle');
+      const camPanel=document.getElementById('camelliaPanel');
+      if(camBtn && camPanel){
+        camBtn.addEventListener('click', ()=>{
+          camPanel.hidden = !camPanel.hidden;
+        });
+      }
     })();
 
     /* ===== 플레이리스트 토글 (현상 유지) ===== */

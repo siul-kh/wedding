@@ -318,7 +318,7 @@
       <!-- 같은 줄 정렬: 가운데 텍스트, 우측 아이콘 -->
       <div id="introBar" class="intro-bar" role="button" aria-label="동영상 소리 토글">
         <div class="inner">
-          <div class="txt">여기를 누르면 소리가 재생됩니다.</div>
+          <div class="txt">영상을 누르면 소리가 재생됩니다.</div>
           <img id="introBarIcon" class="ico" src="images/mute.png" alt="음소거 상태">
         </div>
       </div>
@@ -749,7 +749,7 @@
     function openModal(el){ if(!el) return; el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
     function closeModal(el){ if(!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
 
-    /* ===== 인트로 영상: 상단 바로 사운드 토글, 끝나면 바와 함께 사라짐 ===== */
+    /* ===== 인트로 영상: 배너/영상 클릭으로 사운드 토글 ===== */
     (function(){
       const overlay = document.getElementById('introOverlay');
       const video = document.getElementById('introVideo');
@@ -765,11 +765,15 @@
       video.muted = true; setIntroIcon();
       const safePlay = ()=> video.play().catch(()=>{});
 
-      bar.addEventListener('click', ()=>{
+      function toggleIntroAudio(){
         video.muted = !video.muted;
         setIntroIcon();
         safePlay();
-      });
+      }
+
+      // 배너 클릭 + 영상 아무 곳 클릭 모두 동일 동작
+      bar.addEventListener('click', toggleIntroAudio);
+      video.addEventListener('click', toggleIntroAudio);
 
       function endIntro(){
         overlay.classList.add('hidden');

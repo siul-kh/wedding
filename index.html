@@ -161,6 +161,7 @@
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; cursor:pointer; }
     .more-tri img{ display:block; }
+    .thumbs-more[hidden]{ display:none; } /* 숨김 보장 */
 
     /* ===== 방명록 ===== */
     #guestbook .gb-title{ font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px; }
@@ -263,7 +264,8 @@
     .intro-overlay{ position:fixed; inset:0; z-index:2000; display:flex; align-items:center; justify-content:center; background:#fff; transition:opacity .6s ease; }
     .intro-overlay.hidden{ opacity:0; pointer-events:none; }
     .intro-wrap{ position:relative; width:100vw; height:100vh; background:#fff; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-    .intro-video{ width:100vw; height:100vh; object-fit:contain; background:#fff; }
+    /* ↓↓↓ 높이 101vh로 1% 크게 */
+    .intro-video{ width:100vw; height:101vh; object-fit:contain; background:#fff; }
     .intro-bar{
       position:absolute; left:0; right:0; top:0;
       background:rgba(0,0,0,.3); color:#fff; padding:8px 12px;
@@ -289,25 +291,24 @@
     .fixed-rail{
       position:fixed; top:12px; left:50%; transform:translateX(-50%);
       width:100%; max-width:var(--maxw); z-index:1500; pointer-events:none;
+      padding:0 12px; /* ← top(12px)과 동일 간격만큼 오른쪽도 띄움 */
     }
     .bgm-fab{
       float:right; pointer-events:auto; display:none; opacity:0; transition:opacity .3s ease;
     }
     .bgm-fab.show{ display:block; opacity:1; }
-    /* 원본 크기 사용: 강제 너비 제거 */
     .bgm-fab img{ opacity:.5; display:block; width:auto; height:auto; }
   </style>
 </head>
 <body>
 
-  <!-- 인트로 영상 오버레이: 상단 바 클릭으로 '동영상' 소리 토글, 끝나면 둘 다 사라짐 -->
+  <!-- 인트로 영상 오버레이 -->
   <div id="introOverlay" class="intro-overlay" aria-hidden="false">
     <div class="intro-wrap">
       <video id="introVideo" class="intro-video"
              src="images/250912-pre-wedding-intro.mp4"
              playsinline webkit-playsinline preload="auto" muted autoplay></video>
 
-      <!-- 요청된 상단 가로 바(30% 불투명, 가운데 텍스트, 우측 상태 아이콘) -->
       <div id="introBar" class="intro-bar" role="button" aria-label="동영상 소리 토글">
         <div class="inner">
           <div class="txt">여기를 누르면 소리가 재생됩니다.</div>
@@ -333,12 +334,12 @@
   </div>
 
   <main class="container">
-    <!-- 최상단: images/1-photo.jpg (비율 유지, 가로 100%) -->
+    <!-- 최상단 키 비주얼 -->
     <section>
       <img src="images/1-photo.jpg" alt="키 비주얼" class="vh-photo">
     </section>
 
-    <!-- (기존) 상단 타이포 유지 -->
+    <!-- 상단 타이포 -->
     <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
 
     <!-- 시 -->
@@ -370,7 +371,7 @@
       </p>
     </section>
 
-    <!-- 결혼합니다 섹션 '위'에 3-photo.jpg -->
+    <!-- 3-photo -->
     <section>
       <img src="images/3-photo.jpg" alt="프리 웨딩" class="rounded-photo">
     </section>
@@ -611,7 +612,7 @@
       </div>
     </section>
 
-    <!-- 방명록과 마음 전하실 곳 사이 구분선 -->
+    <!-- 방명록과 마음 전하실 곳 사이 구분선 (현상 유지) -->
     <div class="thin thin-70"></div>
 
     <!-- 마음 전하실 곳 -->
@@ -671,7 +672,7 @@
         </tbody>
       </table>
 
-      <!-- ▼ 신부 측 토글 아래 안내 블록 -->
+      <!-- ▼ 안내 블록 (현상 유지) -->
       <div class="pad center" id="camelliaBlock">
         <div style="height:1.8em"></div>
         <div style="height:1.8em"></div>
@@ -687,7 +688,7 @@
       </div>
     </section>
 
-    <!-- 모달: 삭제 확인 -->
+    <!-- 모달들 (현상 유지) -->
     <div id="delModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body">
@@ -703,7 +704,6 @@
       </div>
     </div>
 
-    <!-- 모달: 복사 완료 -->
     <div id="copyModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body">
@@ -714,7 +714,6 @@
       </div>
     </div>
 
-    <!-- 모달: 경고(작성 미입력 등) -->
     <div id="alertModal" class="modal alert-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body">
@@ -902,7 +901,7 @@
       setInterval(updateStatus, 3600000);
     })();
 
-    /* ===== 갤러리: (현상 유지) ===== */
+    /* ===== 갤러리 ===== */
     (function(){
       const zone=document.getElementById('heroZone');
       const prev=document.getElementById('heroPrev');
@@ -1037,24 +1036,35 @@
       prev.addEventListener('click', ()=>show(idx-1, -1));
       next.addEventListener('click', ()=>show(idx+1, +1));
 
+      // ▼▼▼ 토글 바인딩은 "단 한 번"만. 초기 상태를 확실히 닫힘으로 강제.
+      function bindMoreToggle(){
+        thumbsMore.hidden = true;                           // 항상 닫힌 상태로 시작
+        moreBtn.setAttribute('aria-expanded','false');
+        moreIcon.src = 'images/down.png';
+        moreBtn.onclick = function(){
+          const willOpen = thumbsMore.hidden;               // 현재 감춤 여부 기반
+          thumbsMore.hidden = !willOpen;                    // 상태 토글
+          moreBtn.setAttribute('aria-expanded', String(willOpen));
+          moreIcon.src = willOpen ? 'images/up.png' : 'images/down.png';
+        };
+      }
+
       function render(){
         const first25=list.slice(0,25);
         const next25=list.slice(25,50);
         thumbsTop.innerHTML=''; thumbsMore.innerHTML='';
         first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
-        show(0,0,true);
 
+        // 버튼 표시 여부
         moreBtn.hidden = next25.length===0;
-        moreBtn.setAttribute('aria-expanded','false');
+        // 토글 초기화(상태 강제) - 바인딩은 한 번만 했으니 상태만 리셋
         thumbsMore.hidden = true;
+        moreBtn.setAttribute('aria-expanded','false');
         moreIcon.src='images/down.png';
-        moreBtn.addEventListener('click', ()=>{
-          const willOpen=thumbsMore.hidden;
-          thumbsMore.hidden=!willOpen;
-          moreBtn.setAttribute('aria-expanded', String(willOpen));
-          moreIcon.src = willOpen ? 'images/up.png' : 'images/down.png';
-        });
+
+        // 첫 장 표시
+        show(0,0,true);
       }
 
       async function loadFromGitHub(){
@@ -1072,12 +1082,13 @@
       }
 
       (async function init(){
+        bindMoreToggle();           // ← 딱 1회 바인딩
         list = await loadFromGitHub();
         render();
       })();
     })();
 
-    /* ===== 방명록: JSONP(list) + no-cors POST(create/delete) (현상 유지) ===== */
+    /* ===== 방명록 (현상 유지) ===== */
     (function(){
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbxp2VAXos-C8Z3pJOYQiV9JDAKuF8zEf9uMIfGulxWf9KegrhwtQ8KTLh7mMronT9HK/exec';
 
@@ -1246,44 +1257,6 @@
       }
 
       (async function init(){ await load(); renderList(); })();
-    })();
-
-    /* 마음 전하실 곳: 토글 + 복사 팝업 (현상 유지) */
-    (function(){
-      document.querySelectorAll('.acc-group').forEach(tbl=>{
-        const btn=tbl.querySelector('.acc-heading');
-        const body=tbl.querySelector('tbody');
-        if(!btn||!body) return;
-        btn.addEventListener('click', ()=>{
-          const open = btn.getAttribute('aria-expanded')==='true';
-          btn.setAttribute('aria-expanded', String(!open));
-          body.hidden = open;
-        });
-      });
-
-      function defangTel(str){
-        return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B');
-      }
-      document.querySelectorAll('.acc-line').forEach(td=>{
-        const raw=td.textContent;
-        td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
-      });
-
-      const copyModal=document.getElementById('copyModal');
-      const copyOk=document.getElementById('copyOk');
-      if(copyOk) copyOk.addEventListener('click', ()=>closeModal(copyModal));
-
-      document.addEventListener('click', (e)=>{
-        const b=e.target.closest('.copy-mini'); if(!b) return;
-        const txt=b.getAttribute('data-copy')||'';
-        if(navigator.clipboard){
-          navigator.clipboard.writeText(txt).then(()=>openModal(copyModal));
-        }else{
-          const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
-          ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-          openModal(copyModal);
-        }
-      });
     })();
 
     /* ===== 플레이리스트 토글 (현상 유지) ===== */

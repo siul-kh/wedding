@@ -56,10 +56,10 @@
     img:not(.img-original){ width:100%; }
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
 
-    /* ===== 키 비주얼(요청대로: 비율 유지, 가로 100%) ===== */
+    /* ===== 키 비주얼 ===== */
     .vh-photo{ width:100%; height:auto; object-fit:contain; }
 
-    /* ===== 라운드 이미지(요청대로: 가로 382px, 라운드 유지) ===== */
+    /* ===== 라운드 이미지 ===== */
     .rounded-photo{
       width:382px; max-width:100%;
       margin:16px auto; border-radius:22px; overflow:hidden;
@@ -118,7 +118,7 @@
     .go-addr { font-family:'GowunBatang',serif; font-weight:400; font-size:14pt; color:#585353; text-align:center; margin-bottom:13px; }
     .go-info { font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#9d9b9b; text-align:center; line-height:2.0; margin-top:0; }
 
-    /* 네비 앱 버튼 (10pt) */
+    /* 네비 앱 버튼 */
     .nav-apps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin: 2em 0; }
     .nav-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5em;
@@ -161,7 +161,7 @@
     .thumbs5 .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
     .more-tri{ display:block; margin:10px auto 0; background:transparent; border:none; cursor:pointer; }
     .more-tri img{ display:block; }
-    .thumbs-more[hidden]{ display:none; } /* 숨김 보장 */
+    .thumbs-more[hidden]{ display:none; }
 
     /* ===== 방명록 ===== */
     #guestbook .gb-title{ font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0 14px; }
@@ -207,7 +207,7 @@
     .copy-mini{ font-family:'GowunBatang',serif; font-size:8pt; padding:6px 10px; border-radius:10px; background:transparent; color:#9d9b9b; border:1px solid var(--thin); cursor:pointer; }
     .copy-col{ width:80px; text-align:right; }
 
-    /* ===== 플레이리스트(토글만) ===== */
+    /* ===== 플레이리스트 ===== */
     .pl-title{ font-family:'GowunBatang',serif; font-weight:700; font-size:16pt; color:#585353; text-align:center; margin:8px 0; }
     .pl-note{ font-family:'GowunBatang',serif; font-weight:400; font-size:12pt; color:#585353; text-align:center; margin:4px 0 8px; }
     .pl-group{ width:100%; border:1px solid #f1f1f1; border-radius:12px; overflow:hidden; background:#fff; }
@@ -221,9 +221,9 @@
     .song-meta{ display:block; width:100%; font-family:'GowunBatang',serif; }
     .song-title{ font-size:10pt; color:#585353; font-weight:700; }
     .song-artist{ font-size:10pt; color:#9d9b9b; font-weight:400; }
-    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; } /* 100% 유지 */
+    .song-sep{ width:100%; height:1px; background:var(--thin); margin:0 auto; }
 
-    /* ===== 카운트 블럭 (손대지 않음) ===== */
+    /* ===== 카운트 블럭 ===== */
     .when{ text-align:center; }
     .when .title{ font-size:14pt; color:var(--accent); font-weight:700; }
     .when .meta{ font-size:12pt; color:#585353; }
@@ -243,7 +243,7 @@
     .share-cta img{ display:inline-block; margin:0 2px; }
     .share-cta span{ line-height:1; }
 
-    /* ===== 모달 공통 (유지) ===== */
+    /* ===== 모달 공통 ===== */
     .modal{
       position:fixed; inset:0; display:none; align-items:center; justify-content:center;
       background:rgba(0,0,0,.35); z-index:3000; padding:16px;
@@ -260,25 +260,31 @@
       border-radius:10px; padding:8px 14px; cursor:pointer;
     }
 
-    /* ===== 인트로 영상 오버레이 & 상단 사각형 바 ===== */
+    /* ===== 인트로 영상 & 상단 배너 ===== */
     .intro-overlay{ position:fixed; inset:0; z-index:2000; display:flex; align-items:center; justify-content:center; background:#fff; transition:opacity .6s ease; }
     .intro-overlay.hidden{ opacity:0; pointer-events:none; }
     .intro-wrap{ position:relative; width:100vw; height:100vh; background:#fff; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-    /* ↓↓↓ 높이 101vh로 1% 크게 */
-    .intro-video{ width:100vw; height:101vh; object-fit:contain; background:#fff; }
+    .intro-video{ width:100vw; height:101vh; object-fit:contain; background:#fff; } /* 101vh 유지 */
     .intro-bar{
       position:absolute; left:0; right:0; top:0;
       background:rgba(0,0,0,.3); color:#fff; padding:8px 12px;
       font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
-      display:flex; align-items:center; justify-content:center; gap:8px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; cursor:pointer;
     }
+    /* 같은 줄: 텍스트 가운데, 아이콘 우측 정렬 */
     .intro-bar .inner{
-      width:100%; max-width:var(--maxw); display:grid; grid-template-columns:1fr auto; align-items:center;
+      position:relative; width:100%; max-width:var(--maxw); height:1.6em;
     }
-    .intro-bar .txt{ text-align:center; grid-column:1 / -1; }
-    .intro-bar .ico{ grid-column:2 / 3; justify-self:end; opacity:.5; width:20px; height:auto; }
+    .intro-bar .txt{
+      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+      width:100%; text-align:center;
+    }
+    .intro-bar .ico{
+      position:absolute; right:0; top:50%; transform:translateY(-50%);
+      opacity:.5; width:20px; height:auto;
+    }
 
-    /* ===== 배경음악 상단 안내 바(2초 노출) & FAB ===== */
+    /* ===== 배경음악 배너 & FAB ===== */
     .bgm-banner{
       position:fixed; left:0; right:0; top:0; z-index:1600;
       background:rgba(0,0,0,.3); color:#fff;
@@ -291,7 +297,7 @@
     .fixed-rail{
       position:fixed; top:12px; left:50%; transform:translateX(-50%);
       width:100%; max-width:var(--maxw); z-index:1500; pointer-events:none;
-      padding:0 12px; /* ← top(12px)과 동일 간격만큼 오른쪽도 띄움 */
+      padding:0 12px; /* 우측 여백 = 상단 여백 */
     }
     .bgm-fab{
       float:right; pointer-events:auto; display:none; opacity:0; transition:opacity .3s ease;
@@ -309,6 +315,7 @@
              src="images/250912-pre-wedding-intro.mp4"
              playsinline webkit-playsinline preload="auto" muted autoplay></video>
 
+      <!-- 같은 줄 정렬: 가운데 텍스트, 우측 아이콘 -->
       <div id="introBar" class="intro-bar" role="button" aria-label="동영상 소리 토글">
         <div class="inner">
           <div class="txt">여기를 누르면 소리가 재생됩니다.</div>
@@ -612,7 +619,7 @@
       </div>
     </section>
 
-    <!-- 방명록과 마음 전하실 곳 사이 구분선 (현상 유지) -->
+    <!-- 방명록과 마음 전하실 곳 사이 얇은 선(유지) -->
     <div class="thin thin-70"></div>
 
     <!-- 마음 전하실 곳 -->
@@ -672,7 +679,7 @@
         </tbody>
       </table>
 
-      <!-- ▼ 안내 블록 (현상 유지) -->
+      <!-- 안내 블록 -->
       <div class="pad center" id="camelliaBlock">
         <div style="height:1.8em"></div>
         <div style="height:1.8em"></div>
@@ -688,7 +695,7 @@
       </div>
     </section>
 
-    <!-- 모달들 (현상 유지) -->
+    <!-- 모달들 -->
     <div id="delModal" class="modal copy-modal" aria-hidden="true">
       <div class="sheet">
         <div class="body">
@@ -792,7 +799,7 @@
       safePlay();
     })();
 
-    /* ===== 배경음악: 상단 FAB(이미지)로 재생/일시정지 토글, 아이콘 동기화 ===== */
+    /* ===== 배경음악: 상단 FAB 토글 ===== */
     (function(){
       const bgm = document.getElementById('bgm');
       const fab = document.getElementById('bgmFab');
@@ -802,7 +809,7 @@
       function reflectBgmIcon(){
         fabIcon.src = bgm.paused ? 'images/mute.png' : 'images/play.png';
       }
-      window.reflectBgmIcon = reflectBgmIcon; // 인트로 스크립트에서 호출
+      window.reflectBgmIcon = reflectBgmIcon;
 
       reflectBgmIcon();
 
@@ -815,10 +822,9 @@
 
       bgm.addEventListener('play', reflectBgmIcon);
       bgm.addEventListener('pause', reflectBgmIcon);
-      bgm.addEventListener('ended', ()=>{ /* loop 속성으로 자동 반복 */ });
     })();
 
-    /* ===== 카운트 (손대지 않음) ===== */
+    /* ===== 카운트 ===== */
     function setSecondRowWidths(tbody){
       const row = tbody.querySelector('tr'); if(!row) return;
       const cells = row.children; if(!cells || cells.length !== 7) return;
@@ -873,7 +879,7 @@
       setInterval(tick, 1000);
     });
 
-    /* ===== 달력 상태 문구 (현상 유지) ===== */
+    /* ===== 달력 상태 문구 ===== */
     (function(){
       const el = document.getElementById('weddingStatus');
       const fruitTitle = document.getElementById('fruitTitle');
@@ -1036,14 +1042,14 @@
       prev.addEventListener('click', ()=>show(idx-1, -1));
       next.addEventListener('click', ()=>show(idx+1, +1));
 
-      // ▼▼▼ 토글 바인딩은 "단 한 번"만. 초기 상태를 확실히 닫힘으로 강제.
+      /* 더보기 토글: 1회 바인딩 + 상태 리셋 */
       function bindMoreToggle(){
-        thumbsMore.hidden = true;                           // 항상 닫힌 상태로 시작
+        thumbsMore.hidden = true;
         moreBtn.setAttribute('aria-expanded','false');
         moreIcon.src = 'images/down.png';
         moreBtn.onclick = function(){
-          const willOpen = thumbsMore.hidden;               // 현재 감춤 여부 기반
-          thumbsMore.hidden = !willOpen;                    // 상태 토글
+          const willOpen = thumbsMore.hidden;
+          thumbsMore.hidden = !willOpen;
           moreBtn.setAttribute('aria-expanded', String(willOpen));
           moreIcon.src = willOpen ? 'images/up.png' : 'images/down.png';
         };
@@ -1055,15 +1061,13 @@
         thumbsTop.innerHTML=''; thumbsMore.innerHTML='';
         first25.forEach((src,i)=>thumbsTop.appendChild(makeThumb(src,i)));
         next25.forEach((src,i)=>thumbsMore.appendChild(makeThumb(src,i+25)));
-
-        // 버튼 표시 여부
         moreBtn.hidden = next25.length===0;
-        // 토글 초기화(상태 강제) - 바인딩은 한 번만 했으니 상태만 리셋
+
+        // 상태 리셋
         thumbsMore.hidden = true;
         moreBtn.setAttribute('aria-expanded','false');
         moreIcon.src='images/down.png';
 
-        // 첫 장 표시
         show(0,0,true);
       }
 
@@ -1082,13 +1086,13 @@
       }
 
       (async function init(){
-        bindMoreToggle();           // ← 딱 1회 바인딩
+        bindMoreToggle();
         list = await loadFromGitHub();
         render();
       })();
     })();
 
-    /* ===== 방명록 (현상 유지) ===== */
+    /* ===== 방명록 ===== */
     (function(){
       const GUESTBOOK_API = 'https://script.google.com/macros/s/AKfycbxp2VAXos-C8Z3pJOYQiV9JDAKuF8zEf9uMIfGulxWf9KegrhwtQ8KTLh7mMronT9HK/exec';
 
@@ -1259,7 +1263,46 @@
       (async function init(){ await load(); renderList(); })();
     })();
 
-    /* ===== 플레이리스트 토글 (현상 유지) ===== */
+    /* ===== 마음 전하실 곳: 토글 + 복사 팝업 ===== */
+    (function(){
+      /* 토글: 이벤트 위임으로 섹션 간섭/중복 바인딩 방지 */
+      document.addEventListener('click', (e)=>{
+        const btn = e.target.closest('.acc-heading');
+        if(!btn) return;
+        const tbl = btn.closest('.acc-group');
+        const body = tbl ? tbl.querySelector('tbody') : null;
+        if(!body) return;
+        const open = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!open));
+        body.hidden = open;
+      });
+
+      function defangTel(str){
+        return str.replace(/\d/g, d=>d+'\u200B').replace(/-/g, '-\u200B');
+      }
+      document.querySelectorAll('.acc-line').forEach(td=>{
+        const raw=td.textContent;
+        td.innerHTML = raw.replace(/[0-9-]{3,}/g, m=>defangTel(m));
+      });
+
+      const copyModal=document.getElementById('copyModal');
+      const copyOk=document.getElementById('copyOk');
+      if(copyOk) copyOk.addEventListener('click', ()=>closeModal(copyModal));
+
+      document.addEventListener('click', (e)=>{
+        const b=e.target.closest('.copy-mini'); if(!b) return;
+        const txt=b.getAttribute('data-copy')||'';
+        if(navigator.clipboard){
+          navigator.clipboard.writeText(txt).then(()=>openModal(copyModal));
+        }else{
+          const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta);
+          ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+          openModal(copyModal);
+        }
+      });
+    })();
+
+    /* ===== 플레이리스트 토글 ===== */
     (function(){
       document.querySelectorAll('.pl-group').forEach(box=>{
         const btn = box.querySelector('.pl-heading');
@@ -1273,7 +1316,7 @@
       });
     })();
 
-    /* ===== 공유 (현상 유지) ===== */
+    /* ===== 공유 ===== */
     (function(){
       const btn=document.getElementById('shareCta');
       if(!btn) return;
@@ -1284,7 +1327,7 @@
       });
     })();
 
-    /* ===== 아래에서 위로 애니메이션 (현상 유지) ===== */
+    /* ===== 아래에서 위로 애니메이션 ===== */
     (function(){
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const all = Array.from(document.querySelectorAll('main > section, .thin'));

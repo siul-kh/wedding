@@ -265,8 +265,10 @@
     .intro-overlay.hidden{ opacity:0; pointer-events:none; }
     .intro-wrap{ position:relative; width:100vw; height:100vh; background:#fff; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .intro-video{ width:100vw; height:101vh; object-fit:contain; background:#fff; } /* 101vh 유지 */
+
+    /* 👇 변경: 인트로 배너를 fixed로 고정(배경음악 배너와 동일 위치) */
     .intro-bar{
-      position:absolute; left:0; right:0; top:0;
+      position:fixed; left:0; right:0; top:0; z-index:2100;
       background:rgba(0,0,0,.3); color:#fff; padding:8px 12px;
       font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
       display:flex; align-items:center; justify-content:center; cursor:pointer;
@@ -328,7 +330,7 @@
   <!-- 배경음악 -->
   <audio id="bgm" src="music/dreams-in-nature-149261.mp3" preload="auto" loop></audio>
 
-  <!-- 영상 종료 후: 2초 보여주는 상단 고정 바 -->
+  <!-- 영상 종료 후: 상단 고정 바 -->
   <div id="bgmBanner" class="bgm-banner" aria-hidden="true">
     여기를 누르면 배경음악이 재생됩니다.
   </div>
@@ -779,7 +781,7 @@
         overlay.classList.add('hidden');
         setTimeout(()=>{ overlay?.parentNode?.removeChild(overlay); }, 600);
 
-        // 배경음악 안내 바 페이드인 → 2초 후 페이드아웃 → FAB 표시
+        // 배경음악 안내 바 페이드인 → 4초 후 페이드아웃 → FAB 표시
         bgmBanner.classList.add('show');
         const bannerClick = async ()=>{
           try{ await bgm.play(); }catch(e){}
@@ -790,7 +792,7 @@
         setTimeout(()=>{
           bgmBanner.classList.remove('show');
           setTimeout(()=>{ bgmFab.classList.add('show'); }, 200);
-        }, 2000);
+        }, 4000); // 👈 변경: 4초 뒤 사라짐
       }
       video.addEventListener('ended', endIntro);
       video.addEventListener('error', endIntro);

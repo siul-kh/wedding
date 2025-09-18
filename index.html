@@ -266,20 +266,24 @@
     .intro-wrap{ position:relative; width:100vw; height:100vh; background:#fff; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .intro-video{ width:100vw; height:101vh; object-fit:contain; background:#fff; } /* 101vh 유지 */
 
-    /* 변경: 인트로 배너를 fixed로 고정(배경음악 배너와 동일 위치) */
+    /* 인트로 배너: 배경음악 배너와 동일 위치(상단 고정) */
     .intro-bar{
       position:fixed; left:0; right:0; top:0; z-index:2100;
       background:rgba(0,0,0,.3); color:#fff; padding:8px 12px;
       font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
       display:flex; align-items:center; justify-content:center; cursor:pointer;
     }
-    /* 같은 줄: 텍스트 가운데, 아이콘 우측 정렬 */
-    .intro-bar .inner{ position:relative; width:100%; max-width:var(--maxw); height:1.6em; }
+    .intro-bar .inner{
+      position:relative; width:100%; max-width:var(--maxw); height:1.6em;
+    }
     .intro-bar .txt{
       position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
       width:100%; text-align:center;
     }
-    .intro-bar .ico{ position:absolute; right:0; top:50%; transform:translateY(-50%); opacity:.5; width:20px; height:auto; }
+    .intro-bar .ico{
+      position:absolute; right:0; top:50%; transform:translateY(-50%);
+      opacity:.5; width:20px; height:auto;
+    }
 
     /* ===== 배경음악 배너 & FAB ===== */
     .bgm-banner{
@@ -296,39 +300,30 @@
       width:100%; max-width:var(--maxw); z-index:1500; pointer-events:none;
       padding:0 12px;
     }
-    .bgm-fab{ float:right; pointer-events:auto; display:none; opacity:0; transition:opacity .3s ease; }
+    .bgm-fab{
+      float:right; pointer-events:auto; display:none; opacity:0; transition:opacity .3s ease;
+    }
     .bgm-fab.show{ display:block; opacity:1; }
     .bgm-fab img{ opacity:.5; display:block; width:auto; height:auto; }
 
-    /* ===== 🌸 벚꽃 레이어 ===== */
-    .petal-layer{
-      position:fixed; inset:0; overflow:hidden; pointer-events:none;
-      z-index:1200; /* 컨텐츠 위, FAB(1500)/배너(1600) 아래 */
+    /* ===== 🌸 꽃잎 오버레이 ===== */
+    #petals{
+      position:fixed; inset:0; z-index:1200; pointer-events:none;
     }
     .petal{
-      position:absolute; top:-12vh; left:0;
-      animation: petal-fall var(--dur,15s) linear var(--delay,0s) forwards;
-      will-change: transform, opacity;
+      position:absolute; top:-10vh;
+      background-repeat:no-repeat; background-position:center; background-size:contain;
+      will-change:transform, opacity;
+      animation: fall linear infinite;
+      opacity:.5;
     }
-    .petal .sprite{
-      display:block; width:var(--size,40px); height:auto;
-      opacity:var(--op,0.8);
-      transform: translateX(0) rotate(var(--rotStart,0deg));
-      animation: petal-sway var(--sway,5s) ease-in-out var(--delay,0s) infinite alternate;
-      filter: drop-shadow(0 2px 2px rgba(0,0,0,.05));
-      will-change: transform;
+    @keyframes fall{
+      0%   { transform: translate3d(var(--x,0), -10vh, 0) rotate(0deg); }
+      50%  { transform: translate3d(calc(var(--x,0) + 30px), 50vh, 0) rotate(180deg); }
+      100% { transform: translate3d(calc(var(--x,0) - 10px), 105vh, 0) rotate(360deg); }
     }
-    @keyframes petal-fall{
-      to{ transform: translate3d(0, 112vh, 0); }
-    }
-    @keyframes petal-sway{
-      from{ transform: translateX(calc(var(--amp,24px) * -1)) rotate(var(--rotStart,0deg)); }
-      to  { transform: translateX(var(--amp,24px)) rotate(var(--rotEnd,20deg)); }
-    }
-
-    /* ↓ 사용자가 모션 최소화 설정이면 비활성화 */
     @media (prefers-reduced-motion: reduce){
-      .petal-layer{ display:none; }
+      #petals{ display:none; }
     }
   </style>
 </head>
@@ -365,9 +360,6 @@
       <img id="bgmFabIcon" class="img-original" src="images/mute.png" alt="음소거">
     </a>
   </div>
-
-  <!-- 🌸 벚꽃 레이어 (처음엔 비워둠) -->
-  <div id="petalLayer" class="petal-layer" aria-hidden="true"></div>
 
   <main class="container">
     <!-- 최상단 키 비주얼 -->
@@ -773,7 +765,52 @@
     </section>
   </main>
 
+  <!-- 🌸 꽃잎 오버레이 컨테이너 -->
+  <div id="petals" aria-hidden="true"></div>
+
   <script>
+    /* ===== 🌸 꽃잎 함수 (전역) ===== */
+    function startPetals(count = 20){
+      const wrap = document.getElementById('petals');
+      if(!wrap) return;
+      if(wrap.childElementCount) return; // 중복 생성 방지
+
+      const vw = Math.max(360, window.innerWidth || 360);
+      const imgs = [
+        'images/petal-1.svg',
+        'images/petal-2.svg',
+        'images/petal-3.svg',
+        'images/petal-4.svg'
+      ];
+
+      for(let i=0;i<count;i++){
+        const el = document.createElement('span');
+        el.className = 'petal';
+
+        const img = imgs[Math.floor(Math.random()*imgs.length)];
+        el.style.backgroundImage = `url('${img}')`;
+
+        // 사이즈: 기본 12~40px, petal-4는 8~20px
+        let size;
+        if(img.includes('petal-4')){
+          size = 8 + Math.random()*12;   // 8~20
+        }else{
+          size = 12 + Math.random()*28;  // 12~40
+        }
+        el.style.width  = size + 'px';
+        el.style.height = (size*0.7) + 'px';
+
+        // 위치/불투명도/속도/곡선
+        el.style.left = (Math.random()*vw) + 'px';
+        el.style.setProperty('--x', Math.round(Math.random()*60 - 30) + 'px');
+        el.style.animationDuration = (10 + Math.random()*10).toFixed(2) + 's';
+        el.style.animationDelay    = (Math.random()*4).toFixed(2) + 's';
+        el.style.opacity           = (0.3 + Math.random()*0.3).toFixed(2); // 0.3~0.6
+
+        wrap.appendChild(el);
+      }
+    }
+
     /* ===== 모달 유틸 ===== */
     function openModal(el){ if(!el) return; el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
     function closeModal(el){ if(!el) return; el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
@@ -819,10 +856,10 @@
         setTimeout(()=>{
           bgmBanner.classList.remove('show');
           setTimeout(()=>{ bgmFab.classList.add('show'); }, 200);
-        }, 4000); // 4초 뒤 사라짐
+        }, 4000); // 4초 후 사라짐
 
-        // 🌸 인트로 종료 후 벚꽃 시작
-        if(window.startPetals) window.startPetals();
+        // 🌸 꽃잎 시작
+        startPetals(20);
       }
       video.addEventListener('ended', endIntro);
       video.addEventListener('error', endIntro);
@@ -1078,7 +1115,7 @@
       prev.addEventListener('click', ()=>show(idx-1, -1));
       next.addEventListener('click', ()=>show(idx+1, +1));
 
-      /* 더보기 토글 */
+      /* 더보기 토글: 1회 바인딩 + 상태 리셋 */
       function bindMoreToggle(){
         thumbsMore.hidden = true;
         moreBtn.setAttribute('aria-expanded','false');
@@ -1301,6 +1338,7 @@
 
     /* ===== 마음 전하실 곳: 토글 + 복사 팝업 ===== */
     (function(){
+      /* 토글: 이벤트 위임으로 섹션 간섭/중복 바인딩 방지 */
       document.addEventListener('click', (e)=>{
         const btn = e.target.closest('.acc-heading');
         if(!btn) return;
@@ -1384,101 +1422,6 @@
       }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
 
       targets.forEach(el => io.observe(el));
-    })();
-
-    /* ===== 🌸 벚꽃 스폰 ===== */
-    (function(){
-      const layer = document.getElementById('petalLayer');
-      if(!layer) return;
-
-      const PETALS = [
-        'images/petal-1.svg',
-        'images/petal-2.svg',
-        'images/petal-3.svg',
-        'images/petal-4.svg'
-      ];
-
-      const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      let running = false;
-      let pool = 0;
-      const MAX_PETALS = 26;       // 화면에 동시에 최대 개수 (가벼움 유지)
-      const INTERVAL_MS = 900;     // 생성 간격
-      let timer = null;
-
-      function rand(min, max){ return Math.random()*(max-min)+min; }
-      function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-      function spawn(){
-        if(!running) return;
-        if(pool >= MAX_PETALS) return;
-
-        const src = pick(PETALS);
-        // 기본 크기 범위
-        const minSize = 18;
-        const maxSize = src.endsWith('petal-4.svg') ? 38 : 78; // 4번은 더 작게
-        const size = Math.round(rand(minSize, maxSize));
-
-        const el = document.createElement('div');
-        el.className = 'petal';
-        // 시작 x 위치(퍼센트), 좌우흔들림, 회전 시작/끝
-        const leftPct = rand(0, 100);
-        const amp = Math.round(rand(14, 36)); // 좌우 흔들림 폭
-        const rotStart = Math.round(rand(-35, 15));
-        const rotEnd   = rotStart + rand(15, 45);
-
-        // 낙하/스웨이 시간, 지연
-        const dur = rand(12, 22);
-        const sway = rand(3.5, 6.5);
-        const delay = rand(0, 8);
-        const op = rand(0.65, 0.9);
-
-        el.style.left = leftPct + 'vw';
-        el.style.setProperty('--dur', dur + 's');
-        el.style.setProperty('--sway', sway + 's');
-        el.style.setProperty('--delay', delay + 's');
-        el.style.setProperty('--size', size + 'px');
-        el.style.setProperty('--amp', amp + 'px');
-        el.style.setProperty('--op', op);
-        el.style.setProperty('--rotStart', rotStart + 'deg');
-        el.style.setProperty('--rotEnd', rotEnd + 'deg');
-
-        const img = document.createElement('img');
-        img.className = 'sprite';
-        img.src = src;
-        img.alt = '';
-        img.decoding = 'async';
-        img.loading = 'lazy';
-        el.appendChild(img);
-
-        el.addEventListener('animationend', ()=>{
-          // petal-fall 종료 후 제거
-          if(el && el.parentNode){
-            el.parentNode.removeChild(el);
-            pool = Math.max(0, pool-1);
-          }
-        }, { once:true });
-
-        layer.appendChild(el);
-        pool++;
-      }
-
-      function start(){
-        if(running || REDUCED) return;
-        running = true;
-        // 초기 몇 개 빠르게 채우기
-        for(let i=0;i<8;i++) spawn();
-        timer = setInterval(spawn, INTERVAL_MS);
-      }
-
-      function stop(){
-        running = false;
-        if(timer){ clearInterval(timer); timer=null; }
-      }
-
-      // 외부에서 호출
-      window.startPetals = start;
-      window.stopPetals = stop;
     })();
   </script>
 </body>

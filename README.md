@@ -16,12 +16,12 @@
 
 ## 📂 구조
 wedding/
-├── index.html
-├── README.md
-├── images/
-├── fonts/
-├── music/
-└── js/
+- index.html
+- README.md
+- images/
+- fonts/
+- music/
+- js/
 
 ---
 

@@ -6,6 +6,11 @@
   <meta name="format-detection" content="telephone=no">
   <title>2025년 11월 1일 목지선 ♥︎ 김기환</title>
 
+  <!-- OG (링크 미리보기 대표 이미지) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="2025년 11월 1일 목지선 ♥︎ 김기환">
+  <meta property="og:image" content="images/og.png">
+
   <!-- 폰트 프리로드 -->
   <link rel="preload" href="fonts/GowunBatang-Regular.woff2?v=1" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/GowunBatang-Bold.woff2?v=1" as="font" type="font/woff2" crossorigin>
@@ -55,6 +60,9 @@
     img{display:block; height:auto;}
     img:not(.img-original){ width:100%; }
     .img-original{ display:block; width:auto !important; height:auto !important; margin:0 auto; }
+
+    /* 특정 이미지 90% 표시용 (3,4,5번 사진) */
+    .w90{ width:90% !important; max-width:90% !important; margin-left:auto; margin-right:auto; }
 
     /* ===== 키 비주얼 ===== */
     .vh-photo{ width:100%; height:auto; object-fit:contain; }
@@ -322,9 +330,8 @@
       50%  { transform: translate3d(calc(var(--x,0) + 30px), 50vh, 0) rotate(180deg); }
       100% { transform: translate3d(calc(var(--x,0) - 10px), 105vh, 0) rotate(360deg); }
     }
-    @media (prefers-reduced-motion: reduce){
-      #petals{ display:none; }
-    }
+    /* 접근성의 '줄이기' 설정과 무관하게 꽃잎은 항상 표시되도록 강제 */
+    /* (기존 reduce-motion 숨김 규칙 제거) */
   </style>
 </head>
 <body>
@@ -401,7 +408,7 @@
 
     <!-- 3-photo -->
     <section>
-      <img src="images/3-photo.jpg" alt="프리 웨딩" class="rounded-photo">
+      <img src="images/3-photo.jpg" alt="프리 웨딩" class="rounded-photo w90">
     </section>
 
     <!-- 달력 -->
@@ -494,7 +501,7 @@
 
     <!-- 4-photo -->
     <section>
-      <img src="images/4-photo.jpg" alt="포토 4" class="rounded-photo">
+      <img src="images/4-photo.jpg" alt="포토 4" class="rounded-photo w90">
     </section>
 
     <br>
@@ -607,7 +614,7 @@
 
     <!-- 5-photo -->
     <section>
-      <img src="images/5-photo.jpg" alt="포토 5" class="rounded-photo">
+      <img src="images/5-photo.jpg" alt="포토 5" class="rounded-photo w90">
     </section>
 
     <!-- 방명록 -->
@@ -846,6 +853,10 @@
         setTimeout(()=>{ overlay?.parentNode?.removeChild(overlay); }, 600);
 
         // 배경음악 안내 바 페이드인 → 4초 후 페이드아웃 → FAB 표시
+        const bgmBanner = document.getElementById('bgmBanner');
+        const bgmFab = document.getElementById('bgmFab');
+        const bgm = document.getElementById('bgm');
+
         bgmBanner.classList.add('show');
         const bannerClick = async ()=>{
           try{ await bgm.play(); }catch(e){}
@@ -858,7 +869,7 @@
           setTimeout(()=>{ bgmFab.classList.add('show'); }, 200);
         }, 4000); // 4초 후 사라짐
 
-        // 🌸 꽃잎 시작
+        // 🌸 꽃잎 시작 (접근성 설정과 무관하게 강제 표시)
         startPetals(20);
       }
       video.addEventListener('ended', endIntro);

@@ -392,10 +392,7 @@
     <section>
       <img src="images/1-photo.jpg" alt="키 비주얼" class="vh-photo">
     </section>
-
-    <!-- 상단 타이포 -->
-    <section><img src="images/2-typography.png?v=1" alt="타이포그래피"></section>
-
+<br>
     <!-- 시 -->
     <section class="pad poem" aria-label="시">
       <img src="images/tree.png" alt="나무" class="img-original">
@@ -424,12 +421,12 @@
         적당한 날들을 맞이하려 합니다.
       </p>
     </section>
-
+<br>
     <!-- 3-photo -->
     <section>
       <img src="images/3-photo.jpg" alt="프리 웨딩" class="rounded-photo w90">
     </section>
-
+<br>
     <!-- 달력 -->
     <section class="pad" aria-label="달력">
       <img src="images/heart.png" alt="하트" class="img-original">
@@ -581,7 +578,7 @@
         <img id="thumbsMoreIcon" src="images/down.png" alt="더보기">
       </button>
     </section>
-
+<br>
     <div class="thin"></div>
 
     <!-- 플레이리스트 -->
@@ -630,7 +627,7 @@
         </div>
       </div>
     </section>
-
+<br>
     <!-- 5-photo -->
     <section>
       <img src="images/5-photo.jpg" alt="포토 5" class="rounded-photo w90">
@@ -665,9 +662,8 @@
         <button id="gbNextWindow" class="arrow" hidden>▶</button>
       </div>
     </section>
-
-    <!-- 방명록과 마음 전하실 곳 사이 얇은 선(유지) -->
-    <div class="thin thin-70"></div>
+<br>
+    <div class="thin"></div>
 
     <!-- 마음 전하실 곳 -->
     <section class="pad" id="accounts">
@@ -728,8 +724,8 @@
 
       <!-- 안내 블록 -->
       <div class="pad center" id="camelliaBlock">
-        <div style="height:1.8em"></div>
-        <div style="height:1.8em"></div>
+    
+        <div style="height:2.5em"></div>
         <img src="images/camellia.png" alt="동백" style="width:30%; margin:0 auto; display:block;">
         <div style="height:1em"></div>
         <div style="font-family:'GowunBatang',serif; font-weight:700; color:#7b9155; font-size:12pt;">동백나무 키우기</div>
@@ -781,7 +777,7 @@
     <section>
       <img src="images/6-photo.jpg" alt="포토 6" style="width:100%; height:auto; display:block;">
     </section>
-
+<br>
     <!-- 공유 -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
@@ -789,6 +785,7 @@
         <span>청첩장 공유하기</span>
       </button>
     </section>
+    <br>
   </main>
 
   <!-- 🌸 꽃잎 오버레이 컨테이너 -->
@@ -1002,7 +999,7 @@
           if(fruitTitle) fruitTitle.textContent = '그 나무가 열매를 맺을 날';
         } else {
           const daysSince = Math.floor(diff/msPerDay);
-          el.innerHTML = `지선, 기환이 결혼한지 <span class="dleft">${daysSince}일</span> 되었습니다.`;
+          el.innerHTML = `지선, 기환이 결혼한 지 <span class="dleft">${daysSince}일</span> 되었습니다.`;
           if(fruitTitle) fruitTitle.textContent = '그 나무가 열매를 맺은 날';
         }
       }

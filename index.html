@@ -7,7 +7,6 @@
   <title>2025년 11월 1일 목지선 ♥︎ 김기환</title>
 
   <link rel="canonical" href="https://siul-kh.github.io/wedding/">
-  <!-- 설명문구는 원하시는 대로 수정 -->
   <meta name="description" content="2025년 11월 1일 토요일 오후 2시 · 서울행정법원 융선당">
 
   <!-- Open Graph -->
@@ -16,15 +15,13 @@
   <meta property="og:title" content="김기환 ♥︎ 목지선 결혼합니다">
   <meta property="og:description" content="2025년 11월 1일 토요일 오후 2시 서울행정법원 융선당">
   <meta property="og:url" content="https://siul-kh.github.io/wedding/">
-  <!-- ⚠️ 절대경로(https)로 입력해야 카카오톡에서 확실히 뜹니다 -->
   <meta property="og:image" content="https://siul-kh.github.io/wedding/images/og.png">
   <meta property="og:image:secure_url" content="https://siul-kh.github.io/wedding/images/og.png">
   <meta property="og:image:type" content="image/png">
-  <!-- og.png가 1200x630 기준이면 아래 유지, 아니면 실제 크기로 맞추셔도 OK -->
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
-  <!-- Twitter (백업용) -->
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="2025년 11월 1일 목지선 ♥︎ 김기환">
   <meta name="twitter:description" content="2025년 11월 1일 토요일 오후 2시 · 서울행정법원 융선당">
@@ -293,24 +290,16 @@
     .intro-wrap{ position:relative; width:100vw; height:100vh; background:#fff; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .intro-video{ width:100vw; height:101vh; object-fit:contain; background:#fff; } /* 101vh 유지 */
 
-    /* 인트로 배너: 배경음악 배너와 동일 위치(상단 고정) */
+    /* 인트로 배너 */
     .intro-bar{
       position:fixed; left:0; right:0; top:0; z-index:2100;
       background:rgba(0,0,0,.3); color:#fff; padding:8px 12px;
       font-family:'GowunBatang',serif; font-weight:400; font-size:10pt;
       display:flex; align-items:center; justify-content:center; cursor:pointer;
     }
-    .intro-bar .inner{
-      position:relative; width:100%; max-width:var(--maxw); height:1.6em;
-    }
-    .intro-bar .txt{
-      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-      width:100%; text-align:center;
-    }
-    .intro-bar .ico{
-      position:absolute; right:0; top:50%; transform:translateY(-50%);
-      opacity:.5; width:20px; height:auto;
-    }
+    .intro-bar .inner{ position:relative; width:100%; max-width:var(--maxw); height:1.6em; }
+    .intro-bar .txt{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:100%; text-align:center; }
+    .intro-bar .ico{ position:absolute; right:0; top:50%; transform:translateY(-50%); opacity:.5; width:20px; height:auto; }
 
     /* ===== 배경음악 배너 & FAB ===== */
     .bgm-banner{
@@ -327,16 +316,12 @@
       width:100%; max-width:var(--maxw); z-index:1500; pointer-events:none;
       padding:0 12px;
     }
-    .bgm-fab{
-      float:right; pointer-events:auto; display:none; opacity:0; transition:opacity .3s ease;
-    }
+    .bgm-fab{ float:right; pointer-events:auto; display:none; opacity:0; transition:opacity .3s ease; }
     .bgm-fab.show{ display:block; opacity:1; }
     .bgm-fab img{ opacity:.5; display:block; width:auto; height:auto; }
 
     /* ===== 🌸 꽃잎 오버레이 ===== */
-    #petals{
-      position:fixed; inset:0; z-index:1200; pointer-events:none;
-    }
+    #petals{ position:fixed; inset:0; z-index:1200; pointer-events:none; }
     .petal{
       position:absolute; top:-10vh;
       background-repeat:no-repeat; background-position:center; background-size:contain;
@@ -349,8 +334,24 @@
       50%  { transform: translate3d(calc(var(--x,0) + 30px), 50vh, 0) rotate(180deg); }
       100% { transform: translate3d(calc(var(--x,0) - 10px), 105vh, 0) rotate(360deg); }
     }
-    /* 접근성의 '줄이기' 설정과 무관하게 꽃잎은 항상 표시되도록 강제 */
-    /* (기존 reduce-motion 숨김 규칙 제거) */
+
+    /* ===== 👇 아래에서 위로 리빌 애니메이션 (레이아웃 불변) ===== */
+    .reveal-up{
+      opacity:0;
+      transform:translateY(18px);
+      will-change:transform, opacity;
+      transition:
+        transform 700ms cubic-bezier(.22,.61,.36,1),
+        opacity 700ms ease;
+      transition-delay: var(--reveal-delay, 0s);
+    }
+    .reveal-up.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce){
+      .reveal-up{ transition:none; transform:none; opacity:1; }
+    }
   </style>
 </head>
 <body>
@@ -392,7 +393,9 @@
     <section>
       <img src="images/1-photo.jpg" alt="키 비주얼" class="vh-photo">
     </section>
-<br>
+
+    <br>
+
     <!-- 시 -->
     <section class="pad poem" aria-label="시">
       <img src="images/tree.png" alt="나무" class="img-original">
@@ -421,12 +424,16 @@
         적당한 날들을 맞이하려 합니다.
       </p>
     </section>
-<br>
+
+    <br>
+
     <!-- 3-photo -->
     <section>
       <img src="images/3-photo.jpg" alt="프리 웨딩" class="rounded-photo w90">
     </section>
-<br>
+
+    <br>
+
     <!-- 달력 -->
     <section class="pad" aria-label="달력">
       <img src="images/heart.png" alt="하트" class="img-original">
@@ -578,7 +585,8 @@
         <img id="thumbsMoreIcon" src="images/down.png" alt="더보기">
       </button>
     </section>
-<br>
+
+    <br>
     <div class="thin"></div>
 
     <!-- 플레이리스트 -->
@@ -627,7 +635,9 @@
         </div>
       </div>
     </section>
-<br>
+
+    <br>
+
     <!-- 5-photo -->
     <section>
       <img src="images/5-photo.jpg" alt="포토 5" class="rounded-photo w90">
@@ -662,7 +672,8 @@
         <button id="gbNextWindow" class="arrow" hidden>▶</button>
       </div>
     </section>
-<br>
+
+    <br>
     <div class="thin"></div>
 
     <!-- 마음 전하실 곳 -->
@@ -724,7 +735,6 @@
 
       <!-- 안내 블록 -->
       <div class="pad center" id="camelliaBlock">
-    
         <div style="height:2.5em"></div>
         <img src="images/camellia.png" alt="동백" style="width:30%; margin:0 auto; display:block;">
         <div style="height:1em"></div>
@@ -777,7 +787,9 @@
     <section>
       <img src="images/6-photo.jpg" alt="포토 6" style="width:100%; height:auto; display:block;">
     </section>
-<br>
+
+    <br>
+
     <!-- 공유 -->
     <section class="share-box">
       <button id="shareCta" class="share-cta">
@@ -813,7 +825,7 @@
         const img = imgs[Math.floor(Math.random()*imgs.length)];
         el.style.backgroundImage = `url('${img}')`;
 
-        // 사이즈: 기본 12~40px, petal-4는 8~20px
+        // 사이즈
         let size;
         if(img.includes('petal-4')){
           size = 8 + Math.random()*12;   // 8~20
@@ -885,7 +897,7 @@
           setTimeout(()=>{ bgmFab.classList.add('show'); }, 200);
         }, 4000); // 4초 후 사라짐
 
-        // 🌸 꽃잎 시작 (접근성 설정과 무관하게 강제 표시)
+        // 🌸 꽃잎 시작
         startPetals(20);
       }
       video.addEventListener('ended', endIntro);
@@ -1142,7 +1154,7 @@
       prev.addEventListener('click', ()=>show(idx-1, -1));
       next.addEventListener('click', ()=>show(idx+1, +1));
 
-      /* 더보기 토글: 1회 바인딩 + 상태 리셋 */
+      /* 더보기 토글 */
       function bindMoreToggle(){
         thumbsMore.hidden = true;
         moreBtn.setAttribute('aria-expanded','false');
@@ -1365,7 +1377,7 @@
 
     /* ===== 마음 전하실 곳: 토글 + 복사 팝업 ===== */
     (function(){
-      /* 토글: 이벤트 위임으로 섹션 간섭/중복 바인딩 방지 */
+      /* 토글: 이벤트 위임 */
       document.addEventListener('click', (e)=>{
         const btn = e.target.closest('.acc-heading');
         if(!btn) return;
@@ -1427,17 +1439,25 @@
       });
     })();
 
-    /* ===== 아래에서 위로 애니메이션 ===== */
+    /* ===== 👇 아래에서 위로 애니메이션(스크롤 시 타이밍 노출) ===== */
     (function(){
       const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // main 안의 각 섹션과 구분선(.thin)만 대상으로 하여 레이아웃 영향 0
       const all = Array.from(document.querySelectorAll('main > section, .thin'));
-      const targets = all.filter(el => !el.classList.contains('share-box'));
+      const targets = all.filter(el => !el.classList.contains('share-box')); // 공유영역은 고정 노출
       const share = document.querySelector('.share-box');
 
-      targets.forEach(el => el.classList.add('reveal-up'));
+      // 초기 상태 클래스 부여 + 약한 스태거(0, 60, 120ms 반복)
+      targets.forEach((el, i) => {
+        el.classList.add('reveal-up');
+        el.style.setProperty('--reveal-delay', (i % 3) * 60 + 'ms');
+      });
       if (share) share.classList.add('show');
 
-      if (REDUCED) { targets.forEach(el => el.classList.add('show')); return; }
+      if (REDUCED) {
+        targets.forEach(el => el.classList.add('show'));
+        return;
+      }
 
       const io = new IntersectionObserver((entries)=>{
         entries.forEach(ent=>{
@@ -1451,5 +1471,6 @@
       targets.forEach(el => io.observe(el));
     })();
   </script>
+
 </body>
 </html>
